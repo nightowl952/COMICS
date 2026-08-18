@@ -1,0 +1,7 @@
+# Progress backups exported from the app (personal reading state)
+xmen-reading-progress*.json
+
+# Scratch
+/tmp/
+*.log
+.DS_Store

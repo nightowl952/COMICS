@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEREBRO // Messiah Saga Protocol</title>
+<style>
+  :root{
+    --sky-top:#8fd0f5; --sky-mid:#4a9fd8; --sky-deep:#1b5fa8; --navy:#0d2f5e;
+    --xyellow:#ffd23f; --xyellow-deep:#f0a500;
+    --read-green:#7ed957; --read-green-deep:#3fa32e;
+    --skip-grey:#b9c7d6; --skip-grey-deep:#7d8fa3;
+    --ink:#0a2440;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Tahoma,Verdana,sans-serif; color:#fff; min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(255,255,255,.55), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 85% 8%, rgba(255,255,255,.28), transparent 55%),
+      radial-gradient(circle 320px at 92% 88%, rgba(126,217,255,.32), transparent 70%),
+      linear-gradient(178deg, var(--sky-top) 0%, var(--sky-mid) 32%, var(--sky-deep) 72%, var(--navy) 100%);
+    background-attachment:fixed;
+  }
+  .bubble{position:fixed;border-radius:50%;pointer-events:none;z-index:0;
+    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.8), rgba(255,255,255,.1) 45%, rgba(120,200,255,.07) 70%, transparent 75%);
+    border:1px solid rgba(255,255,255,.22);}
+  .b1{width:190px;height:190px;top:6%;left:-50px;}
+  .b2{width:85px;height:85px;top:34%;right:4%;}
+  .b3{width:280px;height:280px;bottom:-100px;left:10%;opacity:.5;}
+  .b4{width:55px;height:55px;top:66%;left:3%;}
+  .wrap{max-width:960px;margin:0 auto;padding:20px 14px 90px;position:relative;z-index:1;}
+
+  header.hud{border-radius:22px;padding:22px 24px 20px;margin-bottom:16px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, rgba(30,80,150,.86), rgba(10,36,74,.94));
+    border:1px solid rgba(160,220,255,.5);
+    box-shadow:0 10px 30px rgba(5,25,60,.45), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -14px 24px rgba(0,20,60,.5);}
+  header.hud::before{content:"";position:absolute;inset:0 0 55% 0;pointer-events:none;
+    background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,.03));
+    border-radius:22px 22px 50% 50%/22px 22px 30px 30px;}
+  .hud-top{display:flex;align-items:center;gap:16px;}
+  .x-emblem{width:62px;height:62px;flex:0 0 62px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 30% 25%, #fff, #cfe6ff 30%, #4a9fd8 60%, #123c78 100%);
+    border:2px solid rgba(255,255,255,.75);box-shadow:0 4px 12px rgba(0,20,60,.5), inset 0 -6px 10px rgba(0,30,80,.4);}
+  .x-emblem span{font-size:36px;font-weight:900;font-style:italic;line-height:1;transform:translateY(-1px);
+    background:linear-gradient(180deg,#fff 20%, var(--xyellow) 55%, var(--xyellow-deep) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 2px rgba(0,20,60,.6));}
+  .hud-title h1{font-size:clamp(20px,4.2vw,30px);font-style:italic;font-weight:900;letter-spacing:.5px;text-transform:uppercase;
+    background:linear-gradient(180deg,#fff 30%, #bfe3ff 55%, #6db6ea 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 3px rgba(0,20,60,.6));}
+  .hud-title .sub{font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--xyellow);font-weight:700;margin-top:3px;text-shadow:0 1px 2px rgba(0,0,0,.5);}
+  .hud-stats{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;align-items:center;position:relative;}
+  .stat{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#cfe6ff;}
+  .stat b{color:#fff;font-size:16px;margin-right:4px;}
+  .stat.sk b{color:var(--skip-grey);}
+  .master-bar{flex:1 1 200px;min-width:170px;}
+  .pbar{height:15px;border-radius:9px;overflow:hidden;position:relative;display:flex;
+    background:linear-gradient(180deg, rgba(0,20,50,.75), rgba(10,45,90,.6));
+    border:1px solid rgba(160,220,255,.4);box-shadow:inset 0 2px 5px rgba(0,0,0,.5);}
+  .pbar .fill{height:100%;width:0%;transition:width .45s cubic-bezier(.2,.8,.3,1);position:relative;}
+  .pbar .fill.rd{background:linear-gradient(180deg,#c9f7a8 0%, var(--read-green) 45%, var(--read-green-deep) 60%, #a2e87f 100%);}
+  .pbar .fill.sk{background:linear-gradient(180deg,#e8eff6 0%, var(--skip-grey) 45%, var(--skip-grey-deep) 60%, #cdd9e5 100%);}
+  .pbar .fill::after{content:"";position:absolute;inset:1px 0 50% 0;background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.04));}
+
+  .upnext{position:relative;display:flex;gap:14px;align-items:center;margin-bottom:18px;padding:16px;border-radius:18px;flex-wrap:wrap;
+    background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(190,230,255,.13));
+    border:1px solid rgba(255,255,255,.55);
+    box-shadow:0 8px 24px rgba(5,30,70,.35), inset 0 1px 0 rgba(255,255,255,.7);backdrop-filter:blur(6px);}
+  .upnext .tag{position:absolute;top:-9px;left:18px;font-size:9.5px;font-weight:900;letter-spacing:2.5px;padding:3px 12px;border-radius:20px;
+    text-transform:uppercase;color:var(--ink);background:linear-gradient(180deg,#fff 0%, var(--xyellow) 60%, var(--xyellow-deep) 100%);
+    border:1px solid rgba(255,255,255,.8);box-shadow:0 2px 6px rgba(0,20,60,.4);}
+  .upnext-info{flex:1 1 240px;min-width:0;}
+  .upnext-info .run-name{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#eaf6ff;opacity:.85;font-weight:700;}
+  .upnext-info .issue-name{font-size:clamp(16px,3.4vw,21px);font-weight:900;font-style:italic;margin:3px 0 2px;text-shadow:0 2px 4px rgba(0,20,60,.5);}
+  .upnext-info .arc{font-size:12px;color:#d7ecff;}
+  .upnext-actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;}
+  .btn{cursor:pointer;font-family:inherit;font-weight:900;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+    padding:10px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.7);transition:filter .12s, transform .12s;}
+  .btn:hover{filter:brightness(1.08);transform:translateY(-1px);} .btn:active{transform:translateY(1px);}
+  .btn-read{color:#0b3a12;background:linear-gradient(180deg,#e6ffd2 0%, var(--read-green) 48%, var(--read-green-deep) 56%, #8fe066 100%);
+    box-shadow:0 4px 12px rgba(20,70,20,.4), inset 0 1px 0 rgba(255,255,255,.9);}
+  .btn-skip{color:#22354a;background:linear-gradient(180deg,#f4f8fc 0%, var(--skip-grey) 48%, var(--skip-grey-deep) 56%, #d5e0ea 100%);
+    box-shadow:0 4px 12px rgba(20,45,80,.35), inset 0 1px 0 rgba(255,255,255,.9);}
+  .alldone{font-size:15px;font-weight:900;font-style:italic;}
+
+  .controls{display:flex;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+  .chip-btn{cursor:pointer;font-family:inherit;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#eaf6ff;
+    padding:6px 13px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.05));
+    border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);}
+  .chip-btn:hover{background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,.12));}
+  .chip-btn.on{color:var(--ink);background:linear-gradient(180deg,#fff, var(--xyellow) 60%, var(--xyellow-deep));border-color:rgba(255,255,255,.85);}
+
+  .act-head{margin:26px 0 12px;padding:0 4px;display:flex;align-items:center;gap:12px;}
+  .act-head .line{flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg, rgba(255,255,255,.6), rgba(255,255,255,0));}
+  .act-head h2{font-size:clamp(13px,2.6vw,16px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:2px;white-space:nowrap;
+    background:linear-gradient(180deg,#fff 25%, var(--xyellow) 75%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 3px rgba(0,20,60,.6));}
+  .act-head .yr{font-size:10px;letter-spacing:2px;color:#d7ecff;text-transform:uppercase;white-space:nowrap;}
+
+  .ch{border-radius:18px;margin-bottom:12px;overflow:hidden;
+    background:linear-gradient(180deg, rgba(255,255,255,.2), rgba(160,210,250,.09));
+    border:1px solid rgba(255,255,255,.48);
+    box-shadow:0 8px 22px rgba(5,30,70,.28), inset 0 1px 0 rgba(255,255,255,.55);backdrop-filter:blur(5px);}
+  .ch-head{display:flex;align-items:center;gap:12px;padding:13px 15px;cursor:pointer;user-select:none;width:100%;text-align:left;
+    font-family:inherit;color:#fff;border:none;background:linear-gradient(180deg, rgba(255,255,255,.26), rgba(255,255,255,.02));}
+  .ch-head:focus-visible{outline:3px solid var(--xyellow);outline-offset:-3px;}
+  .ch-badge{width:38px;height:38px;flex:0 0 38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:15px;font-style:italic;color:var(--ink);
+    background:linear-gradient(180deg,#fff, var(--xyellow) 55%, var(--xyellow-deep));
+    border:1px solid rgba(255,255,255,.8);box-shadow:0 3px 8px rgba(0,20,60,.4), inset 0 -4px 6px rgba(200,120,0,.35);}
+  .ch.tier3 .ch-badge{background:linear-gradient(180deg,#fff, #a8bece 55%, #708499);color:#1b2c3d;box-shadow:0 3px 8px rgba(0,20,60,.35), inset 0 -4px 6px rgba(60,90,120,.3);}
+  .ch-meta{flex:1;min-width:0;}
+  .ch-meta h3{font-size:clamp(14px,3vw,17px);font-weight:900;font-style:italic;text-shadow:0 2px 3px rgba(0,20,60,.55);}
+  .ch-meta .era{font-size:10.5px;letter-spacing:1.3px;color:#d7ecff;text-transform:uppercase;margin-top:2px;}
+  .ch-side{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto;}
+  .ch-count{font-size:10.5px;font-weight:700;letter-spacing:1px;color:#eaf6ff;padding:2px 9px;border-radius:12px;
+    background:rgba(0,25,60,.45);border:1px solid rgba(160,220,255,.35);white-space:nowrap;}
+  .ch-count.done{color:#0b3a12;background:linear-gradient(180deg,#e6ffd2, var(--read-green));border-color:rgba(255,255,255,.7);}
+  .ch-side .pbar{width:100px;height:9px;}
+  .chev{flex:0 0 auto;width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:var(--ink);
+    background:radial-gradient(circle at 32% 28%, #fff, #cfe6ff 40%, #5aa5dd);border:1px solid rgba(255,255,255,.8);
+    box-shadow:0 2px 5px rgba(0,20,60,.4);transition:transform .25s ease;}
+  .ch.open .chev{transform:rotate(180deg);}
+  .ch-body{display:none;padding:4px 11px 12px;}
+  .ch.open .ch-body{display:block;}
+  .ch-note{font-size:11.5px;line-height:1.5;color:#e2f1ff;background:rgba(0,25,60,.3);border:1px solid rgba(160,220,255,.28);
+    border-radius:12px;padding:9px 12px;margin:4px 2px 10px;}
+  .ch-note b{color:var(--xyellow);}
+  .ch-tools{display:flex;gap:7px;margin:0 2px 10px;flex-wrap:wrap;}
+
+  .issue{display:flex;align-items:center;gap:11px;padding:7px 9px;border-radius:13px;border:1px solid transparent;transition:background .15s;}
+  .issue:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);}
+  .cover{width:40px;height:58px;flex:0 0 40px;border-radius:4px;position:relative;overflow:hidden;cursor:pointer;
+    border:1px solid rgba(255,255,255,.6);box-shadow:0 4px 9px rgba(0,20,60,.42), inset 0 1px 0 rgba(255,255,255,.45);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .cover::before{content:"";position:absolute;inset:0 55% 0 0;background:linear-gradient(105deg, rgba(255,255,255,.38), transparent 70%);}
+  .cover .strip{position:absolute;top:0;left:0;right:0;height:8px;background:rgba(0,0,0,.35);}
+  .cover .cnum{font-weight:900;font-style:italic;font-size:15px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);line-height:1;position:relative;}
+  .cover .cser{font-size:6px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:rgba(255,255,255,.9);text-align:center;
+    padding:0 2px;margin-top:3px;text-shadow:0 1px 1px rgba(0,0,0,.5);position:relative;line-height:1.15;}
+  .issue-info{flex:1;min-width:0;cursor:pointer;}
+  .issue-info .t{font-size:13.5px;font-weight:700;text-shadow:0 1px 2px rgba(0,20,60,.5);}
+  .issue-info .a{font-size:11px;color:#cfe6ff;margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .arcpill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:1px 7px;border-radius:10px;
+    background:rgba(0,25,60,.4);border:1px solid rgba(160,220,255,.3);color:#bfe3ff;}
+  .arcpill.key{background:linear-gradient(180deg, rgba(255,210,63,.9), rgba(240,165,0,.85));color:var(--ink);border-color:rgba(255,255,255,.6);}
+  .issue-acts{display:flex;gap:6px;align-items:center;flex:0 0 auto;}
+  .mini{cursor:pointer;font-family:inherit;font-size:9px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;
+    padding:5px 9px;border-radius:12px;color:#eaf6ff;background:linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.05));
+    border:1px solid rgba(255,255,255,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.45);white-space:nowrap;}
+  .mini:hover{background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,.12));}
+
+  a.read-link{text-decoration:none;display:inline-flex;align-items:center;color:var(--ink);
+    background:linear-gradient(180deg,#fff 0%, var(--xyellow) 55%, var(--xyellow-deep) 100%);
+    border-color:rgba(255,255,255,.8);box-shadow:0 2px 6px rgba(0,20,60,.35), inset 0 1px 0 rgba(255,255,255,.85);}
+  a.read-link:hover{filter:brightness(1.07);background:linear-gradient(180deg,#fff 0%, var(--xyellow) 45%, var(--xyellow-deep) 100%);}
+  a.read-link.approx{color:#20344a;background:linear-gradient(180deg,#f6faff 0%, #c3d4e4 55%, #91a7bd 100%);}
+  .issue.read a.read-link, .issue.skipped a.read-link{opacity:.6;}
+
+  .setup{margin-bottom:14px;padding:13px 15px;border-radius:16px;display:flex;gap:18px;flex-wrap:wrap;
+    background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(160,210,250,.07));
+    border:1px solid rgba(255,255,255,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);}
+  .setup-row{flex:1 1 300px;min-width:250px;}
+  .setup label{display:block;font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#eaf6ff;margin-bottom:7px;}
+  .setup .hint{font-weight:400;letter-spacing:.4px;text-transform:none;color:#c3dcf2;font-size:10.5px;}
+  .setup-inputs{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
+  .setup input[type=password]{flex:1 1 170px;min-width:150px;font-family:inherit;font-size:12px;padding:7px 11px;border-radius:14px;
+    color:#0a2440;background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.7);}
+  .setup input[type=password]:focus{outline:2px solid var(--xyellow);}
+  #keyState{margin-top:6px;}
+  .orb{width:28px;height:28px;flex:0 0 28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:900;color:transparent;transition:all .18s;
+    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(200,230,255,.32) 40%, rgba(30,80,150,.42));
+    border:1px solid rgba(255,255,255,.65);box-shadow:inset 0 -4px 6px rgba(0,30,80,.35), 0 2px 5px rgba(0,20,60,.35);}
+  .issue.read .orb{color:#fff;text-shadow:0 1px 2px rgba(0,60,0,.6);
+    background:radial-gradient(circle at 32% 28%, #f2ffe6, var(--read-green) 55%, var(--read-green-deep));
+    box-shadow:0 0 12px rgba(126,217,87,.6), inset 0 -4px 6px rgba(0,80,0,.35);}
+  .issue.skipped .orb{color:#33465a;font-size:12px;
+    background:radial-gradient(circle at 32% 28%, #fff, var(--skip-grey) 55%, var(--skip-grey-deep));
+    box-shadow:0 0 8px rgba(185,199,214,.4), inset 0 -4px 6px rgba(40,70,100,.3);}
+  .issue.read .cover, .issue.skipped .cover{opacity:.5;filter:saturate(.55);}
+  .issue.read .issue-info .t{color:#cfe6d8;opacity:.78;}
+  .issue.skipped .issue-info .t{color:#d3dde7;opacity:.62;text-decoration:line-through;text-decoration-thickness:1px;}
+
+  .sum{display:none;margin:2px 9px 10px 60px;padding:12px 14px;border-radius:13px;font-size:12.5px;line-height:1.62;color:#eef7ff;
+    background:linear-gradient(180deg, rgba(10,40,85,.72), rgba(6,26,58,.8));
+    border:1px solid rgba(160,220,255,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 4px 12px rgba(0,20,50,.35);}
+  .sum.show{display:block;}
+  .sum .sum-hd{font-size:9px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--xyellow);margin-bottom:6px;}
+  .sum .sum-err{color:#ffd0d0;}
+  .sum .spin{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
+    border-top-color:var(--xyellow);animation:sp .7s linear infinite;vertical-align:-1px;margin-right:7px;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+  footer{margin-top:32px;text-align:center;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(230,245,255,.65);}
+
+  body.hideopt .ch.tier3{display:none;}
+
+  @media (max-width:600px){
+    .ch-side .pbar{width:62px;}
+    .issue-acts .mini{padding:5px 7px;}
+    .sum{margin-left:14px;}
+    .upnext-actions{width:100%;} .upnext-actions .btn{flex:1;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+<div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div>
+
+<div class="wrap">
+  <header class="hud">
+    <div class="hud-top">
+      <div class="x-emblem"><span>X</span></div>
+      <div class="hud-title">
+        <h1>Messiah Saga Protocol</h1>
+        <div class="sub">Divided We Stand &rarr; Second Coming &middot; 2008&ndash;2010</div>
+      </div>
+    </div>
+    <div class="hud-stats">
+      <div class="stat"><b id="statRead">0</b>read</div>
+      <div class="stat sk"><b id="statSkip">0</b>skipped</div>
+      <div class="stat"><b id="statLeft">0</b>remaining</div>
+      <div class="stat"><b id="statPct">0%</b>cleared</div>
+      <div class="master-bar"><div class="pbar"><div class="fill rd" id="mFillRead"></div><div class="fill sk" id="mFillSkip"></div></div></div>
+    </div>
+  </header>
+
+  <div class="upnext" id="upnext">
+    <span class="tag">Up Next</span>
+    <div class="upnext-info" id="upnextInfo"></div>
+    <div class="upnext-actions">
+      <button class="btn btn-read" id="unRead">Mark read</button>
+      <button class="btn btn-skip" id="unSkip">Skip</button>
+    </div>
+  </div>
+
+  <div id="storeWarn" style="display:none;margin-bottom:14px;padding:11px 14px;border-radius:14px;font-size:12px;line-height:1.5;
+    background:linear-gradient(180deg,rgba(150,40,40,.75),rgba(90,15,15,.85));border:1px solid rgba(255,160,160,.5);">
+    <b>Progress isn't saving in this browser.</b> Private/incognito windows block local storage. Use the Back up button below to keep your progress in a file.
+  </div>
+
+  <div class="setup" id="setupBar">
+    <div class="setup-row">
+      <label for="apiKey">Anthropic API key <span class="hint">&mdash; only needed for per-issue summaries when running this file yourself</span></label>
+      <div class="setup-inputs">
+        <input id="apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+        <button class="chip-btn" id="saveKey">Save key</button>
+        <button class="chip-btn" id="clearKey">Remove</button>
+      </div>
+      <div class="hint" id="keyState"></div>
+    </div>
+    <div class="setup-row">
+      <label>Backup <span class="hint">&mdash; progress lives in this browser only</span></label>
+      <div class="setup-inputs">
+        <button class="chip-btn" id="exportBtn">Back up to file</button>
+        <button class="chip-btn" id="importBtn">Restore from file</button>
+        <input id="importFile" type="file" accept="application/json,.json" style="display:none">
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="chip-btn" id="toggleOpt">Hide optional arcs</button>
+      <button class="chip-btn" id="clearSums">Clear saved summaries</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="chip-btn" id="expandAll">Expand all</button>
+      <button class="chip-btn" id="collapseAll">Collapse all</button>
+    </div>
+  </div>
+
+  <div id="acts"></div>
+  <footer>Works offline &middot; progress saved in this browser &middot; back it up from the panel above</footer>
+</div>
+
+<script>
+const SC = {
+  "Uncanny X-Men":["#1c62b8","#0a2f66"],
+  "X-Men Legacy":["#b5453f","#5c1613"],
+  "X-Factor":["#7a3fb5","#3a1560"],
+  "Cable":["#8a8f9c","#2f3644"],
+  "X-Force":["#5c6470","#14171d"],
+  "New Mutants":["#c9a227","#6b520c"],
+  "One-Shot":["#d4af37","#7a5c0e"]
+};
+function seq(series, from, to, idp, arc, keyMap){
+  const out=[];
+  for(let i=from;i<=to;i++){
+    out.push({id:idp+"-"+i, t:series+" #"+i, s:series, arc:(keyMap&&keyMap[i])||arc, key:!!(keyMap&&keyMap[i])});
+  }
+  return out;
+}
+
+const ACTS = [
+{ id:"a1", title:"Act I \u00b7 Divided We Stand", yr:"Spring 2008", chapters:[
+  { id:"c-leg1", title:"X-Men Legacy #208\u2013212", era:"Divided He Stands \u00b7 Mike Carey", tier:2,
+    note:"Reads first because it resolves Xavier's head wound from the final pages of Messiah Complex. Also gives you Cyclops's next chronological appearance, in #210.",
+    issues:seq("X-Men Legacy",208,212,"leg","Divided He Stands",{208:"Picks up from Bishop's bullet"}) },
+  { id:"c-xf1", title:"X-Factor #28\u201332", era:"The Only Game In Town \u00b7 Peter David", tier:2,
+    note:"Placed before X-Force because it opens with Rahne taking leave from X-Factor to join Wolverine's team \u2014 she has to leave here before she can turn up there.",
+    issues:seq("X-Factor",28,32,"xfa","The Only Game In Town",{28:"Rahne leaves for X-Force"}) },
+  { id:"c-xfo1", title:"X-Force #1\u20136", era:"Angels & Demons \u00b7 Kyle & Yost", tier:1,
+    note:"Cyclops's black-ops answer to Messiah Complex. Sits here because every issue lands before Wolverine and Archangel's next Uncanny appearance.",
+    issues:seq("X-Force",1,6,"xfo","Angels & Demons",{1:"X-Force assembles"}) },
+  { id:"c-unc1", title:"Uncanny X-Men #495\u2013499", era:"Divided We Stand \u00b7 Brubaker", tier:2,
+    note:"Opens two weeks after Messiah Complex ends, running parallel threads: Cyclops, Emma and Angel on one side; Wolverine, Colossus and Nightcrawler on the other.",
+    issues:seq("Uncanny X-Men",495,499,"unc","Divided We Stand") },
+  { id:"c-cab1", title:"Cable #1\u20135 + King-Size Cable", era:"Duane Swierczynski", tier:1,
+    note:"The other half of the Hope story. Begins the instant Cable jumps forward at the end of Messiah Complex and has no ties to present-day continuity, so it can float anywhere before Cable #6 \u2014 reading it here keeps Hope in view.",
+    issues:[].concat(seq("Cable",1,5,"cab","On the run",{1:"Cable & Hope in the future"}),
+            [{id:"cab-ks",t:"King-Size Cable Spectacular #1",s:"Cable",arc:"Reads between #5 and #6"}]) }
+]},
+
+{ id:"a2", title:"Act II \u00b7 Manifest Destiny", yr:"Late 2008 \u2013 Early 2009", chapters:[
+  { id:"c-leg2", title:"X-Men Legacy #213\u2013216", era:"Sins of the Father", tier:2,
+    note:"Xavier finds the Westchester mansion destroyed, Beast installs Cerebro in San Francisco, and Scott and Emma confront Xavier. Lands just after the opening of Uncanny #500.",
+    issues:seq("X-Men Legacy",213,216,"leg","Sins of the Father") },
+  { id:"c-leg3", title:"X-Men Legacy #217\u2013218 + Original Sin", era:"Original Sin", tier:3,
+    note:"Crosses over with Wolverine: Origins. Optional \u2014 a Xavier and Daken story that doesn't feed the Hope plot.",
+    issues:[].concat([{id:"os-1",t:"X-Men: Original Sin (One-Shot)",s:"One-Shot",arc:"Original Sin"}],
+            seq("X-Men Legacy",217,218,"leg","Original Sin")) },
+  { id:"c-unc2", title:"Uncanny X-Men #500\u2013503", era:"Manifest Destiny \u00b7 Fraction & Brubaker", tier:2,
+    note:"The X-Men relocate to San Francisco. This is the status quo for everything that follows, all the way to Utopia.",
+    issues:seq("Uncanny X-Men",500,503,"unc","Manifest Destiny",{500:"Move to San Francisco"}) },
+  { id:"c-cab2", title:"Cable #6\u201312", era:"Waiting for the End of the World", tier:1,
+    note:"Tricky to place: it contains present-day scenes of Scott, Emma and X-Force. Since X-Force gets no breathing room from #12 onward, this has to come before that \u2014 and the Cyclops and Wolverine beats fit best just after Uncanny #503.",
+    issues:seq("Cable",6,12,"cab","Waiting for the End of the World") },
+  { id:"c-xf2", title:"X-Factor #33\u201338", era:"Secret Invasion \u00b7 The Isolationist", tier:3,
+    note:"X-Factor's Secret Invasion detour. Skippable if you're chasing the Hope thread \u2014 it barely touches it.",
+    issues:seq("X-Factor",33,38,"xfa","Secret Invasion era") },
+  { id:"c-xfo2", title:"X-Force #7\u201311", era:"Old Ghosts", tier:1,
+    note:"Wolverine's next appearance after the main Secret Invasion series. Sets up the Leper Queen and starts seeding what becomes Necrosha.",
+    issues:seq("X-Force",7,11,"xfo","Old Ghosts") },
+  { id:"c-unc3", title:"Uncanny X-Men #504\u2013507 + Annual 2", era:"Lovelorn", tier:3,
+    note:"Features an Archangel transformation, which firmly places it after X-Force's first arc. Light on the Hope plot.",
+    issues:[].concat(seq("Uncanny X-Men",504,507,"unc","Lovelorn"),
+            [{id:"unc-ann2",t:"Uncanny X-Men Annual #2",s:"Uncanny X-Men",arc:"Lovelorn"}]) },
+  { id:"c-unc4", title:"Uncanny X-Men #508\u2013512", era:"Sisterhood", tier:3,
+    note:"The return of Psylocke. Good X-Men reading, not load-bearing for the Messiah saga.",
+    issues:seq("Uncanny X-Men",508,512,"unc","Sisterhood") }
+]},
+
+{ id:"a3", title:"Act III \u00b7 Messiah War", yr:"2009", chapters:[
+  { id:"c-xfo3", title:"X-Force #12\u201313", era:"Road to Messiah War", tier:1,
+    note:"Immediate lead-in. Worth knowing: some guides argue for reading the Messiah War core <b>before</b> #13, because X-Force returns from the future a few moments earlier than they left. Publication order \u2014 this one \u2014 is the common choice.",
+    issues:seq("X-Force",12,13,"xfo","Road to Messiah War") },
+  { id:"c-mw", title:"Messiah War", era:"Crossover \u00b7 Cable + X-Force", tier:1,
+    note:"Strict alternating order: the Bishop prologue mini, then the one-shot, then Cable and X-Force trading chapters. Cyclops sends X-Force into the future to reach Cable and Hope.",
+    issues:[
+      {id:"lb-1",t:"The Times and Life of Lucas Bishop #1",s:"One-Shot",arc:"Prologue mini"},
+      {id:"lb-2",t:"The Times and Life of Lucas Bishop #2",s:"One-Shot",arc:"Prologue mini"},
+      {id:"lb-3",t:"The Times and Life of Lucas Bishop #3",s:"One-Shot",arc:"Prologue mini"},
+      {id:"mw-0",t:"X-Force/Cable: Messiah War (One-Shot)",s:"One-Shot",arc:"Chapter 1",key:true},
+      {id:"cab-13",t:"Cable #13",s:"Cable",arc:"Chapter 2"},
+      {id:"xfo-14",t:"X-Force #14",s:"X-Force",arc:"Chapter 3"},
+      {id:"cab-14",t:"Cable #14",s:"Cable",arc:"Chapter 4"},
+      {id:"xfo-15",t:"X-Force #15",s:"X-Force",arc:"Chapter 5"},
+      {id:"cab-15",t:"Cable #15",s:"Cable",arc:"Chapter 6"},
+      {id:"xfo-16",t:"X-Force #16",s:"X-Force",arc:"Chapter 7 \u00b7 Finale",key:true}
+    ] },
+  { id:"c-xfo4", title:"X-Force #17\u201320", era:"Not Forgotten", tier:1,
+    note:"Picks up the thread Messiah War interrupted. Collected alongside #12\u201313 as Not Forgotten.",
+    issues:seq("X-Force",17,20,"xfo","Not Forgotten") },
+  { id:"c-cab3", title:"Cable #16\u201320", era:"Stranded", tier:1,
+    note:"Opens literally one second after Messiah War ends. Hope is growing up.",
+    issues:seq("Cable",16,20,"cab","Stranded") }
+]},
+
+{ id:"a4", title:"Act IV \u00b7 Utopia & Nation X", yr:"2009 \u2013 2010", chapters:[
+  { id:"c-leg4", title:"X-Men Legacy #219\u2013225", era:"Salvage", tier:2,
+    note:"Rogue's return arc. Ends a day or two before Utopia kicks off.",
+    issues:seq("X-Men Legacy",219,225,"leg","Salvage") },
+  { id:"c-uto", title:"Utopia", era:"Crossover \u00b7 Dark Reign", tier:2,
+    note:"Norman Osborn moves on San Francisco and the X-Men claim Asteroid M as the mutant nation Utopia \u2014 the setting for everything through Second Coming. The Dark Avengers chapters sit outside your five titles, but the crossover doesn't fully parse without them.",
+    issues:[
+      {id:"uto-0",t:"Dark Avengers/Uncanny X-Men: Utopia #1",s:"One-Shot",arc:"Chapter 1",key:true},
+      {id:"unc-513",t:"Uncanny X-Men #513",s:"Uncanny X-Men",arc:"Chapter 2"},
+      {id:"da-7",t:"Dark Avengers #7",s:"One-Shot",arc:"Chapter 3 \u00b7 outside your list"},
+      {id:"leg-226",t:"X-Men Legacy #226",s:"X-Men Legacy",arc:"Chapter 4"},
+      {id:"unc-514",t:"Uncanny X-Men #514",s:"Uncanny X-Men",arc:"Chapter 5"},
+      {id:"da-8",t:"Dark Avengers #8",s:"One-Shot",arc:"Chapter 6 \u00b7 outside your list"},
+      {id:"leg-227",t:"X-Men Legacy #227",s:"X-Men Legacy",arc:"Chapter 7"},
+      {id:"uto-x",t:"Dark Avengers/Uncanny X-Men: Exodus #1",s:"One-Shot",arc:"Finale \u00b7 Utopia founded",key:true}
+    ] },
+  { id:"c-unc5", title:"Uncanny X-Men #515\u2013522", era:"Nation X", tier:2,
+    note:"Life on the island. Adds Magneto, Namor and Kitty Pryde to the cast \u2014 all of whom matter by Second Coming.",
+    issues:seq("Uncanny X-Men",515,522,"unc","Nation X",{515:"Magneto arrives"}) },
+  { id:"c-xf3", title:"X-Factor #39\u201350", era:"Peter David solo run", tier:3,
+    note:"X-Factor rarely intersects the other books here, so it's shelved as a block. Optional unless you're following Rahne and Madrox.",
+    issues:seq("X-Factor",39,50,"xfa","Detroit era") },
+  { id:"c-xf4", title:"X-Factor #200\u2013203", era:"Renumbering", tier:3,
+    note:"The series renumbers to #200. Still a side road \u2014 but it feeds straight into the #204\u2013206 Second Coming tie-ins.",
+    issues:seq("X-Factor",200,203,"xfa","Post-renumber") },
+  { id:"c-leg5", title:"X-Men Legacy #228\u2013230", era:"Emplate", tier:3,
+    note:"Rogue formally takes charge of the younger X-Men. Reads after Nation X, because in Nation X they're still questioning why she's protecting them.",
+    issues:seq("X-Men Legacy",228,230,"leg","Emplate") }
+]},
+
+{ id:"a5", title:"Act V \u00b7 Necrosha", yr:"Late 2009 \u2013 2010", chapters:[
+  { id:"c-nec", title:"Necrosha", era:"Crossover \u00b7 X-Force + New Mutants + Legacy", tier:1,
+    note:"Selene's endgame, seeded through X-Force since Old Ghosts. Released alongside Nation X, but Magneto takes part in the Legacy chapters, so it lands after. X-Force #21\u201325 is the main thrust; New Mutants and Legacy are the side stories.",
+    issues:[
+      {id:"nec-g",t:"X-Necrosha: The Gathering (One-Shot)",s:"One-Shot",arc:"Prelude"},
+      {id:"nec-1",t:"X-Necrosha #1 (One-Shot)",s:"One-Shot",arc:"Chapter 1",key:true},
+      {id:"nm-6",t:"New Mutants #6",s:"New Mutants",arc:"Necrosha"},
+      {id:"xfo-21",t:"X-Force #21",s:"X-Force",arc:"Necrosha"},
+      {id:"nm-7",t:"New Mutants #7",s:"New Mutants",arc:"Necrosha"},
+      {id:"xfo-22",t:"X-Force #22",s:"X-Force",arc:"Necrosha"},
+      {id:"nm-8",t:"New Mutants #8",s:"New Mutants",arc:"Necrosha"},
+      {id:"leg-231",t:"X-Men Legacy #231",s:"X-Men Legacy",arc:"Necrosha"},
+      {id:"xfo-23",t:"X-Force #23",s:"X-Force",arc:"Necrosha"},
+      {id:"leg-232",t:"X-Men Legacy #232",s:"X-Men Legacy",arc:"Necrosha"},
+      {id:"xfo-24",t:"X-Force #24",s:"X-Force",arc:"Necrosha"},
+      {id:"leg-233",t:"X-Men Legacy #233",s:"X-Men Legacy",arc:"Necrosha"},
+      {id:"xfo-25",t:"X-Force #25",s:"X-Force",arc:"Necrosha \u00b7 Climax",key:true},
+      {id:"leg-234",t:"X-Men Legacy #234",s:"X-Men Legacy",arc:"Epilogue \u00b7 after the end"}
+    ] },
+  { id:"c-sv", title:"X-Force: Sex and Violence #1\u20133", era:"Kyle & Yost \u00b7 Dell'Otto", tier:3,
+    note:"A Domino and Wolverine two-hander collected with the Not Forgotten era. Gorgeous, self-contained, skippable.",
+    issues:[{id:"sv-1",t:"Sex and Violence #1",s:"X-Force",arc:"Standalone"},
+            {id:"sv-2",t:"Sex and Violence #2",s:"X-Force",arc:"Standalone"},
+            {id:"sv-3",t:"Sex and Violence #3",s:"X-Force",arc:"Standalone"}] },
+  { id:"c-cab4", title:"Cable #21\u201325", era:"Homecoming", tier:1,
+    note:"The penultimate chapter of the saga that began with Messiah Complex. Hope tells Cable she's ready to go home, and this ends right on the doorstep of Second Coming.",
+    issues:seq("Cable",21,25,"cab","Homecoming",{25:"Straight into Second Coming"}) }
+]},
+
+{ id:"a6", title:"Act VI \u00b7 Second Coming", yr:"2010", chapters:[
+  { id:"c-sc", title:"Second Coming", era:"The finale \u00b7 all X-titles", tier:1,
+    note:"Fourteen numbered chapters with tie-ins woven between them. X-Factor #204\u2013206 run concurrent to the event because they feature Bastion, and X-Force #28 is both a chapter here and the last issue of that series.",
+    issues:[
+      {id:"sc-hope",t:"X-Men: Hope #1 (One-Shot)",s:"One-Shot",arc:"Lead-in"},
+      {id:"sc-prep",t:"Second Coming: Prepare (One-Shot)",s:"One-Shot",arc:"Lead-in"},
+      {id:"sc-1",t:"X-Men: Second Coming #1",s:"One-Shot",arc:"Chapter 1",key:true},
+      {id:"unc-523",t:"Uncanny X-Men #523",s:"Uncanny X-Men",arc:"Chapter 2"},
+      {id:"nm-12",t:"New Mutants #12",s:"New Mutants",arc:"Chapter 3"},
+      {id:"leg-235",t:"X-Men Legacy #235",s:"X-Men Legacy",arc:"Chapter 4"},
+      {id:"xfo-26",t:"X-Force #26",s:"X-Force",arc:"Chapter 5"},
+      {id:"xfa-204",t:"X-Factor #204",s:"X-Factor",arc:"Tie-in \u00b7 Bastion"},
+      {id:"unc-524",t:"Uncanny X-Men #524",s:"Uncanny X-Men",arc:"Chapter 6"},
+      {id:"hb-1",t:"X-Men: Hellbound #1",s:"One-Shot",arc:"Tie-in mini"},
+      {id:"nm-13",t:"New Mutants #13",s:"New Mutants",arc:"Chapter 7"},
+      {id:"bs-1",t:"X-Men: Blind Science #1",s:"One-Shot",arc:"Tie-in"},
+      {id:"leg-236",t:"X-Men Legacy #236",s:"X-Men Legacy",arc:"Chapter 8"},
+      {id:"xfo-27",t:"X-Force #27",s:"X-Force",arc:"Chapter 9"},
+      {id:"xfa-205",t:"X-Factor #205",s:"X-Factor",arc:"Tie-in"},
+      {id:"unc-525",t:"Uncanny X-Men #525",s:"Uncanny X-Men",arc:"Chapter 10"},
+      {id:"nm-14",t:"New Mutants #14",s:"New Mutants",arc:"Chapter 11"},
+      {id:"leg-237",t:"X-Men Legacy #237",s:"X-Men Legacy",arc:"Chapter 12"},
+      {id:"xfo-28",t:"X-Force #28",s:"X-Force",arc:"Chapter 13 \u00b7 series finale",key:true},
+      {id:"xfa-206",t:"X-Factor #206",s:"X-Factor",arc:"Tie-in"},
+      {id:"hb-2",t:"X-Men: Hellbound #2",s:"One-Shot",arc:"Tie-in mini"},
+      {id:"sc-2",t:"X-Men: Second Coming #2",s:"One-Shot",arc:"Chapter 14 \u00b7 Finale",key:true},
+      {id:"hb-3",t:"X-Men: Hellbound #3",s:"One-Shot",arc:"Tie-in mini \u00b7 Epilogue"}
+    ] }
+]}
+];
+
+const MARVEL={"cab-1":"20897/cable_2008_1","cab-10":"23126/cable_2008_10","cab-11":"23618/cable_2008_11","cab-12":"23773/cable_2008_12","cab-13":"23971/cable_2008_13","cab-14":"24171/cable_2008_14","cab-15":"24631/cable_2008_15","cab-16":"24633/cable_2008_16","cab-17":"24634/cable_2008_17","cab-18":"24635/cable_2008_18","cab-19":"24636/cable_2008_19","cab-2":"21030/cable_2008_2","cab-20":"24637/cable_2008_20","cab-21":"24638/cable_2008_21","cab-22":"30344/cable_2008_22","cab-23":"24640/cable_2008_23","cab-24":"30346/cable_2008_24","cab-25":"29932/cable_2008_25","cab-3":"21246/cable_2008_3","cab-4":"21388/cable_2008_4","cab-5":"21563/cable_2008_5","cab-6":"21758/cable_2008_6","cab-7":"22323/cable_2008_7","cab-8":"22522/cable_2008_8","cab-9":"22930/cable_2008_9","leg-208":"20632/x_men_legacy_2008_208","leg-209":"20819/x_men_legacy_2008_209","leg-210":"20957/x_men_legacy_2008_210","leg-211":"21166/x_men_legacy_2008_211","leg-212":"21167/x_men_legacy_2008_212","leg-213":"21317/x_men_legacy_2008_213","leg-214":"21495/x_men_legacy_2008_214","leg-215":"21698/x_men_legacy_2008_215","leg-216":"21923/x_men_legacy_2008_216","leg-217":"22254/x_men_legacy_2008_217","leg-218":"22462/x_men_legacy_2008_218","leg-219":"22857/x_men_legacy_2008_219","leg-220":"23073/x_men_legacy_2008_220","leg-221":"23563/x_men_legacy_2008_221","leg-222":"23734/x_men_legacy_2008_222","leg-223":"23917/x_men_legacy_2008_223","leg-224":"24129/x_men_legacy_2008_224","leg-225":"27342/x_men_legacy_2008_225","leg-226":"27343/x_men_legacy_2008_226","leg-227":"27344/x_men_legacy_2008_227","leg-228":"27345/x_men_legacy_2008_228","leg-229":"27346/x_men_legacy_2008_229","leg-230":"27347/x_men_legacy_2008_230","leg-231":"27348/x_men_legacy_2008_231","leg-232":"28415/x_men_legacy_2008_232","leg-233":"30700/x_men_legacy_2008_233","leg-234":"30701/x_men_legacy_2008_234","leg-235":"32598/x_men_legacy_2008_235","leg-236":"30703/x_men_legacy_2008_236","leg-237":"30704/x_men_legacy_2008_237","unc-495":"20633/x_men_1963_495","unc-496":"20820/x_men_1963_496","unc-497":"20959/x_men_1963_497","unc-498":"21168/x_men_1963_498","unc-499":"21318/x_men_1963_499","unc-500":"21496/x_men_1963_500","unc-501":"21699/x_men_1963_501","unc-502":"21924/x_men_1963_502","unc-503":"22255/x_men_1963_503","unc-504":"22463/x_men_1963_504","unc-505":"22858/x_men_1963_505","unc-506":"23564/x_men_1963_506","unc-507":"23735/x_men_1963_507","unc-508":"23920/x_men_1963_508","unc-509":"23921/x_men_1963_509","unc-510":"24130/x_men_1963_510","unc-511":"26964/x_men_1963_511","unc-512":"26965/x_men_1963_512","unc-513":"26966/x_men_1963_513","unc-514":"26967/x_men_1963_514","unc-515":"26968/x_men_1963_515","unc-516":"26969/x_men_1963_516","unc-517":"26970/x_men_1963_517","unc-518":"26971/x_men_1963_518","unc-519":"26972/x_men_1963_519","unc-520":"26973/x_men_1963_520","unc-521":"26974/x_men_1963_521","unc-522":"30619/x_men_1963_522","unc-523":"32564/x_men_1963_523","unc-524":"30621/x_men_1963_524","unc-525":"30622/x_men_1963_525","xfa-200":"28117/x_factor_2005_200","xfa-201":"28118/x_factor_2005_201","xfa-202":"28392/x_factor_2005_202","xfa-203":"30658/x_factor_2005_203","xfa-204":"32571/x_factor_2005_204","xfa-205":"30660/x_factor_2005_205","xfa-206":"30661/x_factor_2005_206","xfa-28":"20662/x_factor_2005_28","xfa-29":"20858/x_factor_2005_29","xfa-30":"20990/x_factor_2005_30","xfa-31":"21201/x_factor_2005_31","xfa-32":"21348/x_factor_2005_32","xfa-33":"21528/x_factor_2005_33","xfa-34":"21728/x_factor_2005_34","xfa-35":"21958/x_factor_2005_35","xfa-36":"22281/x_factor_2005_36","xfa-37":"22491/x_factor_2005_37","xfa-38":"22890/x_factor_2005_38","xfa-39":"23100/x_factor_2005_39","xfa-40":"23597/x_factor_2005_40","xfa-41":"23758/x_factor_2005_41","xfa-42":"23956/x_factor_2005_42","xfa-43":"24156/x_factor_2005_43","xfa-44":"27240/x_factor_2005_44","xfa-45":"27241/x_factor_2005_45","xfa-46":"27242/x_factor_2005_46","xfa-47":"27243/x_factor_2005_47","xfa-48":"27244/x_factor_2005_48","xfa-49":"27245/x_factor_2005_49","xfa-50":"27246/x_factor_2005_50","xfo-1":"20704/x_force_2008_1","xfo-10":"22929/x_force_2008_10","xfo-11":"23125/x_force_2008_11","xfo-12":"23617/x_force_2008_12","xfo-13":"23772/x_force_2008_13","xfo-14":"23969/x_force_2008_14","xfo-15":"24170/x_force_2008_15","xfo-16":"27253/x_force_2008_16","xfo-17":"27255/x_force_2008_17","xfo-18":"27256/x_force_2008_18","xfo-19":"27257/x_force_2008_19","xfo-2":"20895/x_force_2008_2","xfo-20":"27258/x_force_2008_20","xfo-21":"27259/x_force_2008_21","xfo-22":"27260/x_force_2008_22","xfo-23":"27261/x_force_2008_23","xfo-24":"27262/x_force_2008_24","xfo-25":"30671/x_force_2008_25","xfo-26":"32583/x_force_2008_26","xfo-27":"30673/x_force_2008_27","xfo-28":"30674/x_force_2008_28","xfo-3":"21028/x_force_2008_3","xfo-4":"21244/x_force_2008_4","xfo-5":"21561/x_force_2008_5","xfo-6":"21757/x_force_2008_6","xfo-7":"21996/x_force_2008_7","xfo-8":"22322/x_force_2008_8","xfo-9":"22521/x_force_2008_9"};
+function marvelURL(iss){
+  if(MARVEL[iss.id]) return "https://www.marvel.com/comics/issue/"+MARVEL[iss.id];
+  return "https://www.marvel.com/search?query="+encodeURIComponent(iss.t.replace(/\s*\(One-Shot\)/,""));
+}
+
+/* ============ PRE-LOADED ARC DIGESTS (spoilers) ============ */
+const ARC_SUMS = {
+"c-leg1":"Exodus and the Acolytes are the ones who spirited Xavier's body away after Bishop shot him in the head \u2014 that's why the corpse vanished at the end of Messiah Complex. Exodus performs emergency surgery: the physical damage heals, but Xavier's mind is shattered. Most of the arc plays out inside his fractured psyche as he rebuilds his memories, with flashback chapters drawn by rotating guest artists that revisit and re-explain early X-Men history \u2014 including Xavier's uglier choices, like the memory-wipes. Outside his head, a depowered Magneto and Exodus work at cross purposes: Exodus is a mutant supremacist now disgusted by the human Magneto he once worshipped as a messiah. Xavier wakes, walks away from the Acolytes, and sets out to atone for his past sins. Ends on a hard cliffhanger into Sins of the Father.",
+"c-xf1":"Peter David's Mutant Town squad in the immediate post-Messiah Complex fallout. The arc opens with Rahne Sinclair walking out of X-Factor Investigations to take Wolverine's offer \u2014 this is the exit that puts her on X-Force, so it has to happen before X-Force #1-6. Madrox's detective agency is barely holding together: Mutant Town is collapsing as the depowered and displaced drain out of it, Madrox is wrestling with his duplicates and his guilt, and Layla Miller's absence hangs over the team. There's very little Hope Summers content here \u2014 X-Factor is deliberately a street-level book in this era. What matters for the saga: Rahne leaves, and the team's isolation from the main X-Men is established.",
+"c-xfo1":"Cyclops's answer to Messiah Complex. Having watched Bishop and the Marauders nearly wipe out mutantkind, Cyclops secretly reactivates X-Force as a black-ops kill squad and puts Wolverine in charge \u2014 explicitly so the X-Men never have to know. The roster is Wolverine, Warpath, X-23, Wolfsbane, and later Archangel, Domino, Elixir and Vanisher. The first mission targets the Purifiers, who have resurrected Bastion; Bastion in turn revives Graydon Creed, Stryker and other anti-mutant dead as a council. Rahne is captured and brutalized, Archangel's Death persona resurfaces, and X-23 slips back into being a weapon. The book's whole thesis lands here: Cyclops has become the man who makes the calls Xavier never would.",
+"c-unc1":"Brubaker's post-Messiah Complex breather, told in two parallel threads. Cyclops and Emma take a Savage Land vacation that turns into a fight, while Angel deals with his own fallout. Meanwhile Wolverine, Colossus and Nightcrawler go to Russia chasing a lead tied to Colossus's past and Omega Red. The mansion is rubble, the team is formally disbanded, and everyone is drifting \u2014 that's the point of the arc. It functions as the connective tissue that gets the cast from 'no more X-Men' to the decision to regroup in San Francisco, which happens in Uncanny #500. Light on plot machinery, heavy on establishing the emotional state everyone is in going forward.",
+"c-cab1":"The other half of the Hope story, running in parallel to everything above. Cable jumps forward with the infant, only for his time-travel device to burn out \u2014 every jump is now one-way, forward only, and he can never come back. He lands in a ruined near-future America and takes shelter with a woman named Hope Rider, which is where the baby gets her name. Bishop is hunting them across time with single-minded fanaticism, willing to nuke cities to get the kill. The arc establishes the chase structure the whole Cable run runs on: Cable jumps, Bishop follows, the world is a little more broken each time, and Cable's techno-organic virus is slowly winning.",
+"c-leg2":"Xavier, now awake and mobile, goes looking for the roots of his own story. He returns to a gutted Westchester mansion, then falls in with Gambit, and the two of them get tangled with Sebastian Shaw and an attempt by Mister Sinister to resurrect himself by hijacking a host body \u2014 Xavier's or Shaw's. Xavier's early history with Sinister and the origins of some very old manipulations get dragged into the light. Meanwhile Beast is installing Cerebro in the new San Francisco base, and the arc closes with Xavier confronting Cyclops and Emma to tell them he's alive. That confrontation is the hinge \u2014 it re-establishes Xavier's place, or lack of one, in the new status quo.",
+"c-leg3":"A crossover with Wolverine: Origins. Wolverine recruits Xavier to break Romulus's psychic conditioning on his son Daken. At the same time Daken is a pawn in Sebastian Shaw and Miss Sinister's play to seize control of the Hellfire Club. Xavier undoes Daken's mental programming while fending off Miss Sinister, and Wolverine fights Shaw. It's a good Xavier-and-Wolverine two-hander but it's a Daken story at heart \u2014 nothing here feeds the Hope Summers plot, which is why it's flagged optional. If you skip it, all you need forward is that Daken exists, he's Wolverine's son, and Xavier has been poking around inside his head.",
+"c-unc2":"The new status quo. Cyclops relocates the surviving X-Men to San Francisco, a city that actually welcomes them, and formally reconstitutes the team \u2014 no more school, no more Westchester. Fraction and Brubaker split the arc between the move itself and a Hellfire Cult led by a new Red Queen who is drugging kids with a mutant-power street drug. Pixie is brought back into the fold, Storm returns from Wakanda, and Angel bankrolls the operation. The important thing structurally is that San Francisco is the setting for the next two years \u2014 everything from Sisterhood through Utopia and Nation X grows out of this move.",
+"c-cab2":"Cable and Hope keep jumping forward. Hope grows from infant to toddler to child across the arc while Cable's body fails him, and Bishop keeps closing the gap \u2014 at one point through decades of stalking and increasingly monstrous collateral damage. This volume also cuts to the present day for the first sustained time, showing Cyclops, Emma, and X-Force reacting to Cable's disappearance and debating whether to send a team after him. Those present-day scenes are why this has to be read before X-Force #12; the pieces they set up pay off directly in the Messiah War one-shot. Emotionally, this is where Cable stops being a soldier carrying cargo and starts being a father.",
+"c-xf2":"X-Factor's Secret Invasion detour and the Isolationist arc. The team gets caught in the Skrull invasion's edges, and later faces Josef Huber, the Isolationist \u2014 a mutant who has absorbed enormous power and offers Madrox a nihilistic mirror of his own philosophy. Layla Miller's fate and the future timeline she's stuck in run underneath. This is well-regarded Peter David character work but it is genuinely disconnected from the Messiah saga; nothing that happens here is load-bearing for Messiah War, Necrosha or Second Coming. Skip freely if you're chasing Hope \u2014 you'll lose no plot threads that later books assume you know.",
+"c-xfo2":"X-Force's second arc, and the one that quietly plants Necrosha. The team hunts the Leper Queen, who is dosing captured mutants with the Legacy Virus strain and using them as suicide weapons \u2014 X-23 is among those she takes. Elixir's resurrection powers become central and terrifying, Wolfsbane's feral state deteriorates, and Archangel keeps slipping further into Death. The deeper thread is Eli Bard, Selene's servant, harvesting mutant corpses and the Technarch transmode virus in the background; almost nothing is explained here, but every piece of Necrosha is being laid. Ends with X-Force badly compromised and Cyclops's secret leaking toward the rest of the team.",
+"c-unc3":"A quieter Uncanny arc about damage. Colossus is grieving Kitty Pryde and spiraling; Angel's Archangel transformation resurfaces publicly, which is what pins this after X-Force's first arc; and a plotline runs about the mutant birth rate and the fact that no new mutants have been born since M-Day. The Annual fills in Emma Frost's past with Namor, which pays off much later when Namor joins the X-Men during Utopia. Solid character work, minimal saga load. If you skip it, carry forward two things: Colossus is a mess, and Emma and Namor have history.",
+"c-unc4":"Psylocke returns to the X-Men, having been resurrected and dumped back into her own body. The Red Queen \u2014 Madelyne Pryor \u2014 assembles a Sisterhood of resurrected and reconstituted villains, including a body-hopping scheme built around Jean Grey's corpse and Psylocke's history. The team fights them off in San Francisco. This matters mainly because it restores Psylocke to the roster in time for Utopia, Nation X and Second Coming, and because it deepens Cyclops and Emma's fractures. Skippable, but Psylocke's presence in later books is unexplained without it.",
+"c-xfo3":"The immediate on-ramp to Messiah War. X-Force is unraveling: the team's secrecy is failing, Wolfsbane has fled after what happened with the Purifiers, Elixir is being pushed past what he can carry, and the Vanisher subplot pays off. Cyclops finally gets confirmation of where Cable and Hope went, and makes the call to send X-Force into the future after them \u2014 which is where Messiah War opens. Note the wrinkle: X-Force returns from that future trip a few moments before it left, so a few guides argue #13 reads better after the crossover.",
+"c-mw":"Cyclops sends Wolverine, Warpath, X-23, Elixir and Domino into the far future to find Cable. They arrive in a wasteland ruled by Stryfe \u2014 who has Apocalypse as a broken, leashed servant \u2014 and find Cable badly damaged and Hope now a teenager who can fight. Bishop is still hunting, now allied with Stryfe. The crossover is a running four-way war between X-Force, Cable and Hope, Stryfe, and Bishop. Casualties are real: the team is chewed up, Elixir is pushed into doing terrible things with his powers, and Deadpool turns up in a genuinely nasty state. It ends with X-Force thrown back to the present and Cable and Hope stranded even further forward, still running.",
+"c-xfo4":"Picks up the threads Messiah War interrupted. The Leper Queen plot climaxes, the fallout of what X-Force did in the future lands on the team, and Cyclops's secret war gets harder to contain. Wolfsbane's storyline reaches its ugly conclusion, and the psychological cost on X-23 and Elixir is the real subject of the arc. Structurally this closes out the pre-Necrosha era of the book \u2014 by the end, X-Force is a wreck held together by Wolverine's insistence that someone has to do this, and Selene's machinery is about to switch on.",
+"c-cab3":"Opens one second after Messiah War ends. Cable and Hope are stranded further forward than ever, on a dying world, with no way back. Hope is a teenager now, functionally raised as a soldier, and the arc is largely about her pushing against that \u2014 she is capable, angry, and starting to make her own calls. Cable's techno-organic virus keeps advancing. There's a long stretch of survival storytelling: scavenging, running, small communities that don't last. It's the quietest stretch of the whole saga and the one that does the most to make Hope a person rather than a plot device before Second Coming pays her off.",
+"c-leg4":"Rogue's return arc, and the point where Legacy shifts from being Xavier's book to being hers. Rogue has been off the board since her powers were scrambled; here she works through the wreckage of her absorbed personalities and comes back functional, with better control than she's had in years. Danger, Gambit and the Shi'ar-tech threads feed in. It ends a day or two before Utopia kicks off, which is why it sits here \u2014 Rogue needs to be back on her feet before the Osborn crisis, and she's a major player in the Second Coming chapters of Legacy later.",
+"c-uto":"Norman Osborn, riding the authority of Dark Reign, uses a manufactured mutant riot in San Francisco as pretext to move on the city. He installs his own sanctioned X-Men \u2014 Dark X-Men, including Mimic, Weapon Omega, Daken, Mystique disguised as Xavier, and Emma Frost playing a double game \u2014 and sends the Dark Avengers in. Cyclops runs a long con: he lets Osborn win the public fight, evacuates every mutant in the city, and raises the sunken remains of Asteroid M off the coast as a sovereign mutant nation, Utopia. Emma betrays Osborn from the inside and takes part of the Void with her, leaving her trapped in diamond form. Every mutant on Earth relocates to the island. This is the setting for everything through Second Coming.",
+"c-unc5":"Life on the island. Utopia has no infrastructure, no food supply, and a population of frightened depowered mutants alongside the X-Men. Magneto arrives \u2014 powers restored, penitent, offering himself in service to Cyclops, which nobody trusts. Namor's Atlanteans shore up the island from below and Kitty Pryde is retrieved from the bullet she phased into, though she comes back unable to solidify. Emma is still stuck in diamond form with a shard of the Void in her. The arc is mostly texture and politics rather than a single villain plot, and its job is to assemble the full cast \u2014 Magneto, Namor, Kitty, Psylocke, the New Mutants \u2014 in one place before Second Coming.",
+"c-xf3":"X-Factor's long solo stretch. The team leaves Mutant Town, the Madrox-Siryn-Monet triangle plays out, Layla Miller's future-timeline arc resolves and she returns older, and there's a substantial run of Greek-god and Hela material alongside the detective work. Peter David is essentially running his own book in his own corner. Genuinely optional for the Messiah saga: nothing here is referenced by Uncanny, X-Force or Cable. The only forward-facing detail is that by the end the team is intact, relocated, and positioned to notice Bastion's activity in #204-206.",
+"c-xf4":"The series renumbers from #50 to #200 as part of Marvel's legacy-numbering push. Story-wise it's continuous with the previous block \u2014 the team relocates, Madrox and Layla's relationship resolves, and there's a Fantastic Four appearance. Still a side road. Its real function in your reading is as the on-ramp to X-Factor #204-206, which are the Bastion-facing tie-ins that run concurrent with Second Coming.",
+"c-leg5":"Rogue is formally handed responsibility for the younger X-Men on Utopia. The threat is Emplate, the parasitic mutant who feeds on other mutants' marrow, and the arc is largely about Rogue proving she can protect people rather than absorb them. It reads after Nation X because in Nation X the kids are still openly questioning why she's the one looking after them. Short, self-contained, and mainly here to set up Rogue as the young mutants' guardian \u2014 which is the role she plays in the Legacy chapters of Second Coming.",
+"c-nec":"Selene's endgame, seeded through X-Force since Old Ghosts. Her servant Eli Bard has spent years exhuming dead mutants and infecting them with the Technarch transmode virus; on her signal, the mutant dead rise \u2014 including everyone killed at Genosha. Selene takes Genosha as her seat and begins harvesting souls to ascend to godhood. Resurrected dead attack Utopia and the New Mutants; Legacy follows a squad including Magneto and Nightcrawler into the field. X-Force takes the main assault. The body count is real: Doug Ramsey is brought back as one of the resurrected, Warlock is involved in the resolution, and X-Force #25 is the climax where Selene is stopped \u2014 through a solution that costs the team badly. Legacy #234 is the epilogue after the dust settles.",
+"c-sv":"A three-issue Domino and Wolverine two-hander painted by Gabriele Dell'Otto. Domino steals from the wrong people, the Mafia and a group of assassin mutants come after her, and Wolverine helps her burn through them. It's a stylish, violent, self-contained crime story with a romantic undercurrent, and it has essentially no consequences for the wider saga. Included because it's collected with the Not Forgotten era and it's some of the best-looking X-Force art of the run \u2014 but skipping it costs you nothing plot-wise.",
+"c-cab4":"The penultimate chapter of the saga. Hope, now essentially an adult, tells Cable she's ready to go home \u2014 she wants to face whatever she was born for rather than keep running. They fight their way back through the timestream toward the present, with Bishop making his final play. Cable's techno-organic virus has all but consumed him and he knows the trip will likely kill him. The arc ends with the two of them arriving on the doorstep of the present day, which is the exact moment Second Coming opens. Cable #25 hands the baton directly to X-Men: Second Coming #1.",
+"c-sc":"Cable and Hope return to the present and every anti-mutant force on Earth converges. Bastion has assembled a council of resurrected human supremacists and encases San Francisco in an impenetrable dome, cutting the X-Men off. The deaths are the point: Nightcrawler is killed teleporting Hope to safety, Cable burns out the last of himself to hold the time portal and dies, and Kurt's loss in particular reshapes the team for years. A Nimrod army pours through a portal from the future and X-Force is sent through on a one-way mission to shut it down \u2014 the sequence that ends the series and sets up Uncanny X-Force. Hope's powers finally manifest, spectacularly, and the arc closes with five new mutants lighting up Cerebro for the first time since M-Day. The mutant decline ends here."
+};
+
+/* ============ STATE ============ */
+const KEY_P="xmen-saga-progress-v2", KEY_S="xmen-saga-summaries-v3";
+let readSet=new Set(), skipSet=new Set(), sums={};
+const flat=[]; ACTS.forEach(a=>a.chapters.forEach(c=>c.issues.forEach(i=>flat.push({act:a,ch:c,issue:i}))));
+
+const IN_CLAUDE = (typeof window.storage !== "undefined" && window.storage && typeof window.storage.get === "function");
+let storageMode = IN_CLAUDE ? "claude" : "local";
+let storageWorks = true;
+
+const store = {
+  async get(k){
+    if(IN_CLAUDE){ const r=await window.storage.get(k); return r&&r.value?r.value:null; }
+    return localStorage.getItem(k);
+  },
+  async set(k,v){
+    if(IN_CLAUDE){ await window.storage.set(k,v); return; }
+    localStorage.setItem(k,v);
+  }
+};
+
+async function loadState(){
+  try{ const v=await store.get(KEY_P);
+    if(v){const d=JSON.parse(v); readSet=new Set(d.read||[]); skipSet=new Set(d.skip||[]);}
+  }catch(e){}
+  try{ const v=await store.get(KEY_S); if(v) sums=JSON.parse(v)||{}; }catch(e){}
+}
+async function saveState(){
+  try{ await store.set(KEY_P, JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet)})); flagStorage(true); }
+  catch(e){ flagStorage(false); }
+}
+async function saveSums(){ try{ await store.set(KEY_S, JSON.stringify(sums)); }catch(e){} }
+
+function flagStorage(ok){
+  if(ok===storageWorks) return;
+  storageWorks=ok;
+  const b=document.getElementById("storeWarn");
+  if(b) b.style.display = ok ? "none" : "block";
+}
+
+/* ---- export / import so progress is never trapped ---- */
+function exportProgress(){
+  const blob=new Blob([JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet),sums:sums},null,1)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="xmen-reading-progress.json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+function importProgress(file){
+  const fr=new FileReader();
+  fr.onload=async()=>{
+    try{
+      const d=JSON.parse(fr.result);
+      if(d.read) readSet=new Set(d.read);
+      if(d.skip) skipSet=new Set(d.skip);
+      if(d.sums) sums=Object.assign(sums,d.sums);
+      refresh(); await saveState(); await saveSums();
+    }catch(e){ alert("That file didn't parse as a progress backup."); }
+  };
+  fr.readAsText(file);
+}
+
+/* ============ RENDER ============ */
+const actsEl=document.getElementById("acts");
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function coverHTML(iss){
+  const c=SC[iss.s]||["#4a9fd8","#123c78"];
+  const m=iss.t.match(/#([\d.]+)/); const num=m?m[1]:"1";
+  return '<div class="cover" data-toggle="'+iss.id+'" style="background:linear-gradient(160deg,'+c[0]+','+c[1]+')">'+
+    '<div class="strip"></div><div class="cnum">'+num+'</div><div class="cser">'+esc(iss.s)+'</div></div>';
+}
+function build(){
+  let n=0;
+  actsEl.innerHTML = ACTS.map(act=>
+    '<div class="act-head"><h2>'+esc(act.title)+'</h2><div class="line"></div><div class="yr">'+esc(act.yr)+'</div></div>'+
+    act.chapters.map(ch=>{
+      n++;
+      return '<div class="ch tier'+ch.tier+'" id="ch-'+ch.id+'">'+
+        '<button class="ch-head" aria-expanded="false" data-ch="'+ch.id+'">'+
+          '<div class="ch-badge">'+n+'</div>'+
+          '<div class="ch-meta"><h3>'+esc(ch.title)+'</h3><div class="era">'+esc(ch.era)+' &middot; '+ch.issues.length+' issues</div></div>'+
+          '<div class="ch-side"><div class="ch-count" data-count="'+ch.id+'">0 / '+ch.issues.length+'</div>'+
+            '<div class="pbar"><div class="fill rd" data-fr="'+ch.id+'"></div><div class="fill sk" data-fs="'+ch.id+'"></div></div></div>'+
+          '<div class="chev">&#9660;</div></button>'+
+        '<div class="ch-body">'+
+          (ch.note?'<div class="ch-note">'+ch.note+'</div>':'')+
+          '<div class="ch-tools">'+
+            '<button class="chip-btn" data-sumarc="'+ch.id+'">Summarize this arc</button>'+
+            '<button class="chip-btn" data-skiparc="'+ch.id+'">Skip whole arc</button>'+
+            '<button class="chip-btn" data-readarc="'+ch.id+'">Mark arc read</button></div>'+
+          '<div class="sum" id="sumarc-'+ch.id+'"></div>'+
+          ch.issues.map(iss=>
+            '<div class="issue" data-row="'+iss.id+'">'+
+              coverHTML(iss)+
+              '<div class="issue-info" data-toggle="'+iss.id+'">'+
+                '<div class="t">'+esc(iss.t)+'</div>'+
+                '<div class="a">'+(iss.arc?'<span class="arcpill'+(iss.key?' key':'')+'">'+esc(iss.arc)+'</span>':'')+'</div></div>'+
+              '<div class="issue-acts">'+
+                '<a class="mini read-link'+(MARVEL[iss.id]?'':' approx')+'" target="_blank" rel="noopener" href="'+marvelURL(iss)+'" title="'+(MARVEL[iss.id]?'Open on Marvel':'Search Marvel for this issue')+'">Read</a>'+'<button class="mini" data-sum="'+iss.id+'">Summary</button>'+
+                '<button class="mini" data-skip="'+iss.id+'">Skip</button>'+
+                '<div class="orb" data-toggle="'+iss.id+'" role="checkbox" aria-checked="false" tabindex="0" aria-label="Mark '+esc(iss.t)+' read">&#10003;</div>'+
+              '</div></div>'+
+            '<div class="sum" id="sum-'+iss.id+'"></div>').join('')+
+        '</div></div>';
+    }).join('')).join('');
+}
+
+/* ============ INTERACTION ============ */
+function chById(id){for(const a of ACTS)for(const c of a.chapters)if(c.id===id)return c;}
+function issById(id){const f=flat.find(x=>x.issue.id===id);return f&&f.issue;}
+
+actsEl.addEventListener("click", async e=>{
+  const t=e.target;
+  const head=t.closest(".ch-head");
+  if(head){toggleCh(document.getElementById("ch-"+head.dataset.ch));return;}
+  if(t.dataset.sum!==undefined){ doSummary(t.dataset.sum); return; }
+  if(t.dataset.skip!==undefined){ await setState(t.dataset.skip, skipSet.has(t.dataset.skip)?"none":"skip"); return; }
+  if(t.dataset.sumarc!==undefined){ doArcSummary(t.dataset.sumarc); return; }
+  if(t.dataset.skiparc!==undefined){ bulk(t.dataset.skiparc,"skip"); return; }
+  if(t.dataset.readarc!==undefined){ bulk(t.dataset.readarc,"read"); return; }
+  if(t.closest("a.read-link")) return;
+  const tog=t.closest("[data-toggle]");
+  if(tog){ const id=tog.dataset.toggle; await setState(id, readSet.has(id)?"none":"read"); }
+});
+actsEl.addEventListener("keydown", async e=>{
+  if((e.key===" "||e.key==="Enter")&&e.target.classList.contains("orb")){
+    e.preventDefault(); const id=e.target.dataset.toggle;
+    await setState(id, readSet.has(id)?"none":"read");
+  }
+});
+
+async function setState(id,state){
+  readSet.delete(id); skipSet.delete(id);
+  if(state==="read") readSet.add(id);
+  if(state==="skip") skipSet.add(id);
+  refresh(); await saveState();
+}
+async function bulk(chId,state){
+  const ch=chById(chId);
+  ch.issues.forEach(i=>{readSet.delete(i.id);skipSet.delete(i.id);
+    if(state==="read")readSet.add(i.id); if(state==="skip")skipSet.add(i.id);});
+  refresh(); await saveState();
+}
+function toggleCh(el,force){
+  if(!el) return;
+  const open=force!==undefined?force:!el.classList.contains("open");
+  el.classList.toggle("open",open);
+  el.querySelector(".ch-head").setAttribute("aria-expanded",open);
+}
+
+/* ============ SUMMARIES ============ */
+function getKey(){ try{ return localStorage.getItem("xmen-anthropic-key")||""; }catch(e){ return ""; } }
+
+async function askClaude(prompt){
+  const body={model:"claude-sonnet-4-6",max_tokens:1000,
+    messages:[{role:"user",content:prompt}],
+    tools:[{type:"web_search_20250305",name:"web_search"}]};
+  const headers={"Content-Type":"application/json"};
+
+  if(!IN_CLAUDE){
+    const k=getKey();
+    if(!k){ const e=new Error("nokey"); e.code="nokey"; throw e; }
+    headers["x-api-key"]=k;
+    headers["anthropic-version"]="2023-06-01";
+    headers["anthropic-dangerous-direct-browser-access"]="true";
+  }
+
+  const res=await fetch("https://api.anthropic.com/v1/messages",
+    {method:"POST",headers:headers,body:JSON.stringify(body)});
+  if(!res.ok){
+    let msg="HTTP "+res.status;
+    try{ const j=await res.json(); if(j.error&&j.error.message) msg=j.error.message; }catch(e){}
+    const err=new Error(msg); err.code=(res.status===401||res.status===403)?"badkey":"http";
+    throw err;
+  }
+  const data=await res.json();
+  return (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+}
+
+function summaryError(el,err){
+  const code=err&&err.code;
+  let msg;
+  if(code==="nokey"){
+    msg='Per-issue summaries need an Anthropic API key when this file runs outside Claude. '+
+        'Paste one into the key box at the top and it will be saved on this device. '+
+        'Every arc-level digest already works with no key and no connection \u2014 use <b>Summarize this arc</b>.';
+  } else if(code==="badkey"){
+    msg='That API key was rejected. Check it in the box at the top of the page.';
+  } else {
+    msg='Lookup failed: '+esc(String(err&&err.message||err))+'. Arc digests still work offline.';
+  }
+  el.classList.add("show");
+  el.innerHTML='<div class="sum-hd">Cerebro</div><div class="sum-err">'+msg+'</div>';
+}
+
+function tidy(txt){
+  if(!txt) return txt;
+  let t=txt.replace(/\r/g,"").trim();
+  // strip markdown emphasis, headings, bullets, separators
+  t=t.replace(/\*\*|__/g,"").replace(/(^|[\s(])\*(\S)/g,"$1$2").replace(/(\S)\*($|[\s.,;:)])/g,"$1$2");
+  t=t.replace(/^#{1,6}\s*/gm,"").replace(/^\s*[-*\u2022]\s+/gm,"").replace(/^\s*[-=_]{3,}\s*$/gm,"");
+  // drop leading process narration lines
+  const bad=/^(i |i'|let me\b|let's\b|now |ok\b|okay\b|here is\b|here's\b|based on\b|according to\b|from the\b|the following\b|searching\b|found\b|great[,.]|perfect[,.]|sure[,.])/i;
+  let lines=t.split("\n");
+  while(lines.length && (lines[0].trim()==="" || bad.test(lines[0].trim()))) lines.shift();
+  // drop trailing source/note lines
+  while(lines.length && /^(sources?\b|note[:s]\b|references?\b|\[|\()/i.test(lines[lines.length-1].trim())) lines.pop();
+  t=lines.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  // collapse to at most two paragraphs
+  const paras=t.split(/\n\s*\n/).map(s=>s.replace(/\n+/g," ").trim()).filter(Boolean);
+  if(paras.length>2) return [paras[0], paras.slice(1).join(" ")].join("\n\n");
+  return paras.join("\n\n");
+}
+function panelLoading(el,label){
+  el.classList.add("show");
+  el.innerHTML='<div class="sum-hd">Cerebro \u00b7 '+esc(label)+'</div><div><span class="spin"></span>Pulling the record\u2026</div>';
+}
+function panelText(el,label,text){
+  el.innerHTML='<div class="sum-hd">Cerebro \u00b7 '+esc(label)+'</div><div>'+esc(text).replace(/\n+/g,"<br><br>")+'</div>';
+}
+async function doSummary(id){
+  const el=document.getElementById("sum-"+id);
+  if(el.classList.contains("show")){ el.classList.remove("show"); return; }
+  if(sums[id]){ el.classList.add("show"); panelText(el,"Spoilers",sums[id]); return; }
+  const iss=issById(id), f=flat.find(x=>x.issue.id===id);
+  panelLoading(el,"Spoilers");
+  const prompt='SEARCH THE WEB FIRST. Look up the plot synopsis for the Marvel comic "'+iss.t+'" (2008-2010 X-Men era, from '+f.ch.title+'). Use marvel.fandom.com (Marvel Database), uncannyxmen.net or comicvine. Search again if the first result is thin.\n\n'+
+    'Then write ONE OR TWO SHORT PARAGRAPHS \u2014 120-180 words total \u2014 covering only what actually matters in that issue: the main plot beats, any deaths or reveals, and where it leaves things. Full spoilers, no hedging.\n\n'+
+    'OUTPUT RULES, follow exactly:\n'+
+    '- Output ONLY the summary text. Nothing before it, nothing after it.\n'+
+    '- Never narrate your process. Do not write "I found", "Let me", "I now have", "Here is", "Based on", or mention sources, searches or pages at all.\n'+
+    '- No markdown whatsoever: no asterisks, no bold, no italics, no headings, no bullet points, no dashes as separators.\n'+
+    '- Flowing prose only. At most one blank line, separating two paragraphs.\n'+
+    '- Skip minor cameos, flashback trivia and issue-number references. Hit what a reader needs to know.';
+  try{
+    const txt=tidy(await askClaude(prompt));
+    if(txt){ sums[id]=txt; saveSums(); panelText(el,"Spoilers",txt); }
+    else el.innerHTML='<div class="sum-hd">Cerebro</div><div class="sum-err">No record came back. Try again.</div>';
+  }catch(err){ summaryError(el,err); }
+}
+async function doArcSummary(chId){
+  const el=document.getElementById("sumarc-"+chId), ch=chById(chId), k="ARC:"+chId;
+  if(el.classList.contains("show")){ el.classList.remove("show"); return; }
+  if(ARC_SUMS[chId]){ el.classList.add("show"); panelText(el,"Arc digest \u00b7 spoilers",ARC_SUMS[chId]); return; }
+  if(sums[k]){ el.classList.add("show"); panelText(el,"Arc digest \u00b7 spoilers",sums[k]); return; }
+  panelLoading(el,"Arc digest \u00b7 spoilers");
+  const prompt='SEARCH THE WEB FIRST for the storyline "'+ch.title+'" ('+ch.era+'), covering '+ch.issues.map(i=>i.t).join(", ")+'. Then write a SPOILER-FILLED catch-up for a reader SKIPPING these issues: what happens, who dies or changes, and what they must know so Messiah War, Necrosha and Second Coming still make sense. 150-220 words.\n\n'+
+    'OUTPUT RULES: output only the summary; never narrate your process or mention sources or searching; no markdown of any kind; flowing prose, at most two paragraphs.';
+  try{
+    const txt=tidy(await askClaude(prompt));
+    if(txt){ sums[k]=txt; saveSums(); panelText(el,"Arc digest \u00b7 spoilers",txt); }
+    else el.innerHTML='<div class="sum-hd">Cerebro</div><div class="sum-err">No record came back. Try again.</div>';
+  }catch(err){ summaryError(el,err); }
+}
+
+/* ============ REFRESH ============ */
+function refresh(){
+  let tr=0,ts=0;
+  ACTS.forEach(a=>a.chapters.forEach(ch=>{
+    let r=0,s=0;
+    ch.issues.forEach(iss=>{
+      const row=actsEl.querySelector('[data-row="'+iss.id+'"]');
+      if(!row) return;
+      const isR=readSet.has(iss.id), isS=skipSet.has(iss.id);
+      if(isR){r++;tr++;} if(isS){s++;ts++;}
+      row.classList.toggle("read",isR); row.classList.toggle("skipped",isS);
+      row.querySelector(".orb").setAttribute("aria-checked",isR);
+      row.querySelector("[data-skip]").textContent=isS?"Unskip":"Skip";
+    });
+    const tot=ch.issues.length;
+    const cEl=actsEl.querySelector('[data-count="'+ch.id+'"]');
+    cEl.textContent=(r+s)+" / "+tot+(s?" \u00b7 "+s+" skipped":"");
+    cEl.classList.toggle("done",r+s===tot);
+    actsEl.querySelector('[data-fr="'+ch.id+'"]').style.width=(r/tot*100)+"%";
+    actsEl.querySelector('[data-fs="'+ch.id+'"]').style.width=(s/tot*100)+"%";
+  }));
+  const tot=flat.length;
+  document.getElementById("statRead").textContent=tr;
+  document.getElementById("statSkip").textContent=ts;
+  document.getElementById("statLeft").textContent=tot-tr-ts;
+  document.getElementById("statPct").textContent=Math.round((tr+ts)/tot*100)+"%";
+  document.getElementById("mFillRead").style.width=(tr/tot*100)+"%";
+  document.getElementById("mFillSkip").style.width=(ts/tot*100)+"%";
+  upNext();
+}
+function upNext(){
+  const info=document.getElementById("upnextInfo");
+  const acts=document.querySelector(".upnext-actions");
+  const next=flat.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
+  if(!next){ info.innerHTML='<div class="alldone">Saga cleared. Every issue read or skipped. &#9733;</div>'; acts.style.display="none"; return; }
+  acts.style.display="";
+  info.innerHTML='<div class="run-name">'+esc(next.act.title)+' &middot; '+esc(next.ch.title)+'</div>'+
+    '<div class="issue-name">'+esc(next.issue.t)+'</div>'+
+    '<div class="arc">'+esc(next.issue.arc||next.ch.era)+'</div>';
+  document.getElementById("unRead").onclick=async()=>{await setState(next.issue.id,"read");toggleCh(document.getElementById("ch-"+next.ch.id),true);};
+  document.getElementById("unSkip").onclick=async()=>{await setState(next.issue.id,"skip");toggleCh(document.getElementById("ch-"+next.ch.id),true);};
+}
+
+document.getElementById("clearSums").onclick=async e=>{
+  sums={}; await saveSums();
+  document.querySelectorAll(".sum").forEach(s=>{s.classList.remove("show");s.innerHTML="";});
+  e.target.textContent="Cleared \u2014 regenerate any time";
+  setTimeout(()=>{e.target.textContent="Clear saved summaries";},2200);
+};
+document.getElementById("expandAll").onclick=()=>document.querySelectorAll(".ch").forEach(c=>toggleCh(c,true));
+document.getElementById("collapseAll").onclick=()=>document.querySelectorAll(".ch").forEach(c=>toggleCh(c,false));
+document.getElementById("toggleOpt").onclick=e=>{
+  document.body.classList.toggle("hideopt");
+  const on=document.body.classList.contains("hideopt");
+  e.target.classList.toggle("on",on);
+  e.target.textContent=on?"Showing spine only":"Hide optional arcs";
+};
+
+
+/* ---- setup bar wiring ---- */
+(function(){
+  const box=document.getElementById("apiKey"), state=document.getElementById("keyState");
+  function paint(){
+    if(IN_CLAUDE){
+      document.getElementById("setupBar").querySelector(".setup-row").style.display="none";
+      return;
+    }
+    const k=getKey();
+    state.innerHTML = k ? "Key saved on this device \u2014 per-issue summaries are live."
+                        : "No key set. Arc digests still work with no key.";
+    if(k) box.value="";
+    box.placeholder = k ? "\u2022\u2022\u2022\u2022 saved \u2014 paste a new key to replace" : "sk-ant-...";
+  }
+  document.getElementById("saveKey").onclick=()=>{
+    const v=box.value.trim();
+    if(!v){ state.textContent="Paste a key first."; return; }
+    try{ localStorage.setItem("xmen-anthropic-key",v); }catch(e){ state.textContent="This browser won't store the key."; return; }
+    paint();
+  };
+  document.getElementById("clearKey").onclick=()=>{
+    try{ localStorage.removeItem("xmen-anthropic-key"); }catch(e){}
+    box.value=""; paint();
+  };
+  document.getElementById("exportBtn").onclick=exportProgress;
+  document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+  document.getElementById("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.files[0]); e.target.value=""; };
+  paint();
+})();
+
+/* ---- verify storage actually persists ---- */
+(function(){
+  if(IN_CLAUDE) return;
+  try{ localStorage.setItem("__x_probe","1"); localStorage.removeItem("__x_probe"); }
+  catch(e){ storageWorks=true; flagStorage(false); }
+})();
+
+(async function init(){
+  build(); await loadState(); refresh();
+  const next=flat.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
+  if(next) toggleCh(document.getElementById("ch-"+next.ch.id),true);
+})();
+</script>
+</body>
+</html>
