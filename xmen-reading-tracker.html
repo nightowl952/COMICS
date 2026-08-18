@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEREBRO // Messiah Saga Protocol</title>
+<title>C.O.M.I.C.S. // Messiah Saga Protocol</title>
 <style>
   :root{
     --sky-top:#8fd0f5; --sky-mid:#4a9fd8; --sky-deep:#1b5fa8; --navy:#0d2f5e;
@@ -201,6 +201,18 @@
     .sum{margin-left:14px;}
     .upnext-actions{width:100%;} .upnext-actions .btn{flex:1;}
   }
+  .topnav{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .backlink{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:inherit;
+    font-size:10.5px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;color:#eaf6ff;
+    padding:7px 15px 7px 11px;border-radius:18px;
+    background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.05));
+    border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+    transition:filter .12s, transform .12s;}
+  .backlink:hover{background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,.12));transform:translateY(-1px);}
+  .backlink:active{transform:translateY(1px);}
+  .backlink .caret{font-size:13px;line-height:1;color:var(--xyellow);}
+  .topnav .crumb{font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:rgba(230,245,255,.72);}
+
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
 </head>
@@ -208,6 +220,11 @@
 <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div>
 
 <div class="wrap">
+  <nav class="topnav">
+    <a class="backlink" href="index.html"><span class="caret">&#9664;</span> C.O.M.I.C.S.</a>
+    <span class="crumb">Subject &middot; X-Men</span>
+  </nav>
+
   <header class="hud">
     <div class="hud-top">
       <div class="x-emblem"><span>X</span></div>
@@ -686,7 +703,7 @@ function summaryError(el,err){
     msg='Lookup failed: '+esc(String(err&&err.message||err))+'. Arc digests still work offline.';
   }
   el.classList.add("show");
-  el.innerHTML='<div class="sum-hd">Cerebro</div><div class="sum-err">'+msg+'</div>';
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">'+msg+'</div>';
 }
 
 function tidy(txt){
@@ -709,10 +726,10 @@ function tidy(txt){
 }
 function panelLoading(el,label){
   el.classList.add("show");
-  el.innerHTML='<div class="sum-hd">Cerebro \u00b7 '+esc(label)+'</div><div><span class="spin"></span>Pulling the record\u2026</div>';
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S. \u00b7 '+esc(label)+'</div><div><span class="spin"></span>Pulling the record\u2026</div>';
 }
 function panelText(el,label,text){
-  el.innerHTML='<div class="sum-hd">Cerebro \u00b7 '+esc(label)+'</div><div>'+esc(text).replace(/\n+/g,"<br><br>")+'</div>';
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S. \u00b7 '+esc(label)+'</div><div>'+esc(text).replace(/\n+/g,"<br><br>")+'</div>';
 }
 async function doSummary(id){
   const el=document.getElementById("sum-"+id);
@@ -731,7 +748,7 @@ async function doSummary(id){
   try{
     const txt=tidy(await askClaude(prompt));
     if(txt){ sums[id]=txt; saveSums(); panelText(el,"Spoilers",txt); }
-    else el.innerHTML='<div class="sum-hd">Cerebro</div><div class="sum-err">No record came back. Try again.</div>';
+    else el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">No record came back. Try again.</div>';
   }catch(err){ summaryError(el,err); }
 }
 async function doArcSummary(chId){
@@ -745,7 +762,7 @@ async function doArcSummary(chId){
   try{
     const txt=tidy(await askClaude(prompt));
     if(txt){ sums[k]=txt; saveSums(); panelText(el,"Arc digest \u00b7 spoilers",txt); }
-    else el.innerHTML='<div class="sum-hd">Cerebro</div><div class="sum-err">No record came back. Try again.</div>';
+    else el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">No record came back. Try again.</div>';
   }catch(err){ summaryError(el,err); }
 }
 
@@ -778,6 +795,19 @@ function refresh(){
   document.getElementById("mFillRead").style.width=(tr/tot*100)+"%";
   document.getElementById("mFillSkip").style.width=(ts/tot*100)+"%";
   upNext();
+  publishIndex(tr,ts,tot);
+}
+
+/* Hand the C.O.M.I.C.S. index a small summary so the homescreen can show real progress
+   without carrying a copy of ACTS. Fire-and-forget: never block or break a render. */
+function publishIndex(read,skip,total){
+  try{
+    const n=flat.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
+    store.set("comics-hero-xmen", JSON.stringify({
+      total:total, read:read, skip:skip,
+      next: n ? {t:n.issue.t, arc:n.issue.arc||n.ch.era, ch:n.ch.title} : null
+    })).catch(()=>{});
+  }catch(e){}
 }
 function upNext(){
   const info=document.getElementById("upnextInfo");

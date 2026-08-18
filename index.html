@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C.O.M.I.C.S. // Subject Index</title>
+<style>
+  :root{
+    --sky-top:#8fd0f5; --sky-mid:#4a9fd8; --sky-deep:#1b5fa8; --navy:#0d2f5e;
+    --xyellow:#ffd23f; --xyellow-deep:#f0a500;
+    --read-green:#7ed957; --read-green-deep:#3fa32e;
+    --skip-grey:#b9c7d6; --skip-grey-deep:#7d8fa3;
+    --ink:#0a2440;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:"Trebuchet MS","Segoe UI",Tahoma,Verdana,sans-serif; color:#fff; min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(255,255,255,.55), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 85% 8%, rgba(255,255,255,.28), transparent 55%),
+      radial-gradient(circle 320px at 92% 88%, rgba(126,217,255,.32), transparent 70%),
+      linear-gradient(178deg, var(--sky-top) 0%, var(--sky-mid) 32%, var(--sky-deep) 72%, var(--navy) 100%);
+    background-attachment:fixed;
+  }
+  .bubble{position:fixed;border-radius:50%;pointer-events:none;z-index:0;
+    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.8), rgba(255,255,255,.1) 45%, rgba(120,200,255,.07) 70%, transparent 75%);
+    border:1px solid rgba(255,255,255,.22);}
+  .b1{width:190px;height:190px;top:6%;left:-50px;}
+  .b2{width:85px;height:85px;top:34%;right:4%;}
+  .b3{width:280px;height:280px;bottom:-100px;left:10%;opacity:.5;}
+  .b4{width:55px;height:55px;top:66%;left:3%;}
+  .wrap{max-width:1120px;margin:0 auto;padding:20px 14px 90px;position:relative;z-index:1;}
+
+  /* ---------- HUD ---------- */
+  header.hud{border-radius:22px;padding:22px 24px 20px;margin-bottom:18px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg, rgba(30,80,150,.86), rgba(10,36,74,.94));
+    border:1px solid rgba(160,220,255,.5);
+    box-shadow:0 10px 30px rgba(5,25,60,.45), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -14px 24px rgba(0,20,60,.5);}
+  header.hud::before{content:"";position:absolute;inset:0 0 55% 0;pointer-events:none;
+    background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,.03));
+    border-radius:22px 22px 50% 50%/22px 22px 30px 30px;}
+  .hud-top{display:flex;align-items:center;gap:16px;}
+  .x-emblem{width:62px;height:62px;flex:0 0 62px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 30% 25%, #fff, #cfe6ff 30%, #4a9fd8 60%, #123c78 100%);
+    border:2px solid rgba(255,255,255,.75);box-shadow:0 4px 12px rgba(0,20,60,.5), inset 0 -6px 10px rgba(0,30,80,.4);}
+  .x-emblem svg{width:38px;height:38px;filter:drop-shadow(0 2px 2px rgba(0,20,60,.6));}
+  .hud-title h1{font-size:clamp(20px,4.2vw,30px);font-style:italic;font-weight:900;letter-spacing:.5px;text-transform:uppercase;
+    background:linear-gradient(180deg,#fff 30%, #bfe3ff 55%, #6db6ea 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 3px rgba(0,20,60,.6));}
+  .hud-title .sub{font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--xyellow);font-weight:700;margin-top:3px;text-shadow:0 1px 2px rgba(0,0,0,.5);}
+  .hud-stats{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;align-items:center;}
+  .stat{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#cfe6ff;}
+  .stat b{color:#fff;font-size:16px;margin-right:4px;}
+  .stat.sk b{color:var(--skip-grey);}
+  .master-bar{flex:1 1 200px;min-width:170px;}
+  .pbar{height:15px;border-radius:9px;overflow:hidden;position:relative;display:flex;
+    background:linear-gradient(180deg, rgba(0,20,50,.75), rgba(10,45,90,.6));
+    border:1px solid rgba(160,220,255,.4);box-shadow:inset 0 2px 5px rgba(0,0,0,.5);}
+  .pbar .fill{height:100%;width:0%;transition:width .45s cubic-bezier(.2,.8,.3,1);position:relative;}
+  .pbar .fill.rd{background:linear-gradient(180deg,#c9f7a8 0%, var(--read-green) 45%, var(--read-green-deep) 60%, #a2e87f 100%);}
+  .pbar .fill.sk{background:linear-gradient(180deg,#e8eff6 0%, var(--skip-grey) 45%, var(--skip-grey-deep) 60%, #cdd9e5 100%);}
+  .pbar .fill::after{content:"";position:absolute;inset:1px 0 50% 0;background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.04));}
+
+  /* ---------- Continue reading ---------- */
+  .continue{position:relative;display:none;gap:16px;align-items:center;margin-bottom:20px;padding:16px;border-radius:18px;flex-wrap:wrap;
+    background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(190,230,255,.13));
+    border:1px solid rgba(255,255,255,.55);
+    box-shadow:0 8px 24px rgba(5,30,70,.35), inset 0 1px 0 rgba(255,255,255,.7);backdrop-filter:blur(6px);}
+  .continue.show{display:flex;}
+  .continue .tag{position:absolute;top:-9px;left:18px;font-size:9.5px;font-weight:900;letter-spacing:2.5px;padding:3px 12px;border-radius:20px;
+    text-transform:uppercase;color:var(--ink);background:linear-gradient(180deg,#fff 0%, var(--xyellow) 60%, var(--xyellow-deep) 100%);
+    border:1px solid rgba(255,255,255,.8);box-shadow:0 2px 6px rgba(0,20,60,.4);}
+  .continue .thumb{width:60px;height:90px;flex:0 0 60px;border-radius:8px;overflow:hidden;position:relative;
+    border:1px solid rgba(255,255,255,.6);box-shadow:0 4px 10px rgba(0,20,60,.45);}
+  .continue .thumb-emb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+  .continue .thumb-emb svg{width:60%;height:auto;filter:drop-shadow(0 2px 4px rgba(0,15,40,.6));}
+  .continue-info{flex:1 1 260px;min-width:0;}
+  .continue-info .run-name{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#eaf6ff;opacity:.85;font-weight:700;}
+  .continue-info .issue-name{font-size:clamp(16px,3.4vw,21px);font-weight:900;font-style:italic;margin:3px 0 6px;text-shadow:0 2px 4px rgba(0,20,60,.5);}
+  .continue-info .pbar{height:11px;max-width:340px;}
+  .continue-info .pct{font-size:11px;color:#d7ecff;margin-top:5px;letter-spacing:.6px;}
+  .btn{cursor:pointer;font-family:inherit;font-weight:900;font-size:12px;letter-spacing:1px;text-transform:uppercase;
+    padding:11px 22px;border-radius:22px;border:1px solid rgba(255,255,255,.7);transition:filter .12s, transform .12s;
+    text-decoration:none;display:inline-flex;align-items:center;justify-content:center;}
+  .btn:hover{filter:brightness(1.08);transform:translateY(-1px);} .btn:active{transform:translateY(1px);}
+  .btn-go{color:var(--ink);background:linear-gradient(180deg,#fff 0%, var(--xyellow) 55%, var(--xyellow-deep) 100%);
+    box-shadow:0 4px 12px rgba(90,60,0,.4), inset 0 1px 0 rgba(255,255,255,.9);}
+  .btn-ghost{color:#eaf6ff;background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.05));
+    border-color:rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);}
+  .btn[disabled]{cursor:default;opacity:.5;filter:none;transform:none;}
+
+  /* ---------- section head + filters ---------- */
+  .act-head{margin:26px 0 14px;padding:0 4px;display:flex;align-items:center;gap:12px;}
+  .act-head .line{flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg, rgba(255,255,255,.6), rgba(255,255,255,0));}
+  .act-head h2{font-size:clamp(13px,2.6vw,16px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:2px;white-space:nowrap;
+    background:linear-gradient(180deg,#fff 25%, var(--xyellow) 75%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 3px rgba(0,20,60,.6));}
+  .act-head .yr{font-size:10px;letter-spacing:2px;color:#d7ecff;text-transform:uppercase;white-space:nowrap;}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .chip-btn{cursor:pointer;font-family:inherit;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#eaf6ff;
+    padding:6px 13px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.05));
+    border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);}
+  .chip-btn:hover{background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,.12));}
+  .chip-btn.on{color:var(--ink);background:linear-gradient(180deg,#fff, var(--xyellow) 60%, var(--xyellow-deep));border-color:rgba(255,255,255,.85);}
+
+  /* ---------- poster shelf ---------- */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(186px,1fr));gap:20px;}
+  .cell{position:relative;transition:transform .22s cubic-bezier(.2,.8,.3,1);}
+  .cell:hover,.cell:focus-within{transform:translateY(-8px) scale(1.03);z-index:5;}
+  .poster{position:relative;aspect-ratio:2/3;border-radius:16px;overflow:hidden;cursor:pointer;padding:0;display:block;width:100%;
+    font-family:inherit;text-align:left;color:#fff;border:1px solid rgba(255,255,255,.55);
+    box-shadow:0 10px 26px rgba(5,25,60,.45), inset 0 1px 0 rgba(255,255,255,.5);
+    transition:box-shadow .22s;}
+  .cell:hover .poster,.cell:focus-within .poster{
+    box-shadow:0 22px 44px rgba(5,25,60,.6), 0 0 0 2px var(--xyellow), inset 0 1px 0 rgba(255,255,255,.6);}
+  .poster:focus-visible{outline:3px solid var(--xyellow);outline-offset:2px;}
+  /* Art layers are reused by the poster, the Continue thumb and the modal banner,
+     so they must not be scoped to .poster — they fill whichever box contains them. */
+  .art,.tex{position:absolute;inset:0;}
+  .gloss{position:absolute;inset:0 52% 0 0;pointer-events:none;
+    background:linear-gradient(104deg, rgba(255,255,255,.34), transparent 72%);}
+  .vig{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse 90% 70% at 50% 34%, transparent 40%, rgba(0,10,30,.42) 100%);}
+  .poster .emblem{position:absolute;left:0;right:0;top:16%;display:flex;align-items:center;justify-content:center;}
+  .poster .emblem svg{width:52%;max-width:118px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,15,40,.55));}
+  .poster .plate{position:absolute;left:0;right:0;bottom:0;padding:34px 13px 12px;
+    background:linear-gradient(180deg, transparent, rgba(4,20,48,.62) 42%, rgba(4,16,40,.9));}
+  .poster .pname{font-size:clamp(14px,1.5vw,17px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.6px;line-height:1.1;
+    text-shadow:0 2px 4px rgba(0,15,45,.8);}
+  .poster .pmeta{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#cfe6ff;margin-top:5px;}
+  .poster .plate .pbar{height:7px;margin-top:8px;}
+  .info-dot{position:absolute;top:9px;left:9px;z-index:3;width:26px;height:26px;border-radius:50%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-family:inherit;font-size:13px;font-weight:900;font-style:italic;
+    color:var(--ink);opacity:0;transition:opacity .18s, transform .12s;
+    background:radial-gradient(circle at 32% 28%, #fff, #cfe6ff 40%, #5aa5dd);
+    border:1px solid rgba(255,255,255,.85);box-shadow:0 2px 6px rgba(0,20,60,.5);}
+  .cell:hover .info-dot,.cell:focus-within .info-dot{opacity:1;}
+  .info-dot:hover{transform:scale(1.12);}
+  .info-dot:focus-visible{opacity:1;outline:3px solid var(--xyellow);outline-offset:2px;}
+  @media (hover:none){.info-dot{opacity:.92;}}
+  .badge{position:absolute;top:10px;right:10px;font-size:8.5px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;
+    padding:3px 9px;border-radius:12px;color:#eaf6ff;background:rgba(4,20,48,.72);border:1px solid rgba(160,220,255,.45);
+    box-shadow:0 2px 6px rgba(0,20,60,.4);}
+  .badge.live{color:var(--ink);background:linear-gradient(180deg,#fff, var(--xyellow) 60%, var(--xyellow-deep));border-color:rgba(255,255,255,.8);}
+  .poster.soon .art{filter:saturate(.88) brightness(.94);}
+  .poster.soon .emblem{opacity:.82;}
+
+  /* ---------- hero palettes ---------- */
+  .a-spider{background:linear-gradient(163deg,#f04a44 0%,#c4151f 38%,#7d0d16 66%,#15286b 100%);}
+  .a-wolverine{background:linear-gradient(163deg,#ffd84d 0%,#f0a800 34%,#2a3f7a 66%,#101c3f 100%);}
+  .a-hulk{background:linear-gradient(163deg,#8fd45c 0%,#4d9c2c 36%,#276b2a 62%,#4a2380 100%);}
+  .a-xmen{background:linear-gradient(163deg,#8fd0f5 0%,#3c8fd6 32%,#12408f 68%,#08203f 100%);}
+  .a-ff{background:linear-gradient(163deg,#a9d8ff 0%,#3f86d8 34%,#123f8c 64%,#060f2e 100%);}
+  .a-moon{background:linear-gradient(163deg,#fdfeff 0%,#d4dfec 26%,#8494ab 56%,#1b2432 100%);}
+  .a-daredevil{background:linear-gradient(163deg,#e8353a 0%,#9d0f16 38%,#4a060c 68%,#120306 100%);}
+
+  /* ---------- hero textures ---------- */
+  .tex-web{background:
+    repeating-conic-gradient(from 0deg at 50% 30%, rgba(255,255,255,.14) 0deg .7deg, transparent .7deg 22.5deg),
+    radial-gradient(circle at 50% 30%, transparent 0 7%, rgba(255,255,255,.13) 7% 7.6%, transparent 7.6% 15%,
+      rgba(255,255,255,.12) 15% 15.6%, transparent 15.6% 25%, rgba(255,255,255,.11) 25% 25.6%, transparent 25.6% 37%,
+      rgba(255,255,255,.1) 37% 37.6%, transparent 37.6% 51%, rgba(255,255,255,.08) 51% 51.6%, transparent 51.6%);}
+  .tex-claw{background:
+    linear-gradient(74deg, transparent 24%, rgba(255,255,255,.30) 25%, rgba(255,255,255,.04) 28%, transparent 29%),
+    linear-gradient(74deg, transparent 43%, rgba(255,255,255,.34) 44%, rgba(255,255,255,.05) 48%, transparent 49%),
+    linear-gradient(74deg, transparent 62%, rgba(255,255,255,.26) 63%, rgba(255,255,255,.04) 66%, transparent 67%);}
+  .tex-smash{background:
+    repeating-conic-gradient(from 9deg at 50% 46%, rgba(0,25,0,.17) 0deg 2.4deg, transparent 2.4deg 30deg),
+    radial-gradient(circle at 50% 46%, rgba(255,255,255,.26), transparent 52%);}
+  .tex-x{background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.075) 0 2px, transparent 2px 17px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,.075) 0 2px, transparent 2px 17px);}
+  .tex-cosmic{background:
+    radial-gradient(circle at 17% 14%, rgba(255,255,255,.95) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 71% 9%, rgba(255,255,255,.8) 0 1.3px, transparent 1.8px),
+    radial-gradient(circle at 88% 31%, rgba(255,255,255,.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 34% 40%, rgba(255,255,255,.85) 0 1.2px, transparent 1.7px),
+    radial-gradient(circle at 9% 57%, rgba(255,255,255,.65) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 62% 63%, rgba(255,255,255,.8) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 82% 74%, rgba(255,255,255,.6) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 26% 82%, rgba(255,255,255,.7) 0 1.2px, transparent 1.7px),
+    radial-gradient(ellipse 78% 42% at 50% 78%, rgba(120,190,255,.32), transparent 72%);}
+  .tex-moon{background:
+    radial-gradient(circle at 50% 27%, rgba(255,255,255,.8), transparent 44%),
+    radial-gradient(circle at 21% 62%, rgba(255,255,255,.6) 0 1.2px, transparent 1.7px),
+    radial-gradient(circle at 76% 55%, rgba(255,255,255,.5) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 63% 76%, rgba(255,255,255,.55) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 33% 88%, rgba(255,255,255,.45) 0 1px, transparent 1.5px),
+    linear-gradient(180deg, transparent 52%, rgba(18,24,38,.55));}
+  .tex-radar{background:
+    radial-gradient(circle at 50% 33%, transparent 0 9%, rgba(255,255,255,.16) 9% 9.9%, transparent 9.9% 19%,
+      rgba(255,255,255,.14) 19% 19.9%, transparent 19.9% 31%, rgba(255,255,255,.11) 31% 31.9%, transparent 31.9% 45%,
+      rgba(255,255,255,.09) 45% 45.9%, transparent 45.9% 61%, rgba(255,255,255,.07) 61% 61.9%, transparent 61.9%);}
+
+  /* Moon Knight reads dark-on-light */
+  .poster.lightart .pname{color:#fff;}
+
+  /* ---------- modal ---------- */
+  .scrim{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;padding:18px;
+    background:rgba(4,16,40,.66);backdrop-filter:blur(5px);}
+  .scrim.show{display:flex;}
+  .modal{position:relative;width:min(660px,100%);max-height:92vh;overflow:auto;border-radius:22px;
+    background:linear-gradient(180deg, rgba(30,80,150,.94), rgba(8,30,64,.97));
+    border:1px solid rgba(160,220,255,.5);
+    box-shadow:0 24px 60px rgba(2,12,34,.7), inset 0 1px 0 rgba(255,255,255,.45);}
+  .modal-art{position:relative;height:190px;overflow:hidden;border-radius:21px 21px 0 0;}
+  .modal-art .fade{position:absolute;inset:0;background:linear-gradient(180deg, transparent 52%, rgba(9,32,68,.72) 84%, rgba(9,32,68,1));}
+  /* Re-aim the ramp for a wide box so it doesn't bottom out in the first 40px. */
+  .a-spider.wide{background:linear-gradient(104deg,#f04a44 0%,#c4151f 42%,#7d0d16 72%,#15286b 100%);}
+  .a-wolverine.wide{background:linear-gradient(104deg,#ffd84d 0%,#f0a800 40%,#2a3f7a 74%,#101c3f 100%);}
+  .a-hulk.wide{background:linear-gradient(104deg,#8fd45c 0%,#4d9c2c 40%,#276b2a 70%,#4a2380 100%);}
+  .a-xmen.wide{background:linear-gradient(104deg,#8fd0f5 0%,#3c8fd6 38%,#12408f 74%,#08203f 100%);}
+  .a-ff.wide{background:linear-gradient(104deg,#a9d8ff 0%,#3f86d8 40%,#123f8c 72%,#060f2e 100%);}
+  .a-moon.wide{background:linear-gradient(104deg,#fdfeff 0%,#d4dfec 34%,#8494ab 66%,#1b2432 100%);}
+  .a-daredevil.wide{background:linear-gradient(104deg,#e8353a 0%,#9d0f16 44%,#4a060c 74%,#120306 100%);}
+  .modal-art .memb{position:absolute;left:20px;bottom:14px;width:74px;height:74px;
+    display:flex;align-items:center;justify-content:center;}
+  .modal-art .memb svg{width:100%;height:100%;filter:drop-shadow(0 3px 7px rgba(0,15,40,.65));}
+  .modal-body{padding:12px 22px 22px;}
+  .modal-body h2{font-size:clamp(20px,4vw,27px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.6px;
+    background:linear-gradient(180deg,#fff 30%, #bfe3ff 60%, #6db6ea 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 3px rgba(0,20,60,.6));}
+  .modal-body .mera{font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--xyellow);font-weight:700;margin-top:4px;}
+  .modal-body .mdesc{font-size:13px;line-height:1.65;color:#e2f1ff;margin-top:12px;}
+  .modal-facts{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;padding:12px 14px;border-radius:14px;
+    background:rgba(0,25,60,.36);border:1px solid rgba(160,220,255,.28);}
+  .modal-facts .stat{flex:0 0 auto;}
+  .modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+  .modal-note{font-size:11.5px;line-height:1.55;color:#cfe6ff;margin-top:12px;}
+  .modal-close{position:absolute;top:12px;right:12px;z-index:2;width:32px;height:32px;border-radius:50%;cursor:pointer;
+    font-size:15px;font-weight:900;color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:inherit;
+    background:radial-gradient(circle at 32% 28%, #fff, #cfe6ff 40%, #5aa5dd);
+    border:1px solid rgba(255,255,255,.8);box-shadow:0 3px 8px rgba(0,20,60,.5);}
+
+  footer{margin-top:36px;text-align:center;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(230,245,255,.65);}
+
+  @media (max-width:600px){
+    .shelf{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;}
+    .poster .plate{padding:28px 10px 10px;}
+    .continue .thumb{display:none;}
+    .continue-actions{width:100%;} .continue-actions .btn{width:100%;}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+<div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div>
+
+<div class="wrap">
+  <header class="hud">
+    <div class="hud-top">
+      <div class="x-emblem">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="20%" stop-color="#ffffff"/><stop offset="55%" stop-color="#ffd23f"/><stop offset="100%" stop-color="#f0a500"/>
+          </linearGradient></defs>
+          <g fill="none" stroke="url(#cg)" stroke-linecap="round">
+            <circle cx="50" cy="50" r="10" stroke-width="7"/>
+            <path d="M22,50 a28,28 0 0 1 56,0" stroke-width="6"/>
+            <path d="M10,50 a40,40 0 0 1 80,0" stroke-width="5" opacity=".8"/>
+            <path d="M30,72 l-8,14 M70,72 l8,14" stroke-width="6"/>
+          </g>
+        </svg>
+      </div>
+      <div class="hud-title">
+        <h1>C.O.M.I.C.S.</h1>
+        <div class="sub">Caleb&rsquo;s Online Marvel Intractable Comic Shelf</div>
+      </div>
+    </div>
+    <div class="hud-stats">
+      <div class="stat"><b id="statHeroes">0</b>subjects</div>
+      <div class="stat"><b id="statLive">0</b>protocols live</div>
+      <div class="stat"><b id="statRead">0</b>issues read</div>
+      <div class="stat"><b id="statPct">0%</b>overall</div>
+      <div class="master-bar"><div class="pbar"><div class="fill rd" id="mFillRead"></div><div class="fill sk" id="mFillSkip"></div></div></div>
+    </div>
+  </header>
+
+  <section class="continue" id="continue">
+    <span class="tag" id="contTag">Continue Reading</span>
+    <div class="thumb" id="contThumb"></div>
+    <div class="continue-info" id="contInfo"></div>
+    <div class="continue-actions"><a class="btn btn-go" id="contGo" href="#">Resume</a></div>
+  </section>
+
+  <div class="act-head">
+    <h2>Select Subject</h2>
+    <div class="line"></div>
+    <span class="yr" id="shelfCount"></span>
+  </div>
+
+  <div class="filters">
+    <button class="chip-btn on" data-filter="all">All</button>
+    <button class="chip-btn" data-filter="ready">Protocol ready</button>
+    <button class="chip-btn" data-filter="soon">In curation</button>
+  </div>
+
+  <div class="shelf" id="shelf"></div>
+
+  <footer>Works offline &middot; each protocol is its own file &middot; progress saved in this browser</footer>
+</div>
+
+<div class="scrim" id="scrim">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="modal-close" id="mClose" aria-label="Close">&#10005;</button>
+    <div class="modal-art" id="mArt"></div>
+    <div class="modal-body">
+      <h2 id="mTitle"></h2>
+      <div class="mera" id="mEra"></div>
+      <div class="mdesc" id="mDesc"></div>
+      <div class="modal-facts" id="mFacts"></div>
+      <div class="modal-actions" id="mActions"></div>
+      <div class="modal-note" id="mNote"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ EMBLEMS ============
+   Pure inline SVG so the whole page stays one portable file — no image assets. */
+const GRAD = '<defs><linearGradient id="g$" x1="0" y1="0" x2="0" y2="1">' +
+  '<stop offset="10%" stop-color="#ffffff"/><stop offset="52%" stop-color="#ffe488"/><stop offset="100%" stop-color="#e39400"/>' +
+  '</linearGradient></defs>';
+/* Light posters (Moon Knight) wash out the gold ramp entirely — they get an ink ramp instead. */
+const GRAD_DARK = '<defs><linearGradient id="g$" x1="0" y1="0" x2="0" y2="1">' +
+  '<stop offset="8%" stop-color="#4a5a70"/><stop offset="50%" stop-color="#1e2838"/><stop offset="100%" stop-color="#080d16"/>' +
+  '</linearGradient></defs>';
+
+const EMBLEMS = {
+  spider: '<g fill="url(#g$)">' +
+    '<ellipse cx="50" cy="60" rx="13" ry="19"/><ellipse cx="50" cy="37" rx="9" ry="10"/></g>' +
+    '<g fill="none" stroke="url(#g$)" stroke-width="4.5" stroke-linecap="round">' +
+    '<path d="M42,34 Q24,24 20,8"/><path d="M40,43 Q19,37 11,24"/><path d="M40,52 Q18,52 11,45"/><path d="M42,60 Q23,66 19,82"/>' +
+    '<path d="M58,34 Q76,24 80,8"/><path d="M60,43 Q81,37 89,24"/><path d="M60,52 Q82,52 89,45"/><path d="M58,60 Q77,66 81,82"/></g>',
+
+  claws: '<g fill="url(#g$)">' +
+    '<path d="M27,92 L38,92 L28,16 L23,13 Z"/>' +
+    '<path d="M45,94 L57,94 L54,8 L49,5 Z"/>' +
+    '<path d="M64,92 L75,92 L79,16 L74,13 Z"/></g>',
+
+  fist: '<g fill="url(#g$)">' +
+    '<path d="M23,53 q0,-11 10,-11 q7,0 9,7 q1,-10 10,-10 q9,0 10,9 q1,-9 10,-9 q9,0 9,10 l0,4 q7,1 7,9 l0,15 q0,21 -22,21 l-19,0 q-24,0 -24,-23 z"/>' +
+    '<path d="M21,60 q11,-5 22,-1 q7,3 7,9 q0,8 -9,8 l-20,0 q-5,0 -5,-7 q0,-6 5,-9 z" opacity=".82"/></g>',
+
+  xmark: '<g fill="url(#g$)">' +
+    '<path d="M20,10 L38,10 L82,90 L64,90 Z"/><path d="M80,10 L62,10 L18,90 L36,90 Z"/></g>',
+
+  four: '<g fill="none" stroke="url(#g$)" stroke-width="7"><circle cx="50" cy="50" r="38"/></g>' +
+    '<text x="50" y="50" text-anchor="middle" dominant-baseline="central" fill="url(#g$)"' +
+    ' font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="52" font-weight="900" font-style="italic">4</text>',
+
+  /* Cut the crescent with a mask — hand-written arc pairs are brittle at these radii. */
+  crescent: '<mask id="msk-g$"><circle cx="46" cy="50" r="38" fill="#fff"/>' +
+      '<circle cx="64" cy="41" r="32" fill="#000"/></mask>' +
+    '<circle cx="46" cy="50" r="38" fill="url(#g$)" mask="url(#msk-g$)"/>' +
+    '<g fill="url(#g$)" opacity=".9"><path d="M82,22 l2.6,6.4 6.4,2.6 -6.4,2.6 -2.6,6.4 -2.6,-6.4 -6.4,-2.6 6.4,-2.6 z"/>' +
+    '<path d="M86,62 l2,5 5,2 -5,2 -2,5 -2,-5 -5,-2 5,-2 z"/></g>',
+
+  dd: '<g fill="none" stroke="url(#g$)" stroke-width="6"><circle cx="50" cy="50" r="39"/></g>' +
+    '<text x="50" y="52" text-anchor="middle" dominant-baseline="central" fill="url(#g$)"' +
+    ' font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="44" font-weight="900" font-style="italic"' +
+    ' letter-spacing="-4">DD</text>'
+};
+
+/* Each emblem instance needs its own gradient id, or later copies reuse the first. */
+let embN = 0;
+function emblemSVG(name, dark){
+  const id = "e" + (++embN);
+  const body = ((dark ? GRAD_DARK : GRAD) + EMBLEMS[name]).split("g$").join(id);
+  return '<svg viewBox="0 0 100 100" aria-hidden="true">' + body + '</svg>';
+}
+
+/* ============ SUBJECTS ============
+   Adding a hero = one entry here. `file` non-null means the protocol exists and the
+   poster becomes navigable; null means it is still being curated.
+   `total` is the fallback issue count used before that tracker has ever been opened —
+   once opened, the tracker publishes a live record and that wins. */
+const HEROES = [
+  { id:"spider-man", name:"Spider-Man", art:"a-spider", tex:"tex-web", emblem:"spider",
+    era:"The Omnibus Shelf · 1962–2011", file:"spiderman-reading-tracker.html", total:456,
+    desc:"A curated Spider-Man shelf of 18 omnibus volumes — each one collecting exactly what the printed book collects, in print order. 12 volumes carry full issue lists (456 issues) across Lee/Ditko, Romita, Conway, Untold Tales, Stern, McFarlane, Larsen, the Clone Saga and Ben Reilly; 6 more sit on the shelf as placeholders until their contents are added." },
+
+  { id:"wolverine", name:"Wolverine", art:"a-wolverine", tex:"tex-claw", emblem:"claws",
+    era:"Protocol pending", file:null, total:null,
+    desc:"Logan on his own, untangled from the X-books. Claremont/Miller and the Barry Windsor-Smith origin as the spine, then Weapon X, the solo ongoing, and the modern runs — ordered so the memory-implant reveals land in the right sequence." },
+
+  { id:"hulk", name:"Hulk", art:"a-hulk", tex:"tex-smash", emblem:"fist",
+    era:"Protocol pending", file:null, total:null,
+    desc:"Banner and the Hulk across every personality shift. Peter David's twelve-year run is the backbone; the plan threads Planet Hulk, World War Hulk, and the Immortal era around it without forcing you through the filler." },
+
+  { id:"xmen", name:"X-Men", art:"a-xmen", tex:"tex-x", emblem:"xmark",
+    era:"Messiah Saga · 2008–2010", file:"xmen-reading-tracker.html", total:174,
+    desc:"The Messiah saga, read in researched chronological order rather than publication order. 174 issues across 27 arcs and 6 acts, from Divided We Stand through Second Coming — with Marvel deep links, per-arc spoiler digests, and optional arcs foldable out of the way." },
+
+  { id:"fantastic-four", name:"Fantastic Four", art:"a-ff", tex:"tex-cosmic", emblem:"four",
+    era:"Protocol pending", file:null, total:null,
+    desc:"The first family, and the run that made the Marvel Universe cosmic. Lee/Kirby as the load-bearing era, then Byrne, Waid/Wieringo, and Hickman — with the Galactus, Negative Zone, and Doom threads called out as their own arcs." },
+
+  { id:"moon-knight", name:"Moon Knight", art:"a-moon", tex:"tex-moon", emblem:"crescent", light:true,
+    era:"Protocol pending", file:null, total:null,
+    desc:"Marc Spector, and every relaunch that reinvented him. Moench/Sienkiewicz first, then the modern spine — Ellis, Lemire's Khonshu-fractured run, and MacKay — sequenced so the identity questions build instead of repeating." },
+
+  { id:"daredevil", name:"Daredevil", art:"a-daredevil", tex:"tex-radar", emblem:"dd",
+    era:"Protocol pending", file:null, total:null,
+    desc:"Matt Murdock's long fall and longer climb. Miller's Born Again as the hinge, with Bendis/Maleev, Brubaker, and Waid's tonal reset arranged so each run answers the one before it." }
+];
+
+/* ============ STORAGE (dual-mode, same contract as the trackers) ============ */
+const IN_CLAUDE = (typeof window.storage !== "undefined" && window.storage && typeof window.storage.get === "function");
+const store = {
+  async get(k){
+    try{
+      if(IN_CLAUDE){ const r = await window.storage.get(k); return r && r.value ? r.value : null; }
+      return localStorage.getItem(k);
+    }catch(e){ return null; }
+  }
+};
+/* Trackers publish a summary record here on every refresh so the index can show
+   real progress without duplicating their data. */
+const RECORD_KEY = id => "comics-hero-" + id;
+/* Records written before the Cerebro -> C.O.M.I.C.S. rename. Read-only fallback;
+   the first refresh of any tracker rewrites under the new key. */
+const OLD_RECORD_KEY = id => "cerebro-hero-" + id;
+/* Read straight from the X-Men tracker's own progress key as a fallback, so the
+   Continue panel works even before that tracker has been reopened once. */
+const LEGACY = { "xmen": "xmen-saga-progress-v2" };
+
+const progress = {};   // heroId -> {total, read, skip, next}
+
+async function loadProgress(){
+  for(const h of HEROES){
+    if(!h.file) continue;
+    let rec = null;
+    try{ const raw = await store.get(RECORD_KEY(h.id)); if(raw) rec = JSON.parse(raw); }catch(e){}
+    if(!rec){ try{ const raw = await store.get(OLD_RECORD_KEY(h.id)); if(raw) rec = JSON.parse(raw); }catch(e){} }
+    if(!rec && LEGACY[h.id]){
+      try{
+        const raw = await store.get(LEGACY[h.id]);
+        if(raw){ const d = JSON.parse(raw);
+          rec = { total:h.total, read:(d.read||[]).length, skip:(d.skip||[]).length, next:null }; }
+      }catch(e){}
+    }
+    if(!rec) rec = { total:h.total, read:0, skip:0, next:null };
+    if(!rec.total) rec.total = h.total || 0;
+    progress[h.id] = rec;
+  }
+}
+
+/* ============ RENDER ============ */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shelfEl = document.getElementById("shelf");
+
+function artHTML(h, banner){
+  /* The banner is short and wide — the poster vignette would crush it to near-black. */
+  return '<div class="art ' + h.art + (banner ? " wide" : "") + '"></div>' +
+         '<div class="tex ' + h.tex + '"></div>' +
+         (banner ? '' : '<div class="vig"></div>') + '<div class="gloss"></div>';
+}
+
+function posterHTML(h){
+  const p = progress[h.id];
+  const live = !!h.file;
+  const done = p ? p.read + p.skip : 0;
+  const pct = p && p.total ? Math.round(done / p.total * 100) : 0;
+  let meta, bar = "";
+  if(live && p && p.total){
+    meta = done + " / " + p.total + " logged · " + pct + "%";
+    bar = '<div class="pbar"><div class="fill rd" style="width:' + (p.read / p.total * 100) + '%"></div>' +
+          '<div class="fill sk" style="width:' + (p.skip / p.total * 100) + '%"></div></div>';
+  }else{
+    meta = "List in curation";
+  }
+  return '<div class="cell" data-state="' + (live ? "ready" : "soon") + '">' +
+    '<button class="poster ' + (live ? "" : "soon ") + (h.light ? "lightart " : "") +
+      '" data-hero="' + h.id + '" aria-label="' + esc(h.name) + ' \u2014 ' + esc(meta) + '">' +
+      artHTML(h) +
+      '<span class="badge ' + (live ? "live" : "") + '">' + (live ? "Ready" : "Curating") + '</span>' +
+      '<div class="emblem">' + emblemSVG(h.emblem, h.light) + '</div>' +
+      '<div class="plate"><div class="pname">' + esc(h.name) + '</div>' +
+        '<div class="pmeta">' + esc(meta) + '</div>' + bar +
+      '</div>' +
+    '</button>' +
+    '<button class="info-dot" data-info="' + h.id + '" aria-label="Details for ' + esc(h.name) + '">i</button>' +
+  '</div>';
+}
+
+function buildShelf(){
+  shelfEl.innerHTML = HEROES.map(posterHTML).join("");
+  document.getElementById("shelfCount").textContent =
+    HEROES.length + " subjects · " + HEROES.filter(h => h.file).length + " ready";
+}
+
+function paintHUD(){
+  const live = HEROES.filter(h => h.file);
+  let tr = 0, ts = 0, tt = 0;
+  live.forEach(h => { const p = progress[h.id]; if(!p) return; tr += p.read; ts += p.skip; tt += p.total || 0; });
+  document.getElementById("statHeroes").textContent = HEROES.length;
+  document.getElementById("statLive").textContent = live.length;
+  document.getElementById("statRead").textContent = tr;
+  document.getElementById("statPct").textContent = tt ? Math.round((tr + ts) / tt * 100) + "%" : "0%";
+  document.getElementById("mFillRead").style.width = tt ? (tr / tt * 100) + "%" : "0%";
+  document.getElementById("mFillSkip").style.width = tt ? (ts / tt * 100) + "%" : "0%";
+}
+
+/* ---- Continue reading: the furthest-along protocol that isn't finished ---- */
+function paintContinue(){
+  const box = document.getElementById("continue");
+  const started = HEROES.filter(h => {
+    const p = progress[h.id];
+    return h.file && p && p.total && (p.read + p.skip) < p.total;
+  });
+  if(!started.length){ box.classList.remove("show"); return; }
+  started.sort((a, b) => {
+    const pa = progress[a.id], pb = progress[b.id];
+    return (pb.read + pb.skip) - (pa.read + pa.skip);
+  });
+  const h = started[0], p = progress[h.id];
+  const done = p.read + p.skip, pct = Math.round(done / p.total * 100);
+  document.getElementById("contTag").textContent = done ? "Continue Reading" : "Start Here";
+  document.getElementById("contGo").textContent = done ? "Resume" : "Begin";
+
+  document.getElementById("contThumb").innerHTML = artHTML(h) +
+    '<div class="thumb-emb">' + emblemSVG(h.emblem, h.light) + '</div>';
+  document.getElementById("contInfo").innerHTML =
+    '<div class="run-name">' + esc(h.name) + ' · ' + esc(h.era) + '</div>' +
+    '<div class="issue-name">' + esc(p.next ? p.next.t : (done ? "Pick up where you left off" : "Start the protocol")) + '</div>' +
+    (p.next && p.next.arc ? '<div class="pmeta" style="font-size:11px;color:#d7ecff;margin-bottom:6px;">' + esc(p.next.arc) + '</div>' : '') +
+    '<div class="pbar"><div class="fill rd" style="width:' + (p.read / p.total * 100) + '%"></div>' +
+      '<div class="fill sk" style="width:' + (p.skip / p.total * 100) + '%"></div></div>' +
+    '<div class="pct">' + p.read + ' read · ' + p.skip + ' skipped · ' + (p.total - done) + ' remaining · ' + pct + '% cleared</div>';
+  document.getElementById("contGo").href = h.file;
+  box.classList.add("show");
+}
+
+/* ============ NAVIGATION ============ */
+function heroById(id){ return HEROES.find(h => h.id === id); }
+
+const scrim = document.getElementById("scrim");
+let lastFocus = null;
+
+function openHero(id){
+  const h = heroById(id);
+  if(!h) return;
+  lastFocus = document.activeElement;
+  const p = progress[h.id];
+
+  document.getElementById("mArt").innerHTML = artHTML(h, true) +
+    '<div class="fade"></div><div class="memb">' + emblemSVG(h.emblem, h.light) + '</div>';
+  document.getElementById("mTitle").textContent = h.name;
+  document.getElementById("mEra").textContent = h.era;
+  document.getElementById("mDesc").textContent = h.desc;
+
+  const facts = document.getElementById("mFacts");
+  if(h.file && p && p.total){
+    const done = p.read + p.skip;
+    facts.style.display = "flex";
+    facts.innerHTML =
+      '<div class="stat"><b>' + p.total + '</b>issues</div>' +
+      '<div class="stat"><b>' + p.read + '</b>read</div>' +
+      '<div class="stat sk"><b>' + p.skip + '</b>skipped</div>' +
+      '<div class="stat"><b>' + Math.round(done / p.total * 100) + '%</b>cleared</div>';
+  }else{
+    facts.style.display = "none";
+  }
+
+  const actions = document.getElementById("mActions");
+  const note = document.getElementById("mNote");
+  if(h.file){
+    const done = p && p.total ? p.read + p.skip : 0;
+    actions.innerHTML = '<a class="btn btn-go" href="' + h.file + '">' +
+      (done ? "Resume protocol" : "Open protocol") + '</a>' +
+      '<button class="btn btn-ghost" data-close>Back to index</button>';
+    note.textContent = "";
+  }else{
+    actions.innerHTML = '<button class="btn btn-go" disabled>Protocol not built yet</button>' +
+      '<button class="btn btn-ghost" data-close>Back to index</button>';
+    note.textContent = "No reading list has been curated for " + h.name + " yet. Ask for one and it gets its own tracker file, then this poster goes live.";
+  }
+
+  scrim.classList.add("show");
+  document.getElementById("mClose").focus();
+}
+
+function closeHero(){
+  scrim.classList.remove("show");
+  if(lastFocus) lastFocus.focus();
+}
+
+shelfEl.addEventListener("click", e => {
+  /* The "i" dot opens the dossier; the poster itself is the fast path. */
+  const info = e.target.closest("[data-info]");
+  if(info){ e.preventDefault(); e.stopPropagation(); openHero(info.dataset.info); return; }
+
+  const card = e.target.closest("[data-hero]");
+  if(!card) return;
+  const h = heroById(card.dataset.hero);
+  /* Ready protocols go straight in; unbuilt ones open the dossier instead. */
+  if(h && h.file) window.location.href = h.file;
+  else openHero(card.dataset.hero);
+});
+
+
+scrim.addEventListener("click", e => {
+  if(e.target === scrim || e.target.closest("[data-close]") || e.target.closest("#mClose")) closeHero();
+});
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape" && scrim.classList.contains("show")) closeHero();
+});
+
+/* ---- filters ---- */
+document.querySelector(".filters").addEventListener("click", e => {
+  const b = e.target.closest("[data-filter]");
+  if(!b) return;
+  document.querySelectorAll(".filters .chip-btn").forEach(c => c.classList.toggle("on", c === b));
+  const f = b.dataset.filter;
+  shelfEl.querySelectorAll(".cell").forEach(c => {
+    c.style.display = (f === "all" || c.dataset.state === f) ? "" : "none";
+  });
+});
+
+/* ============ INIT ============ */
+(async function init(){
+  await loadProgress();
+  buildShelf();
+  paintHUD();
+  paintContinue();
+})();
+</script>
+</body>
+</html>
