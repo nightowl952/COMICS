@@ -473,13 +473,23 @@ page. Rebuild in the same commit.
 
 | Surface | URL | Progress lives in |
 |---|---|---|
-| GitHub Pages | `https://<user>.github.io/comics/` | that origin's `localStorage` |
+| GitHub Pages | `https://<user>.github.io/COMICS/` | that origin's `localStorage` |
 | Claude Artifact | the artifact link | artifact `window.storage` |
 | Local `file://` | the clone | that browser's `localStorage` |
 
 They do not sync — see "Progress does not sync". Export/import JSON is the
 bridge. Publishing a new version of either surface does not disturb progress
 already saved there, because progress is never in the HTML.
+
+**Cross-device sync is wanted and not built.** Note the asymmetry before
+designing it: the artifact runs under a CSP that blocks *all* external requests,
+so no artifact-side code can ever reach a sync store. GitHub Pages has no such
+restriction. So the two surfaces cannot share one mechanism — the realistic
+shape is a store reachable from Pages (a private Gist keyed by a token the user
+pastes in, mirroring the existing `xmen-anthropic-key` pattern), with the
+artifact staying export/import-only. The artifact `artifact` capability is not
+the answer: its live-doc arm only persists DOM inside a marked region, and both
+trackers render their issue rows from JS data, which it does not save.
 
 ### Updating the artifact
 

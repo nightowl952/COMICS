@@ -45,3 +45,6 @@ Progress is stored per-browser in `localStorage`, never in the HTML. Copying a
 file to another machine does not carry your progress with it; each published
 surface (Pages, the Claude artifact, a local copy) keeps its own. Use the
 Back up / restore JSON buttons to move between them.
+
+Automatic cross-device sync is not built yet — see the sync notes in
+`CLAUDE.md`.
