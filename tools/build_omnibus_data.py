@@ -1,4 +1,9 @@
-import json,re,collections
+import json,re,collections,os,sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+RAW    = os.path.join(HERE, 'omnibus_contents_raw.json')
+TRACKER= os.path.join(ROOT, 'spiderman-reading-tracker.html')
 
 # wiki series title -> (short code, display name used in the UI)
 # "Spectacular Spider-Man Vol 1" and "Peter Parker, The Spectacular Spider-Man Vol 1"
@@ -104,7 +109,7 @@ def spanlabel(nums):
 
 def gen(pages, meta):
     out=[]
-    d=json.load(open('omni.json'))
+    d=json.load(open(RAW, encoding='utf-8'))
     for key in pages:
         v=d[key]; m=meta[key]
         seen=[];s=set()
@@ -143,3 +148,101 @@ def gen(pages, meta):
         out.append({**{k:val for k,val in m.items()}, 'chapters':chapters,
                     'count':sum(len(c['issues']) for c in chapters)})
     return out
+
+
+# ---------------------------------------------------------------------------
+# Assembling and writing the shelf
+#
+# gen() only covers the wiki-backed volumes in ORDER. The full OMNI array is
+# those plus PLACEHOLDERS, arranged in SHELF order. Key order is pinned so a
+# regen produces a minimal diff instead of reshuffling all 18 entries.
+# ---------------------------------------------------------------------------
+
+KEY_ORDER = ["id","spine","cover","title","vol","creators","era","released",
+             "art","tex","note","placeholder","chapters"]
+
+MARK = "const OMNI = ["
+
+
+def build_all():
+    """Return the full 18-volume OMNI array, in SHELF order."""
+    from omnibus_meta import ORDER, PLACEHOLDERS, SHELF
+    meta = dict(ORDER)
+    by_id = {o["id"]: o for o in gen(list(meta), meta)}
+    for p in PLACEHOLDERS:
+        by_id[p["id"]] = dict(p)
+
+    unknown = [v for v in SHELF if v not in by_id]
+    if unknown:
+        sys.exit("SHELF names ids with no entry in ORDER or PLACEHOLDERS: %s" % unknown)
+    orphan = [v for v in by_id if v not in SHELF]
+    if orphan:
+        sys.exit("defined but missing from SHELF (it would not render): %s" % orphan)
+
+    out = []
+    for vid in SHELF:
+        o = dict(by_id[vid])
+        o.pop("count", None)          # derived at runtime by omniStats()
+        extra = [k for k in o if k not in KEY_ORDER]
+        if extra:
+            sys.exit("unknown field(s) %s on %s -- add them to KEY_ORDER" % (extra, vid))
+        out.append({k: o[k] for k in KEY_ORDER if k in o})
+    return out
+
+
+def render(arr):
+    # indent=0 / ensure_ascii=False is the format already in the file; keeping it
+    # byte-compatible is what makes a regen a small diff.
+    return MARK[:-1] + json.dumps(arr, indent=0, ensure_ascii=False)
+
+
+def splice(html, arr):
+    s = html.index(MARK)
+    e = html.index("\n];", s)
+    return html[:s] + render(arr) + html[e + 2:]
+
+
+def check_spine_colors(html, arr):
+    """Every .o-* ramp a volume uses needs a SPINE_C entry.
+
+    The book spine is painted from SPINE_C[o.art]; a ramp that is missing there
+    silently falls back to the grey placeholder colour, which looks like a
+    rendering bug rather than a missing map entry.
+    """
+    blk = html[html.index("const SPINE_C="):]
+    blk = blk[:blk.index("};")]
+    known = set(re.findall(r"'([\w-]+)':\s*\[", blk))
+    missing = sorted({o["art"] for o in arr} - known)
+    if missing:
+        sys.exit("no SPINE_C entry for %s -- add one in %s or the spine renders grey"
+                 % (missing, os.path.basename(TRACKER)))
+
+
+def main():
+    check = "--check" in sys.argv
+    arr = build_all()
+    html = open(TRACKER, encoding="utf-8").read()
+    check_spine_colors(html, arr)
+    new = splice(html, arr)
+
+    slots = sum(len(c["issues"]) for o in arr for c in o["chapters"])
+    uniq = len({i["id"] for o in arr for c in o["chapters"] for i in c["issues"]})
+    covers = sum(1 for o in arr if o.get("cover"))
+    print("%d volumes | %d issue slots | %d unique issues | %d covers wired"
+          % (len(arr), slots, uniq, covers))
+
+    if check:
+        print("in sync" if new == html else "OUT OF SYNC -- run without --check to rewrite")
+        sys.exit(0 if new == html else 1)
+
+    if new == html:
+        print("%s already up to date" % os.path.basename(TRACKER))
+    else:
+        open(TRACKER, "w", encoding="utf-8").write(new)
+        print("wrote %s" % os.path.basename(TRACKER))
+    print("now run: python3 tools/build_single_file.py")
+
+
+if __name__ == "__main__":
+    sys.path.insert(0, HERE)
+    main()

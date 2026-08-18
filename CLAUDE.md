@@ -28,7 +28,11 @@ tracker file, which the homescreen links into.
 - `xmen-reading-tracker.html` — the X-Men Messiah Saga protocol. A single curated
   chronological read, grouped into acts → chapters → issues.
 - `spiderman-reading-tracker.html` — the Spider-Man omnibus shelf. A different
-  shape: a shelf of omnibus volumes, each opening into its own reading list.
+  shape: a shelf of omnibus volumes rendered as CSS-3D hardcover books, each
+  opening into its own reading list. Its `OMNI` array is **generated** from
+  `tools/omnibus_meta.py` — edit that and regenerate, don't hand-edit the array.
+- `Art/Spider-Man/` — cover scans, committed so GitHub Pages can serve them and
+  the mobile build can inline them.
 
 No build step, no package.json, no dependencies, no server. Open either file
 directly in a browser.
@@ -185,12 +189,76 @@ issues) are different numbers. Progress math uses `uniqIds`; the shelf label use
 slots. The overlap count was much higher (46) before the shelf was trimmed —
 it scales with how many overlapping volumes are on the shelf.
 
-### Covers are placeholders
+### The 3D book shelf
 
-Every volume renders CSS art (an `.o-*` colour ramp + a `.tex-*` pattern + a
-shared spider glyph). Setting `cover:"path/to/art.jpg"` on a `HEROES`-style entry
-in `OMNI` swaps in a real image automatically — `artHTML()` checks for it. That
-is the intended path for dropping in official cover scans.
+Since Aug 2026 each shelf tile is a CSS-3D hardcover, not a flat poster. The
+markup `buildShelf()` emits, outermost first:
+
+    .cell        perspective root (1500px). Owns hover z-index.
+      .book      the float wrapper -- `bob` keyframes run on hover
+        .shade   soft ground shadow
+        .omni    the <button>. Tilted `rotateY(21deg)`, `transform-style:preserve-3d`,
+                 and carries `--t` (spine thickness) as an inline style
+          .spine  vertical title + gold rivet + volume number
+          .pages  the paper block along the top edge
+          .face   the cover itself -- art layers, badge, plate, progress bar
+
+Three things drive how a book looks, and they are set in different places:
+
+| What | Where it comes from |
+|---|---|
+| Spine **colour** | `SPINE_C[o.art]` in the tracker — keyed on the `.o-*` ramp |
+| Spine **text** | `o.spine` (short label; falls back to `o.title` if absent) |
+| Spine **thickness** | `bookThickness(issueCount)` — `max(22, 19.5 + count*0.41)` px |
+
+Two traps, both cheap to avoid:
+
+- **Keep `art` set even on a volume that has a real `cover`.** The cover image
+  replaces the *face*, but the spine is still painted from `SPINE_C[o.art]`.
+  Drop `art` and the book gets a grey placeholder spine next to its real cover.
+- **A new `.o-*` ramp needs a matching `SPINE_C` entry.** Without it the spine
+  silently falls back to grey, which reads as a rendering bug rather than a
+  missing map entry. `build_omnibus_data.py` now fails loudly on this instead
+  of letting it ship.
+
+### Cover art
+
+`artHTML(o)` renders a real image when `o.cover` is set and the CSS ramp
+otherwise. Note it returns the image *instead of* the ramp, texture, gloss and
+spider glyph — a covered volume is just the scan.
+
+Covers are wired in `tools/omnibus_meta.py` (`cover="Art/Spider-Man/<id>.jpg"`),
+never by hand-editing the `OMNI` array in the HTML — that array is generated.
+
+**Adding one:**
+
+```bash
+python3 tools/covers.py add asm-o4 ~/Downloads/scan.png   # optimise + name it
+# paste the printed cover="..." line into tools/omnibus_meta.py
+python3 tools/build_omnibus_data.py                       # regenerate OMNI
+python3 tools/build_single_file.py                        # rebuild the mobile page
+```
+
+`covers.py audit` prints what every volume has and projects the finished build
+size.
+
+**Size is a real constraint, not a nicety.** The artifact caps at 16MB, and
+`build_single_file.py` inlines every cover as a base64 data URI (see below for
+why it must). Base64 costs ~33% on top of the file, so full-resolution scans do
+not fit: the three original ASM scans average 1.1MB, and 18 of those would
+project to a ~26MB build. `covers.py add` re-encodes to 700px wide / JPEG q82
+(~150KB), which keeps all 18 near 4MB. The builder hard-fails past the limit
+rather than writing a file the artifact will reject.
+
+The three ASM covers predate `covers.py` and keep their original filenames and
+sizes; `asm-o1` in particular is a 2.4MB PNG that `audit` flags. Re-running
+`covers.py add` on them is the fix when the shelf fills up.
+
+**Why the mobile build inlines them.** A relative `src="Art/..."` resolves fine
+on GitHub Pages and over `file://`, but the artifact has no sibling files *and*
+its CSP blocks the request outright, so the tile renders empty — and because
+`artHTML()` returns the image instead of the ramp, there is no CSS fallback
+underneath. Inlining is the only form that works on all three surfaces at once.
 
 ### Marvel deep links
 
@@ -231,15 +299,39 @@ is 80439, but 80330–80620 did not contain the ASM annuals).
   are skipped, so rerunning after a block costs nothing.
 - `omnibus_contents_raw.json` — the raw ReprintOf lists pulled from the Marvel
   Database, one entry per omnibus. Regenerate only if a volume's contents change.
-- `omnibus_meta.py` — the hand-written half: `ORDER` (wiki-backed volumes; each
-  key must exist in `omnibus_contents_raw.json` or `gen()` KeyErrors),
-  `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF` (display order by
-  id). This is where a new omnibus gets added.
-- `build_omnibus_data.py` — turns the two above into the `OMNI` structure
-  (dedupe, chaptering strategy, span labels).
+- `omnibus_meta.py` — the hand-written half, and **the only place shelf metadata
+  should be edited**: `ORDER` (wiki-backed volumes; each key must exist in
+  `omnibus_contents_raw.json` or `gen()` KeyErrors), `PLACEHOLDERS` (shelf tiles
+  with no contents), and `SHELF` (display order by id). This is where a new
+  omnibus, a `spine` label or a `cover` path gets added.
+- `build_omnibus_data.py` — turns the two above into the `OMNI` array **and
+  writes it into `spiderman-reading-tracker.html`**. Run it with no arguments to
+  regenerate; `--check` verifies the file matches without writing (exit 1 if
+  not). It also fails loudly on an unknown field, an id in `SHELF` that nothing
+  defines, a volume defined but missing from `SHELF`, and an `.o-*` ramp with no
+  `SPINE_C` entry.
+- `covers.py` — cover art pipeline. `add <volume-id> <image>` optimises a scan
+  to 700px/q82 and prints the line to paste into `omnibus_meta.py`; `audit`
+  reports every volume's cover and projects the finished mobile-build size
+  against the 16MB artifact limit. Needs Pillow (`pip install Pillow`).
 - `marvel_ids.json` — id → marvel.com path fragment, consumed as `MARVEL`.
 - `build_single_file.py` — composes the three pages into `comics-mobile.html`
-  for artifact publishing. See "The mobile build" below.
+  for artifact publishing, inlining cover images as data URIs on the way. See
+  "The mobile build" below.
+
+**`OMNI` in the HTML is generated — do not hand-edit it.** Change
+`omnibus_meta.py` and regenerate. The serialization is pinned to
+`json.dumps(arr, indent=0, ensure_ascii=False)` with a fixed key order
+(`KEY_ORDER`) precisely so a regen shows a small diff instead of reshuffling all
+18 entries.
+
+A full shelf change is three commands:
+
+```bash
+python3 tools/build_omnibus_data.py     # omnibus_meta.py -> OMNI in the tracker
+python3 tools/build_single_file.py      # the three pages -> comics-mobile.html
+python3 tools/build_omnibus_data.py --check   # confirm it round-trips
+```
 
 ### Scope call
 
@@ -395,7 +487,7 @@ Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`.
 - **Top-level JS names collide wholesale** (`SC`, `MARVEL`, `store`, `refresh`,
   `flat`, `esc`…). Each script is wrapped in an IIFE, so nothing leaks.
 
-### Three artifact-environment constraints, each already handled
+### Four artifact-environment constraints, each already handled
 
 1. **No `<meta charset>`** — the Artifact wrapper owns `<head>`, so the page is
    emitted as **pure ASCII** (entities in HTML, `\uXXXX` in JS, `\XXXX ` in CSS).
@@ -413,6 +505,10 @@ Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`.
    (`claude.use("downloads")` → `save({filename,data})`), falls back to the
    clipboard, and uses an ordinary blob link when running locally.
    The artifact must therefore be published with `capabilities: {downloads:true}`.
+4. **Relative image paths do not resolve** — the artifact has no sibling files
+   and its CSP blocks the request, so `src="Art/..."` renders as an empty tile.
+   The builder inlines every cover as a base64 data URI, and hard-fails if the
+   result would exceed the 16MB artifact limit. See "Cover art".
 
 ### Progress does not sync
 
@@ -430,6 +526,13 @@ a server-side store and is not built.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
+3. **15 of 18 omnibus volumes still have no cover scan** — everything except
+   ASM Vol. 1–3. This is the obvious next pass; see "Cover art". The three that
+   exist predate `covers.py` and are unoptimised, so re-running `covers.py add`
+   on them is worth folding into the same pass.
+4. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
+   arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
+   would be a genuine improvement — see "Chaptering".
 
 ## Testing
 
@@ -441,14 +544,27 @@ for real.
 Verify changes with:
 
 ```bash
-# JS syntax
+# JS syntax (swap in spiderman-reading-tracker.html / comics-mobile.html)
 node -e "const fs=require('fs');fs.writeFileSync('/tmp/v.js',
   fs.readFileSync('xmen-reading-tracker.html','utf8').split('<script>')[1].split('</script>')[0])"
 node --check /tmp/v.js
 
+# Shelf data round-trips (also checks SHELF/SPINE_C consistency)
+python3 tools/build_omnibus_data.py --check
+
+# Cover art budget
+python3 tools/covers.py audit
+
+# The mobile build must stay pure ASCII
+python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"   # 0
+
 # Data integrity (counts, duplicate ids, ARC_SUMS coverage) — see git history
 # or re-derive: eval the data section and assert every chapter has a digest.
 ```
+
+The shelf currently reports **18 volumes / 459 issue slots / 456 unique
+issues**. If a change moves those numbers without meaning to, something is
+wrong.
 
 For behavior, `jsdom` with `runScripts:'dangerously'` and no `window.storage`
 simulates plain-browser mode accurately — that's how the localStorage fallback
@@ -459,10 +575,14 @@ and the no-key summary path were verified.
 The canonical copy lives on GitHub. Local clones are disposable; do not treat a
 folder on one machine as the real project.
 
-    git pull           # before touching anything
+    git pull                              # before touching anything
     …edit…
+    python3 tools/build_omnibus_data.py   # if tools/omnibus_meta.py changed
     python3 tools/build_single_file.py    # if any page changed
     git add -A && git commit && git push
+
+Then publish — a push alone changes nothing anyone can see. See "Seeing a
+change" below.
 
 `comics-mobile.html` is generated but **is committed** — GitHub Pages and the
 Claude Artifact both serve it, and neither runs a build step. A commit that
@@ -492,6 +612,34 @@ artifact staying export/import-only. The artifact `artifact` capability is not
 the answer: its live-doc arm only persists DOM inside a marked region, and both
 trackers render their issue rows from JS data, which it does not save.
 
+### Seeing a change — nothing publishes itself
+
+**No surface updates from a `git push`.** Merging to `main` updates Pages only;
+the artifact updates only when someone republishes it. Both are separate,
+explicit steps after the commit lands, and forgetting one is the single most
+common way a change looks "broken" when it is merely unpublished.
+
+| To see it on | Do this | Lag |
+|---|---|---|
+| GitHub Pages | merge to `main` | ~1 min, then hard-refresh |
+| Claude Artifact | republish `comics-mobile.html` to the URL below | immediate |
+| Local | `python3 -m http.server`, not `file://` | — |
+
+Pages serves the repo root of `main`, so a change sitting on a branch — even a
+pushed branch with an open PR — is not visible anywhere. There is no preview
+URL for a branch. Confirm a Pages deploy actually landed rather than assuming:
+
+```bash
+curl -s https://nightowl952.github.io/COMICS/spiderman-reading-tracker.html \
+  | grep -c bookThickness        # some string only the new version has
+```
+
+It returns 0 for a minute or so after the merge while Pages rebuilds. Browsers
+cache these pages hard, so hard-refresh before believing a stale render.
+
+`Art/` is committed, so cover images serve from Pages at their relative path —
+spaces in filenames get URL-encoded by the browser and work fine.
+
 ### Updating the artifact
 
 The artifact is **https://claude.ai/code/artifact/a339fcf9-afeb-413c-880c-a4b1aa6b0f81**.
@@ -499,3 +647,7 @@ The artifact is **https://claude.ai/code/artifact/a339fcf9-afeb-413c-880c-a4b1aa
 Republish `comics-mobile.html` **to that URL** (pass the existing
 URL, don't create a second artifact) with `capabilities: {downloads: true}` —
 without that capability the Back up button silently does nothing.
+
+Rebuild before republishing (`python3 tools/build_single_file.py`) or you ship
+whatever was last generated. The builder refuses to write past 16MB; if it
+does, run `python3 tools/covers.py audit` — it is almost certainly cover art.
