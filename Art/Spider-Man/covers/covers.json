@@ -1,0 +1,434 @@
+[
+ {
+  "id": "asm-o1",
+  "shelfPosition": 1,
+  "title": "Amazing Spider-Man Omnibus",
+  "vol": "Vol. 1",
+  "creators": "Stan Lee & Steve Ditko",
+  "era": "1962–1966",
+  "released": "Apr 2007",
+  "issues": 43,
+  "chapters": 5,
+  "contentsPending": false,
+  "note": "The complete Lee/Ditko run. Everything Spider-Man is starts here — Amazing Fantasy #15 through the Master Planner saga and Ditko's exit.",
+  "source": "local scan: Art/Spider-Man/The Amazing Spider-Man Vol1.png",
+  "cover": {
+   "path": "Art/Spider-Man/covers/asm-o1.jpg",
+   "w": 792,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/asm-o1.jpg",
+   "w": 317,
+   "h": 480
+  }
+ },
+ {
+  "id": "asm-o2",
+  "shelfPosition": 2,
+  "title": "Amazing Spider-Man Omnibus",
+  "vol": "Vol. 2",
+  "creators": "Stan Lee & John Romita Sr.",
+  "era": "1966–1968",
+  "released": "Apr 2012",
+  "issues": 37,
+  "chapters": 4,
+  "contentsPending": false,
+  "note": "Romita takes over. The Green Goblin's identity, Mary Jane's entrance, the Kingpin's debut, and \"Spider-Man No More!\"",
+  "source": "local scan: Art/Spider-Man/The Amazing Spider-Man Vol2.jpg",
+  "cover": {
+   "path": "Art/Spider-Man/covers/asm-o2.jpg",
+   "w": 798,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/asm-o2.jpg",
+   "w": 319,
+   "h": 480
+  }
+ },
+ {
+  "id": "asm-o3",
+  "shelfPosition": 3,
+  "title": "Amazing Spider-Man Omnibus",
+  "vol": "Vol. 3",
+  "creators": "Lee, Romita Sr. & Gil Kane",
+  "era": "1968–1971",
+  "released": "May 2017",
+  "issues": 37,
+  "chapters": 1,
+  "contentsPending": false,
+  "note": "The Stone Tablet saga, Captain Stacy's death, the Comics Code-defying drug issues, and Morbius's debut.",
+  "source": "local scan: Art/Spider-Man/The Amazing Spider-Man Vol3.jpg",
+  "cover": {
+   "path": "Art/Spider-Man/covers/asm-o3.jpg",
+   "w": 798,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/asm-o3.jpg",
+   "w": 319,
+   "h": 480
+  }
+ },
+ {
+  "id": "asm-o4",
+  "shelfPosition": 4,
+  "title": "Amazing Spider-Man Omnibus",
+  "vol": "Vol. 4",
+  "creators": "Gerry Conway & Ross Andru",
+  "era": "1972–1975",
+  "released": "May 2019",
+  "issues": 40,
+  "chapters": 3,
+  "contentsPending": false,
+  "note": "The Night Gwen Stacy Died, the death of the Green Goblin, and the first Punisher and Clone Saga.",
+  "source": "Marvel Database: Amazing Spider-Man Omnibus Vol 1 4",
+  "cover": {
+   "path": "Art/Spider-Man/covers/asm-o4.jpg",
+   "w": 811,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/asm-o4.jpg",
+   "w": 325,
+   "h": 480
+  }
+ },
+ {
+  "id": "utsm-o1",
+  "shelfPosition": 5,
+  "title": "Untold Tales of Spider-Man Omnibus",
+  "vol": "",
+  "creators": "Kurt Busiek & Pat Olliffe",
+  "era": "Set 1962–1965",
+  "released": "Apr 2012",
+  "issues": 33,
+  "chapters": 5,
+  "contentsPending": false,
+  "note": "Published 1995–97 but set between the early Lee/Ditko issues. Slots here by story chronology, not print date — read it alongside Omnibus Vol. 1 or straight after.",
+  "source": "Marvel Database: Untold Tales of Spider-Man Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/utsm-o1.jpg",
+   "w": 600,
+   "h": 888
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/utsm-o1.jpg",
+   "w": 324,
+   "h": 480
+  }
+ },
+ {
+  "id": "stern-o1",
+  "shelfPosition": 6,
+  "title": "Spider-Man by Roger Stern Omnibus",
+  "vol": "",
+  "creators": "Roger Stern, JRJR & John Byrne",
+  "era": "1980–1984",
+  "released": "Apr 2014",
+  "issues": 55,
+  "chapters": 6,
+  "contentsPending": false,
+  "note": "The Hobgoblin mystery, \"The Kid Who Collects Spider-Man,\" and Nothing Can Stop the Juggernaut. Overlaps Omnibus Vol. 7–8.",
+  "source": "Marvel Database: Spider-Man by Roger Stern Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/stern-o1.jpg",
+   "w": 325,
+   "h": 495
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/stern-o1.jpg",
+   "w": 315,
+   "h": 480
+  }
+ },
+ {
+  "id": "mcf-o1",
+  "shelfPosition": 7,
+  "title": "ASM by Michelinie & McFarlane Omnibus",
+  "vol": "",
+  "creators": "David Michelinie & Todd McFarlane",
+  "era": "1987–1990",
+  "released": "Aug 2011",
+  "issues": 35,
+  "chapters": 2,
+  "contentsPending": false,
+  "note": "ASM #300 — the first full Venom. McFarlane's run that reset what a Spider-Man comic looked like.",
+  "source": "Marvel Database: Amazing Spider-Man by David Michelinie and Todd McFarlane Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/mcf-o1.jpg",
+   "w": 459,
+   "h": 700
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/mcf-o1.jpg",
+   "w": 315,
+   "h": 480
+  }
+ },
+ {
+  "id": "larsen-o1",
+  "shelfPosition": 8,
+  "title": "Spider-Man by Michelinie & Larsen Omnibus",
+  "vol": "",
+  "creators": "David Michelinie & Erik Larsen",
+  "era": "1990–1991",
+  "released": "Jun 2017",
+  "issues": 38,
+  "chapters": 4,
+  "contentsPending": false,
+  "note": "Picks up directly from the McFarlane omnibus. Overlaps it at ASM #324, #327 and #329.",
+  "source": "Marvel Database: Spider-Man by David Michelinie and Erik Larsen Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/larsen-o1.jpg",
+   "w": 337,
+   "h": 500
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/larsen-o1.jpg",
+   "w": 324,
+   "h": 480
+  }
+ },
+ {
+  "id": "vs-venom-o1",
+  "shelfPosition": 9,
+  "title": "Spider-Man vs. Venom Omnibus",
+  "vol": "",
+  "creators": "Various",
+  "era": "1988–1994",
+  "released": "Contents pending",
+  "issues": 0,
+  "chapters": 0,
+  "contentsPending": true,
+  "note": "Placeholder — the issue list for this volume has not been added to the tracker yet.",
+  "source": "Marvel Database: Spider-Man vs. Venom Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/vs-venom-o1.jpg",
+   "w": 813,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/vs-venom-o1.jpg",
+   "w": 325,
+   "h": 480
+  }
+ },
+ {
+  "id": "venom-o1",
+  "shelfPosition": 10,
+  "title": "Venomnibus",
+  "vol": "Vol. 1",
+  "creators": "Various",
+  "era": "1988–1995",
+  "released": "Contents pending",
+  "issues": 0,
+  "chapters": 0,
+  "contentsPending": true,
+  "note": "Placeholder — the issue list for this volume has not been added to the tracker yet.",
+  "source": "Marvel Database: Venomnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/venom-o1.jpg",
+   "w": 780,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/venom-o1.jpg",
+   "w": 312,
+   "h": 480
+  }
+ },
+ {
+  "id": "venom-o2",
+  "shelfPosition": 11,
+  "title": "Venomnibus",
+  "vol": "Vol. 2",
+  "creators": "Various",
+  "era": "1995–1998",
+  "released": "Contents pending",
+  "issues": 0,
+  "chapters": 0,
+  "contentsPending": true,
+  "note": "Placeholder — the issue list for this volume has not been added to the tracker yet.",
+  "source": "Marvel Database: Venomnibus Vol 1 2",
+  "cover": {
+   "path": "Art/Spider-Man/covers/venom-o2.jpg",
+   "w": 780,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/venom-o2.jpg",
+   "w": 312,
+   "h": 480
+  }
+ },
+ {
+  "id": "mcf-o2",
+  "shelfPosition": 12,
+  "title": "Spider-Man by Todd McFarlane Omnibus",
+  "vol": "",
+  "creators": "Todd McFarlane",
+  "era": "1990–1991",
+  "released": "Aug 2016",
+  "issues": 16,
+  "chapters": 2,
+  "contentsPending": false,
+  "note": "The adjectiveless Spider-Man #1 — one of the best-selling comics ever printed — and McFarlane's solo writer/artist run.",
+  "source": "Marvel Database: Spider-Man by Todd McFarlane Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/mcf-o2.jpg",
+   "w": 780,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/mcf-o2.jpg",
+   "w": 312,
+   "h": 480
+  }
+ },
+ {
+  "id": "clone-o1",
+  "shelfPosition": 13,
+  "title": "Spider-Man: Clone Saga Omnibus",
+  "vol": "Vol. 1",
+  "creators": "Various",
+  "era": "1994–1995",
+  "released": "Oct 2016",
+  "issues": 41,
+  "chapters": 7,
+  "contentsPending": false,
+  "note": "Printed in true crossover reading order — Web, Amazing, Spider-Man and Spectacular interleave month by month, which is how the chapters below are grouped.",
+  "source": "Marvel Database: Spider-Man: Clone Saga Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/clone-o1.jpg",
+   "w": 806,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/clone-o1.jpg",
+   "w": 322,
+   "h": 480
+  }
+ },
+ {
+  "id": "clone-o2",
+  "shelfPosition": 14,
+  "title": "Spider-Man: Clone Saga Omnibus",
+  "vol": "Vol. 2",
+  "creators": "Various",
+  "era": "1995",
+  "released": "Nov 2017",
+  "issues": 39,
+  "chapters": 7,
+  "contentsPending": false,
+  "note": "Maximum Clonage and the Jackal's endgame. Also interleaved in reading order.",
+  "source": "Marvel Database: Spider-Man: Clone Saga Omnibus Vol 1 2",
+  "cover": {
+   "path": "Art/Spider-Man/covers/clone-o2.jpg",
+   "w": 332,
+   "h": 502
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/clone-o2.jpg",
+   "w": 317,
+   "h": 480
+  }
+ },
+ {
+  "id": "ben-o1",
+  "shelfPosition": 15,
+  "title": "Spider-Man: Ben Reilly Omnibus",
+  "vol": "Vol. 1",
+  "creators": "Various",
+  "era": "1995–1996",
+  "released": "Jan 2019",
+  "issues": 45,
+  "chapters": 8,
+  "contentsPending": false,
+  "note": "Ben Reilly takes over as Spider-Man. The Scarlet Spider titles and the Sensational relaunch.",
+  "source": "Marvel Database: Spider-Man: Ben Reilly Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/ben-o1.jpg",
+   "w": 794,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/ben-o1.jpg",
+   "w": 318,
+   "h": 480
+  }
+ },
+ {
+  "id": "jms-o1",
+  "shelfPosition": 16,
+  "title": "Amazing Spider-Man by J. Michael Straczynski Omnibus",
+  "vol": "",
+  "creators": "J. Michael Straczynski & John Romita Jr.",
+  "era": "2001–2007",
+  "released": "Contents pending",
+  "issues": 0,
+  "chapters": 0,
+  "contentsPending": true,
+  "note": "Placeholder — the issue list for this volume has not been added to the tracker yet.",
+  "source": "Marvel Database: Amazing Spider-Man by J. Michael Straczynski Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/jms-o1.jpg",
+   "w": 797,
+   "h": 1200
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/jms-o1.jpg",
+   "w": 319,
+   "h": 480
+  }
+ },
+ {
+  "id": "ult-o1",
+  "shelfPosition": 17,
+  "title": "Ultimate Spider-Man Omnibus",
+  "vol": "",
+  "creators": "Brian Michael Bendis & Mark Bagley",
+  "era": "2000–2009",
+  "released": "Contents pending",
+  "issues": 0,
+  "chapters": 0,
+  "contentsPending": true,
+  "note": "Placeholder — the issue list for this volume has not been added to the tracker yet.",
+  "source": "Marvel Database: Ultimate Spider-Man Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/ult-o1.jpg",
+   "w": 325,
+   "h": 500
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/ult-o1.jpg",
+   "w": 312,
+   "h": 480
+  }
+ },
+ {
+  "id": "ult-death-o1",
+  "shelfPosition": 18,
+  "title": "Death of Ultimate Spider-Man Omnibus",
+  "vol": "",
+  "creators": "Brian Michael Bendis & Mark Bagley",
+  "era": "2010–2011",
+  "released": "Contents pending",
+  "issues": 0,
+  "chapters": 0,
+  "contentsPending": true,
+  "note": "Placeholder — the issue list for this volume has not been added to the tracker yet.",
+  "source": "Marvel Database: Ultimate Comics Spider-Man: Death of Spider-Man Omnibus Vol 1 1",
+  "cover": {
+   "path": "Art/Spider-Man/covers/ult-death-o1.jpg",
+   "w": 325,
+   "h": 500
+  },
+  "small": {
+   "path": "Art/Spider-Man/covers/small/ult-death-o1.jpg",
+   "w": 312,
+   "h": 480
+  }
+ }
+]
