@@ -114,15 +114,41 @@
   .chip-btn.on{color:var(--ink);background:linear-gradient(180deg,#fff, var(--xyellow) 60%, var(--xyellow-deep));border-color:rgba(255,255,255,.85);}
 
   /* ================= OMNIBUS SHELF ================= */
-  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:20px;}
-  .cell{position:relative;transition:transform .22s cubic-bezier(.2,.8,.3,1);}
-  .cell:hover,.cell:focus-within{transform:translateY(-8px) scale(1.03);z-index:5;}
-  .omni{position:relative;aspect-ratio:2/3;border-radius:16px;overflow:hidden;cursor:pointer;padding:0;display:block;width:100%;
-    font-family:inherit;text-align:left;color:#fff;border:1px solid rgba(255,255,255,.55);
-    box-shadow:0 10px 26px rgba(5,25,60,.45), inset 0 1px 0 rgba(255,255,255,.5);transition:box-shadow .22s;}
-  .cell:hover .omni,.cell:focus-within .omni{
-    box-shadow:0 22px 44px rgba(5,25,60,.6), 0 0 0 2px var(--xyellow), inset 0 1px 0 rgba(255,255,255,.6);}
-  .omni:focus-visible{outline:3px solid var(--xyellow);outline-offset:2px;}
+  /* Each tile is a CSS-3D hardcover: .cell (perspective root) > .book (bob float
+     wrapper) > .omni (the tilted book, holding .spine + .pages + .face). Spine
+     thickness comes from --t (set inline per tile from issue count). */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:34px 26px;}
+  .cell{position:relative;z-index:1;perspective:1500px;perspective-origin:50% 40%;}
+  .cell:hover,.cell:focus-within{z-index:9;}
+  .book{position:relative;transform-style:preserve-3d;}
+  .cell:hover .book,.cell:focus-within .book{animation:bob 3.4s ease-in-out .4s infinite;}
+  .shade{position:absolute;left:8%;right:8%;bottom:-12px;height:24px;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 50%,rgba(3,14,36,.55),transparent 70%);filter:blur(6px);}
+  .omni{--t:22px;position:relative;display:block;width:100%;aspect-ratio:2/3;padding:0;border:0;background:none;
+    font-family:inherit;text-align:left;color:#fff;cursor:pointer;transform-style:preserve-3d;
+    transform:rotateY(21deg) rotateX(4deg);transition:transform .5s cubic-bezier(.2,.8,.3,1);}
+  .cell:hover .omni,.cell:focus-within .omni{transform:rotateY(30deg) rotateX(7deg) translateY(-8px) scale(1.03);}
+  .omni:focus-visible{outline:3px solid var(--xyellow);outline-offset:6px;}
+  .spine{position:absolute;left:0;top:0;bottom:0;width:var(--t);transform-origin:left center;
+    transform:translateZ(calc(var(--t) * -1)) rotateY(-90deg);display:flex;flex-direction:column;align-items:center;
+    justify-content:space-between;padding:12px 0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);}
+  .spine::before{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,.02) 36%,rgba(0,0,0,.42));}
+  .spine .dot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;
+    background:linear-gradient(180deg,#fff, var(--xyellow) 60%, var(--xyellow-deep));box-shadow:0 1px 3px rgba(0,0,0,.5);}
+  .spine .stitle{position:relative;z-index:1;writing-mode:vertical-rl;font-size:8.5px;font-weight:900;font-style:italic;
+    letter-spacing:1.6px;text-transform:uppercase;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.6);}
+  .spine .stitle .ovol{color:var(--xyellow);}
+  .spine .snum{position:relative;z-index:1;font-size:8px;font-weight:900;font-style:italic;color:rgba(255,255,255,.6);letter-spacing:1px;}
+  .pages{position:absolute;left:5px;right:3px;top:1px;height:var(--t);transform-origin:center top;
+    transform:translateZ(calc(var(--t) * -1)) rotateX(90deg);
+    background:repeating-linear-gradient(90deg,#efe9db 0 1.5px,#cfc7b4 1.5px 2.5px);box-shadow:inset 0 0 7px rgba(0,0,0,.3);}
+  .face{position:absolute;inset:0;overflow:hidden;border-radius:2px 8px 8px 2px;
+    box-shadow:0 0 0 1px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.28),inset 15px 0 16px -12px rgba(0,0,0,.65);
+    transition:box-shadow .22s;}
+  .cell:hover .face,.cell:focus-within .face{
+    box-shadow:0 0 0 2px var(--xyellow),inset 0 0 0 1px rgba(255,255,255,.3),inset 15px 0 16px -12px rgba(0,0,0,.65);}
+  @keyframes bob{0%,100%{transform:translateY(0) rotateZ(0deg);}50%{transform:translateY(-9px) rotateZ(-.6deg);}}
   /* art layers are reused by the shelf tile and the detail banner - do not scope to .omni */
   .art,.tex{position:absolute;inset:0;}
   .artimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
@@ -696,6 +722,8 @@
 const OMNI = [
 {
 "id": "asm-o1",
+"spine": "Amazing Spider-Man",
+"cover": "Art/Spider-Man/The Amazing Spider-Man Vol1.png",
 "title": "Amazing Spider-Man Omnibus",
 "vol": "Vol. 1",
 "creators": "Stan Lee & Steve Ditko",
@@ -959,6 +987,8 @@ const OMNI = [
 },
 {
 "id": "asm-o2",
+"spine": "Amazing Spider-Man",
+"cover": "Art/Spider-Man/The Amazing Spider-Man Vol2.jpg",
 "title": "Amazing Spider-Man Omnibus",
 "vol": "Vol. 2",
 "creators": "Stan Lee & John Romita Sr.",
@@ -1185,6 +1215,8 @@ const OMNI = [
 },
 {
 "id": "asm-o3",
+"spine": "Amazing Spider-Man",
+"cover": "Art/Spider-Man/The Amazing Spider-Man Vol3.jpg",
 "title": "Amazing Spider-Man Omnibus",
 "vol": "Vol. 3",
 "creators": "Lee, Romita Sr. & Gil Kane",
@@ -1390,6 +1422,7 @@ const OMNI = [
 },
 {
 "id": "asm-o4",
+"spine": "Amazing Spider-Man",
 "title": "Amazing Spider-Man Omnibus",
 "vol": "Vol. 4",
 "creators": "Gerry Conway & Ross Andru",
@@ -1624,6 +1657,7 @@ const OMNI = [
 },
 {
 "id": "utsm-o1",
+"spine": "Untold Tales",
 "title": "Untold Tales of Spider-Man Omnibus",
 "vol": "",
 "creators": "Kurt Busiek & Pat Olliffe",
@@ -1837,6 +1871,7 @@ const OMNI = [
 },
 {
 "id": "stern-o1",
+"spine": "By Roger Stern",
 "title": "Spider-Man by Roger Stern Omnibus",
 "vol": "",
 "creators": "Roger Stern, JRJR & John Byrne",
@@ -2167,6 +2202,7 @@ const OMNI = [
 },
 {
 "id": "mcf-o1",
+"spine": "Michelinie & McFarlane",
 "title": "ASM by Michelinie & McFarlane Omnibus",
 "vol": "",
 "creators": "David Michelinie & Todd McFarlane",
@@ -2369,6 +2405,7 @@ const OMNI = [
 },
 {
 "id": "larsen-o1",
+"spine": "Michelinie & Larsen",
 "title": "Spider-Man by Michelinie & Larsen Omnibus",
 "vol": "",
 "creators": "David Michelinie & Erik Larsen",
@@ -2600,6 +2637,7 @@ const OMNI = [
 },
 {
 "id": "vs-venom-o1",
+"spine": "Spider-Man vs. Venom",
 "title": "Spider-Man vs. Venom Omnibus",
 "vol": "",
 "creators": "Various",
@@ -2613,6 +2651,7 @@ const OMNI = [
 },
 {
 "id": "venom-o1",
+"spine": "Venomnibus",
 "title": "Venomnibus",
 "vol": "Vol. 1",
 "creators": "Various",
@@ -2626,6 +2665,7 @@ const OMNI = [
 },
 {
 "id": "venom-o2",
+"spine": "Venomnibus",
 "title": "Venomnibus",
 "vol": "Vol. 2",
 "creators": "Various",
@@ -2639,6 +2679,7 @@ const OMNI = [
 },
 {
 "id": "mcf-o2",
+"spine": "By Todd McFarlane",
 "title": "Spider-Man by Todd McFarlane Omnibus",
 "vol": "",
 "creators": "Todd McFarlane",
@@ -2746,6 +2787,7 @@ const OMNI = [
 },
 {
 "id": "clone-o1",
+"spine": "Clone Saga",
 "title": "Spider-Man: Clone Saga Omnibus",
 "vol": "Vol. 1",
 "creators": "Various",
@@ -3013,6 +3055,7 @@ const OMNI = [
 },
 {
 "id": "clone-o2",
+"spine": "Clone Saga",
 "title": "Spider-Man: Clone Saga Omnibus",
 "vol": "Vol. 2",
 "creators": "Various",
@@ -3270,6 +3313,7 @@ const OMNI = [
 },
 {
 "id": "ben-o1",
+"spine": "Ben Reilly",
 "title": "Spider-Man: Ben Reilly Omnibus",
 "vol": "Vol. 1",
 "creators": "Various",
@@ -3564,6 +3608,7 @@ const OMNI = [
 },
 {
 "id": "jms-o1",
+"spine": "By J.M. Straczynski",
 "title": "Amazing Spider-Man by J. Michael Straczynski Omnibus",
 "vol": "",
 "creators": "J. Michael Straczynski & John Romita Jr.",
@@ -3577,6 +3622,7 @@ const OMNI = [
 },
 {
 "id": "ult-o1",
+"spine": "Ultimate Spider-Man",
 "title": "Ultimate Spider-Man Omnibus",
 "vol": "",
 "creators": "Brian Michael Bendis & Mark Bagley",
@@ -3590,6 +3636,7 @@ const OMNI = [
 },
 {
 "id": "ult-death-o1",
+"spine": "Death of Ultimate",
 "title": "Death of Ultimate Spider-Man Omnibus",
 "vol": "",
 "creators": "Brian Michael Bendis & Mark Bagley",
@@ -4818,6 +4865,18 @@ const spiderSVG = () => SPIDER_SVG.split("GID").join("sp"+(++gid));
 
 /* ============ SHELF ============ */
 const shelfEl=document.getElementById("shelf");
+/* spine gradient (top/bottom) per cover ramp -- the middle two stops of the
+   matching .o-* ramp in the stylesheet, kept in sync by hand */
+const SPINE_C={
+  'o-ditko':['#b81f26','#1d3f8c'],'o-untold':['#c9702e','#8d2226'],'o-romita':['#d92a30','#2454b0'],
+  'o-teamup':['#e2661f','#7d2a8e'],'o-conway':['#bd2028','#16306e'],'o-spectacular':['#3566c4','#4a2a92'],
+  'o-eighties':['#a8151d','#2b2b33'],'o-stern':['#e07a1c','#a3161d'],'o-black':['#31405c','#141a2c'],
+  'o-mcfarlane':['#4a2f9c','#1c1140'],'o-larsen':['#1f8f9c','#a8231f'],'o-bagley':['#d5121a','#1b4fb5'],
+  'o-dematteis':['#3f8c2c','#5c2a8e'],'o-clone':['#3f9433','#a81d22'],'o-benreilly':['#c2161c','#1e3f96'],
+  'o-placeholder':['#4d6480','#26344a']
+};
+/* thickness scales with issue count; placeholders (0 issues) fall through to the 22px floor */
+function bookThickness(issueCount){ return Math.max(22, Math.round(19.5 + issueCount*0.41)); }
 function buildShelf(){
   shelfEl.innerHTML = OMNI.map((o,idx)=>{
     const st=omniStats(o);
@@ -4828,19 +4887,29 @@ function buildShelf(){
     else if(o.released==="Announced") badge='<span class="obadge soon">Announced</span>';
     else if(state==="done") badge='<span class="obadge done">Finished</span>';
     else badge='<span class="obadge">'+st.t+' issues</span>';
+    const num=String(idx+1).padStart(2,"0");
+    const [c1,c2]=SPINE_C[o.art]||SPINE_C['o-placeholder'];
+    const spineTitle=esc(o.spine||o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'');
     return '<div class="cell" data-state="'+state+'">'+
-      '<button class="omni" data-omni="'+o.id+'" aria-label="'+esc(o.title+' '+o.vol)+' — '+st.done+' of '+st.t+' logged">'+
-        artHTML(o)+
-        '<span class="onum">'+String(idx+1).padStart(2,"0")+'</span>'+ badge +
-        '<div class="spidey">'+spiderSVG()+'</div>'+
-        '<div class="plate">'+
-          '<div class="oname">'+esc(o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'')+'</div>'+
-          '<div class="ocre">'+esc(o.creators)+'</div>'+
-          '<div class="ometa">'+esc(o.era)+(o.placeholder?' &middot; not added yet':' &middot; '+st.done+'/'+st.t+' &middot; '+pct+'%')+'</div>'+
-          '<div class="pbar"><div class="fill rd" style="width:'+(st.t?st.r/st.t*100:0)+'%"></div>'+
-            '<div class="fill sk" style="width:'+(st.t?st.s/st.t*100:0)+'%"></div></div>'+
+      '<div class="book"><div class="shade"></div>'+
+      '<button class="omni" style="--t:'+bookThickness(st.t)+'px" data-omni="'+o.id+'" aria-label="'+esc(o.title+' '+o.vol)+' — '+st.done+' of '+st.t+' logged">'+
+        '<div class="spine" style="background:linear-gradient(180deg,'+c1+','+c2+')">'+
+          '<span class="dot"></span><span class="stitle">'+spineTitle+'</span><span class="snum">'+num+'</span>'+
         '</div>'+
-      '</button></div>';
+        '<div class="pages"></div>'+
+        '<div class="face">'+
+          artHTML(o)+
+          '<span class="onum">'+num+'</span>'+ badge +
+          (o.cover?'':'<div class="spidey">'+spiderSVG()+'</div>')+
+          '<div class="plate">'+
+            '<div class="oname">'+esc(o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'')+'</div>'+
+            '<div class="ocre">'+esc(o.creators)+'</div>'+
+            '<div class="ometa">'+esc(o.era)+(o.placeholder?' &middot; not added yet':' &middot; '+st.done+'/'+st.t+' &middot; '+pct+'%')+'</div>'+
+            '<div class="pbar"><div class="fill rd" style="width:'+(st.t?st.r/st.t*100:0)+'%"></div>'+
+              '<div class="fill sk" style="width:'+(st.t?st.s/st.t*100:0)+'%"></div></div>'+
+          '</div>'+
+        '</div>'+
+      '</button></div></div>';
   }).join("");
   document.getElementById("shelfCount").textContent =
     OMNI.length+" volumes · "+flat.length+" issues";
