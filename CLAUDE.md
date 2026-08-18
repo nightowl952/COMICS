@@ -303,6 +303,14 @@ underneath. Inlining is the only form that works on all three surfaces at once.
 fall back to a `marvel.com/search?query=` URL and render a grey Read button —
 same convention as the X-Men tracker.
 
+**This is the Marvel Unlimited path, and there is nothing else to build.** The
+Read button goes to `marvel.com/comics/issue/<id>/<slug>` — the issue's own page,
+carrying the description and the Read Now button that opens it in Marvel
+Unlimited for a subscriber. "Marvel Unlimited link" and "marvel.com issue link"
+mean the same destination here; there is no separate `read.marvel.com` URL
+scheme to harvest, and a new hero needs only the same id harvest described
+below.
+
 `MARVEL` still carries all 1118 harvested ids, 744 of which no longer match any
 issue on the shelf. That is intentional: unused keys cost nothing, and keeping
 them means re-adding a trimmed volume does not require re-running the harvester
