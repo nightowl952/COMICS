@@ -261,7 +261,12 @@ def main():
         if re.fullmatch(r'[\d.]+', meta.get('price', '')):
             meta['price'] = '$' + meta['price']
         if meta:
-            editions[vid] = {**editions.get(vid, {}), **meta}
+            # Wiki values win over anything seeded from retail listings, and the
+            # provenance goes with them -- leaving a stale "retail" source note
+            # on wiki-sourced fields would misreport where the data came from.
+            prev = {k: v for k, v in editions.get(vid, {}).items()
+                    if k not in ('printing', 'note')}
+            editions[vid] = {**prev, **meta, 'source': f'Marvel Database wiki: {page}'}
             print("    " + ", ".join(f"{k}={v[:34]}" for k, v in meta.items()))
         else:
             print("    no edition fields found")

@@ -160,6 +160,11 @@ END   = '/* ==== END GENERATED OMNI ==== */'
 # than printing blanks.
 EDITION_FIELDS = ['format','pages','released','isbn','price','coverArtist','editor','publisher']
 
+# Not rendered: provenance and notes that belong in the JSON, not on the page.
+# `marvel` is lifted out of the edition block onto the volume itself, because it
+# is a deep link rather than an attribute of the printing.
+EDITION_SKIP = ['printing', 'source', 'note', 'marvel']
+
 
 def cover_uri(vid):
     """Read Art/covers/<id>.<ext> and return it as a data: URI.
@@ -192,12 +197,14 @@ def shelf():
         v.pop('wiki', None)
 
     editions = json.load(open(EDIT)) if os.path.exists(EDIT) else {}
+    editions = {k: v for k, v in editions.items() if not k.startswith('_')}
     out = []
     for vid in M.SHELF:
         v = vols[vid]
-        ed = {k: editions[vid][k] for k in EDITION_FIELDS
-              if k in editions.get(vid, {}) and editions[vid][k]}
+        e = editions.get(vid, {})
+        ed = {k: e[k] for k in EDITION_FIELDS if e.get(k)}
         if ed: v['edition'] = ed
+        if e.get('marvel'): v['marvel'] = e['marvel']
         uri = cover_uri(vid)
         if uri: v['cover'] = uri
         # chapters last so the generated block stays readable
@@ -220,9 +227,11 @@ def write(page=PAGE):
 
     covers = sum(1 for v in data if v.get('cover'))
     eds    = sum(1 for v in data if v.get('edition'))
+    links  = sum(1 for v in data if v.get('marvel'))
     issues = sum(len(c['issues']) for v in data for c in v['chapters'])
     print(f"{os.path.basename(page)}: {len(data)} volumes, {issues} issue slots, "
-          f"{covers} covers baked in, {eds} with edition metadata")
+          f"{covers} covers baked in, {eds} with edition metadata, "
+          f"{links} with a Marvel collection link")
     if covers < len(data):
         missing = [v['id'] for v in data if not v.get('cover')]
         print("  no cover yet: " + ", ".join(missing))

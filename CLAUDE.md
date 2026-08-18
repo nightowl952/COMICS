@@ -207,7 +207,19 @@ undecodable cover degrades instead of blanking. Saving a cover to
 
 Each volume also carries an optional `edition` object (format, pages, released,
 isbn, price, coverArtist, editor, publisher) rendered as a grid on the detail
-view. Every field is optional; the panel hides itself when empty.
+view, plus an optional `marvel` collection id that renders a "View collection"
+link. Every field is optional; the panel hides itself when empty.
+
+`tools/omnibus_editions.json` is currently **seeded from retail listings**, not
+the wiki — the Claude Code web environment cannot reach marvel.fandom.com, so a
+first pass was gathered by web search. Each entry carries `printing` and
+`source` provenance keys, which are build-time only and never reach the page.
+Treat every `isbn`/`pages` value there as provisional: running
+`scrape_covers.py` overwrites them from the Marvel Database wiki, keeps the
+`marvel` link, and rewrites `source` to name the wiki page it used.
+
+13 of the 18 volumes have a `marvel` collection id. The convention matches the
+issue-level links — only the numeric id matters, the slug is decorative.
 
 Budget: each committed kilobyte costs ~1.37 KB in **both**
 `spiderman-reading-tracker.html` and `comics-mobile.html`. 18 covers at 45 KB

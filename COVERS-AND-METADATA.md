@@ -270,6 +270,33 @@ marvel.com harvests were run from and where they are known to work. A session in
 an environment with a permissive network policy would also do, but the local
 route is proven.
 
+## Status, 2026-08-18
+
+**Metadata: seeded for all 18 volumes.** `tools/omnibus_editions.json` carries
+format, publisher, ISBN and page count (14 of 18), plus a marvel.com collection
+id for 13 of 18. Gathered by **web search against retail listings**, not the
+wiki, because this environment cannot reach marvel.fandom.com. Anchored to the
+printing matching each volume's existing `released` month wherever that
+printing's figures were quoted; where sources conflicted or only described a
+different printing, the field was left empty rather than guessed. Every entry
+records `printing` and `source`.
+
+This also settled a question the survey left open: **marvel.com collection pages
+are real and findable**, at `/comics/collection/<id>/<slug>` exactly as
+predicted. Confirmed ids include 6332 (ASM Vol. 1), 58980 (Vol. 2), 92004 (Roger
+Stern), 41736 (Michelinie & McFarlane, 2011 printing) and 42201 (Death of
+Ultimate Spider-Man). Note that search surfaces new-printing ids as readily as
+first-printing ones — 70527 and 41736 are the same book, eleven years apart.
+
+Still missing a collection id: `utsm-o1`, `larsen-o1`, `mcf-o2`, `clone-o2`,
+`ult-o1`.
+
+**Covers: none yet.** No cover can be fetched from a Claude Code web session —
+there is no binary fetch path at all, only text search, and the account has a
+single environment. `tools/scrape_covers.py` run from a local clone is the only
+route, and it will upgrade the metadata to wiki-sourced in the same pass.
+
+
 ## What is and isn't verified
 
 Verified this session: the Marvel API discontinuation; Comic Vine's limits and
