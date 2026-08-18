@@ -12,7 +12,7 @@ What it has to solve:
   * top-level JS names collide wholesale (SC, MARVEL, store, refresh, flat, ...)
     -> each script is wrapped in an IIFE, so nothing leaks.
 """
-import re, json, sys, os
+import re, json, sys, os, base64
 
 SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APPS = [
@@ -210,6 +210,41 @@ def patch_app(key, js):
                         'byId("backShelf").onclick=()=>{ location.hash="#/spider-man"; };')
         js = js.replace('<a class="backlink" href="index.html">', '<a class="backlink" href="#/">')
         js += '\nwindow.__COMICS.spidey = function(){ route(); };\n'
+        js = inline_covers(js)
+    return js
+
+
+# ------------------------------------------------------------- cover inlining
+# The shelf points `cover` at a file under Art/ -- fine over HTTP, but the
+# artifact has no sibling files and its CSP blocks the request outright, so a
+# relative src renders as a broken tile. Baking each cover in as a data URI is
+# the only thing that works on all three surfaces at once.
+#
+# Cost: base64 is ~33% bigger than the file, and the artifact caps at 16MB.
+# Run `python3 tools/covers.py audit` if this trips.
+MIME = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png",
+        ".webp": "image/webp", ".gif": "image/gif"}
+ARTIFACT_LIMIT = 16 * 1024**2
+
+
+def inline_covers(js):
+    def repl(m):
+        rel = m.group(1)
+        path = os.path.join(SRC, rel)
+        if not os.path.exists(path):
+            raise SystemExit(
+                "cover file missing: %s\n"
+                "fix the `cover` path in tools/omnibus_meta.py, regenerate with\n"
+                "  python3 tools/build_omnibus_data.py" % rel)
+        mime = MIME.get(os.path.splitext(path)[1].lower())
+        if not mime:
+            raise SystemExit("unsupported cover format: %s" % rel)
+        b64 = base64.b64encode(open(path, "rb").read()).decode("ascii")
+        return '"cover": "data:%s;base64,%s"' % (mime, b64)
+
+    js, n = re.subn(r'"cover": "((?!data:)[^"]+)"', repl, js)
+    if n:
+        print("  inlined %d cover image(s)" % n)
     return js
 
 
@@ -312,5 +347,8 @@ def emit():
 if __name__ == "__main__":
     out = os.path.join(SRC, "comics-mobile.html")
     html = emit()
+    if len(html) > ARTIFACT_LIMIT:
+        sys.exit(f"{len(html)/1e6:.1f} MB exceeds the {ARTIFACT_LIMIT/1e6:.0f} MB artifact "
+                 f"limit.\nShrink the covers: python3 tools/covers.py audit")
     open(out, "w", encoding="utf-8").write(html)
-    print(f"wrote {out}  ({len(html):,} bytes)")
+    print(f"wrote {out}  ({len(html):,} bytes, {len(html)/1e6:.1f} MB)")
