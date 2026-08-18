@@ -8,6 +8,27 @@ the Spider-Man shelf, and which source to trust for what. Companion to
 Researched 2026-08-18. Read the "What is and isn't verified" section before
 trusting any single line here.
 
+## TL;DR — the pipeline is built, run it locally
+
+Everything is scraped **once** and baked into the HTML. The published pages make
+no network requests for covers or metadata; they work with the wifi off.
+
+    python3 tools/scrape_covers.py        # the only step that needs network
+    python3 tools/build_omnibus_data.py   # bakes covers + metadata into OMNI
+    python3 tools/build_single_file.py    # rebuilds comics-mobile.html
+
+The scrape writes `Art/covers/<id>.jpg` and `tools/omnibus_editions.json`, both
+committed. The generator base64-encodes the covers into the tracker's `OMNI`
+block as `data:` URIs. Re-running it is cheap: it skips volumes already done,
+caches every response under `tools/scrape_cache/`, and `--reparse` re-reads that
+cache without touching the network.
+
+**Run it from a local clone** — see "Where this can and cannot run" below.
+
+If a volume never resolves, save a cover to `Art/covers/<id>.jpg` by hand. The
+generator takes whatever is in that directory and does not care where it came
+from.
+
 ## What we are trying to fill
 
 Two separate things, from two different kinds of source:
@@ -41,22 +62,26 @@ That last cell is the problem. `artHTML()` returns *either* the `<img>` *or* the
 CSS layers, so setting `cover` on a volume actively removes the placeholder art
 that currently looks fine in the artifact.
 
-Two ways out, and they are not exclusive:
+Both mitigations are now implemented, and hotlinking is not one of them:
 
-1. **Commit the images to the repo** (`Art/covers/<id>.webp`), reference them
-   relatively, and have `tools/build_single_file.py` inline each one as a
-   `data:` URI when it composes the mobile build. Works on all three surfaces.
-   Cost: ~18 files in the repo, and the mobile build grows.
-2. **Hotlink, and make `artHTML()` fall back.** Keep the CSS ramp rendered
-   *behind* the `<img>` instead of instead of it, so a blocked or 404 image
-   degrades to today's art rather than to a hole. This is a two-line change and
-   is worth doing regardless of which source wins.
+1. **Covers are committed and inlined.** `Art/covers/<id>.<ext>` is the source of
+   truth; `tools/build_omnibus_data.py` base64-encodes each one into `OMNI` as a
+   `data:` URI. That lands in `spiderman-reading-tracker.html` itself, which keeps
+   the file self-contained — the project rule that every page carries its own
+   data, styles, logic and artwork — and `comics-mobile.html` inherits it for
+   free. Works on all three surfaces, offline.
+2. **`artHTML()` layers rather than replaces.** The CSS ramp now always renders
+   underneath the `<img>`, so a volume with no cover yet, or an image that fails
+   to decode, degrades to today's placeholder art instead of a hole.
 
-Size math for option 1: at 400×600 WebP q80 a cover is roughly 30–45 KB, so
-base64 is ~40–60 KB, so 18 covers add roughly 0.7–1.1 MB to `comics-mobile.html`
-(currently 270 KB). The artifact limit is 16 MB, so this fits with room to spare
-— but it does mean the mobile build stops being a small file, and every rebuild
-carries the whole payload.
+Measured, with 18 stand-in covers at 45 KB each: `spiderman-reading-tracker.html`
+150 KB → 1.23 MB, `comics-mobile.html` 266 KB → 1.35 MB. Comfortably inside the
+artifact's 16 MB limit, but the mobile build stops being a small file and every
+rebuild carries the whole payload. `--width` on the scraper is the knob; 400px is
+the default and is plenty at the size these render.
+
+Base64 is ASCII, so the mobile builder's zero-non-ASCII assertion is unaffected —
+verified, it still passes with covers baked in.
 
 Also note the builder asserts **zero non-ASCII bytes** before writing. Base64 is
 ASCII, so data URIs are safe there. Do not try to inline raw binary.
@@ -194,10 +219,22 @@ publisher blurbs, but it is quota-managed per calling project and returned HTTP
 from a residential IP, but it is not something to build a pipeline on. ISBNdb is
 paid.
 
-## Recommended plan
+## What was implemented
 
-A three-tier cascade, cheapest and most authoritative first, run once and cached
-to a JSON store the way `marvel_ids.json` already is:
+`tools/scrape_covers.py` does tiers 1 and 3 below against the Marvel Database
+wiki, with Open Library as the cover fallback. Tier 2 (marvel.com) is documented
+but **not** built, because its page structure could not be verified from here —
+see "What is and isn't verified".
+
+The wiki parser reads `| Key = Value` pairs generically rather than assuming one
+infobox template, since the omnibus pages do not all use the same one. It unwraps
+`[[links]]`, keeps a wrapping template's last argument (so `{{USD|99.99}}` yields
+a price instead of vanishing), joins `<br>`-separated creator lists, drops `<ref>`
+notes, and prefers a link's target over a `Last, First` display form so
+`[[Steve Ditko|Ditko, Steve]]` reads as "Steve Ditko". That parsing was exercised
+against realistic hand-written wikitext, not against the live wiki.
+
+The original three-tier plan, for reference:
 
 1. **Marvel Database wiki → all metadata, all 18 volumes.** One `action=parse`
    per page, parse the infobox, write `tools/omnibus_editions.json` keyed by the
@@ -211,11 +248,8 @@ to a JSON store the way `marvel_ids.json` already is:
    convention.
 3. **Open Library by ISBN → fallback cover** for anything step 2 misses.
 
-Then, separately, decide the hosting question from the constraint section:
-download the winners to `Art/covers/<id>.webp`, commit them, and teach
-`build_single_file.py` to inline them — or hotlink and accept CSS art in the
-artifact. Either way, make `artHTML()` layer the image *over* the CSS ramp so a
-failure degrades instead of blanking.
+The hosting question from the constraint section is settled: covers are
+committed and inlined, never linked.
 
 ## Where this can and cannot run
 

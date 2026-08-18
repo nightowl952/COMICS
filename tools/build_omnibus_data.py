@@ -1,4 +1,4 @@
-import json,re,collections
+import base64,json,mimetypes,os,re,sys,collections
 
 # wiki series title -> (short code, display name used in the UI)
 # "Spectacular Spider-Man Vol 1" and "Peter Parker, The Spectacular Spider-Man Vol 1"
@@ -104,7 +104,7 @@ def spanlabel(nums):
 
 def gen(pages, meta):
     out=[]
-    d=json.load(open('omni.json'))
+    d=json.load(open(RAW))
     for key in pages:
         v=d[key]; m=meta[key]
         seen=[];s=set()
@@ -140,6 +140,93 @@ def gen(pages, meta):
                 chapters.append({'id':f"{m['id']}-c{ci//CH+1}",'title':f"Part {ci//CH+1}",
                     'era':f"{first} → {last}",
                     'issues':[{'id':f"{c}-{n}",'t':f"{disp} #{n}",'s':disp} for c,disp,n in blk]})
-        out.append({**{k:val for k,val in m.items()}, 'chapters':chapters,
-                    'count':sum(len(c['issues']) for c in chapters)})
+        out.append({**{k:val for k,val in m.items()}, 'chapters':chapters})
     return out
+
+
+# ---------------------------------------------------------------- paths
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+RAW  = os.path.join(HERE, 'omnibus_contents_raw.json')
+EDIT = os.path.join(HERE, 'omnibus_editions.json')
+ART  = os.path.join(ROOT, 'Art', 'covers')
+PAGE = os.path.join(ROOT, 'spiderman-reading-tracker.html')
+
+BEGIN = '/* ==== BEGIN GENERATED OMNI -- tools/build_omnibus_data.py ==== */'
+END   = '/* ==== END GENERATED OMNI ==== */'
+
+# Edition fields carried onto each volume, in display order. Anything the
+# scrape did not find is simply absent -- the UI omits missing rows rather
+# than printing blanks.
+EDITION_FIELDS = ['format','pages','released','isbn','price','coverArtist','editor','publisher']
+
+
+def cover_uri(vid):
+    """Read Art/covers/<id>.<ext> and return it as a data: URI.
+
+    Baked in rather than linked on purpose: the tracker has to work with no
+    network at all, and the Artifact CSP blocks remote images outright."""
+    if not os.path.isdir(ART): return None
+    for fn in sorted(os.listdir(ART)):
+        stem, ext = os.path.splitext(fn)
+        if stem != vid: continue
+        mime = mimetypes.types_map.get(ext.lower())
+        if not mime or not mime.startswith('image/'):
+            print(f"  !! {fn}: unknown image type, skipped"); continue
+        raw = open(os.path.join(ART, fn), 'rb').read()
+        return f"data:{mime};base64," + base64.b64encode(raw).decode('ascii')
+    return None
+
+
+def shelf():
+    """The whole shelf in SHELF order: wiki-backed volumes generated from the
+    raw contents, placeholders passed through, both decorated with whatever
+    covers and edition metadata have been scraped."""
+    sys.path.insert(0, HERE)
+    import omnibus_meta as M
+    vols = {o['id']: o for o in gen([k for k, _ in M.ORDER], dict(M.ORDER))}
+    for ph in M.PLACEHOLDERS:
+        vols[ph['id']] = dict(ph)
+    # build-time only -- scrape_covers.py reads these, the browser never needs them
+    for v in vols.values():
+        v.pop('wiki', None)
+
+    editions = json.load(open(EDIT)) if os.path.exists(EDIT) else {}
+    out = []
+    for vid in M.SHELF:
+        v = vols[vid]
+        ed = {k: editions[vid][k] for k in EDITION_FIELDS
+              if k in editions.get(vid, {}) and editions[vid][k]}
+        if ed: v['edition'] = ed
+        uri = cover_uri(vid)
+        if uri: v['cover'] = uri
+        # chapters last so the generated block stays readable
+        ch = v.pop('chapters', [])
+        v['chapters'] = ch
+        out.append(v)
+    return out
+
+
+def write(page=PAGE):
+    data = shelf()
+    block = 'const OMNI = ' + json.dumps(data, indent=0, ensure_ascii=False) + ';'
+    src = open(page, encoding='utf-8').read()
+    if BEGIN not in src or END not in src:
+        sys.exit(f"{page}: generation markers missing -- add {BEGIN} / {END} "
+                 "around the OMNI block first")
+    head, rest = src.split(BEGIN, 1)
+    _, tail = rest.split(END, 1)
+    open(page, 'w', encoding='utf-8').write(head + BEGIN + '\n' + block + '\n' + END + tail)
+
+    covers = sum(1 for v in data if v.get('cover'))
+    eds    = sum(1 for v in data if v.get('edition'))
+    issues = sum(len(c['issues']) for v in data for c in v['chapters'])
+    print(f"{os.path.basename(page)}: {len(data)} volumes, {issues} issue slots, "
+          f"{covers} covers baked in, {eds} with edition metadata")
+    if covers < len(data):
+        missing = [v['id'] for v in data if not v.get('cover')]
+        print("  no cover yet: " + ", ".join(missing))
+
+
+if __name__ == '__main__':
+    write()

@@ -4,6 +4,11 @@
 # the key is the wiki page title, and it MUST exist in omnibus_contents_raw.json
 # or gen() will KeyError.
 #
+# `wiki` on a PLACEHOLDER is the page title scrape_covers.py starts from when
+# fetching its cover and edition metadata -- a placeholder has no contents but
+# is still a printed book with a cover. A wrong guess is recoverable: the
+# scraper falls back to searching the wiki.
+#
 # PLACEHOLDERS holds volumes that are on the shelf but have no issue list yet.
 # They are not wiki-backed, carry no contents, and render as a "Cover pending"
 # tile. Give one a real wiki page + a raw-contents entry and move it into ORDER
@@ -57,27 +62,27 @@ ORDER = [
 # date: these are pending in the tracker, which says nothing about whether the
 # book is in print.
 PLACEHOLDERS = [
-dict(id="vs-venom-o1", title="Spider-Man vs. Venom Omnibus", vol="",
+dict(id="vs-venom-o1", title="Spider-Man vs. Venom Omnibus", vol="", wiki="Spider-Man vs. Venom Omnibus Vol 1 1",
   creators="Various", era="1988–1994", released="Contents pending",
   art="o-placeholder", tex="tex-halftone", placeholder=True, chapters=[],
   note="Placeholder — the issue list for this volume has not been added to the tracker yet."),
-dict(id="venom-o1", title="Venomnibus", vol="Vol. 1",
+dict(id="venom-o1", title="Venomnibus", vol="Vol. 1", wiki="Venomnibus Vol 1 1",
   creators="Various", era="1988–1995", released="Contents pending",
   art="o-placeholder", tex="tex-halftone", placeholder=True, chapters=[],
   note="Placeholder — the issue list for this volume has not been added to the tracker yet."),
-dict(id="venom-o2", title="Venomnibus", vol="Vol. 2",
+dict(id="venom-o2", title="Venomnibus", vol="Vol. 2", wiki="Venomnibus Vol 1 2",
   creators="Various", era="1995–1998", released="Contents pending",
   art="o-placeholder", tex="tex-halftone", placeholder=True, chapters=[],
   note="Placeholder — the issue list for this volume has not been added to the tracker yet."),
-dict(id="jms-o1", title="Amazing Spider-Man by J. Michael Straczynski Omnibus", vol="",
+dict(id="jms-o1", title="Amazing Spider-Man by J. Michael Straczynski Omnibus", vol="", wiki="Amazing Spider-Man by J. Michael Straczynski Omnibus Vol 1 1",
   creators="J. Michael Straczynski & John Romita Jr.", era="2001–2007", released="Contents pending",
   art="o-placeholder", tex="tex-halftone", placeholder=True, chapters=[],
   note="Placeholder — the issue list for this volume has not been added to the tracker yet."),
-dict(id="ult-o1", title="Ultimate Spider-Man Omnibus", vol="",
+dict(id="ult-o1", title="Ultimate Spider-Man Omnibus", vol="", wiki="Ultimate Spider-Man Omnibus Vol 1 1",
   creators="Brian Michael Bendis & Mark Bagley", era="2000–2009", released="Contents pending",
   art="o-placeholder", tex="tex-halftone", placeholder=True, chapters=[],
   note="Placeholder — the issue list for this volume has not been added to the tracker yet."),
-dict(id="ult-death-o1", title="Death of Ultimate Spider-Man Omnibus", vol="",
+dict(id="ult-death-o1", title="Death of Ultimate Spider-Man Omnibus", vol="", wiki="Death of Ultimate Spider-Man Omnibus Vol 1 1",
   creators="Brian Michael Bendis & Mark Bagley", era="2010–2011", released="Contents pending",
   art="o-placeholder", tex="tex-halftone", placeholder=True, chapters=[],
   note="Placeholder — the issue list for this volume has not been added to the tracker yet."),

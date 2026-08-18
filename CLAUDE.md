@@ -115,7 +115,10 @@ publication order.
 
 ### Placeholder volumes
 
-A placeholder is an entry with `placeholder:true` and `chapters:[]`. It uses the
+A placeholder is an entry with `placeholder:true` and `chapters:[]`. Note the
+badge wording predates scraped covers: a placeholder can now carry a real cover
+and full edition metadata and still be a placeholder, because what is pending is
+its *issue list*, not its art. Rename the badge if that gets confusing. It uses the
 `.o-placeholder` ramp, shows a "Cover pending" badge and "not added yet" in place
 of the progress figures, and its detail page shows an empty-state note instead of
 a chapter list.
@@ -185,24 +188,34 @@ issues) are different numbers. Progress math uses `uniqIds`; the shelf label use
 slots. The overlap count was much higher (46) before the shelf was trimmed —
 it scales with how many overlapping volumes are on the shelf.
 
-### Covers are placeholders
+### Covers and edition metadata
 
-Every volume renders CSS art (an `.o-*` colour ramp + a `.tex-*` pattern + a
-shared spider glyph). Setting `cover:"path/to/art.jpg"` on a `HEROES`-style entry
-in `OMNI` swaps in a real image automatically — `artHTML()` checks for it. That
-is the intended path for dropping in official cover scans.
+Covers are **scraped once and baked in**, never linked. `Art/covers/<id>.<ext>`
+is the source of truth; `build_omnibus_data.py` base64-encodes each one into
+`OMNI` as a `data:` URI. Nothing is fetched at page load — the trackers are
+offline-only by design, and the Artifact CSP blocks remote images outright, so a
+linked cover would render as a hole rather than a picture.
 
-Where to *get* those scans, and the printed-edition metadata (ISBN, page count,
-cover artist, price) that `OMNI` does not carry yet, is researched in
-`COVERS-AND-METADATA.md`. Two findings from it are load-bearing:
+    python3 tools/scrape_covers.py        # the only step needing network
+    python3 tools/build_omnibus_data.py   # bakes covers + metadata into OMNI
+    python3 tools/build_single_file.py    # rebuilds comics-mobile.html
 
-- **Marvel's developer API is discontinued** (shut down mid-2026). It was the
-  obvious source; it is gone, and everything else is a workaround.
-- **The artifact CSP blocks remote images too**, so a hotlinked `cover` renders
-  blank in `comics-mobile.html` — and because `artHTML()` returns *either* the
-  `<img>` *or* the CSS layers, setting `cover` there removes the placeholder art
-  instead of falling back to it. Layer the image over the ramp before adding any
-  cover, or inline the images as `data:` URIs at build time.
+A volume with no cover file renders the CSS ramp exactly as before — `artHTML()`
+draws the image *over* the ramp rather than instead of it, so a missing or
+undecodable cover degrades instead of blanking. Saving a cover to
+`Art/covers/<id>.jpg` by hand works identically to scraping one.
+
+Each volume also carries an optional `edition` object (format, pages, released,
+isbn, price, coverArtist, editor, publisher) rendered as a grid on the detail
+view. Every field is optional; the panel hides itself when empty.
+
+Budget: each committed kilobyte costs ~1.37 KB in **both**
+`spiderman-reading-tracker.html` and `comics-mobile.html`. 18 covers at 45 KB
+took the mobile build from 266 KB to 1.35 MB — fine against the 16 MB artifact
+limit, but not free. 400px wide is the scraper default and is plenty.
+
+Where the art and metadata come from, and why Marvel's own API is not an option,
+is written up in `COVERS-AND-METADATA.md`.
 
 ### Marvel deep links
 
@@ -245,10 +258,21 @@ is 80439, but 80330–80620 did not contain the ASM annuals).
   Database, one entry per omnibus. Regenerate only if a volume's contents change.
 - `omnibus_meta.py` — the hand-written half: `ORDER` (wiki-backed volumes; each
   key must exist in `omnibus_contents_raw.json` or `gen()` KeyErrors),
-  `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF` (display order by
-  id). This is where a new omnibus gets added.
-- `build_omnibus_data.py` — turns the two above into the `OMNI` structure
-  (dedupe, chaptering strategy, span labels).
+  `PLACEHOLDERS` (shelf tiles with no contents, each with a `wiki` page title
+  for the scraper — a placeholder has no issue list but is still a printed book
+  with a cover), and `SHELF` (display order by id). This is where a new omnibus
+  gets added. `wiki` is stripped at build time and never reaches the browser.
+- `scrape_covers.py` — the one-time cover + edition-metadata scraper (Marvel
+  Database wiki, Open Library fallback). Caches every response under
+  `tools/scrape_cache/` so a parsing bug costs a `--reparse`, not another pass
+  over a rate-limited API. Resumable: already-done volumes are skipped.
+- `omnibus_editions.json` — scraped per-volume edition metadata, consumed as the
+  `edition` object on each `OMNI` entry.
+- `build_omnibus_data.py` — turns the above into the `OMNI` structure (dedupe,
+  chaptering strategy, span labels, cover inlining, edition merge) and **writes
+  it into `spiderman-reading-tracker.html`** between the `BEGIN/END GENERATED
+  OMNI` markers. Run it directly: `python3 tools/build_omnibus_data.py`. It is
+  idempotent — regenerating without new covers is a no-op.
 - `marvel_ids.json` — id → marvel.com path fragment, consumed as `MARVEL`.
 - `build_single_file.py` — composes the three pages into `comics-mobile.html`
   for artifact publishing. See "The mobile build" below.
@@ -473,6 +497,7 @@ folder on one machine as the real project.
 
     git pull           # before touching anything
     …edit…
+    python3 tools/build_omnibus_data.py   # if covers/contents/editions changed
     python3 tools/build_single_file.py    # if any page changed
     git add -A && git commit && git push
 
