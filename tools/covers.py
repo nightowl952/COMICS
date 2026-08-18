@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Cover art pipeline for the Spider-Man omnibus shelf.
+"""Cover art pipeline for an omnibus shelf.
 
 Two jobs:
 
   audit                     what every volume has, and whether the mobile
                             build still fits inside the artifact size limit
-  add <volume-id> <image>   optimise a scan into Art/Spider-Man/<id>.jpg and
-                            print the one line to paste into omnibus_meta.py
+  add <volume-id> <image>   optimise a scan into the hero's art dir as
+                            <id>.jpg and print the line to paste into its
+                            metadata module
+
+Both take --hero <key> (default spider-man); see tools/heroes.py.
 
 Covers matter for size, not just looks: tools/build_single_file.py inlines
 every cover into comics-mobile.html as a base64 data URI (the artifact runs
@@ -20,8 +23,19 @@ import json, os, re, sys
 
 HERE    = os.path.dirname(os.path.abspath(__file__))
 ROOT    = os.path.dirname(HERE)
-TRACKER = os.path.join(ROOT, "spiderman-reading-tracker.html")
-ART     = os.path.join(ROOT, "Art", "Spider-Man")
+# bound per hero by _use(); the module-level defaults keep `import covers`
+# working for callers that only want save_cover()
+TRACKER = None
+ART     = None
+
+
+def _use(key=None):
+    global TRACKER, ART, HERO
+    sys.path.insert(0, HERE)
+    import heroes
+    HERO = heroes.resolve(key)
+    TRACKER, ART = HERO["tracker_path"], HERO["art_path"]
+    return HERO
 
 WIDTH   = 700          # tiles render ~196px wide; 700 covers 2x displays and the banner
 MIN_WIDTH = 500        # below this a cover looks soft on a 2x tile
@@ -31,6 +45,8 @@ TARGET  = 12 * 1024**2 # leave headroom; warn past this
 
 
 def omni():
+    if TRACKER is None:
+        _use()
     h = open(TRACKER, encoding="utf-8").read()
     s = h.index("const OMNI = [")
     e = h.index("\n];", s)
@@ -102,12 +118,14 @@ def audit():
 
 
 def save_cover(im, vid, quiet=False):
-    """Downscale to WIDTH/QUALITY and write Art/Spider-Man/<vid>.jpg.
+    """Downscale to WIDTH/QUALITY and write <hero art dir>/<vid>.jpg.
 
     Returns the repo-relative path to drop into omnibus_meta.py. Shared with
     fetch_covers.py so both routes produce identically sized art.
     """
     from PIL import Image
+    if ART is None:
+        _use()
     w, h = im.size
     ratio = w / h
     if not (0.60 <= ratio <= 0.75) and not quiet:
@@ -141,9 +159,10 @@ def add(vid, src):
     im = type("I", (), {"width": iw, "height": ih})
     print("wrote %s  (%dx%d, %.0f KB, was %.0f KB)"
           % (rel, im.width, im.height, os.path.getsize(out) / 1024, os.path.getsize(src) / 1024))
-    print("\nadd this to the %s entry in tools/omnibus_meta.py:\n" % vid)
+    print("\nadd this to the %s entry in tools/%s.py:\n" % (vid, HERO["meta"]))
     print('  cover="%s",' % rel)
-    print("\nthen:  python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py")
+    print("\nthen:  python3 tools/build_omnibus_data.py --hero %s"
+          " && python3 tools/build_single_file.py" % HERO["key"])
 
 
 if __name__ == "__main__":
@@ -153,7 +172,10 @@ if __name__ == "__main__":
         signal.signal(signal.SIGPIPE, signal.SIG_DFL)
     except (ImportError, AttributeError, ValueError):
         pass
-    a = sys.argv[1:]
+    sys.path.insert(0, HERE)
+    import heroes
+    _key, a = heroes.arg(sys.argv[1:])
+    _use(_key)
     if a[:1] == ["audit"]:
         audit()
     elif a[:1] == ["add"] and len(a) == 3:

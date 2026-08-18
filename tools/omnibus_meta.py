@@ -124,3 +124,15 @@ SHELF = [
   "mcf-o2", "clone-o1", "clone-o2", "ben-o1",
   "jms-o1", "ult-o1", "ult-death-o1",
 ]
+
+# Wiki page titles for the PLACEHOLDERS. The volumes in ORDER carry theirs as
+# the ORDER key; these have no contents pulled yet, so fetch_covers.py needs
+# them named explicitly. Resolved by search and eyeballed once.
+PLACEHOLDER_PAGES = {
+  "vs-venom-o1":  "Spider-Man vs. Venom Omnibus Vol 1 1",
+  "venom-o1":     "Venomnibus Vol 1 1",
+  "venom-o2":     "Venomnibus Vol 1 2",
+  "jms-o1":       "Amazing Spider-Man by J. Michael Straczynski Omnibus Vol 1 1",
+  "ult-o1":       "Ultimate Spider-Man Omnibus Vol 1 1",
+  "ult-death-o1": "Ultimate Comics Spider-Man: Death of Spider-Man Omnibus Vol 1 1",
+}

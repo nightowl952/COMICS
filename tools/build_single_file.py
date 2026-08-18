@@ -14,12 +14,24 @@ What it has to solve:
 """
 import re, json, sys, os, base64
 
-SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-APPS = [
-    dict(key="home",   pfx="hm", file="index.html",                     route="/"),
-    dict(key="xmen",   pfx="xm", file="xmen-reading-tracker.html",      route="/xmen"),
-    dict(key="spidey", pfx="sm", file="spiderman-reading-tracker.html", route="/spider-man"),
-]
+SRC  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TOOLS = os.path.dirname(os.path.abspath(__file__))
+
+# The homescreen and the X-Men page are fixed; every omnibus-shelf hero comes
+# from the registry, so adding one does not mean editing this list.
+def _apps():
+    sys.path.insert(0, TOOLS)
+    import heroes
+    apps = [
+        dict(key="home", pfx="hm", file="index.html",                route="/"),
+        dict(key="xmen", pfx="xm", file="xmen-reading-tracker.html", route="/xmen"),
+    ]
+    for key in sorted(heroes.HEROES):
+        h = heroes.HEROES[key]
+        apps.append(dict(key=h["panel"], pfx=h["pfx"], file=h["tracker"], route=h["route"]))
+    return apps
+
+APPS = _apps()
 
 def part(html, tag):
     m = re.search(r'<%s>(.*?)</%s>' % (tag, tag), html, re.S)
@@ -317,9 +329,8 @@ window.__COMICS_SAVE = async function(filename, text){
   }
   function route(){
     const h=location.hash.replace(/^#\/?/,"");
-    if(h.startsWith("xmen")) show("xmen");
-    else if(h.startsWith("spider-man")) show("spidey");
-    else show("home");
+    const hit=__ROUTES.find(r=>h.startsWith(r.p));
+    show(hit?hit.k:"home");
   }
   window.addEventListener("hashchange",route);
   route();
@@ -337,8 +348,12 @@ def emit():
     html.append('<div class="bubble b1"></div><div class="bubble b2"></div>'
                 '<div class="bubble b3"></div><div class="bubble b4"></div>')
     html += [ascii_html(p) for p in panels]
+    # longest prefix first, so "/spider-man" is not shadowed by a shorter route
+    routes = sorted(((a["route"].strip("/"), a["key"]) for a in APPS if a["route"] != "/"),
+                    key=lambda r: -len(r[0]))
+    routes_js = "const __ROUTES=%s;\n" % json.dumps([{"p": p_, "k": k} for p_, k in routes])
     html.append("<script>\nwindow.__COMICS={};\n"
-                + ascii_js("\n".join(scripts) + "\n" + SHELL_JS) + "\n</script>")
+                + ascii_js("\n".join(scripts) + "\n" + routes_js + SHELL_JS) + "\n</script>")
     doc = "\n".join(html)
     non = [c for c in doc if ord(c) > 127]
     assert not non, f"non-ascii survived: {set(non)}"

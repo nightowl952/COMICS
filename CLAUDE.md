@@ -344,6 +344,10 @@ is 80439, but 80330–80620 did not contain the ASM annuals).
   are skipped, so rerunning after a block costs nothing.
 - `omnibus_contents_raw.json` — the raw ReprintOf lists pulled from the Marvel
   Database, one entry per omnibus. Regenerate only if a volume's contents change.
+- `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
+  its tracker filename, art directory, metadata module, panel key and route.
+  Every other tool takes `--hero <key>` (default `spider-man`) and reads its
+  paths from here. `python3 tools/heroes.py` lists what is registered.
 - `omnibus_meta.py` — the hand-written half, and **the only place shelf metadata
   should be edited**: `ORDER` (wiki-backed volumes; each key must exist in
   `omnibus_contents_raw.json` or `gen()` KeyErrors), `PLACEHOLDERS` (shelf tiles
@@ -378,9 +382,39 @@ A full shelf change is three commands:
 
 ```bash
 python3 tools/build_omnibus_data.py     # omnibus_meta.py -> OMNI in the tracker
-python3 tools/build_single_file.py      # the three pages -> comics-mobile.html
+python3 tools/build_single_file.py      # every page -> comics-mobile.html
 python3 tools/build_omnibus_data.py --check   # confirm it round-trips
 ```
+
+All of these take `--hero <key>`; without one they act on Spider-Man.
+`build_single_file.py` does not, because it always rebuilds every page.
+
+### Adding an omnibus hero
+
+The tooling is hero-agnostic; what is not automated is curation and the id
+harvest. Roughly in order:
+
+1. **Decide the shelf.** Enumerate candidate volumes with
+   `list=allpages&apprefix=<Character>` filtered for `Omnibus`, then make the
+   judgement call the tools cannot: which books are *this character's* rather
+   than ones they merely appear in. That is a question for the user, not a
+   default.
+2. **Pull contents** for each wiki-backed volume (the `ReprintOf<N>` call under
+   "Where the contents came from") into a `<hero>_contents_raw.json`.
+3. **Write `tools/<hero>_meta.py`** — `ORDER`, `PLACEHOLDERS`, `SHELF`, and
+   `PLACEHOLDER_PAGES`, modelled on `omnibus_meta.py`. If its books collect
+   series `SERIES` in `build_omnibus_data.py` does not know, add them as
+   `SERIES_EXTRA` in this module rather than editing the shared table.
+4. **Register it** in `tools/heroes.py`.
+5. **Build the tracker page.** Copy `spiderman-reading-tracker.html` and change
+   the title, the glyph, the `.o-*` ramps with their `SPINE_C` entries, and the
+   storage keys (`comics-hero-<id>`, `<hero>-omnibus-progress`). This is the one
+   genuinely hand-made step — it is design, not plumbing.
+6. **Harvest Marvel ids** with `harvest.py` and merge into `marvel_ids.json`.
+   Expect this to be the slow part; see the rate-limiting notes above.
+7. **Generate and publish**: `build_omnibus_data.py --hero <key>`,
+   `fetch_covers.py --hero <key>`, `build_single_file.py`, then flip the
+   `HEROES` entry in `index.html`.
 
 ### Scope call
 
