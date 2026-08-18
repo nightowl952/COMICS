@@ -120,7 +120,7 @@ publication order.
 ### Placeholder volumes
 
 A placeholder is an entry with `placeholder:true` and `chapters:[]`. It uses the
-`.o-placeholder` ramp, shows a "Cover pending" badge and "not added yet" in place
+`.o-placeholder` ramp, shows a "Contents pending" badge and "not added yet" in place
 of the progress figures, and its detail page shows an empty-state note instead of
 a chapter list.
 
@@ -230,17 +230,34 @@ spider glyph — a covered volume is just the scan.
 Covers are wired in `tools/omnibus_meta.py` (`cover="Art/Spider-Man/<id>.jpg"`),
 never by hand-editing the `OMNI` array in the HTML — that array is generated.
 
-**Adding one:**
+All 18 volumes have cover art. It came from the **Marvel Database wiki** — the
+same source as the issue contents — via `prop=pageimages`, which hands back the
+cover image stored on each volume's page.
+
+**Refetching, or filling in a new volume:**
+
+```bash
+python3 tools/fetch_covers.py                # every volume still missing one
+python3 tools/fetch_covers.py venom-o1       # just these
+python3 tools/fetch_covers.py --all          # refetch everything, overwriting
+python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
+```
+
+**Adding a scan you have locally** (better art than the wiki's, say):
 
 ```bash
 python3 tools/covers.py add asm-o4 ~/Downloads/scan.png   # optimise + name it
 # paste the printed cover="..." line into tools/omnibus_meta.py
-python3 tools/build_omnibus_data.py                       # regenerate OMNI
-python3 tools/build_single_file.py                        # rebuild the mobile page
+python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
 ```
 
-`covers.py audit` prints what every volume has and projects the finished build
-size.
+`fetch_covers.py` writes the `cover=` line into `omnibus_meta.py` itself;
+`covers.py add` prints it for you to paste. Both route through
+`covers.save_cover()`, so art from either is sized identically. Neither
+regenerates — that is the follow-up command.
+
+`covers.py audit` prints what every volume has, flags oversized and low-res
+files, and projects the finished build size.
 
 **Size is a real constraint, not a nicety.** The artifact caps at 16MB, and
 `build_single_file.py` inlines every cover as a base64 data URI (see below for
@@ -250,9 +267,17 @@ project to a ~26MB build. `covers.py add` re-encodes to 700px wide / JPEG q82
 (~150KB), which keeps all 18 near 4MB. The builder hard-fails past the limit
 rather than writing a file the artifact will reject.
 
-The three ASM covers predate `covers.py` and keep their original filenames and
-sizes; `asm-o1` in particular is a 2.4MB PNG that `audit` flags. Re-running
-`covers.py add` on them is the fix when the shelf fills up.
+Everything is named `Art/Spider-Man/<volume-id>.jpg` — the original
+`The Amazing Spider-Man Vol1.png` style names are gone (git history still has
+them). `asm-o1` was a 2.4MB PNG; through the pipeline it is 158KB with no
+visible difference at tile size.
+
+**Six covers are low-resolution** — `stern-o1`, `mcf-o1`, `larsen-o1`,
+`clone-o2`, `ult-o1`, `ult-death-o1`, all around 325x500. That is genuinely all
+the Marvel Database has; `imageinfo` confirms the stored originals are that
+small, so refetching will not improve them. They look fine on a standard
+display and soft on a retina tile or in the detail banner. `covers.py audit`
+marks them `soft`. A better scan dropped in via `covers.py add` is the fix.
 
 **Why the mobile build inlines them.** A relative `src="Art/..."` resolves fine
 on GitHub Pages and over `file://`, but the artifact has no sibling files *and*
@@ -314,6 +339,10 @@ is 80439, but 80330–80620 did not contain the ASM annuals).
   to 700px/q82 and prints the line to paste into `omnibus_meta.py`; `audit`
   reports every volume's cover and projects the finished mobile-build size
   against the 16MB artifact limit. Needs Pillow (`pip install Pillow`).
+- `fetch_covers.py` — pulls cover art from the Marvel Database and writes the
+  `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
+  keys; the placeholders have no such key, so their pages are listed in
+  `PLACEHOLDER_PAGES` inside the script.
 - `marvel_ids.json` — id → marvel.com path fragment, consumed as `MARVEL`.
 - `build_single_file.py` — composes the three pages into `comics-mobile.html`
   for artifact publishing, inlining cover images as data URIs on the way. See
@@ -526,10 +555,9 @@ a server-side store and is not built.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **15 of 18 omnibus volumes still have no cover scan** — everything except
-   ASM Vol. 1–3. This is the obvious next pass; see "Cover art". The three that
-   exist predate `covers.py` and are unoptimised, so re-running `covers.py add`
-   on them is worth folding into the same pass.
+3. **Six covers are low-res** (~325px wide) because that is all the Marvel
+   Database stores — see "Cover art". Replacing them needs a scan from
+   somewhere else; everything else on the shelf is 700px.
 4. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
    arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
    would be a genuine improvement — see "Chaptering".
