@@ -6601,6 +6601,7 @@ byId("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.f
 window.__COMICS.spidey = function(){ route(); };
 
 })();
+const __ROUTES=[{"p": "spider-man", "k": "spidey"}, {"p": "xmen", "k": "xmen"}];
 
 /* ---- saving a backup ----
    In the published artifact a plain <a download> is inert: the viewer must
@@ -6651,9 +6652,8 @@ window.__COMICS_SAVE = async function(filename, text){
   }
   function route(){
     const h=location.hash.replace(/^#\/?/,"");
-    if(h.startsWith("xmen")) show("xmen");
-    else if(h.startsWith("spider-man")) show("spidey");
-    else show("home");
+    const hit=__ROUTES.find(r=>h.startsWith(r.p));
+    show(hit?hit.k:"home");
   }
   window.addEventListener("hashchange",route);
   route();

@@ -1,54 +1,48 @@
 #!/usr/bin/env python3
 """Pull omnibus cover scans from the Marvel Database and wire them in.
 
+Takes --hero <key> (default spider-man); see tools/heroes.py.
+
 Same source as the issue contents (see "Where the contents came from" in
 CLAUDE.md) -- the wiki stores a cover image per volume page, which the
 MediaWiki API hands back via prop=pageimages.
 
-    python3 tools/fetch_covers.py            # every volume still missing a cover
-    python3 tools/fetch_covers.py asm-o4     # just these
-    python3 tools/fetch_covers.py --all      # refetch, overwriting existing
+    python3 tools/fetch_covers.py                    # everything still missing one
+    python3 tools/fetch_covers.py asm-o4             # just these
+    python3 tools/fetch_covers.py --all              # refetch, overwriting
+    python3 tools/fetch_covers.py --hero hulk        # a different shelf
 
 Downloads, downscales through covers.save_cover (so art from here is the same
 size as art added by hand), and writes the cover= line into omnibus_meta.py.
 It does NOT regenerate -- finish with:
 
-    python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
+    python3 tools/build_omnibus_data.py --hero <key> && python3 tools/build_single_file.py
 """
 import json, os, re, sys, time, urllib.parse, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-META = os.path.join(HERE, "omnibus_meta.py")
+META = None            # bound per hero in main()
 API  = "https://marvel.fandom.com/api.php"
 UA   = "COMICS-tracker/1.0 (personal reading tracker; +https://github.com/nightowl952/COMICS)"
-
-# The volumes in ORDER carry their wiki page title as the ORDER key. The
-# PLACEHOLDERS do not (they have no contents pulled yet), so their pages are
-# named here -- resolved by search and eyeballed once.
-PLACEHOLDER_PAGES = {
-    "vs-venom-o1":  "Spider-Man vs. Venom Omnibus Vol 1 1",
-    "venom-o1":     "Venomnibus Vol 1 1",
-    "venom-o2":     "Venomnibus Vol 1 2",
-    "jms-o1":       "Amazing Spider-Man by J. Michael Straczynski Omnibus Vol 1 1",
-    "ult-o1":       "Ultimate Spider-Man Omnibus Vol 1 1",
-    "ult-death-o1": "Ultimate Comics Spider-Man: Death of Spider-Man Omnibus Vol 1 1",
-}
-
 
 def get(url):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     return urllib.request.urlopen(req, timeout=60).read()
 
 
-def pages_for(ids):
-    sys.path.insert(0, HERE)
-    from omnibus_meta import ORDER
-    out = {m["id"]: page for page, m in ORDER}
-    out.update(PLACEHOLDER_PAGES)
+def pages_for(ids, mod):
+    """Volume id -> Marvel Database page title.
+
+    ORDER keys are the page titles already; PLACEHOLDERS have none, so the hero
+    module lists them in PLACEHOLDER_PAGES.
+    """
+    out = {m["id"]: page for page, m in mod.ORDER}
+    out.update(getattr(mod, "PLACEHOLDER_PAGES", {}))
     missing = [i for i in ids if i not in out]
     if missing:
-        sys.exit("no wiki page known for %s -- add it to PLACEHOLDER_PAGES" % missing)
+        sys.exit("no wiki page known for %s -- add them to PLACEHOLDER_PAGES in %s"
+                 % (missing, os.path.basename(META)))
     return {i: out[i] for i in ids}
 
 
@@ -86,13 +80,19 @@ def set_cover(vid, rel):
 
 
 def main(argv):
+    global META
     try:
         from PIL import Image
     except ImportError:
         sys.exit("needs Pillow:  pip install Pillow")
     sys.path.insert(0, HERE)
-    import covers
-    import io
+    import covers, heroes, io
+
+    key, argv = heroes.arg(argv)
+    hero = covers._use(key)
+    META = os.path.join(HERE, hero["meta"] + ".py")
+    mod  = heroes.meta_module(hero)
+    print("[%s] -> %s" % (hero["key"], hero["art"]))
 
     force = "--all" in argv
     want = [a for a in argv if not a.startswith("-")]
@@ -112,7 +112,7 @@ def main(argv):
         print("every volume already has a cover -- pass --all to refetch")
         return
 
-    pages = pages_for(todo)
+    pages = pages_for(todo, mod)
     ok, failed = [], []
     for i, vid in enumerate(todo, 1):
         page = pages[vid]
@@ -135,8 +135,15 @@ def main(argv):
     print("\n%d fetched, %d failed" % (len(ok), len(failed)))
     if failed:
         print("failed: %s" % ", ".join(failed))
-    print("\nnow run: python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py")
+    print("\nnow run: python3 tools/build_omnibus_data.py --hero %s"
+          " && python3 tools/build_single_file.py" % hero["key"])
 
 
 if __name__ == "__main__":
+    # keep `... | head` from spewing a BrokenPipeError traceback
+    try:
+        import signal
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    except (ImportError, AttributeError, ValueError):
+        pass
     main(sys.argv[1:])

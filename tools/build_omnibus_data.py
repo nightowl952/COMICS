@@ -2,8 +2,10 @@ import json,re,collections,os,sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-RAW    = os.path.join(HERE, 'omnibus_contents_raw.json')
-TRACKER= os.path.join(ROOT, 'spiderman-reading-tracker.html')
+# Paths are per-hero now and come from tools/heroes.py; these are rebound in
+# main() once --hero is parsed. They stay module-level so gen() can read RAW.
+RAW     = os.path.join(HERE, 'omnibus_contents_raw.json')
+TRACKER = os.path.join(ROOT, 'spiderman-reading-tracker.html')
 
 # wiki series title -> (short code, display name used in the UI)
 # "Spectacular Spider-Man Vol 1" and "Peter Parker, The Spectacular Spider-Man Vol 1"
@@ -107,7 +109,13 @@ def spanlabel(nums):
     parts += [f"#{o}" for o in odd]
     return ", ".join(parts)
 
-def gen(pages, meta):
+def gen(pages, meta, series_extra=None):
+    # SERIES is a shared lookup (wiki series title -> id prefix + display name).
+    # It is not Spider-Man-only -- it already carries Nova, X-Force, New Warriors
+    # and so on. A hero whose books collect series it lacks adds them through
+    # SERIES_EXTRA in its own meta module rather than editing this table.
+    if series_extra:
+        SERIES.update(series_extra)
     out=[]
     d=json.load(open(RAW, encoding='utf-8'))
     for key in pages:
@@ -164,11 +172,12 @@ KEY_ORDER = ["id","spine","cover","title","vol","creators","era","released",
 MARK = "const OMNI = ["
 
 
-def build_all():
-    """Return the full 18-volume OMNI array, in SHELF order."""
-    from omnibus_meta import ORDER, PLACEHOLDERS, SHELF
+def build_all(mod):
+    """Return one hero's full OMNI array, in SHELF order."""
+    ORDER, PLACEHOLDERS, SHELF = mod.ORDER, mod.PLACEHOLDERS, mod.SHELF
     meta = dict(ORDER)
-    by_id = {o["id"]: o for o in gen(list(meta), meta)}
+    by_id = {o["id"]: o for o in gen(list(meta), meta,
+                                     getattr(mod, "SERIES_EXTRA", None))}
     for p in PLACEHOLDERS:
         by_id[p["id"]] = dict(p)
 
@@ -219,12 +228,19 @@ def check_spine_colors(html, arr):
 
 
 def main():
-    check = "--check" in sys.argv
-    arr = build_all()
+    global RAW, TRACKER
+    import heroes
+    key, argv = heroes.arg(sys.argv[1:])
+    h = heroes.resolve(key)
+    RAW, TRACKER = h["raw_path"], h["tracker_path"]
+
+    check = "--check" in argv
+    arr = build_all(heroes.meta_module(h))
     html = open(TRACKER, encoding="utf-8").read()
     check_spine_colors(html, arr)
     new = splice(html, arr)
 
+    print("[%s] %s" % (h["key"], h["tracker"]))
     slots = sum(len(c["issues"]) for o in arr for c in o["chapters"])
     uniq = len({i["id"] for o in arr for c in o["chapters"] for i in c["issues"]})
     covers = sum(1 for o in arr if o.get("cover"))
@@ -245,4 +261,10 @@ def main():
 
 if __name__ == "__main__":
     sys.path.insert(0, HERE)
+    # keep `... | head` from spewing a BrokenPipeError traceback
+    try:
+        import signal
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    except (ImportError, AttributeError, ValueError):
+        pass
     main()
