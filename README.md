@@ -18,6 +18,13 @@ works opened straight off disk.
 | `tools/` | The generators and the marvel.com ID harvester. |
 | `CLAUDE.md` | The full working notes — architecture, data provenance, every constraint already learned the hard way. Read this before changing anything. |
 
+## Where it lives
+
+- **Live:** <https://nightowl952.github.io/COMICS/>
+- **Claude artifact:** a single-file mobile build, published from `comics-mobile.html`
+
+Each surface keeps its own reading progress — see "Progress" below.
+
 ## Running it
 
 Open `index.html` in a browser. That's it.

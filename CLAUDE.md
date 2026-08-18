@@ -9,8 +9,9 @@ places on purpose: the in-world X-Men summaries (Beast installing Cerebro is
 plot, not branding), and `OLD_RECORD_KEY` in `index.html`, which still reads
 pre-rename homescreen records. Everything else is C.O.M.I.C.S.
 
-**GitHub is the source of truth.** Iterate through the repo, not through loose
-local copies — see "Working on this" at the bottom.
+**GitHub is the source of truth**: <https://github.com/nightowl952/COMICS>.
+Iterate through the repo, not through loose local copies — see "Working on
+this" at the bottom.
 
 `index.html` is the homescreen — a streaming-style poster wall of "subjects"
 (heroes). Each subject that has a curated reading list gets its own self-contained
@@ -473,7 +474,7 @@ page. Rebuild in the same commit.
 
 | Surface | URL | Progress lives in |
 |---|---|---|
-| GitHub Pages | `https://<user>.github.io/COMICS/` | that origin's `localStorage` |
+| GitHub Pages | `https://nightowl952.github.io/COMICS/` | that origin's `localStorage` |
 | Claude Artifact | the artifact link | artifact `window.storage` |
 | Local `file://` | the clone | that browser's `localStorage` |
 
