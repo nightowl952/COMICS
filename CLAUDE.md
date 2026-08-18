@@ -483,6 +483,8 @@ already saved there, because progress is never in the HTML.
 
 ### Updating the artifact
 
-Republish `comics-mobile.html` **to the same artifact URL** (pass the existing
+The artifact is **https://claude.ai/code/artifact/a339fcf9-afeb-413c-880c-a4b1aa6b0f81**.
+
+Republish `comics-mobile.html` **to that URL** (pass the existing
 URL, don't create a second artifact) with `capabilities: {downloads: true}` —
 without that capability the Back up button silently does nothing.

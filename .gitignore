@@ -1,5 +1,7 @@
-# Progress backups exported from the app (personal reading state)
-xmen-reading-progress*.json
+# Progress backups exported from the apps (personal reading state)
+# Covers xmen-reading-progress.json and spider-man-omnibus-progress.json,
+# plus whatever a future tracker names its export.
+*progress*.json
 
 # Scratch
 /tmp/
