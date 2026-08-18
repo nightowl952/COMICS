@@ -477,7 +477,7 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
     border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);}
 #app-spidey .chip-btn:hover{background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,.12));}
 #app-spidey .chip-btn.on{color:var(--ink);background:linear-gradient(180deg,#fff, var(--xyellow) 60%, var(--xyellow-deep));border-color:rgba(255,255,255,.85);}
-#app-spidey .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:34px 26px;}
+#app-spidey .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:44px 30px;}
 #app-spidey .cell{position:relative;z-index:1;perspective:1500px;perspective-origin:50% 40%;}
 #app-spidey .cell:hover,#app-spidey .cell:focus-within{z-index:9;}
 #app-spidey .book{position:relative;transform-style:preserve-3d;}
@@ -490,16 +490,30 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
 #app-spidey .cell:hover .omni,#app-spidey .cell:focus-within .omni{transform:rotateY(30deg) rotateX(7deg) translateY(-8px) scale(1.03);}
 #app-spidey .omni:focus-visible{outline:3px solid var(--xyellow);outline-offset:6px;}
 #app-spidey .spine{position:absolute;left:0;top:0;bottom:0;width:var(--t);transform-origin:left center;
-    transform:translateZ(calc(var(--t) * -1)) rotateY(-90deg);display:flex;flex-direction:column;align-items:center;
-    justify-content:space-between;padding:12px 0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);}
-#app-spidey .spine::before{content:"";position:absolute;inset:0;
-    background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,.02) 36%,rgba(0,0,0,.42));}
-#app-spidey .spine .dot{position:relative;z-index:1;width:9px;height:9px;border-radius:50%;
-    background:linear-gradient(180deg,#fff, var(--xyellow) 60%, var(--xyellow-deep));box-shadow:0 1px 3px rgba(0,0,0,.5);}
-#app-spidey .spine .stitle{position:relative;z-index:1;writing-mode:vertical-rl;font-size:8.5px;font-weight:900;font-style:italic;
-    letter-spacing:1.6px;text-transform:uppercase;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.6);}
-#app-spidey .spine .stitle .ovol{color:var(--xyellow);}
-#app-spidey .spine .snum{position:relative;z-index:1;font-size:8px;font-weight:900;font-style:italic;color:rgba(255,255,255,.6);letter-spacing:1px;}
+    transform:translateZ(calc(var(--t) * -1)) rotateY(-90deg);display:flex;flex-direction:column;
+    align-items:stretch;overflow:hidden;
+    background:linear-gradient(180deg,#191a1d 0%,#0b0b0d 52%,#141417 100%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);}
+#app-spidey .spine::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.02) 38%,rgba(0,0,0,.45));}
+#app-spidey .spine>*{position:relative;z-index:1;}
+#app-spidey .spine .sband{flex:0 0 13%;min-height:38px;padding:6px 3px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:4px;
+    background:linear-gradient(90deg,#b8151b,#e62429 40%,#c2181e);box-shadow:inset 0 -1px 0 rgba(0,0,0,.45);}
+#app-spidey .spine .smark{font-size:7.5px;font-weight:900;letter-spacing:.4px;line-height:1;white-space:nowrap;}
+#app-spidey .spine .srule{width:56%;height:1px;background:rgba(255,255,255,.75);flex:0 0 auto;}
+#app-spidey .spine .sline{font-size:6px;font-weight:700;letter-spacing:.9px;line-height:1;white-space:nowrap;}
+#app-spidey .spine .sbody{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:10px;padding:16px 0;overflow:hidden;}
+#app-spidey .spine .stitle{writing-mode:vertical-rl;font-size:12.5px;font-weight:900;letter-spacing:.3px;
+    text-transform:uppercase;white-space:nowrap;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75);}
+#app-spidey .spine .stitle.mid{font-size:11.5px;}
+#app-spidey .spine .stitle.long{font-size:10px;}
+#app-spidey .spine .screds{writing-mode:vertical-rl;font-size:7px;font-weight:700;letter-spacing:1.5px;
+    text-transform:uppercase;white-space:nowrap;color:rgba(255,255,255,.7);}
+#app-spidey .spine .svol{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 0 13px;}
+#app-spidey .spine .svl{font-size:6.5px;font-weight:700;letter-spacing:1.2px;color:rgba(255,255,255,.75);}
+#app-spidey .spine .svn{font-size:13px;font-weight:900;line-height:1;color:#fff;}
 #app-spidey .pages{position:absolute;left:5px;right:3px;top:1px;height:var(--t);transform-origin:center top;
     transform:translateZ(calc(var(--t) * -1)) rotateX(90deg);
     background:repeating-linear-gradient(90deg,#efe9db 0 1.5px,#cfc7b4 1.5px 2.5px);box-shadow:inset 0 0 7px rgba(0,0,0,.3);}
@@ -646,7 +660,7 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
     background:linear-gradient(180deg,rgba(150,40,40,.75),rgba(90,15,15,.85));border:1px solid rgba(255,160,160,.5);}
 #app-spidey footer{margin-top:32px;text-align:center;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(230,245,255,.65);}
 #app-spidey .hidden{display:none!important;}
-@media (max-width:600px){#app-spidey .shelf{grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:14px;}#app-spidey .omni .plate{padding:30px 9px 9px;}#app-spidey .omni .oname{font-size:11.5px;}#app-spidey .omni .ocre{display:none;}#app-spidey .ch-side .pbar{width:62px;}#app-spidey .issue-acts .mini{padding:5px 7px;}#app-spidey .upnext-actions{width:100%;}#app-spidey .upnext-actions .btn{flex:1;}#app-spidey .obanner{height:150px;}}
+@media (max-width:600px){#app-spidey .shelf{grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:26px 18px;}#app-spidey .spine .screds{display:none;}#app-spidey .omni .plate{padding:30px 9px 9px;}#app-spidey .omni .oname{font-size:11.5px;}#app-spidey .omni .ocre{display:none;}#app-spidey .ch-side .pbar{width:62px;}#app-spidey .issue-acts .mini{padding:5px 7px;}#app-spidey .upnext-actions{width:100%;}#app-spidey .upnext-actions .btn{flex:1;}#app-spidey .obanner{height:150px;}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
 /* ---- shell ---- */
@@ -6312,8 +6326,9 @@ const spiderSVG = () => SPIDER_SVG.split("GID").join("sp"+(++gid));
 
 /* ============ SHELF ============ */
 const shelfEl=byId("shelf");
-/* spine gradient (top/bottom) per cover ramp -- the middle two stops of the
-   matching .o-* ramp in the stylesheet, kept in sync by hand */
+/* Retained, but no longer paints the spine -- every book now uses the shared
+   black/red Marvel trade dress. build_omnibus_data.py still checks that each
+   .o-* ramp has an entry here, and it is one line to revert to coloured spines. */
 const SPINE_C={
   'o-ditko':['#b81f26','#1d3f8c'],'o-untold':['#c9702e','#8d2226'],'o-romita':['#d92a30','#2454b0'],
   'o-teamup':['#e2661f','#7d2a8e'],'o-conway':['#bd2028','#16306e'],'o-spectacular':['#3566c4','#4a2a92'],
@@ -6322,8 +6337,10 @@ const SPINE_C={
   'o-dematteis':['#3f8c2c','#5c2a8e'],'o-clone':['#3f9433','#a81d22'],'o-benreilly':['#c2161c','#1e3f96'],
   'o-placeholder':['#4d6480','#26344a']
 };
-/* thickness scales with issue count; placeholders (0 issues) fall through to the 22px floor */
-function bookThickness(issueCount){ return Math.max(22, Math.round(19.5 + issueCount*0.41)); }
+/* A printed omnibus is ~1.5-3in across a 7.4in-wide cover, i.e. 20-40% of the
+   tile width -- not the 22-40px sliver this used to draw. Placeholders (0 issues)
+   fall through to the 42px floor, which still reads as a real omnibus. */
+function bookThickness(issueCount){ return Math.min(82, Math.max(42, Math.round(15 + issueCount*1.15))); }
 function buildShelf(){
   shelfEl.innerHTML = OMNI.map((o,idx)=>{
     const st=omniStats(o);
@@ -6336,13 +6353,17 @@ function buildShelf(){
     else if(state==="done") badge='<span class="obadge done">Finished</span>';
     else badge='<span class="obadge">'+st.t+' issues</span>';
     const num=String(idx+1).padStart(2,"0");
-    const [c1,c2]=SPINE_C[o.art]||SPINE_C['o-placeholder'];
-    const spineTitle=esc(o.spine||o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'');
+    const label=o.spine||o.title;
+    const sz = label.length>20 ? ' long' : (label.length>16 ? ' mid' : '');
+    const creds = (label.length<=16 && o.creators.length<=30) ? '<span class="screds">'+esc(o.creators)+'</span>' : '';
+    const vm=/(\d+)/.exec(o.vol||'');
     return '<div class="cell" data-state="'+state+'">'+
       '<div class="book"><div class="shade"></div>'+
       '<button class="omni" style="--t:'+bookThickness(st.t)+'px" data-omni="'+o.id+'" aria-label="'+esc(o.title+' '+o.vol)+' \u2014 '+st.done+' of '+st.t+' logged">'+
-        '<div class="spine" style="background:linear-gradient(180deg,'+c1+','+c2+')">'+
-          '<span class="dot"></span><span class="stitle">'+spineTitle+'</span><span class="snum">'+num+'</span>'+
+        '<div class="spine">'+
+          '<div class="sband"><span class="smark">MARVEL</span><span class="srule"></span><span class="sline">OMNIBUS</span></div>'+
+          '<div class="sbody"><span class="stitle'+sz+'">'+esc(label)+'</span>'+creds+'</div>'+
+          '<div class="svol">'+(vm?'<span class="svl">VOL</span><span class="svn">'+vm[1]+'</span>':'')+'</div>'+
         '</div>'+
         '<div class="pages"></div>'+
         '<div class="face">'+

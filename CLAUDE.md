@@ -211,27 +211,43 @@ markup `buildShelf()` emits, outermost first:
         .shade   soft ground shadow
         .omni    the <button>. Tilted `rotateY(21deg)`, `transform-style:preserve-3d`,
                  and carries `--t` (spine thickness) as an inline style
-          .spine  vertical title + gold rivet + volume number
+          .spine  Marvel trade dress -- red MARVEL/OMNIBUS band, vertical title,
+                  optional credit line, volume number at the foot
           .pages  the paper block along the top edge
           .face   the cover itself -- art layers, badge, plate, progress bar
 
-Three things drive how a book looks, and they are set in different places:
+The spine is the **shared Marvel trade dress** — black field, red
+`MARVEL` / `OMNIBUS` band at the top, white title down the spine, `VOL n` at the
+foot. It is not per-volume: it reads `o.spine`/`o.title`, `o.creators` and `o.vol`,
+which every entry in `omnibus_meta.py` already carries, so a new omnibus (or a new
+hero tracker copied from this one) picks the look up for free.
 
 | What | Where it comes from |
 |---|---|
-| Spine **colour** | `SPINE_C[o.art]` in the tracker — keyed on the `.o-*` ramp |
 | Spine **text** | `o.spine` (short label; falls back to `o.title` if absent) |
-| Spine **thickness** | `bookThickness(issueCount)` — `max(22, 19.5 + count*0.41)` px |
+| Spine **credit line** | `o.creators`, shown only when the label is ≤ 16 chars and the credits ≤ 30 |
+| Spine **volume number** | first digits found in `o.vol` |
+| Spine **thickness** | `bookThickness(issueCount)` — `min(82, max(42, 15 + count*1.15))` px |
 
-Two traps, both cheap to avoid:
+Thickness is a real omnibus proportion, not a sliver: a printed volume is ~1.5–3in
+across a 7.4in cover, so the spine is 20–40% of the tile width. Volumes with no
+contents yet sit at the 42px floor and still read as hardcovers.
 
-- **Keep `art` set even on a volume that has a real `cover`.** The cover image
-  replaces the *face*, but the spine is still painted from `SPINE_C[o.art]`.
-  Drop `art` and the book gets a grey placeholder spine next to its real cover.
-- **A new `.o-*` ramp needs a matching `SPINE_C` entry.** Without it the spine
-  silently falls back to grey, which reads as a rendering bug rather than a
-  missing map entry. `build_omnibus_data.py` now fails loudly on this instead
-  of letting it ship.
+Three things to know, all cheap to avoid:
+
+- **`SPINE_C` no longer paints anything.** Every spine is the same black trade
+  dress now. The table is kept because `build_omnibus_data.py` still checks that
+  each `.o-*` ramp has an entry, and because restoring coloured spines is one
+  line. A new `.o-*` ramp therefore still needs a `SPINE_C` entry or the build
+  fails loudly.
+- **`art` still matters on a volume that has a real `cover`.** It no longer picks
+  the spine colour, but `artHTML()` falls back to the `.o-*` ramp whenever `cover`
+  is missing or fails to load.
+- **The spine text is vertical and clipped, not wrapped.** The length gates in
+  `buildShelf()` are tuned to the 196px desktop tile; the 600px breakpoint hides
+  `.screds` outright because a 142px tile leaves only ~207px of spine, which fits
+  the title but not a credit line under it. Lengthening a `spine` label past ~22
+  characters means re-checking both breakpoints.
 
 ### Cover art
 
