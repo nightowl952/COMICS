@@ -17,6 +17,18 @@ this" at the bottom.
 (heroes). Each subject that has a curated reading list gets its own self-contained
 tracker file, which the homescreen links into.
 
+## Answering style
+
+Keep replies short and plain. This is a hobby project, not a code review.
+
+- Lead with what happened or what the answer is. No preamble.
+- A few sentences beats a section with headings. Skip tables unless the data
+  genuinely has columns.
+- Don't narrate the steps taken, restate the request, or list what wasn't done.
+- Say what broke and what you did about it, then stop.
+- Long form is for when it was asked for, or when something genuinely went
+  wrong and the detail is the point.
+
 ## Files
 
 - `index.html` — the C.O.M.I.C.S. homescreen. Poster grid, Continue Reading panel,
