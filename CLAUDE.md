@@ -192,6 +192,18 @@ shared spider glyph). Setting `cover:"path/to/art.jpg"` on a `HEROES`-style entr
 in `OMNI` swaps in a real image automatically — `artHTML()` checks for it. That
 is the intended path for dropping in official cover scans.
 
+Where to *get* those scans, and the printed-edition metadata (ISBN, page count,
+cover artist, price) that `OMNI` does not carry yet, is researched in
+`COVERS-AND-METADATA.md`. Two findings from it are load-bearing:
+
+- **Marvel's developer API is discontinued** (shut down mid-2026). It was the
+  obvious source; it is gone, and everything else is a workaround.
+- **The artifact CSP blocks remote images too**, so a hotlinked `cover` renders
+  blank in `comics-mobile.html` — and because `artHTML()` returns *either* the
+  `<img>` *or* the CSS layers, setting `cover` there removes the placeholder art
+  instead of falling back to it. Layer the image over the ramp before adding any
+  cover, or inline the images as `data:` URIs at build time.
+
 ### Marvel deep links
 
 374 of 456 unique issues (82%) resolve to a real marvel.com issue page. The rest
