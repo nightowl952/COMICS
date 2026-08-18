@@ -7,3 +7,6 @@
 /tmp/
 *.log
 .DS_Store
+
+# Full-size cover downloads, cached so tools/fetch_covers.py can be rerun cheaply
+tools/.cover-cache/
