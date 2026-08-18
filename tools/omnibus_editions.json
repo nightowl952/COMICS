@@ -1,0 +1,167 @@
+{
+ "_meta": {
+  "gaps": "No cover images -- those need the local scrape_covers.py run. utsm-o1, larsen-o1, mcf-o2, clone-o2 and ult-o1 have no marvel collection id yet. Page counts omitted where sources conflicted (vs-venom-o1) or only quoted a different printing (clone-o1, venom-o2, ben-o1).",
+  "note": "Printed-edition metadata per shelf volume. `printing` and `source` are provenance and are NOT rendered -- build_omnibus_data.py drops them. `marvel` is lifted to the volume as a collection deep link; only the numeric id matters, the slug is decorative (see MARVEL-IDS.md).",
+  "sourced": "2026-08-18, from retail listings and marvel.com collection pages via web search, because marvel.fandom.com is unreachable from the Claude Code web environment. Anchored to the printing matching each volume's existing `released` month wherever that printing's figures were stated. Retail metadata disagrees between sites; treat every isbn/pages value here as provisional until scrape_covers.py overwrites it from the Marvel Database wiki."
+ },
+ "asm-o1": {
+  "format": "Hardcover",
+  "publisher": "Marvel",
+  "pages": "1088",
+  "isbn": "9780785124023",
+  "marvel": "6332/amazing_spider-man_omnibus_vol_1_hardcover",
+  "printing": "1st, April 2007 (isbn); page count quoted for the 2016 printing 9781302900823",
+  "source": "retail listings via web search"
+ },
+ "asm-o2": {
+  "format": "Hardcover",
+  "isbn": "9780785158578",
+  "marvel": "58980/the_amazing_spider-man_omnibus_vol_2_hardcover",
+  "pages": "992",
+  "printing": "1st, April 2012",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "asm-o3": {
+  "format": "Hardcover",
+  "isbn": "9781302904081",
+  "marvel": "60835/the_amazing_spider-man_omnibus_vol_3_hardcover",
+  "pages": "858",
+  "printing": "1st, May 30 2017",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "asm-o4": {
+  "format": "Hardcover",
+  "isbn": "9781302915599",
+  "marvel": "72747/the_amazing_spider-man_omnibus_vol_4_hardcover",
+  "pages": "976",
+  "printing": "1st, June 4 2019",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "ben-o1": {
+  "format": "Hardcover",
+  "isbn": "9781302913854",
+  "marvel": "70289/spider-man_ben_reilly_omnibus_vol_1_hardcover",
+  "note": "page count not stated by any source found",
+  "printing": "1st, January 2 2019",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "clone-o1": {
+  "format": "Hardcover",
+  "isbn": "9781302902162",
+  "marvel": "59842/spider-man_clone_saga_omnibus_vol_1_hardcover",
+  "note": "page count omitted -- 1240 was quoted for the new printing 9781302952952",
+  "printing": "1st, 2016",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "clone-o2": {
+  "format": "Hardcover",
+  "isbn": "9781302907983",
+  "pages": "1288",
+  "price": "$125.00",
+  "printing": "1st, November 14 2017",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "jms-o1": {
+  "format": "Hardcover",
+  "isbn": "9781302917067",
+  "marvel": "74098/amazing_spider-man_by_j_michael_straczynski_omnibus_vol_1_hardcover",
+  "pages": "1120",
+  "printing": "1st, 2019",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "larsen-o1": {
+  "format": "Hardcover",
+  "isbn": "9781302907020",
+  "pages": "888",
+  "price": "$100.00",
+  "printing": "1st, June 20 2017",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "mcf-o1": {
+  "format": "Hardcover",
+  "isbn": "0785157298",
+  "marvel": "41736/amazing_spider-man_by_david_michelinie_todd_mcfarlane_omnibus_hc_hardcover",
+  "pages": "856",
+  "printing": "1st, 2011 (isbn-10 as quoted)",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "mcf-o2": {
+  "format": "Hardcover",
+  "isbn": "9781302900731",
+  "pages": "440",
+  "printing": "1st, August 16 2016",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "stern-o1": {
+  "format": "Hardcover",
+  "isbn": "9781302928377",
+  "marvel": "92004/spider-man_by_roger_stern_omnibus_hardcover",
+  "pages": "1296",
+  "printing": "2nd, April 20 2021 -- the 2014 first printing's isbn and page count were not found",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "ult-death-o1": {
+  "format": "Hardcover",
+  "isbn": "9780785164647",
+  "marvel": "42201/ultimate_spider-man_death_of_spider-man_omnibus_hardcover",
+  "pages": "608",
+  "printing": "1st, 2012",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "ult-o1": {
+  "format": "Hardcover",
+  "isbn": "9780785164753",
+  "pages": "1000",
+  "printing": "1st -- page count quoted for the 2022 printing 9781302931872",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "utsm-o1": {
+  "format": "Hardcover",
+  "isbn": "9780785162476",
+  "pages": "808",
+  "printing": "1st, 2012",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "venom-o1": {
+  "format": "Hardcover",
+  "isbn": "9781302912444",
+  "marvel": "70061/venomnibus_vol_1_hardcover",
+  "pages": "1096",
+  "printing": "1st, July 3 2018",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "venom-o2": {
+  "format": "Hardcover",
+  "isbn": "9781302916534",
+  "marvel": "73922/venomnibus_vol_2_hardcover",
+  "note": "page count omitted -- only an ebook figure was quoted",
+  "printing": "1st, February 5 2019",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ },
+ "vs-venom-o1": {
+  "format": "Hardcover",
+  "isbn": "9781302913205",
+  "marvel": "67551/spider-man_vs_venom_omnibus_hardcover",
+  "note": "page count omitted -- sources gave both 1101 and 1160",
+  "price": "$125.00",
+  "printing": "1st, September 18 2018",
+  "publisher": "Marvel",
+  "source": "retail listings via web search"
+ }
+}

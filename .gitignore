@@ -7,3 +7,7 @@
 /tmp/
 *.log
 .DS_Store
+
+# generator byproducts
+tools/__pycache__/
+tools/scrape_cache/

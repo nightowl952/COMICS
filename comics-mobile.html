@@ -610,6 +610,14 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
 #app-spidey .obanner .bmeta{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--xyellow);font-weight:700;margin-top:4px;}
 #app-spidey .onote{font-size:12px;line-height:1.6;color:#e2f1ff;background:rgba(0,25,60,.34);border:1px solid rgba(160,220,255,.28);
     border-radius:13px;padding:11px 14px;margin-bottom:14px;}
+#app-spidey .edition{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:1px;margin:0 0 14px;
+    border-radius:14px;overflow:hidden;background:rgba(160,220,255,.22);border:1px solid rgba(160,220,255,.28);}
+#app-spidey .edition:empty{display:none;}
+#app-spidey .edition>div{background:rgba(0,25,60,.5);padding:9px 12px;}
+#app-spidey .edition dt{font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--xyellow);font-weight:700;}
+#app-spidey .edition dd{margin:3px 0 0;font-size:12px;line-height:1.45;color:#e2f1ff;}
+#app-spidey .edition a.edlink{color:var(--xyellow);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(255,214,102,.45);}
+#app-spidey .edition a.edlink:hover{border-bottom-color:var(--xyellow);}
 #app-spidey .emptyvol{font-size:12.5px;line-height:1.6;color:#dceaf8;text-align:center;padding:26px 16px;border-radius:14px;
     background:rgba(0,25,60,.3);border:1px dashed rgba(160,220,255,.4);}
 #app-spidey .setup{margin-bottom:14px;padding:13px 15px;border-radius:16px;display:flex;gap:18px;flex-wrap:wrap;
@@ -867,6 +875,7 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
   <section id="sm-viewOmni" class="hidden">
     <div class="obanner" id="sm-obanner"></div>
     <div class="onote" id="sm-onote"></div>
+    <dl class="edition" id="sm-oedition"></dl>
     <div class="controls">
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="chip-btn" id="sm-markAll">Mark whole omnibus read</button>
@@ -2131,8 +2140,10 @@ const SC = {
    Contents come from the Marvel Database's structured ReprintOf fields for each
    collected edition, so every issue list matches what the book actually prints,
    in print order. Ordered by the cover date of the material collected.
-   `cover` is unset on every volume -- add a real cover image path there and the
-   CSS placeholder art is replaced automatically. */
+   GENERATED -- do not hand-edit below the marker. Rebuild with
+   `python3 tools/build_omnibus_data.py`, which bakes in covers from Art/covers/
+   as data: URIs and edition metadata from tools/omnibus_editions.json. */
+/* ==== BEGIN GENERATED OMNI -- tools/build_omnibus_data.py ==== */
 const OMNI = [
 {
 "id": "asm-o1",
@@ -2144,6 +2155,13 @@ const OMNI = [
 "art": "o-ditko",
 "tex": "tex-halftone",
 "note": "The complete Lee/Ditko run. Everything Spider-Man is starts here \u2014 Amazing Fantasy #15 through the Master Planner saga and Ditko's exit.",
+"edition": {
+"format": "Hardcover",
+"pages": "1088",
+"isbn": "9780785124023",
+"publisher": "Marvel"
+},
+"marvel": "6332/amazing_spider-man_omnibus_vol_1_hardcover",
 "chapters": [
 {
 "id": "asm-o1-c1",
@@ -2407,6 +2425,13 @@ const OMNI = [
 "art": "o-romita",
 "tex": "tex-halftone",
 "note": "Romita takes over. The Green Goblin's identity, Mary Jane's entrance, the Kingpin's debut, and \"Spider-Man No More!\"",
+"edition": {
+"format": "Hardcover",
+"pages": "992",
+"isbn": "9780785158578",
+"publisher": "Marvel"
+},
+"marvel": "58980/the_amazing_spider-man_omnibus_vol_2_hardcover",
 "chapters": [
 {
 "id": "asm-o2-c1",
@@ -2633,6 +2658,13 @@ const OMNI = [
 "art": "o-romita",
 "tex": "tex-web",
 "note": "The Stone Tablet saga, Captain Stacy's death, the Comics Code-defying drug issues, and Morbius's debut.",
+"edition": {
+"format": "Hardcover",
+"pages": "858",
+"isbn": "9781302904081",
+"publisher": "Marvel"
+},
+"marvel": "60835/the_amazing_spider-man_omnibus_vol_3_hardcover",
 "chapters": [
 {
 "id": "asm-o3-c1",
@@ -2838,6 +2870,13 @@ const OMNI = [
 "art": "o-conway",
 "tex": "tex-web",
 "note": "The Night Gwen Stacy Died, the death of the Green Goblin, and the first Punisher and Clone Saga.",
+"edition": {
+"format": "Hardcover",
+"pages": "976",
+"isbn": "9781302915599",
+"publisher": "Marvel"
+},
+"marvel": "72747/the_amazing_spider-man_omnibus_vol_4_hardcover",
 "chapters": [
 {
 "id": "asm-o4-c1",
@@ -3072,6 +3111,12 @@ const OMNI = [
 "art": "o-untold",
 "tex": "tex-halftone",
 "note": "Published 1995\u201397 but set between the early Lee/Ditko issues. Slots here by story chronology, not print date \u2014 read it alongside Omnibus Vol. 1 or straight after.",
+"edition": {
+"format": "Hardcover",
+"pages": "808",
+"isbn": "9780785162476",
+"publisher": "Marvel"
+},
 "chapters": [
 {
 "id": "utsm-o1-c1",
@@ -3284,7 +3329,14 @@ const OMNI = [
 "released": "Apr 2014",
 "art": "o-stern",
 "tex": "tex-web",
-"note": "The Hobgoblin mystery, \"The Kid Who Collects Spider-Man,\" and Nothing Can Stop the Juggernaut. Overlaps Omnibus Vol. 7\u20138.",
+"note": "The Hobgoblin mystery, \"The Kid Who Collects Spider-Man,\" and Nothing Can Stop the Juggernaut.",
+"edition": {
+"format": "Hardcover",
+"pages": "1296",
+"isbn": "9781302928377",
+"publisher": "Marvel"
+},
+"marvel": "92004/spider-man_by_roger_stern_omnibus_hardcover",
 "chapters": [
 {
 "id": "stern-o1-c1",
@@ -3615,6 +3667,13 @@ const OMNI = [
 "art": "o-mcfarlane",
 "tex": "tex-web",
 "note": "ASM #300 \u2014 the first full Venom. McFarlane's run that reset what a Spider-Man comic looked like.",
+"edition": {
+"format": "Hardcover",
+"pages": "856",
+"isbn": "0785157298",
+"publisher": "Marvel"
+},
+"marvel": "41736/amazing_spider-man_by_david_michelinie_todd_mcfarlane_omnibus_hc_hardcover",
 "chapters": [
 {
 "id": "mcf-o1-c1",
@@ -3817,6 +3876,13 @@ const OMNI = [
 "art": "o-larsen",
 "tex": "tex-burst",
 "note": "Picks up directly from the McFarlane omnibus. Overlaps it at ASM #324, #327 and #329.",
+"edition": {
+"format": "Hardcover",
+"pages": "888",
+"isbn": "9781302907020",
+"price": "$100.00",
+"publisher": "Marvel"
+},
 "chapters": [
 {
 "id": "larsen-o1-c1",
@@ -4047,8 +4113,15 @@ const OMNI = [
 "released": "Contents pending",
 "art": "o-placeholder",
 "tex": "tex-halftone",
-"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
 "placeholder": true,
+"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
+"edition": {
+"format": "Hardcover",
+"isbn": "9781302913205",
+"price": "$125.00",
+"publisher": "Marvel"
+},
+"marvel": "67551/spider-man_vs_venom_omnibus_hardcover",
 "chapters": []
 },
 {
@@ -4060,8 +4133,15 @@ const OMNI = [
 "released": "Contents pending",
 "art": "o-placeholder",
 "tex": "tex-halftone",
-"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
 "placeholder": true,
+"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
+"edition": {
+"format": "Hardcover",
+"pages": "1096",
+"isbn": "9781302912444",
+"publisher": "Marvel"
+},
+"marvel": "70061/venomnibus_vol_1_hardcover",
 "chapters": []
 },
 {
@@ -4073,8 +4153,14 @@ const OMNI = [
 "released": "Contents pending",
 "art": "o-placeholder",
 "tex": "tex-halftone",
-"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
 "placeholder": true,
+"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
+"edition": {
+"format": "Hardcover",
+"isbn": "9781302916534",
+"publisher": "Marvel"
+},
+"marvel": "73922/venomnibus_vol_2_hardcover",
 "chapters": []
 },
 {
@@ -4087,6 +4173,12 @@ const OMNI = [
 "art": "o-mcfarlane",
 "tex": "tex-web",
 "note": "The adjectiveless Spider-Man #1 \u2014 one of the best-selling comics ever printed \u2014 and McFarlane's solo writer/artist run.",
+"edition": {
+"format": "Hardcover",
+"pages": "440",
+"isbn": "9781302900731",
+"publisher": "Marvel"
+},
 "chapters": [
 {
 "id": "mcf-o2-c1",
@@ -4194,6 +4286,12 @@ const OMNI = [
 "art": "o-clone",
 "tex": "tex-burst",
 "note": "Printed in true crossover reading order \u2014 Web, Amazing, Spider-Man and Spectacular interleave month by month, which is how the chapters below are grouped.",
+"edition": {
+"format": "Hardcover",
+"isbn": "9781302902162",
+"publisher": "Marvel"
+},
+"marvel": "59842/spider-man_clone_saga_omnibus_vol_1_hardcover",
 "chapters": [
 {
 "id": "clone-o1-c1",
@@ -4461,6 +4559,13 @@ const OMNI = [
 "art": "o-clone",
 "tex": "tex-burst",
 "note": "Maximum Clonage and the Jackal's endgame. Also interleaved in reading order.",
+"edition": {
+"format": "Hardcover",
+"pages": "1288",
+"isbn": "9781302907983",
+"price": "$125.00",
+"publisher": "Marvel"
+},
 "chapters": [
 {
 "id": "clone-o2-c1",
@@ -4718,6 +4823,12 @@ const OMNI = [
 "art": "o-benreilly",
 "tex": "tex-burst",
 "note": "Ben Reilly takes over as Spider-Man. The Scarlet Spider titles and the Sensational relaunch.",
+"edition": {
+"format": "Hardcover",
+"isbn": "9781302913854",
+"publisher": "Marvel"
+},
+"marvel": "70289/spider-man_ben_reilly_omnibus_vol_1_hardcover",
 "chapters": [
 {
 "id": "ben-o1-c1",
@@ -5011,8 +5122,15 @@ const OMNI = [
 "released": "Contents pending",
 "art": "o-placeholder",
 "tex": "tex-halftone",
-"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
 "placeholder": true,
+"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
+"edition": {
+"format": "Hardcover",
+"pages": "1120",
+"isbn": "9781302917067",
+"publisher": "Marvel"
+},
+"marvel": "74098/amazing_spider-man_by_j_michael_straczynski_omnibus_vol_1_hardcover",
 "chapters": []
 },
 {
@@ -5024,8 +5142,14 @@ const OMNI = [
 "released": "Contents pending",
 "art": "o-placeholder",
 "tex": "tex-halftone",
-"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
 "placeholder": true,
+"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
+"edition": {
+"format": "Hardcover",
+"pages": "1000",
+"isbn": "9780785164753",
+"publisher": "Marvel"
+},
 "chapters": []
 },
 {
@@ -5037,11 +5161,19 @@ const OMNI = [
 "released": "Contents pending",
 "art": "o-placeholder",
 "tex": "tex-halftone",
-"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
 "placeholder": true,
+"note": "Placeholder \u2014 the issue list for this volume has not been added to the tracker yet.",
+"edition": {
+"format": "Hardcover",
+"pages": "608",
+"isbn": "9780785164647",
+"publisher": "Marvel"
+},
+"marvel": "42201/ultimate_spider-man_death_of_spider-man_omnibus_hardcover",
 "chapters": []
 }
 ];
+/* ==== END GENERATED OMNI ==== */
 
 /* internal issue id -> marvel.com `<id>/<slug>` path fragment.
    Missing ids fall back to a marvel.com search URL and render a grey Read button. */
@@ -6235,11 +6367,16 @@ function omniStats(o){
   o.chapters.forEach(c=>c.issues.forEach(i=>{t++; if(readSet.has(i.id))r++; else if(skipSet.has(i.id))s++;}));
   return {r:r,s:s,t:t,done:r+s};
 }
-/* art layers; a real cover image (o.cover) replaces the CSS placeholder when present */
+/* Art layers. A baked cover (o.cover, a data: URI) draws *over* the CSS ramp
+   rather than instead of it, so a volume with no cover yet -- or an image that
+   fails to decode -- degrades to the placeholder art instead of a blank tile.
+   No network is involved either way; covers are inlined at build time. */
 function artHTML(o,banner){
-  if(o.cover) return '<img class="artimg" src="'+esc(o.cover)+'" alt="">'+(banner?'':'<div class="vig"></div>');
-  return '<div class="art '+o.art+'"></div><div class="tex '+o.tex+'"></div>'+
-         (banner?'':'<div class="vig"></div>')+'<div class="gloss"></div>';
+  let h='<div class="art '+o.art+'"></div><div class="tex '+o.tex+'"></div>';
+  if(o.cover) h+='<img class="artimg" src="'+esc(o.cover)+'" alt="">';
+  if(!banner)  h+='<div class="vig"></div>';
+  if(!o.cover) h+='<div class="gloss"></div>';
+  return h;
 }
 const SPIDER_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="GID" x1="0" y1="0" x2="0" y2="1">'+
  '<stop offset="10%" stop-color="rgba(255,255,255,.95)"/><stop offset="60%" stop-color="rgba(255,255,255,.55)"/>'+
@@ -6289,11 +6426,28 @@ function coverHTML(iss){
   return '<div class="cover" data-toggle="'+iss.id+'" style="background:linear-gradient(160deg,'+c[0]+','+c[1]+')">'+
     '<div class="strip"></div><div class="cnum">'+num+'</div><div class="cser">'+esc(iss.s)+'</div></div>';
 }
+/* Printed-edition metadata, scraped once by tools/scrape_covers.py and baked
+   into OMNI. Every field is optional -- a volume the scrape missed just shows
+   fewer rows, and one it missed entirely shows none. */
+const EDITION_ROWS=[["format","Format"],["pages","Pages"],["released","Released"],
+  ["isbn","ISBN"],["price","Cover price"],["coverArtist","Cover art"],
+  ["editor","Editor"],["publisher","Publisher"]];
+function buildEdition(o){
+  const ed=o.edition||{};
+  let h=EDITION_ROWS.filter(r=>ed[r[0]])
+      .map(r=>'<div><dt>'+esc(r[1])+'</dt><dd>'+esc(ed[r[0]])+'</dd></div>').join("");
+  /* Same convention as the issue-level Read button: only the numeric id matters,
+     the slug is decorative. Volumes with no id resolve to a search instead. */
+  if(o.marvel) h+='<div><dt>On Marvel</dt><dd><a class="edlink" target="_blank" rel="noopener" href="'+
+    'https://www.marvel.com/comics/collection/'+esc(o.marvel)+'">View collection</a></dd></div>';
+  byId("oedition").innerHTML=h;
+}
 function buildOmni(o){
   byId("obanner").innerHTML =
     artHTML(o,true)+'<div class="fade"></div><div class="binfo"><h2>'+esc(o.title)+(o.vol?' '+esc(o.vol):'')+
     '</h2><div class="bmeta">'+esc(o.creators)+' &middot; '+esc(o.era)+' &middot; '+esc(o.released)+'</div></div>';
   byId("onote").textContent=o.note;
+  buildEdition(o);
   qs("#viewOmni .controls").style.display = o.chapters.length ? "" : "none";
   if(!o.chapters.length){
     chaptersEl.innerHTML='<div class="emptyvol">Issue list not added yet &mdash; this volume is a placeholder on the shelf.</div>';
