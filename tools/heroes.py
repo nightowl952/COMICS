@@ -8,7 +8,8 @@ module beside it; see "Adding an omnibus hero" in CLAUDE.md.
 
 `meta` names a module in tools/ that defines ORDER, PLACEHOLDERS and SHELF (and
 optionally PLACEHOLDER_PAGES and SERIES_EXTRA) -- the hand-written half of that
-hero's shelf.
+hero's shelf. `ids` names the harvested marvel.com id store that becomes the
+tracker's MARVEL map.
 """
 import os, sys
 
@@ -22,6 +23,7 @@ HEROES = {
         art     = os.path.join("Art", "Spider-Man"),
         meta    = "omnibus_meta",
         raw     = "omnibus_contents_raw.json",
+        ids     = "marvel_ids.json",
         # the panel key + id prefix build_single_file.py scopes this page under
         panel   = "spidey",
         pfx     = "sm",
@@ -41,6 +43,7 @@ def resolve(key=None):
     h["tracker_path"] = os.path.join(ROOT, h["tracker"])
     h["art_path"]     = os.path.join(ROOT, h["art"])
     h["raw_path"]     = os.path.join(HERE, h["raw"])
+    h["ids_path"]     = os.path.join(HERE, h["ids"])
     return h
 
 
