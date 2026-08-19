@@ -33,7 +33,7 @@ Keep replies short and plain. This is a hobby project, not a code review.
 
 - `index.html` — the C.O.M.I.C.S. homescreen. Poster grid, Continue Reading panel,
   per-subject dossier modal, filters.
-- `comics-mobile.html` — **generated, do not hand-edit.** All three pages
+- `comics-mobile.html` — **generated, do not hand-edit.** All four pages
   composed into one hash-routed file for publishing as a Claude Artifact
   (artifacts are one file per URL). Rebuild with
   `python3 tools/build_single_file.py` after changing any source page.
@@ -43,8 +43,11 @@ Keep replies short and plain. This is a hobby project, not a code review.
   shape: a shelf of omnibus volumes rendered as CSS-3D hardcover books, each
   opening into its own reading list. Its `OMNI` array is **generated** from
   `tools/omnibus_meta.py` — edit that and regenerate, don't hand-edit the array.
-- `Art/Spider-Man/` — cover scans, committed so GitHub Pages can serve them and
-  the mobile build can inline them.
+- `hulk-reading-tracker.html` — the Hulk omnibus shelf. Same shape and same
+  tooling as the Spider-Man page (`--hero hulk`); 17 mainline Bruce Banner
+  volumes. Its `OMNI` array is generated from `tools/hulk_meta.py`.
+- `Art/Spider-Man/`, `Art/Hulk/` — cover scans, committed so GitHub Pages can
+  serve them and the mobile build can inline them.
 
 No build step, no package.json, no dependencies, no server. Open either file
 directly in a browser.
@@ -59,9 +62,10 @@ There are two ways a hero's tracker can be organised. Pick per hero:
 
 - **Curated chronology** (X-Men) — one researched reading order through a single
   saga. Acts → chapters → issues, all on one page.
-- **Omnibus shelf** (Spider-Man) — a poster shelf of omnibus volumes, each
+- **Omnibus shelf** (Spider-Man, Hulk) — a poster shelf of omnibus volumes, each
   reproducing exactly what the printed book collects, in print order. Two views
-  in one file, hash-routed (`#/omni/<id>`).
+  in one file, hash-routed (`#/omni/<id>`). Two heroes use this shape; the whole
+  pipeline behind it is hero-agnostic — see "Adding an omnibus hero".
 
 The omnibus shape is what to copy when the goal is "read the collections as
 published" rather than "read this story in the right order".
@@ -165,21 +169,42 @@ curl -s -A "$UA" -G "https://marvel.fandom.com/api.php" \
   --data-urlencode "prop=wikitext" --data-urlencode "format=json"
 ```
 
-Those fields are one row per *story*, in printed order — so the generator dedupes
-globally (keeping first occurrence) and the surviving order **is** the book's
-reading order. Prose "Collects…" blurbs from retail sites disagree with each
-other and with the books; the ReprintOf fields did not. Prefer them.
+Those fields are one row per *story* — so the generator dedupes globally
+(keeping first occurrence) and the surviving order is what drives the chapters.
+Prose "Collects…" blurbs from retail sites disagree with each other and with the
+books; the ReprintOf fields did not. Prefer them.
 
-Enumerate candidate pages with `list=allpages&apprefix=...`, filtering for
-`Omnibus` in the title.
+**They are not always in printed order, though.** The Spider-Man pages happen to
+be; the Hulk pages group by series instead, which put Incredible Hulk #102
+seventh in Omnibus Vol. 1 when the book prints it last. Read the pulled order
+before trusting it, and correct the raw-contents file where a volume's own
+chapter order would come out wrong.
+
+Two API details that cost time the first time round:
+
+- **`ReprintOf<N>` is written two ways.** Spider-Man's pages spell the target in
+  full (`Amazing Spider-Man Vol 1 1`); the Hulk's use the short form
+  (`Incredible Hulk #1`), which does not say *which* volume of a retitled
+  series. The rendered page resolves it: fetch `prop=text` instead and read the
+  reprint gallery's captions, whose links are canonical page titles
+  (`/wiki/Incredible_Hulk_Vol_1_102`), in the same order. Pull both and check
+  the counts match — that is the cheap integrity check on the whole list.
+- **`list=allpages&apprefix=…` silently truncates.** `aplimit=500` is a page of
+  results, not a limit on the answer, and a prefix like "Incredible Hulk" has
+  thousands of issue pages before it reaches the omnibus titles — which is how
+  the five *Incredible Hulk by Peter David* volumes went missing from a first
+  enumeration that looked complete. Follow `continue.apcontinue` until it stops.
+
+The wiki's `list=search` returns nothing useful here (`intitle:` included), so
+prefix enumeration is the way in.
 
 ### Chaptering — two strategies, chosen automatically
 
 The generator computes runs of consecutive same-series issues and looks at the
 average run length:
 
-- **avg ≥ 3.5 → chapter per series run** (12 of the 15 volumes with contents). E.g.
-  "Amazing Spider-Man #1–38", "Amazing Spider-Man Annual #1–2".
+- **avg ≥ 3.5 → chapter per series run** (12 of the 15 Spider-Man volumes with
+  contents). E.g. "Amazing Spider-Man #1–38", "Amazing Spider-Man Annual #1–2".
 - **avg < 3.5 → interleaved crossover** (Clone Saga Vol. 1–2, Ben Reilly Vol. 1).
   These books print Web → Amazing → Spider-Man →
   Spectacular month by month, so a per-series chapter would be one issue long.
@@ -188,6 +213,14 @@ average run length:
 The Part N labels are honest but generic. Real arc names (Power and
 Responsibility, The Exile Returns, Maximum Clonage…) would be a genuine
 improvement and are the obvious next curation pass.
+
+**`chapterby` in a volume's meta entry overrides the heuristic** (`"series"` or
+`"parts"`). The average-run-length test asks "is this a month-by-month
+crossover?", and an anthology answers the same way for a different reason: five
+of the Hulk volumes are collections of tie-in minis and one-shots, which score
+under 3.5 but read far better as one chapter per mini ("World War Hulk: X-Men
+#1–3") than as "Part 3". The key is a build-time hint — `build_all()` pops it
+before serializing, so it never reaches the page.
 
 **A series run is not necessarily contiguous**, so `spanlabel()` splits it into
 contiguous blocks and joins them with commas. The Straczynski volume is why:
@@ -360,7 +393,56 @@ pass: #1–10 sit in a digital-backfill batch at 37894–37904 and #678–700 in
 2012 chronological run at 40105–40139, so #11–58 and #500–514 are in backfill
 batches between those two that a sweep has not reached yet.
 
-**The harvesting runbook still works, but marvel.com is much more aggressive
+### Harvest by series, not by id range
+
+`tools/series_harvest.py` is the method to reach for first. Three facts make it
+much cheaper and more reliable than probing an id range:
+
+- `/comics/series/<id>/<anything>` **resolves on the id alone** — the slug in
+  the URL is decoration. So the series-id space can be probed by title the same
+  way the issue-id space is.
+- A series page lists ~20 of its issues as `/comics/issue/<id>/<slug>`, which is
+  exactly the `<id>/<slug>` fragment `MARVEL` stores. No second request, no
+  slug to reconstruct.
+- An **issue page links to its neighbours in the same series**, so one known
+  issue walks out to the whole run at about a request per issue — and unlike a
+  blind scan it cannot skip one.
+
+```bash
+python3 tools/series_harvest.py probe  2350:2650      # series id -> title
+python3 tools/series_harvest.py series 2400 2418      # series -> its issues
+python3 tools/series_harvest.py walk   immortal_hulk_2018:77345
+python3 tools/series_harvest.py write                 # -> marvel_ids.json
+```
+
+The first three append to `tools/series_links.json` and are resumable; `write`
+only adds slugs whose prefix is in `SLUG_PFX`, and prints the ones that are not
+rather than guessing. That is how Immortal Hulk (51 issues), Incredible Hulk
+(2000) (114) and Hulk (2021) (14) were resolved, in minutes rather than hours.
+
+Two things it will not do for you. **Series ids cluster by era but are not
+ordered**, so finding an unknown mini means probing a range near a known
+sibling — the 2007 World War Hulk tie-ins all sit in 2400–2600, which is how
+X-Men, Gamma Corps and World Breaker were found. And **a series page only shows
+the tail of a long run** (Hulk (2008) gives #38–57, and the walk stops at #30
+because marvel.com does not link further back), so pre-2008 material still needs
+the id scan below.
+
+**marvel.com's series names do not always match the wiki's**, and `SLUG_PFX`
+takes a callable for exactly that case. The wiki splits the 1999 Hulk ongoing in
+two at the retitling — `Hulk Vol 1` #1–11, then `Incredible Hulk Vol 2` #12–112 —
+where marvel.com keeps one `hulk_1999` series across the whole run. Punctuation
+drifts too: series `world_war_hulk_xmen_2007` holds issues named
+`world_war_hulk_x-men_2007_N`, which is why the issue filter groups by slug stem
+rather than matching the series slug.
+
+Three routes that look promising and are not, so nobody re-walks them:
+`www.marvel.com/sitemap.xml` exists and resolves but carries **no**
+`/comics/issue/` URLs; `/search?query=…` is client-rendered and returns no
+results in the HTML; and `/comics/calendar?date=YYYY-MM-DD` accepts the
+parameter but always answers with the current week.
+
+**The id-scanning runbook still works, but marvel.com is much more aggressive
 about rate limiting than it was.** `-P 20` over ~500 ids succeeded once and then
 403'd everything for several minutes; `-P 5` with 2s pauses also tripped it. What
 does work is `tools/harvest.py` — small batches, 3 workers, and **403
@@ -386,6 +468,11 @@ search.** Mapping them by striding is much cheaper than scanning blind:
 | ~6400–26000 | one contiguous block per series, blocks in no useful order, issues **lexicographic** by number (#1, #10, #100, #11…) | stride 50–60 to find the block, then scan it end to end |
 | ~33000+ | chronological again, with digital-backfill batches of older material spliced in | stride 20 near the release date, then scan the neighbourhood |
 
+Striding 40 across 6400–26000 maps the middle regime's blocks in about 500
+probes and is worth doing once before any targeted scan — that single pass is
+where the Incredible Hulk (1962) block (8906–9285, all 380 issues), Tales to
+Astonish (11347–11447) and the Hulk annuals (16867–16882) all came from.
+
 The lexicographic ordering in the middle regime is the surprise: a block that
 starts at #10 has not skipped #1–9, they are at the far end. Do not stop a scan
 because the numbers look wrong.
@@ -396,17 +483,23 @@ because the numbers look wrong.
   `python3 tools/harvest.py 6440:6960:asm 14500:14820:spectacular` probes those
   id ranges and appends to `tools/marvel_ids.json`. Resumable: already-probed ids
   are skipped, so rerunning after a block costs nothing.
-- `omnibus_contents_raw.json` — the raw ReprintOf lists pulled from the Marvel
-  Database, one entry per omnibus. Regenerate only if a volume's contents change.
+- `omnibus_contents_raw.json`, `hulk_contents_raw.json` — the raw ReprintOf
+  lists pulled from the Marvel Database, one entry per omnibus, one file per
+  hero. Regenerate only if a volume's contents change.
 - `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
   its tracker filename, art directory, metadata module, panel key and route.
   Every other tool takes `--hero <key>` (default `spider-man`) and reads its
   paths from here. `python3 tools/heroes.py` lists what is registered.
-- `omnibus_meta.py` — the hand-written half, and **the only place shelf metadata
-  should be edited**: `ORDER` (wiki-backed volumes; each key must exist in
-  `omnibus_contents_raw.json` or `gen()` KeyErrors), `PLACEHOLDERS` (shelf tiles
-  with no contents), and `SHELF` (display order by id). This is where a new
-  omnibus, a `spine` label or a `cover` path gets added.
+- `omnibus_meta.py` (Spider-Man), `hulk_meta.py` (Hulk) — the hand-written half,
+  and **the only place shelf metadata should be edited**: `ORDER` (wiki-backed
+  volumes; each key must exist in that hero's raw-contents file or `gen()`
+  KeyErrors), `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF`
+  (display order by id). This is where a new omnibus, a `spine` label, a
+  `chapterby` override or a `cover` path gets added.
+
+  One formatting constraint: `fetch_covers.py` anchors the `cover=` line it
+  writes to a `spine="…",` that **ends its line**, so keep `spine` last on its
+  line — that is why `chapterby` is written before it, not after.
 - `build_omnibus_data.py` — turns the two above into the `OMNI` array, and
   `marvel_ids.json` into the `MARVEL` map, **and writes both into
   `spiderman-reading-tracker.html`**. Run it with no arguments to
@@ -422,25 +515,35 @@ because the numbers look wrong.
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
   `PLACEHOLDER_PAGES` in the meta module.
-- `marvel_ids.json` — id → marvel.com path fragment. `build_omnibus_data.py`
-  splices it in as `MARVEL`, so a harvest lands by regenerating, not by editing
-  the HTML.
-- `build_single_file.py` — composes the three pages into `comics-mobile.html`
-  for artifact publishing, inlining cover images as data URIs on the way. See
+- `series_harvest.py` — the faster harvester: `probe` maps a range of series
+  ids to titles, `series` pulls a series page's issue list, `walk` follows an
+  issue's sibling links across a whole run, and `write` merges the result into
+  `marvel_ids.json` through its `SLUG_PFX` table. See "Harvest by series, not by
+  id range" above. Both heroes' shelves feed from the same store.
+- `series_links.json`, `series_titles.json` — what `series_harvest.py` has
+  banked: issue slug → marvel id, and series id → title. Resumable caches, so a
+  rerun costs nothing.
+- `marvel_ids.json` — id → marvel.com path fragment, **shared by both heroes**.
+  `build_omnibus_data.py` splices it in as `MARVEL`, so a harvest lands by
+  regenerating, not by editing the HTML.
+- `build_single_file.py` — composes every page into `comics-mobile.html` for
+  artifact publishing, inlining cover images as data URIs on the way. It reads
+  the shelf heroes out of `heroes.py`, so adding one needs no edit here. See
   "The mobile build" below.
 
 **`OMNI` and `MARVEL` in the HTML are generated — do not hand-edit them.** Change
 `omnibus_meta.py` (or `marvel_ids.json`) and regenerate. The serialization is pinned to
 `json.dumps(arr, indent=0, ensure_ascii=False)` with a fixed key order
-(`KEY_ORDER`) precisely so a regen shows a small diff instead of reshuffling all
-18 entries.
+(`KEY_ORDER`) precisely so a regen shows a small diff instead of reshuffling
+every entry.
 
 A full shelf change is three commands:
 
 ```bash
-python3 tools/build_omnibus_data.py     # omnibus_meta.py -> OMNI in the tracker
-python3 tools/build_single_file.py      # every page -> comics-mobile.html
-python3 tools/build_omnibus_data.py --check   # confirm it round-trips
+python3 tools/build_omnibus_data.py              # omnibus_meta.py -> OMNI in the tracker
+python3 tools/build_omnibus_data.py --hero hulk  # hulk_meta.py    -> OMNI in the tracker
+python3 tools/build_single_file.py               # every page -> comics-mobile.html
+python3 tools/build_omnibus_data.py --check      # confirm it round-trips
 ```
 
 All of these take `--hero <key>`; without one they act on Spider-Man.
@@ -463,15 +566,21 @@ harvest. Roughly in order:
    series `SERIES` in `build_omnibus_data.py` does not know, add them as
    `SERIES_EXTRA` in this module rather than editing the shared table.
 4. **Register it** in `tools/heroes.py`.
-5. **Build the tracker page.** Copy `spiderman-reading-tracker.html` and change
-   the title, the glyph, the `.o-*` ramps with their `SPINE_C` entries, and the
-   storage keys (`comics-hero-<id>`, `<hero>-omnibus-progress`). This is the one
-   genuinely hand-made step — it is design, not plumbing.
-6. **Harvest Marvel ids** with `harvest.py` and merge into `marvel_ids.json`.
-   Expect this to be the slow part; see the rate-limiting notes above.
-7. **Generate and publish**: `build_omnibus_data.py --hero <key>`,
-   `fetch_covers.py --hero <key>`, `build_single_file.py`, then flip the
-   `HEROES` entry in `index.html`.
+5. **Build the tracker page.** Copy `spiderman-reading-tracker.html` (or
+   `hulk-reading-tracker.html`) and change the title, the glyph, the `SC` series
+   → cover-colour map, the `.o-*` ramps with their `SPINE_C` entries, the cover
+   textures, and the storage keys (`comics-hero-<id>`, `<hero>-omni-progress-v1`).
+   Empty `OMNI`/`MARVEL` to `const OMNI = [\n];` and `const MARVEL = {\n};` so
+   the generator has something to splice into. This is the one genuinely
+   hand-made step — it is design, not plumbing.
+6. **Harvest Marvel ids** with `series_harvest.py` (fall back to `harvest.py`
+   for pre-2008 runs) — the store is shared, so anything already in it lands
+   for free. Expect this to be the slow part; see the rate-limiting notes above.
+7. **Generate and publish**: `fetch_covers.py --hero <key>`,
+   `build_omnibus_data.py --hero <key>` (in that order — fetch writes the
+   `cover=` lines the generator reads), `build_single_file.py`, then flip the
+   `HEROES` entry in `index.html` and set its `total` to the unique-issue count
+   the generator printed.
 
 ### Scope call
 
@@ -499,6 +608,93 @@ the raw wiki contents for the 13 dropped volumes. Nothing on the shelf depends o
 them, but re-adding a dropped volume means re-pulling its page with the MediaWiki
 call under "Where the contents came from". `marvel_ids.json` and the `MARVEL` map
 were *not* trimmed, so the deep links come back for free.
+
+## The Hulk tracker (omnibus shelf)
+
+Same code as the Spider-Man page, same tooling, different data: 17 volumes, 663
+issue slots, 657 unique issues, all 17 with contents and cover art. No
+placeholders. `tools/hulk_meta.py` is the hand-written half; run everything with
+`--hero hulk`.
+
+### Scope call — mainline Bruce Banner only
+
+The wiki lists 21 Hulk-family omnibuses. The four **She-Hulk** books (She-Hulk
+Omnibus, Savage She-Hulk, Sensational She-Hulk by John Byrne, She-Hulk by Dan
+Slott / Peter David / Rainbow Rowell) are a different character and are
+deliberately off the shelf. Everything else is on it, including the two
+judgement calls, which the user made explicitly:
+
+- **Hulk by Loeb & McGuinness** is the Hulk (2008) ongoing — the Red Hulk
+  mystery. It is the mainline Hulk title of its moment even though Banner
+  co-stars.
+- **Hulk: Maestro by Peter David** is an alternate-future thread rather than
+  the main line, but every issue in it is a Hulk book.
+
+`SHELF` order is a reading order, not publication order. Two placements are
+deliberate:
+
+- **maestro-o1 sits after pad-o4**, with the Peter David run it grew out of,
+  even though half its contents are 2020–2022.
+- **pad-o5 sits after rotm-o1**, because its Incredible Hulk (2000) #77–87 picks
+  up directly from where Return of the Monster stops at #74.
+
+**There is one real gap in the shelf, and it is Marvel's, not ours.** Incredible
+Hulk (1962) #210–327 has never been collected in omnibus, so `inc-o4` ends at
+#209 and `pad-o1` opens at #328. The note on `pad-o1` says so on the page.
+
+`inc-o4` is solicited for February 2027 and carries `released="Announced"`, which
+is what puts the amber "Announced" badge on its tile — the same path the
+Spider-Man shelf already had but never exercised.
+
+### Contents, and where the wiki order is not print order
+
+Pulled the same way as Spider-Man's (the `ReprintOf<N>` MediaWiki call above),
+into `tools/hulk_contents_raw.json`. One difference worth knowing: **the Hulk
+pages' ReprintOf fields are not always in print order.** They group by series
+where the Spider-Man pages did not. Only one volume is actually wrong because of
+it — `inc-o1` lists Incredible Hulk #102 seventh, straight after #1–6, when the
+book prints it last, after Tales to Astonish #101 (which is the issue it
+continues from). `hulk_contents_raw.json` carries the corrected order.
+
+If a volume's contents are ever re-pulled, re-check that fix — a fresh pull will
+reintroduce it.
+
+### Chaptering
+
+Twelve volumes take the automatic per-series chapters. Five carry
+`chapterby="series"` because the heuristic would have chunked them into "Part N":
+`wwh-o1`, `planet-o1`, `pad-o5`, `maestro-o1` and `cates-o1`. All five are
+anthologies of tie-in minis and one-shots rather than month-by-month crossovers,
+so one chapter per mini is both shorter and more informative. World War Hulk
+lands at 16 chapters that read as the tie-in list it is.
+
+### Marvel deep links
+
+495 of 657 unique issues (75%) resolve to a real marvel.com issue page; the rest
+fall back to `marvel.com/search?query=` and a grey Read button, same convention
+as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
+Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
+Incredible Hulk annuals, and the World War Hulk core minis.
+
+Unresolved, largest first: **Hulk (2008) #1–29** (23 on the shelf — the biggest
+single gap and the one worth another pass), Rampaging Hulk (6), the three
+Maestro minis and Future Imperfect (2015) (5 each), Symbiote Spider-Man:
+Crossroads, New Fantastic Four, Heroes for Hire and Gamma Flight (5 each), and a
+long tail of one-shots and tie-ins at one to four apiece. Immortal Hulk #0 is
+missing too — marvel.com has no `immortal_hulk_2018_0`.
+
+### Issue ids and the shared id store
+
+Six issue slots overlap between volumes (Hulk: Future Imperfect #1–2 and
+Incredible Hulk #460–461 are in both the Peter David volumes and the Maestro
+one; World War Hulk Prologue and Giant-Size Hulk #1 are each in two). They share
+ids on purpose, exactly as on the Spider-Man shelf.
+
+`heroes.py` points **both** heroes at the same `tools/marvel_ids.json`. That is
+deliberate: the store is keyed by issue id, several series (Web of Spider-Man,
+Marvel Comics Presents, Fantastic Four) appear on both shelves, and one store
+means an overlap resolves without being harvested twice. The cost is that each
+tracker carries some ids it does not use, which was already true of Spider-Man's.
 
 ## The X-Men tracker
 
@@ -612,19 +808,26 @@ Non-obvious placements that are deliberate, not mistakes:
 
 ## The mobile build (`comics-mobile.html`)
 
-`tools/build_single_file.py` composes the three pages into one. The sources are
-never modified — everything below is done at build time.
+`tools/build_single_file.py` composes every page into one. The sources are never
+modified — everything below is done at build time.
 
-Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`.
+Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`, `#/hulk`,
+`#/hulk/omni/<id>`.
+
+**The builder is registry-driven, not hardcoded.** `_apps()` reads the shelf
+heroes out of `heroes.py`; the panel list, the cross-page link rewrites, the
+`ROUTE_OF` map the homescreen navigates by, the per-hero hash prefix and the
+shell router's panel set are all derived from it. Adding an omnibus hero needs
+no edit here — register it in `heroes.py` and rebuild.
 
 ### What the build has to solve
 
-- **83 CSS class names collide** across the three files with *different* values
+- **CSS class names collide** across the source files with *different* values
   (`.wrap` is 960px vs 1120px, `.x-emblem` is blue vs red, `.tex-web` differs).
   Each stylesheet is scoped under its own `#app-<key>` panel. `:root`, the
   reset, `body` and the bubbles are hoisted once. `body.hideopt` is special-cased
   so the X-Men "hide optional arcs" toggle still works.
-- **18 DOM ids collide** (`statRead`, `upnext`, `shelf`, …). Every id is
+- **DOM ids collide** (`statRead`, `upnext`, `shelf`, …). Every id is
   prefixed per app in both the markup and the JS that looks it up;
   `document.getElementById/querySelector(All)` are rewritten to prefix-aware
   helpers scoped to the panel.
@@ -663,22 +866,28 @@ a server-side store and is not built.
 
 ## Open items — C.O.M.I.C.S.
 
-1. **Five of seven subjects have no reading list yet** (Wolverine, Hulk,
-   Fantastic Four, Moon Knight, Daredevil). Their `desc` text in `HEROES`
-   sketches the intended shape of each list but nothing is researched or
-   verified yet — treat it as a starting brief, not a plan.
+1. **Four of seven subjects have no reading list yet** (Wolverine, Fantastic
+   Four, Moon Knight, Daredevil). Their `desc` text in `HEROES` sketches the
+   intended shape of each list but nothing is researched or verified yet —
+   treat it as a starting brief, not a plan.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Six covers are low-res** (~325px wide) because that is all the Marvel
-   Database stores — see "Cover art". Replacing them needs a scan from
-   somewhere else; everything else on the shelf is 700px.
+3. **Twelve covers are low-res** (~325–400px wide) because that is all the
+   Marvel Database stores — six on the Spider-Man shelf, six on the Hulk shelf;
+   see "Cover art". Replacing them needs a scan from somewhere else; everything
+   else is 700px.
 4. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
    arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
    would be a genuine improvement — see "Chaptering".
-5. **The Straczynski volume has no Marvel deep links at all** — all 47 of its
-   Amazing Spider-Man (1999) issues fall back to search. The block is findable;
-   see "Marvel deep links" for where the sweeps got to.
+5. **The Straczynski volume has almost no Marvel deep links** — its Amazing
+   Spider-Man (1999) issues mostly fall back to search. Try
+   `series_harvest.py walk the_amazing_spider-man_1999:<any known id>` before
+   another id sweep; see "Harvest by series, not by id range".
+6. **Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf** (23 issues).
+   marvel.com's series page only reaches back to #38 and the sibling walk stops
+   at #30, so these need an id scan — #12 is at 24160, in a 2009 chronological
+   batch rather than a series block.
 
 ## Testing
 
@@ -697,9 +906,11 @@ node --check /tmp/v.js
 
 # Shelf data round-trips (also checks SHELF/SPINE_C consistency)
 python3 tools/build_omnibus_data.py --check
+python3 tools/build_omnibus_data.py --check --hero hulk
 
 # Cover art budget
 python3 tools/covers.py audit
+python3 tools/covers.py audit --hero hulk
 
 # The mobile build must stay pure ASCII
 python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"   # 0
@@ -708,7 +919,8 @@ python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"  
 # or re-derive: eval the data section and assert every chapter has a digest.
 ```
 
-The shelf currently reports **16 volumes / 567 issue slots / 564 unique
+The Spider-Man shelf currently reports **16 volumes / 567 issue slots / 564
+unique issues**; the Hulk shelf **17 volumes / 663 issue slots / 657 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
 

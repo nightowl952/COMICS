@@ -29,6 +29,20 @@ HEROES = {
         pfx     = "sm",
         route   = "/spider-man",
     ),
+    "hulk": dict(
+        name    = "Hulk",
+        tracker = "hulk-reading-tracker.html",
+        art     = os.path.join("Art", "Hulk"),
+        meta    = "hulk_meta",
+        raw     = "hulk_contents_raw.json",
+        # deliberately the same store as Spider-Man: the id map is keyed by
+        # issue id, several series appear on both shelves, and a shared store
+        # means an overlap resolves without being harvested twice.
+        ids     = "marvel_ids.json",
+        panel   = "hulk",
+        pfx     = "hk",
+        route   = "/hulk",
+    ),
 }
 
 DEFAULT = "spider-man"
