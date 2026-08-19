@@ -205,6 +205,19 @@ body{
 #app-home .modal-facts .stat{flex:0 0 auto;}
 #app-home .modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
 #app-home .modal-note{font-size:11.5px;line-height:1.55;color:#cfe6ff;margin-top:12px;}
+#app-home .gear{position:absolute;top:14px;right:14px;z-index:4;width:34px;height:34px;border-radius:50%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-family:inherit;
+    background:linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.07));
+    border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+    transition:transform .25s cubic-bezier(.2,.8,.3,1), filter .12s;}
+#app-home .gear:hover{filter:brightness(1.15);transform:rotate(40deg);}
+#app-home .gear:focus-visible{outline:3px solid var(--xyellow);outline-offset:2px;}
+#app-home .gear svg{width:19px;height:19px;fill:#eaf6ff;}
+#app-home .modal.setmodal{width:min(540px,100%);}
+#app-home .setrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+#app-home .setrow input[type=password]{flex:1 1 200px;min-width:170px;font-family:inherit;font-size:12.5px;padding:8px 12px;border-radius:14px;
+    color:#fff;background:rgba(0,20,50,.55);border:1px solid rgba(160,220,255,.45);}
+#app-home .setrow input[type=password]:focus{outline:2px solid var(--xyellow);}
 #app-home .modal-close{position:absolute;top:12px;right:12px;z-index:2;width:32px;height:32px;border-radius:50%;cursor:pointer;
     font-size:15px;font-weight:900;color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:inherit;
     background:radial-gradient(circle at 32% 28%, #fff, #cfe6ff 40%, #5aa5dd);
@@ -350,10 +363,6 @@ body{
 #app-xmen .setup label{display:block;font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#eaf6ff;margin-bottom:7px;}
 #app-xmen .setup .hint{font-weight:400;letter-spacing:.4px;text-transform:none;color:#c3dcf2;font-size:10.5px;}
 #app-xmen .setup-inputs{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
-#app-xmen .setup input[type=password]{flex:1 1 170px;min-width:150px;font-family:inherit;font-size:12px;padding:7px 11px;border-radius:14px;
-    color:#0a2440;background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.7);}
-#app-xmen .setup input[type=password]:focus{outline:2px solid var(--xyellow);}
-#app-xmen #keyState{margin-top:6px;}
 #app-xmen .orb{width:28px;height:28px;flex:0 0 28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
     font-size:14px;font-weight:900;color:transparent;transition:all .18s;
     background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(200,230,255,.32) 40%, rgba(30,80,150,.42));
@@ -571,6 +580,15 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
 #app-hulk .tex-burst{background:
     repeating-conic-gradient(from 8deg at 50% 34%, rgba(255,255,255,.10) 0deg 2.2deg, transparent 2.2deg 24deg),
     radial-gradient(circle at 50% 34%, rgba(255,255,255,.2), transparent 54%);}
+#app-hulk .sum{display:none;margin:2px 9px 10px 60px;padding:12px 14px;border-radius:13px;font-size:12.5px;line-height:1.62;color:#eef7ff;
+    background:rgba(0,25,60,.42);border:1px solid rgba(160,220,255,.34);}
+#app-hulk .sum.show{display:block;}
+#app-hulk .sum.chsum{margin:0 2px 10px;}
+#app-hulk .sum .sum-hd{font-size:9px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--xyellow);margin-bottom:6px;}
+#app-hulk .sum .sum-err{color:#ffd0d0;}
+#app-hulk .sum .spin{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
+    border-top-color:var(--xyellow);margin-right:8px;vertical-align:-1px;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 #app-hulk .ch{border-radius:18px;margin-bottom:12px;overflow:hidden;
     background:linear-gradient(180deg, rgba(255,255,255,.2), rgba(160,210,250,.09));
     border:1px solid rgba(255,255,255,.48);
@@ -659,7 +677,7 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
     background:linear-gradient(180deg,rgba(150,40,40,.75),rgba(90,15,15,.85));border:1px solid rgba(255,160,160,.5);}
 #app-hulk footer{margin-top:32px;text-align:center;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(230,245,255,.65);}
 #app-hulk .hidden{display:none!important;}
-@media (max-width:600px){#app-hulk .shelf{grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:26px 30px;}#app-hulk .spine .screds{display:none;}#app-hulk .omni .plate{padding:30px 9px 9px;}#app-hulk .omni .oname{font-size:11.5px;}#app-hulk .omni .ocre{display:none;}#app-hulk .ch-side .pbar{width:62px;}#app-hulk .issue-acts .mini{padding:5px 7px;}#app-hulk .upnext-actions{width:100%;}#app-hulk .upnext-actions .btn{flex:1;}#app-hulk .obanner{height:150px;}}
+@media (max-width:600px){#app-hulk .shelf{grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:26px 30px;}#app-hulk .spine .screds{display:none;}#app-hulk .omni .plate{padding:30px 9px 9px;}#app-hulk .omni .oname{font-size:11.5px;}#app-hulk .omni .ocre{display:none;}#app-hulk .ch-side .pbar{width:62px;}#app-hulk .sum{margin-left:14px;}#app-hulk .issue-acts .mini{padding:5px 7px;}#app-hulk .upnext-actions{width:100%;}#app-hulk .upnext-actions .btn{flex:1;}#app-hulk .obanner{height:150px;}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 /* ===== spiderman-reading-tracker.html ===== */
 #app-spidey{
@@ -843,6 +861,14 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
 #app-spidey .tex-burst{background:
     repeating-conic-gradient(from 8deg at 50% 34%, rgba(255,255,255,.10) 0deg 2.2deg, transparent 2.2deg 24deg),
     radial-gradient(circle at 50% 34%, rgba(255,255,255,.2), transparent 54%);}
+#app-spidey .sum{display:none;margin:2px 9px 10px 60px;padding:12px 14px;border-radius:13px;font-size:12.5px;line-height:1.62;color:#eef7ff;
+    background:rgba(0,25,60,.42);border:1px solid rgba(160,220,255,.34);}
+#app-spidey .sum.show{display:block;}
+#app-spidey .sum.chsum{margin:0 2px 10px;}
+#app-spidey .sum .sum-hd{font-size:9px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--xyellow);margin-bottom:6px;}
+#app-spidey .sum .sum-err{color:#ffd0d0;}
+#app-spidey .sum .spin{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
+    border-top-color:var(--xyellow);margin-right:8px;vertical-align:-1px;animation:spin .8s linear infinite;}
 #app-spidey .ch{border-radius:18px;margin-bottom:12px;overflow:hidden;
     background:linear-gradient(180deg, rgba(255,255,255,.2), rgba(160,210,250,.09));
     border:1px solid rgba(255,255,255,.48);
@@ -931,7 +957,7 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
     background:linear-gradient(180deg,rgba(150,40,40,.75),rgba(90,15,15,.85));border:1px solid rgba(255,160,160,.5);}
 #app-spidey footer{margin-top:32px;text-align:center;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(230,245,255,.65);}
 #app-spidey .hidden{display:none!important;}
-@media (max-width:600px){#app-spidey .shelf{grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:26px 30px;}#app-spidey .spine .screds{display:none;}#app-spidey .omni .plate{padding:30px 9px 9px;}#app-spidey .omni .oname{font-size:11.5px;}#app-spidey .omni .ocre{display:none;}#app-spidey .ch-side .pbar{width:62px;}#app-spidey .issue-acts .mini{padding:5px 7px;}#app-spidey .upnext-actions{width:100%;}#app-spidey .upnext-actions .btn{flex:1;}#app-spidey .obanner{height:150px;}}
+@media (max-width:600px){#app-spidey .shelf{grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:26px 30px;}#app-spidey .spine .screds{display:none;}#app-spidey .omni .plate{padding:30px 9px 9px;}#app-spidey .omni .oname{font-size:11.5px;}#app-spidey .omni .ocre{display:none;}#app-spidey .ch-side .pbar{width:62px;}#app-spidey .sum{margin-left:14px;}#app-spidey .issue-acts .mini{padding:5px 7px;}#app-spidey .upnext-actions{width:100%;}#app-spidey .upnext-actions .btn{flex:1;}#app-spidey .obanner{height:150px;}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
 /* ---- shell ---- */
@@ -945,6 +971,9 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
 
 <div class="wrap">
   <header class="hud">
+    <button class="gear" id="hm-gearBtn" aria-label="Settings" title="Settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/><path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.7 7.7 0 0 0-1.7-1L14.9 3H9.1l-.4 2.6c-.6.2-1.2.6-1.7 1l-2.4-1-2 3.4L2.6 11a7.8 7.8 0 0 0 0 2l-2 1.6 2 3.4 2.4-1c.5.4 1.1.8 1.7 1l.4 2.6h5.8l.4-2.6c.6-.2 1.2-.6 1.7-1l2.4 1 2-3.4-2-1.6z" opacity=".55"/></svg>
+    </button>
     <div class="hud-top">
       <div class="x-emblem">
         <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -1012,6 +1041,25 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
   </div>
 </div>
 
+<div class="scrim" id="hm-setScrim">
+  <div class="modal setmodal" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <button class="modal-close" id="hm-setClose" aria-label="Close">&#10005;</button>
+    <div class="modal-body" style="padding-top:22px;">
+      <h2 id="hm-setTitle">Settings</h2>
+      <div class="mera">Anthropic API key</div>
+      <div class="mdesc">Every tracker can pull a spoiler summary for an issue, a chapter or a whole omnibus. Those are generated on demand and need your own Anthropic API key.
+        The key is saved in this browser only, is sent nowhere except api.anthropic.com, and works across every subject &mdash; set it once here.</div>
+      <div class="setrow">
+        <input id="hm-apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+        <button class="chip-btn" id="hm-saveKey">Save</button>
+        <button class="chip-btn" id="hm-clearKey">Remove</button>
+      </div>
+      <div class="modal-note" id="hm-keyState"></div>
+      <div class="modal-note">Keys come from console.anthropic.com. The X-Men tracker&rsquo;s 27 arc digests are written into that page and keep working with no key at all.</div>
+    </div>
+  </div>
+</div>
+
 </div>
 <div class="cb-panel" id="app-xmen">
 
@@ -1054,15 +1102,6 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
   </div>
 
   <div class="setup" id="xm-setupBar">
-    <div class="setup-row">
-      <label for="apiKey">Anthropic API key <span class="hint">&mdash; only needed for per-issue summaries when running this file yourself</span></label>
-      <div class="setup-inputs">
-        <input id="xm-apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
-        <button class="chip-btn" id="xm-saveKey">Save key</button>
-        <button class="chip-btn" id="xm-clearKey">Remove</button>
-      </div>
-      <div class="hint" id="xm-keyState"></div>
-    </div>
     <div class="setup-row">
       <label>Backup <span class="hint">&mdash; progress lives in this browser only</span></label>
       <div class="setup-inputs">
@@ -1176,6 +1215,7 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
         <button class="chip-btn" id="hk-markAll">Mark whole omnibus read</button>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="chip-btn" id="hk-clearSums">Clear saved summaries</button>
         <button class="chip-btn" id="hk-expandAll">Expand all</button>
         <button class="chip-btn" id="hk-collapseAll">Collapse all</button>
       </div>
@@ -1278,6 +1318,7 @@ body.hideopt #app-xmen .ch.tier3{display:none;}
         <button class="chip-btn" id="sm-markAll">Mark whole omnibus read</button>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="chip-btn" id="sm-clearSums">Clear saved summaries</button>
         <button class="chip-btn" id="sm-expandAll">Expand all</button>
         <button class="chip-btn" id="sm-collapseAll">Collapse all</button>
       </div>
@@ -1595,6 +1636,57 @@ document.addEventListener("keydown", e => {
   if(e.key === "Escape" && scrim.classList.contains("show")) closeHero();
 });
 
+/* ---- settings: the Anthropic API key, shared by every tracker ----
+   The key lives under ONE storage name for the whole site. Each tracker reads
+   it directly rather than keeping its own, which is why this lives here and not
+   on a subject page. KEY_API_OLD is the name the X-Men page used when it owned
+   the key box; it is migrated forward on first read and then dropped. */
+const KEY_API = "comics-anthropic-key", KEY_API_OLD = "xmen-anthropic-key";
+function getKey(){
+  try{
+    let k = localStorage.getItem(KEY_API);
+    if(!k){
+      const old = localStorage.getItem(KEY_API_OLD);
+      if(old){ localStorage.setItem(KEY_API, old); localStorage.removeItem(KEY_API_OLD); k = old; }
+    }
+    return k || "";
+  }catch(e){ return ""; }
+}
+
+const setScrim = byId("setScrim");
+(function(){
+  const box = byId("apiKey"), state = byId("keyState");
+  let lastGearFocus = null;
+  function paint(){
+    const k = getKey();
+    state.innerHTML = k ? "Key saved in this browser &mdash; summaries are live on every tracker."
+                        : "No key set. Summaries stay unavailable until you add one.";
+    box.value = "";
+    box.placeholder = k ? "\u2022\u2022\u2022\u2022 saved \u2014 paste a new key to replace" : "sk-ant-...";
+  }
+  function open(){ paint(); setScrim.classList.add("show"); box.focus(); }
+  function close(){ setScrim.classList.remove("show"); if(lastGearFocus) lastGearFocus.focus(); }
+  byId("gearBtn").onclick = e => { lastGearFocus = e.currentTarget; open(); };
+  byId("saveKey").onclick = () => {
+    const v = box.value.trim();
+    if(!v){ state.textContent = "Paste a key first."; return; }
+    try{ localStorage.setItem(KEY_API, v); }
+    catch(e){ state.textContent = "This browser won't store the key."; return; }
+    paint();
+  };
+  byId("clearKey").onclick = () => {
+    try{ localStorage.removeItem(KEY_API); localStorage.removeItem(KEY_API_OLD); }catch(e){}
+    paint();
+  };
+  setScrim.addEventListener("click", e => {
+    if(e.target === setScrim || e.target.closest("#setClose")) close();
+  });
+  document.addEventListener("keydown", e => {
+    if(e.key === "Escape" && setScrim.classList.contains("show")) close();
+  });
+  window.__COMICS_SETTINGS = open;
+})();
+
 /* ---- filters ---- */
 qs(".filters").addEventListener("click", e => {
   const b = e.target.closest("[data-filter]");
@@ -1615,6 +1707,9 @@ qs(".filters").addEventListener("click", e => {
 })();
 
 window.__COMICS.home = async function(){ await loadProgress(); buildShelf(); paintHUD(); paintContinue(); };
+
+/* bundled build: nothing to configure, the API is unreachable */
+try{ byId("gearBtn").style.display="none"; }catch(e){}
 
 })();
 /* ================= xmen-reading-tracker.html ================= */
@@ -1994,15 +2089,20 @@ function toggleCh(el,force){
 }
 
 /* ============ SUMMARIES ============ */
-function getKey(){ return ""; }  /* bundled build: live per-issue summaries are CSP-blocked */
+/* The key is shared site-wide and set from the gear on the C.O.M.I.C.S.
+   homescreen, so one paste covers every tracker. KEY_API_OLD is where this page
+   kept it when it owned the key box; it is migrated forward once, then dropped. */
+const KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
+function getKey(){ return ""; }  /* bundled build: live summaries are CSP-blocked */
 
 async function askClaude(prompt){
-  const body={model:"claude-sonnet-4-6",max_tokens:1000,
+  const body={model:"claude-opus-5",max_tokens:2000,
     messages:[{role:"user",content:prompt}],
-    tools:[{type:"web_search_20250305",name:"web_search"}]};
+    output_config:{effort:"low"},
+    tools:[{type:"web_search_20260209",name:"web_search"}]};
   const headers={"Content-Type":"application/json"};
 
-  if(!IN_CLAUDE){
+  if(true){  /* bundled build: always take the no-key path */
     const k=getKey();
     if(!k){ const e=new Error("nokey"); e.code="nokey"; throw e; }
     headers["x-api-key"]=k;
@@ -2030,7 +2130,7 @@ function summaryError(el,err){
         'All 27 arc digests are written into the page and work offline: use <b>Summarize this arc</b>. '+
         'For per-issue summaries, open the desktop copy of the tracker.';
   } else if(code==="badkey"){
-    msg='That API key was rejected. Check it in the box at the top of the page.';
+    msg='That API key was rejected. Replace it from the gear on the C.O.M.I.C.S. homescreen.';
   } else {
     msg='Lookup failed: '+esc(String(err&&err.message||err))+'. Arc digests still work offline.';
   }
@@ -2172,32 +2272,9 @@ byId("toggleOpt").onclick=e=>{
 
 /* ---- setup bar wiring ---- */
 (function(){
-  const box=byId("apiKey"), state=byId("keyState");
-  function paint(){
-    if(IN_CLAUDE){
-      byId("setupBar").querySelector(".setup-row").style.display="none";
-      return;
-    }
-    const k=getKey();
-    state.innerHTML = k ? "Key saved on this device \u2014 per-issue summaries are live."
-                        : "No key set. Arc digests still work with no key.";
-    if(k) box.value="";
-    box.placeholder = k ? "\u2022\u2022\u2022\u2022 saved \u2014 paste a new key to replace" : "sk-ant-...";
-  }
-  byId("saveKey").onclick=()=>{
-    const v=box.value.trim();
-    if(!v){ state.textContent="Paste a key first."; return; }
-    try{ localStorage.setItem("xmen-anthropic-key",v); }catch(e){ state.textContent="This browser won't store the key."; return; }
-    paint();
-  };
-  byId("clearKey").onclick=()=>{
-    try{ localStorage.removeItem("xmen-anthropic-key"); }catch(e){}
-    box.value=""; paint();
-  };
   byId("exportBtn").onclick=exportProgress;
   byId("importBtn").onclick=()=>byId("importFile").click();
   byId("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.files[0]); e.target.value=""; };
-  paint();
 })();
 
 /* ---- verify storage actually persists ---- */
@@ -2212,9 +2289,6 @@ byId("toggleOpt").onclick=e=>{
   const next=flat.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
   if(next) toggleCh(byId("ch-"+next.ch.id),true);
 })();
-
-/* bundled build: no key box, since the key can never be used here */
-try{ var _sr=qs(".setup .setup-row"); if(_sr) _sr.style.display="none"; }catch(e){}
 
 window.__COMICS.xmen = function(){ refresh(); };
 
@@ -9200,7 +9274,9 @@ function buildOmni(o){
         '<div class="ch-tools">'+
           '<button class="mini" data-chread="'+ch.id+'">Mark chapter read</button>'+
           '<button class="mini" data-chskip="'+ch.id+'">Skip chapter</button>'+
+          '<button class="mini" data-sumch="'+ch.id+'">Summarize chapter</button>'+
         '</div>'+
+        '<div class="sum chsum" id="sumch-'+ch.id+'"></div>'+
         ch.issues.map(iss=>{
           const known=!!MARVEL[iss.id];
           return '<div class="issue" data-row="'+iss.id+'">'+
@@ -9211,8 +9287,10 @@ function buildOmni(o){
             '<div class="issue-acts">'+
               '<a class="mini read-link'+(known?'':' approx')+'" href="'+marvelURL(iss)+'" target="_blank" rel="noopener">Read</a>'+
               '<button class="mini" data-skip="'+iss.id+'">Skip</button>'+
+              '<button class="mini" data-sum="'+iss.id+'">Summary</button>'+
               '<button class="orb" role="checkbox" aria-checked="false" data-toggle="'+iss.id+'">&#10003;</button>'+
-            '</div></div>';
+            '</div></div>'+
+            '<div class="sum" id="hk-sum-'+iss.id+'"></div>';
         }).join("")+
       '</div></div>';
   }).join("");
@@ -9311,6 +9389,131 @@ function publishIndex(){
   }catch(e){}
 }
 
+
+/* ============ SUMMARIES ============
+   Same engine as the X-Men tracker: one live call to the Messages API with web
+   search on, then tidy() strips the model's formatting habits. There are no
+   pre-written digests on this shelf -- an omnibus has hundreds of issues -- so
+   every panel here is a live lookup and needs a key.
+
+   The key is NOT owned by this page: it lives under one storage name for the
+   whole site, set from the gear on the C.O.M.I.C.S. homescreen, so one paste
+   covers every tracker. KEY_API_OLD is where the X-Men page used to keep it. */
+const KEY_S="hulk-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
+let sums={};
+async function loadSums(){ try{ const v=await store.get(KEY_S); if(v) sums=JSON.parse(v)||{}; }catch(e){} }
+async function saveSums(){ try{ await store.set(KEY_S, JSON.stringify(sums)); }catch(e){} }
+function getKey(){ return ""; }  /* bundled build: live summaries are CSP-blocked */
+
+async function askClaude(prompt){
+  const body={model:"claude-opus-5",max_tokens:2000,
+    messages:[{role:"user",content:prompt}],
+    output_config:{effort:"low"},
+    tools:[{type:"web_search_20260209",name:"web_search"}]};
+  const headers={"Content-Type":"application/json"};
+  if(true){  /* bundled build: always take the no-key path */
+    const k=getKey();
+    if(!k){ const e=new Error("nokey"); e.code="nokey"; throw e; }
+    headers["x-api-key"]=k;
+    headers["anthropic-version"]="2023-06-01";
+    headers["anthropic-dangerous-direct-browser-access"]="true";
+  }
+  const res=await fetch("https://api.anthropic.com/v1/messages",
+    {method:"POST",headers:headers,body:JSON.stringify(body)});
+  if(!res.ok){
+    let msg="HTTP "+res.status;
+    try{ const j=await res.json(); if(j.error&&j.error.message) msg=j.error.message; }catch(e){}
+    const err=new Error(msg); err.code=(res.status===401||res.status===403)?"badkey":"http";
+    throw err;
+  }
+  const data=await res.json();
+  return (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+}
+
+function summaryError(el,err){
+  const code=err&&err.code;
+  let msg;
+  if(code==="nokey"){
+    msg='Summaries are turned off in the mobile build \u2014 this page cannot reach the API. '+
+        'Open the shelf on GitHub Pages or a local copy to generate them.';
+  } else if(code==="badkey"){
+    msg='That API key was rejected. Replace it from the gear on the C.O.M.I.C.S. homescreen.';
+  } else {
+    msg='Lookup failed: '+esc(String(err&&err.message||err))+'.';
+  }
+  el.classList.add("show");
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">'+msg+'</div>';
+}
+
+function tidy(txt){
+  if(!txt) return txt;
+  let t=txt.replace(/\r/g,"").trim();
+  t=t.replace(/\*\*|__/g,"").replace(/(^|[\s(])\*(\S)/g,"$1$2").replace(/(\S)\*($|[\s.,;:)])/g,"$1$2");
+  t=t.replace(/^#{1,6}\s*/gm,"").replace(/^\s*[-*\u2022]\s+/gm,"").replace(/^\s*[-=_]{3,}\s*$/gm,"");
+  const bad=/^(i |i'|let me\b|let's\b|now |ok\b|okay\b|here is\b|here's\b|based on\b|according to\b|from the\b|the following\b|searching\b|found\b|great[,.]|perfect[,.]|sure[,.])/i;
+  let lines=t.split("\n");
+  while(lines.length && (lines[0].trim()==="" || bad.test(lines[0].trim()))) lines.shift();
+  while(lines.length && /^(sources?\b|note[:s]\b|references?\b|\[|\()/i.test(lines[lines.length-1].trim())) lines.pop();
+  t=lines.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  const paras=t.split(/\n\s*\n/).map(s=>s.replace(/\n+/g," ").trim()).filter(Boolean);
+  if(paras.length>2) return [paras[0], paras.slice(1).join(" ")].join("\n\n");
+  return paras.join("\n\n");
+}
+const RULES='OUTPUT RULES, follow exactly:\n'+
+  '- Output ONLY the summary text. Nothing before it, nothing after it.\n'+
+  '- Never narrate your process. Do not write "I found", "Let me", "Here is", "Based on", or mention sources, searches or pages at all.\n'+
+  '- No markdown whatsoever: no asterisks, no bold, no italics, no headings, no bullet points, no dashes as separators.\n'+
+  '- Flowing prose only. At most one blank line, separating two paragraphs.';
+function panelLoading(el,label){
+  el.classList.add("show");
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S. \u00b7 '+esc(label)+'</div><div><span class="spin"></span>Pulling the record\u2026</div>';
+}
+function panelText(el,label,text){
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S. \u00b7 '+esc(label)+'</div><div>'+esc(text).replace(/\n+/g,"<br><br>")+'</div>';
+}
+function issInChapter(id){
+  for(const ch of (currentOmni?currentOmni.chapters:[])) for(const i of ch.issues) if(i.id===id) return {ch:ch,iss:i};
+  return null;
+}
+async function doSummary(id){
+  const el=byId("sum-"+id);
+  if(!el) return;
+  if(el.classList.contains("show")){ el.classList.remove("show"); return; }
+  if(sums[id]){ el.classList.add("show"); panelText(el,"Spoilers",sums[id]); return; }
+  const hit=issInChapter(id); if(!hit) return;
+  panelLoading(el,"Spoilers");
+  const prompt='SEARCH THE WEB FIRST. Look up the plot synopsis for the Marvel comic "'+hit.iss.t+'" ('+hit.iss.s+
+    '), collected in '+currentOmni.title+(currentOmni.vol?' '+currentOmni.vol:'')+' ('+currentOmni.era+'). '+
+    'Use marvel.fandom.com (Marvel Database) or comicvine. Search again if the first result is thin.\n\n'+
+    'Then write ONE OR TWO SHORT PARAGRAPHS \u2014 120-180 words total \u2014 covering only what actually matters in that issue: '+
+    'the main plot beats, any deaths or reveals, and where it leaves things. Full spoilers, no hedging.\n\n'+RULES+'\n'+
+    '- Skip minor cameos, flashback trivia and issue-number references. Hit what a reader needs to know.';
+  try{
+    const txt=tidy(await askClaude(prompt));
+    if(txt){ sums[id]=txt; saveSums(); panelText(el,"Spoilers",txt); }
+    else el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">No record came back. Try again.</div>';
+  }catch(err){ summaryError(el,err); }
+}
+async function doChapterSummary(chId){
+  const el=byId("sumch-"+chId);
+  if(!el||!currentOmni) return;
+  const ch=currentOmni.chapters.find(c=>c.id===chId); if(!ch) return;
+  const k="CH:"+chId;
+  if(el.classList.contains("show")){ el.classList.remove("show"); return; }
+  if(sums[k]){ el.classList.add("show"); panelText(el,"Chapter digest \u00b7 spoilers",sums[k]); return; }
+  panelLoading(el,"Chapter digest \u00b7 spoilers");
+  const list=ch.issues.map(i=>i.t).join(", ");
+  const prompt='SEARCH THE WEB FIRST for these Marvel comics, collected in '+currentOmni.title+
+    (currentOmni.vol?' '+currentOmni.vol:'')+': '+list+'.\n\n'+
+    'Then write a SPOILER-FILLED catch-up for a reader who is SKIPPING them: what happens across the run, '+
+    'who dies or changes, and what carries forward into the rest of the book. 150-220 words.\n\n'+RULES;
+  try{
+    const txt=tidy(await askClaude(prompt));
+    if(txt){ sums[k]=txt; saveSums(); panelText(el,"Chapter digest \u00b7 spoilers",txt); }
+    else el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">No record came back. Try again.</div>';
+  }catch(err){ summaryError(el,err); }
+}
+
 /* ============ ROUTING ============ */
 function showShelf(){
   currentOmni=null;
@@ -9364,6 +9567,10 @@ qs("#viewShelf .controls").addEventListener("click",e=>{
 });
 
 chaptersEl.addEventListener("click", async e=>{
+  const sm=e.target.closest("[data-sum]");
+  if(sm){ doSummary(sm.dataset.sum); return; }
+  const sc=e.target.closest("[data-sumch]");
+  if(sc){ doChapterSummary(sc.dataset.sumch); return; }
   const head=e.target.closest("[data-ch]");
   if(head){ toggleCh(byId("ch-"+head.dataset.ch)); return; }
   const t=e.target.closest("[data-toggle]");
@@ -9390,6 +9597,10 @@ byId("markAll").onclick=async()=>{
   currentOmni.chapters.forEach(c=>c.issues.forEach(i=>{skipSet.delete(i.id);readSet.add(i.id);}));
   await saveState(); refresh();
 };
+byId("clearSums").onclick=async()=>{
+  sums={}; await saveSums();
+  qsa(".sum").forEach(el=>{ el.classList.remove("show"); el.innerHTML=""; });
+};
 byId("exportBtn").onclick=exportProgress;
 byId("importBtn").onclick=()=>byId("importFile").click();
 byId("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.files[0]); e.target.value=""; };
@@ -9399,7 +9610,7 @@ byId("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.f
   try{ localStorage.setItem("__s_probe","1"); localStorage.removeItem("__s_probe"); }
   catch(e){ storageWorks=true; flagStorage(false); }})();
 
-(async function init(){ await loadState(); route(); })();
+(async function init(){ await loadState(); await loadSums(); route(); })();
 
 
 window.__COMICS.hulk = function(){ route(); };
@@ -15441,7 +15652,9 @@ function buildOmni(o){
         '<div class="ch-tools">'+
           '<button class="mini" data-chread="'+ch.id+'">Mark chapter read</button>'+
           '<button class="mini" data-chskip="'+ch.id+'">Skip chapter</button>'+
+          '<button class="mini" data-sumch="'+ch.id+'">Summarize chapter</button>'+
         '</div>'+
+        '<div class="sum chsum" id="sumch-'+ch.id+'"></div>'+
         ch.issues.map(iss=>{
           const known=!!MARVEL[iss.id];
           return '<div class="issue" data-row="'+iss.id+'">'+
@@ -15452,8 +15665,10 @@ function buildOmni(o){
             '<div class="issue-acts">'+
               '<a class="mini read-link'+(known?'':' approx')+'" href="'+marvelURL(iss)+'" target="_blank" rel="noopener">Read</a>'+
               '<button class="mini" data-skip="'+iss.id+'">Skip</button>'+
+              '<button class="mini" data-sum="'+iss.id+'">Summary</button>'+
               '<button class="orb" role="checkbox" aria-checked="false" data-toggle="'+iss.id+'">&#10003;</button>'+
-            '</div></div>';
+            '</div></div>'+
+            '<div class="sum" id="sm-sum-'+iss.id+'"></div>';
         }).join("")+
       '</div></div>';
   }).join("");
@@ -15552,6 +15767,131 @@ function publishIndex(){
   }catch(e){}
 }
 
+
+/* ============ SUMMARIES ============
+   Same engine as the X-Men tracker: one live call to the Messages API with web
+   search on, then tidy() strips the model's formatting habits. There are no
+   pre-written digests on this shelf -- an omnibus has hundreds of issues -- so
+   every panel here is a live lookup and needs a key.
+
+   The key is NOT owned by this page: it lives under one storage name for the
+   whole site, set from the gear on the C.O.M.I.C.S. homescreen, so one paste
+   covers every tracker. KEY_API_OLD is where the X-Men page used to keep it. */
+const KEY_S="spidey-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
+let sums={};
+async function loadSums(){ try{ const v=await store.get(KEY_S); if(v) sums=JSON.parse(v)||{}; }catch(e){} }
+async function saveSums(){ try{ await store.set(KEY_S, JSON.stringify(sums)); }catch(e){} }
+function getKey(){ return ""; }  /* bundled build: live summaries are CSP-blocked */
+
+async function askClaude(prompt){
+  const body={model:"claude-opus-5",max_tokens:2000,
+    messages:[{role:"user",content:prompt}],
+    output_config:{effort:"low"},
+    tools:[{type:"web_search_20260209",name:"web_search"}]};
+  const headers={"Content-Type":"application/json"};
+  if(true){  /* bundled build: always take the no-key path */
+    const k=getKey();
+    if(!k){ const e=new Error("nokey"); e.code="nokey"; throw e; }
+    headers["x-api-key"]=k;
+    headers["anthropic-version"]="2023-06-01";
+    headers["anthropic-dangerous-direct-browser-access"]="true";
+  }
+  const res=await fetch("https://api.anthropic.com/v1/messages",
+    {method:"POST",headers:headers,body:JSON.stringify(body)});
+  if(!res.ok){
+    let msg="HTTP "+res.status;
+    try{ const j=await res.json(); if(j.error&&j.error.message) msg=j.error.message; }catch(e){}
+    const err=new Error(msg); err.code=(res.status===401||res.status===403)?"badkey":"http";
+    throw err;
+  }
+  const data=await res.json();
+  return (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+}
+
+function summaryError(el,err){
+  const code=err&&err.code;
+  let msg;
+  if(code==="nokey"){
+    msg='Summaries are turned off in the mobile build \u2014 this page cannot reach the API. '+
+        'Open the shelf on GitHub Pages or a local copy to generate them.';
+  } else if(code==="badkey"){
+    msg='That API key was rejected. Replace it from the gear on the C.O.M.I.C.S. homescreen.';
+  } else {
+    msg='Lookup failed: '+esc(String(err&&err.message||err))+'.';
+  }
+  el.classList.add("show");
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">'+msg+'</div>';
+}
+
+function tidy(txt){
+  if(!txt) return txt;
+  let t=txt.replace(/\r/g,"").trim();
+  t=t.replace(/\*\*|__/g,"").replace(/(^|[\s(])\*(\S)/g,"$1$2").replace(/(\S)\*($|[\s.,;:)])/g,"$1$2");
+  t=t.replace(/^#{1,6}\s*/gm,"").replace(/^\s*[-*\u2022]\s+/gm,"").replace(/^\s*[-=_]{3,}\s*$/gm,"");
+  const bad=/^(i |i'|let me\b|let's\b|now |ok\b|okay\b|here is\b|here's\b|based on\b|according to\b|from the\b|the following\b|searching\b|found\b|great[,.]|perfect[,.]|sure[,.])/i;
+  let lines=t.split("\n");
+  while(lines.length && (lines[0].trim()==="" || bad.test(lines[0].trim()))) lines.shift();
+  while(lines.length && /^(sources?\b|note[:s]\b|references?\b|\[|\()/i.test(lines[lines.length-1].trim())) lines.pop();
+  t=lines.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  const paras=t.split(/\n\s*\n/).map(s=>s.replace(/\n+/g," ").trim()).filter(Boolean);
+  if(paras.length>2) return [paras[0], paras.slice(1).join(" ")].join("\n\n");
+  return paras.join("\n\n");
+}
+const RULES='OUTPUT RULES, follow exactly:\n'+
+  '- Output ONLY the summary text. Nothing before it, nothing after it.\n'+
+  '- Never narrate your process. Do not write "I found", "Let me", "Here is", "Based on", or mention sources, searches or pages at all.\n'+
+  '- No markdown whatsoever: no asterisks, no bold, no italics, no headings, no bullet points, no dashes as separators.\n'+
+  '- Flowing prose only. At most one blank line, separating two paragraphs.';
+function panelLoading(el,label){
+  el.classList.add("show");
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S. \u00b7 '+esc(label)+'</div><div><span class="spin"></span>Pulling the record\u2026</div>';
+}
+function panelText(el,label,text){
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S. \u00b7 '+esc(label)+'</div><div>'+esc(text).replace(/\n+/g,"<br><br>")+'</div>';
+}
+function issInChapter(id){
+  for(const ch of (currentOmni?currentOmni.chapters:[])) for(const i of ch.issues) if(i.id===id) return {ch:ch,iss:i};
+  return null;
+}
+async function doSummary(id){
+  const el=byId("sum-"+id);
+  if(!el) return;
+  if(el.classList.contains("show")){ el.classList.remove("show"); return; }
+  if(sums[id]){ el.classList.add("show"); panelText(el,"Spoilers",sums[id]); return; }
+  const hit=issInChapter(id); if(!hit) return;
+  panelLoading(el,"Spoilers");
+  const prompt='SEARCH THE WEB FIRST. Look up the plot synopsis for the Marvel comic "'+hit.iss.t+'" ('+hit.iss.s+
+    '), collected in '+currentOmni.title+(currentOmni.vol?' '+currentOmni.vol:'')+' ('+currentOmni.era+'). '+
+    'Use marvel.fandom.com (Marvel Database) or comicvine. Search again if the first result is thin.\n\n'+
+    'Then write ONE OR TWO SHORT PARAGRAPHS \u2014 120-180 words total \u2014 covering only what actually matters in that issue: '+
+    'the main plot beats, any deaths or reveals, and where it leaves things. Full spoilers, no hedging.\n\n'+RULES+'\n'+
+    '- Skip minor cameos, flashback trivia and issue-number references. Hit what a reader needs to know.';
+  try{
+    const txt=tidy(await askClaude(prompt));
+    if(txt){ sums[id]=txt; saveSums(); panelText(el,"Spoilers",txt); }
+    else el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">No record came back. Try again.</div>';
+  }catch(err){ summaryError(el,err); }
+}
+async function doChapterSummary(chId){
+  const el=byId("sumch-"+chId);
+  if(!el||!currentOmni) return;
+  const ch=currentOmni.chapters.find(c=>c.id===chId); if(!ch) return;
+  const k="CH:"+chId;
+  if(el.classList.contains("show")){ el.classList.remove("show"); return; }
+  if(sums[k]){ el.classList.add("show"); panelText(el,"Chapter digest \u00b7 spoilers",sums[k]); return; }
+  panelLoading(el,"Chapter digest \u00b7 spoilers");
+  const list=ch.issues.map(i=>i.t).join(", ");
+  const prompt='SEARCH THE WEB FIRST for these Marvel comics, collected in '+currentOmni.title+
+    (currentOmni.vol?' '+currentOmni.vol:'')+': '+list+'.\n\n'+
+    'Then write a SPOILER-FILLED catch-up for a reader who is SKIPPING them: what happens across the run, '+
+    'who dies or changes, and what carries forward into the rest of the book. 150-220 words.\n\n'+RULES;
+  try{
+    const txt=tidy(await askClaude(prompt));
+    if(txt){ sums[k]=txt; saveSums(); panelText(el,"Chapter digest \u00b7 spoilers",txt); }
+    else el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">No record came back. Try again.</div>';
+  }catch(err){ summaryError(el,err); }
+}
+
 /* ============ ROUTING ============ */
 function showShelf(){
   currentOmni=null;
@@ -15605,6 +15945,10 @@ qs("#viewShelf .controls").addEventListener("click",e=>{
 });
 
 chaptersEl.addEventListener("click", async e=>{
+  const sm=e.target.closest("[data-sum]");
+  if(sm){ doSummary(sm.dataset.sum); return; }
+  const sc=e.target.closest("[data-sumch]");
+  if(sc){ doChapterSummary(sc.dataset.sumch); return; }
   const head=e.target.closest("[data-ch]");
   if(head){ toggleCh(byId("ch-"+head.dataset.ch)); return; }
   const t=e.target.closest("[data-toggle]");
@@ -15631,6 +15975,10 @@ byId("markAll").onclick=async()=>{
   currentOmni.chapters.forEach(c=>c.issues.forEach(i=>{skipSet.delete(i.id);readSet.add(i.id);}));
   await saveState(); refresh();
 };
+byId("clearSums").onclick=async()=>{
+  sums={}; await saveSums();
+  qsa(".sum").forEach(el=>{ el.classList.remove("show"); el.innerHTML=""; });
+};
 byId("exportBtn").onclick=exportProgress;
 byId("importBtn").onclick=()=>byId("importFile").click();
 byId("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.files[0]); e.target.value=""; };
@@ -15640,7 +15988,7 @@ byId("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.f
   try{ localStorage.setItem("__s_probe","1"); localStorage.removeItem("__s_probe"); }
   catch(e){ storageWorks=true; flagStorage(false); }})();
 
-(async function init(){ await loadState(); route(); })();
+(async function init(){ await loadState(); await loadSums(); route(); })();
 
 
 window.__COMICS.spidey = function(){ route(); };

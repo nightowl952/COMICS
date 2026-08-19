@@ -227,6 +227,20 @@
   .modal-facts .stat{flex:0 0 auto;}
   .modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
   .modal-note{font-size:11.5px;line-height:1.55;color:#cfe6ff;margin-top:12px;}
+  /* ---- settings gear + its modal ---- */
+  .gear{position:absolute;top:14px;right:14px;z-index:4;width:34px;height:34px;border-radius:50%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-family:inherit;
+    background:linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.07));
+    border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+    transition:transform .25s cubic-bezier(.2,.8,.3,1), filter .12s;}
+  .gear:hover{filter:brightness(1.15);transform:rotate(40deg);}
+  .gear:focus-visible{outline:3px solid var(--xyellow);outline-offset:2px;}
+  .gear svg{width:19px;height:19px;fill:#eaf6ff;}
+  .modal.setmodal{width:min(540px,100%);}
+  .setrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+  .setrow input[type=password]{flex:1 1 200px;min-width:170px;font-family:inherit;font-size:12.5px;padding:8px 12px;border-radius:14px;
+    color:#fff;background:rgba(0,20,50,.55);border:1px solid rgba(160,220,255,.45);}
+  .setrow input[type=password]:focus{outline:2px solid var(--xyellow);}
   .modal-close{position:absolute;top:12px;right:12px;z-index:2;width:32px;height:32px;border-radius:50%;cursor:pointer;
     font-size:15px;font-weight:900;color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:inherit;
     background:radial-gradient(circle at 32% 28%, #fff, #cfe6ff 40%, #5aa5dd);
@@ -248,6 +262,9 @@
 
 <div class="wrap">
   <header class="hud">
+    <button class="gear" id="gearBtn" aria-label="Settings" title="Settings">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/><path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.7 7.7 0 0 0-1.7-1L14.9 3H9.1l-.4 2.6c-.6.2-1.2.6-1.7 1l-2.4-1-2 3.4L2.6 11a7.8 7.8 0 0 0 0 2l-2 1.6 2 3.4 2.4-1c.5.4 1.1.8 1.7 1l.4 2.6h5.8l.4-2.6c.6-.2 1.2-.6 1.7-1l2.4 1 2-3.4-2-1.6z" opacity=".55"/></svg>
+    </button>
     <div class="hud-top">
       <div class="x-emblem">
         <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -311,6 +328,25 @@
       <div class="modal-facts" id="mFacts"></div>
       <div class="modal-actions" id="mActions"></div>
       <div class="modal-note" id="mNote"></div>
+    </div>
+  </div>
+</div>
+
+<div class="scrim" id="setScrim">
+  <div class="modal setmodal" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <button class="modal-close" id="setClose" aria-label="Close">&#10005;</button>
+    <div class="modal-body" style="padding-top:22px;">
+      <h2 id="setTitle">Settings</h2>
+      <div class="mera">Anthropic API key</div>
+      <div class="mdesc">Every tracker can pull a spoiler summary for an issue, a chapter or a whole omnibus. Those are generated on demand and need your own Anthropic API key.
+        The key is saved in this browser only, is sent nowhere except api.anthropic.com, and works across every subject &mdash; set it once here.</div>
+      <div class="setrow">
+        <input id="apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+        <button class="chip-btn" id="saveKey">Save</button>
+        <button class="chip-btn" id="clearKey">Remove</button>
+      </div>
+      <div class="modal-note" id="keyState"></div>
+      <div class="modal-note">Keys come from console.anthropic.com. The X-Men tracker&rsquo;s 27 arc digests are written into that page and keep working with no key at all.</div>
     </div>
   </div>
 </div>
@@ -606,6 +642,57 @@ scrim.addEventListener("click", e => {
 document.addEventListener("keydown", e => {
   if(e.key === "Escape" && scrim.classList.contains("show")) closeHero();
 });
+
+/* ---- settings: the Anthropic API key, shared by every tracker ----
+   The key lives under ONE storage name for the whole site. Each tracker reads
+   it directly rather than keeping its own, which is why this lives here and not
+   on a subject page. KEY_API_OLD is the name the X-Men page used when it owned
+   the key box; it is migrated forward on first read and then dropped. */
+const KEY_API = "comics-anthropic-key", KEY_API_OLD = "xmen-anthropic-key";
+function getKey(){
+  try{
+    let k = localStorage.getItem(KEY_API);
+    if(!k){
+      const old = localStorage.getItem(KEY_API_OLD);
+      if(old){ localStorage.setItem(KEY_API, old); localStorage.removeItem(KEY_API_OLD); k = old; }
+    }
+    return k || "";
+  }catch(e){ return ""; }
+}
+
+const setScrim = document.getElementById("setScrim");
+(function(){
+  const box = document.getElementById("apiKey"), state = document.getElementById("keyState");
+  let lastGearFocus = null;
+  function paint(){
+    const k = getKey();
+    state.innerHTML = k ? "Key saved in this browser &mdash; summaries are live on every tracker."
+                        : "No key set. Summaries stay unavailable until you add one.";
+    box.value = "";
+    box.placeholder = k ? "\u2022\u2022\u2022\u2022 saved \u2014 paste a new key to replace" : "sk-ant-...";
+  }
+  function open(){ paint(); setScrim.classList.add("show"); box.focus(); }
+  function close(){ setScrim.classList.remove("show"); if(lastGearFocus) lastGearFocus.focus(); }
+  document.getElementById("gearBtn").onclick = e => { lastGearFocus = e.currentTarget; open(); };
+  document.getElementById("saveKey").onclick = () => {
+    const v = box.value.trim();
+    if(!v){ state.textContent = "Paste a key first."; return; }
+    try{ localStorage.setItem(KEY_API, v); }
+    catch(e){ state.textContent = "This browser won't store the key."; return; }
+    paint();
+  };
+  document.getElementById("clearKey").onclick = () => {
+    try{ localStorage.removeItem(KEY_API); localStorage.removeItem(KEY_API_OLD); }catch(e){}
+    paint();
+  };
+  setScrim.addEventListener("click", e => {
+    if(e.target === setScrim || e.target.closest("#setClose")) close();
+  });
+  document.addEventListener("keydown", e => {
+    if(e.key === "Escape" && setScrim.classList.contains("show")) close();
+  });
+  window.__COMICS_SETTINGS = open;
+})();
 
 /* ---- filters ---- */
 document.querySelector(".filters").addEventListener("click", e => {
