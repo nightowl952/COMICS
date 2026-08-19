@@ -390,7 +390,7 @@ is 80439, but 80330–80620 did not contain the ASM annuals).
 - `fetch_covers.py` — pulls cover art from the Marvel Database and writes the
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
-  `PLACEHOLDER_PAGES` inside the script.
+  `PLACEHOLDER_PAGES` in the meta module.
 - `marvel_ids.json` — id → marvel.com path fragment, consumed as `MARVEL`.
 - `build_single_file.py` — composes the three pages into `comics-mobile.html`
   for artifact publishing, inlining cover images as data URIs on the way. See
