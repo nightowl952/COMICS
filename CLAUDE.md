@@ -122,8 +122,9 @@ always safe.
 
 ## The Spider-Man tracker (omnibus shelf)
 
-18 omnibus volumes on the shelf: **12 with contents** (459 issue slots, 456 unique
-issues) and **6 placeholders** that render as a tile but carry no issue list.
+16 omnibus volumes on the shelf: **15 with contents** (567 issue slots, 564 unique
+issues) and **1 placeholder** (Spider-Man vs. Venom) that renders as a tile but
+carries no issue list.
 
 The shelf is a curated selection, not "every omnibus" — see "Scope call" below.
 Display order is `SHELF` in `tools/omnibus_meta.py`; it is a reading order, not
@@ -177,7 +178,7 @@ Enumerate candidate pages with `list=allpages&apprefix=...`, filtering for
 The generator computes runs of consecutive same-series issues and looks at the
 average run length:
 
-- **avg ≥ 3.5 → chapter per series run** (9 of the 12 volumes with contents). E.g.
+- **avg ≥ 3.5 → chapter per series run** (12 of the 15 volumes with contents). E.g.
   "Amazing Spider-Man #1–38", "Amazing Spider-Man Annual #1–2".
 - **avg < 3.5 → interleaved crossover** (Clone Saga Vol. 1–2, Ben Reilly Vol. 1).
   These books print Web → Amazing → Spider-Man →
@@ -188,6 +189,13 @@ The Part N labels are honest but generic. Real arc names (Power and
 Responsibility, The Exile Returns, Maximum Clonage…) would be a genuine
 improvement and are the obvious next curation pass.
 
+**A series run is not necessarily contiguous**, so `spanlabel()` splits it into
+contiguous blocks and joins them with commas. The Straczynski volume is why:
+it collects Amazing Spider-Man (1999) #30–58 *and* #500–514 across the
+renumbering, and one span would have read "#30–514" — a claim of 485 issues.
+Half a dozen older chapters gained commas the same way (Stern's volume really
+does skip ASM #204–223 and #242), which is a correction, not a regression.
+
 ### Issue ids are shared on purpose
 
 An issue collected in two omnibuses gets the **same** id in both, so marking
@@ -196,7 +204,7 @@ Michelinie & McFarlane volume. On the current shelf 3 issues overlap this way
 (ASM #324, #327, #329); the UI flags them with a gold pill reading "in N
 omnibuses". This is deliberate — do not de-duplicate ids per volume.
 
-Consequence: `flat.length` (459, issue *slots*) and `uniqIds.size` (456, distinct
+Consequence: `flat.length` (567, issue *slots*) and `uniqIds.size` (564, distinct
 issues) are different numbers. Progress math uses `uniqIds`; the shelf label uses
 slots. The overlap count was much higher (46) before the shelf was trimmed —
 it scales with how many overlapping volumes are on the shelf.
@@ -258,7 +266,7 @@ spider glyph — a covered volume is just the scan.
 Covers are wired in `tools/omnibus_meta.py` (`cover="Art/Spider-Man/<id>.jpg"`),
 never by hand-editing the `OMNI` array in the HTML — that array is generated.
 
-All 18 volumes have cover art. It came from the **Marvel Database wiki** — the
+All 16 volumes have cover art. It came from the **Marvel Database wiki** — the
 same source as the issue contents — via `prop=pageimages`, which hands back the
 cover image stored on each volume's page.
 
@@ -266,7 +274,7 @@ cover image stored on each volume's page.
 
 ```bash
 python3 tools/fetch_covers.py                # every volume still missing one
-python3 tools/fetch_covers.py venom-o1       # just these
+python3 tools/fetch_covers.py vs-venom-o1    # just these
 python3 tools/fetch_covers.py --all          # refetch everything, overwriting
 python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
 ```
@@ -444,10 +452,14 @@ Spider-Man Vol. 1–2, Michelinie & Bagley Vol. 1–2, DeMatteis & Buscema, and 
 Reilly Vol. 2. Removing the companion ongoings is what dropped the overlap count
 from 46 shared issues to 3.
 
-Added as placeholders (no contents yet): Spider-Man vs. Venom, Venomnibus Vol. 1
-and 2, ASM by J. Michael Straczynski, Ultimate Spider-Man, and Death of Ultimate
-Spider-Man. These push the shelf past the Clone Saga, so the era label is now
-1962–2011 rather than 1962–1997.
+Added past the Clone Saga, so the era label is 1962–2011 rather than 1962–1997:
+ASM by J. Michael Straczynski, Ultimate Spider-Man and Death of Ultimate
+Spider-Man, all three now carrying full contents, plus Spider-Man vs. Venom,
+which is still a placeholder.
+
+The two Venomnibus volumes were on the shelf briefly as placeholders and were
+removed again (Aug 2026) — they are Venom's books, not Spider-Man's. Their cover
+scans went with them; git history has both.
 
 **`tools/omnibus_contents_raw.json` was filtered to match** and no longer holds
 the raw wiki contents for the 13 dropped volumes. Nothing on the shelf depends on
@@ -660,7 +672,7 @@ python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"  
 # or re-derive: eval the data section and assert every chapter has a digest.
 ```
 
-The shelf currently reports **18 volumes / 459 issue slots / 456 unique
+The shelf currently reports **16 volumes / 567 issue slots / 564 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
 

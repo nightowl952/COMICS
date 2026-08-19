@@ -16,6 +16,10 @@ SERIES = {
  "Amazing Spider-Man Vol 2":                           ("asm2", "Amazing Spider-Man (1999)"),
  "Amazing Spider-Man Annual Vol 1":                    ("asmann","Amazing Spider-Man Annual"),
  "Amazing Spider-Man Annual Vol 2":                    ("asm2ann","Amazing Spider-Man Annual (1999)"),
+ "Ultimate Spider-Man Vol 1":                          ("usm",  "Ultimate Spider-Man"),
+ "Ultimate Spider-Man Vol 2":                          ("ucsm", "Ultimate Comics Spider-Man"),
+ "Ultimate Avengers vs. New Ultimates Vol 1":          ("uavn", "Ultimate Avengers vs. New Ultimates"),
+ "Ultimate Fallout Vol 1":                             ("ufal", "Ultimate Fallout"),
  "Amazing Spider-Man Ashcan Vol 1":                    ("asmash","Amazing Spider-Man Ashcan"),
  "Amazing Spider-Man Super Special Vol 1":             ("asmss", "Amazing Spider-Man Super Special"),
  "Peter Parker, The Spectacular Spider-Man Vol 1":     ("pp",   "Spectacular Spider-Man"),
@@ -101,11 +105,20 @@ def parse(entry):
 def spanlabel(nums):
     """Issue numbers are not all plain integers -- Untold Tales has a #-1
     (Flashback month) and annuals are numbered by year. Keep those out of the
-    range so labels never read "#1--1"."""
+    range so labels never read "#1--1".
+
+    A run of one series is not necessarily contiguous: the JMS volume collects
+    Amazing Spider-Man (1999) #30-58 and #500-514 across the renumbering, and
+    Ultimate Comics Spider-Man does the same at #15 -> #150. Labelling that
+    "#30-514" would claim 485 issues, so contiguous blocks are labelled
+    separately and joined with commas."""
     plain=[n for n in nums if re.fullmatch(r'\d+',n)]
     odd=[n for n in nums if not re.fullmatch(r'\d+',n)]
-    parts=[]
-    if plain: parts.append(f"#{plain[0]}" if len(plain)==1 else f"#{plain[0]}\u2013{plain[-1]}")
+    blocks=[]
+    for n in plain:
+        if blocks and int(n)==int(blocks[-1][-1])+1: blocks[-1].append(n)
+        else: blocks.append([n])
+    parts=[f"#{b[0]}" if len(b)==1 else f"#{b[0]}\u2013{b[-1]}" for b in blocks]
     parts += [f"#{o}" for o in odd]
     return ", ".join(parts)
 
