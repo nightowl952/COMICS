@@ -169,13 +169,34 @@ curl -s -A "$UA" -G "https://marvel.fandom.com/api.php" \
   --data-urlencode "prop=wikitext" --data-urlencode "format=json"
 ```
 
-Those fields are one row per *story*, in printed order — so the generator dedupes
-globally (keeping first occurrence) and the surviving order **is** the book's
-reading order. Prose "Collects…" blurbs from retail sites disagree with each
-other and with the books; the ReprintOf fields did not. Prefer them.
+Those fields are one row per *story* — so the generator dedupes globally
+(keeping first occurrence) and the surviving order is what drives the chapters.
+Prose "Collects…" blurbs from retail sites disagree with each other and with the
+books; the ReprintOf fields did not. Prefer them.
 
-Enumerate candidate pages with `list=allpages&apprefix=...`, filtering for
-`Omnibus` in the title.
+**They are not always in printed order, though.** The Spider-Man pages happen to
+be; the Hulk pages group by series instead, which put Incredible Hulk #102
+seventh in Omnibus Vol. 1 when the book prints it last. Read the pulled order
+before trusting it, and correct the raw-contents file where a volume's own
+chapter order would come out wrong.
+
+Two API details that cost time the first time round:
+
+- **`ReprintOf<N>` is written two ways.** Spider-Man's pages spell the target in
+  full (`Amazing Spider-Man Vol 1 1`); the Hulk's use the short form
+  (`Incredible Hulk #1`), which does not say *which* volume of a retitled
+  series. The rendered page resolves it: fetch `prop=text` instead and read the
+  reprint gallery's captions, whose links are canonical page titles
+  (`/wiki/Incredible_Hulk_Vol_1_102`), in the same order. Pull both and check
+  the counts match — that is the cheap integrity check on the whole list.
+- **`list=allpages&apprefix=…` silently truncates.** `aplimit=500` is a page of
+  results, not a limit on the answer, and a prefix like "Incredible Hulk" has
+  thousands of issue pages before it reaches the omnibus titles — which is how
+  the five *Incredible Hulk by Peter David* volumes went missing from a first
+  enumeration that looked complete. Follow `continue.apcontinue` until it stops.
+
+The wiki's `list=search` returns nothing useful here (`intitle:` included), so
+prefix enumeration is the way in.
 
 ### Chaptering — two strategies, chosen automatically
 
@@ -407,6 +428,20 @@ the tail of a long run** (Hulk (2008) gives #38–57, and the walk stops at #30
 because marvel.com does not link further back), so pre-2008 material still needs
 the id scan below.
 
+**marvel.com's series names do not always match the wiki's**, and `SLUG_PFX`
+takes a callable for exactly that case. The wiki splits the 1999 Hulk ongoing in
+two at the retitling — `Hulk Vol 1` #1–11, then `Incredible Hulk Vol 2` #12–112 —
+where marvel.com keeps one `hulk_1999` series across the whole run. Punctuation
+drifts too: series `world_war_hulk_xmen_2007` holds issues named
+`world_war_hulk_x-men_2007_N`, which is why the issue filter groups by slug stem
+rather than matching the series slug.
+
+Three routes that look promising and are not, so nobody re-walks them:
+`www.marvel.com/sitemap.xml` exists and resolves but carries **no**
+`/comics/issue/` URLs; `/search?query=…` is client-rendered and returns no
+results in the HTML; and `/comics/calendar?date=YYYY-MM-DD` accepts the
+parameter but always answers with the current week.
+
 **The id-scanning runbook still works, but marvel.com is much more aggressive
 about rate limiting than it was.** `-P 20` over ~500 ids succeeded once and then
 403'd everything for several minutes; `-P 5` with 2s pauses also tripped it. What
@@ -432,6 +467,11 @@ search.** Mapping them by striding is much cheaper than scanning blind:
 | ~1–6400 | chronological by cover date, every series interleaved (~200 ids/month) | date-interpolate; ASM (1999) #526 = 3020 and #539 = 5960 anchor it |
 | ~6400–26000 | one contiguous block per series, blocks in no useful order, issues **lexicographic** by number (#1, #10, #100, #11…) | stride 50–60 to find the block, then scan it end to end |
 | ~33000+ | chronological again, with digital-backfill batches of older material spliced in | stride 20 near the release date, then scan the neighbourhood |
+
+Striding 40 across 6400–26000 maps the middle regime's blocks in about 500
+probes and is worth doing once before any targeted scan — that single pass is
+where the Incredible Hulk (1962) block (8906–9285, all 380 issues), Tales to
+Astonish (11347–11447) and the Hulk annuals (16867–16882) all came from.
 
 The lexicographic ordering in the middle regime is the surprise: a block that
 starts at #10 has not skipped #1–9, they are at the far end. Do not stop a scan
