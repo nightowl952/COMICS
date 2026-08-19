@@ -323,9 +323,15 @@ underneath. Inlining is the only form that works on all three surfaces at once.
 
 ### Marvel deep links
 
-374 of 456 unique issues (82%) resolve to a real marvel.com issue page. The rest
+434 of 564 unique issues (77%) resolve to a real marvel.com issue page. The rest
 fall back to a `marvel.com/search?query=` URL and render a grey Read button —
 same convention as the X-Men tracker.
+
+**`MARVEL` in the tracker is generated** from `tools/marvel_ids.json` by
+`build_omnibus_data.py`, same as `OMNI` — do not hand-edit it. It used to be
+hand-synced, which is how it silently fell 54 entries behind the store. The
+build prints link coverage on every run, so a gap shows up without being
+looked for.
 
 **This is the Marvel Unlimited path, and there is nothing else to build.** The
 Read button goes to `marvel.com/comics/issue/<id>/<slug>` — the issue's own page,
@@ -335,15 +341,24 @@ mean the same destination here; there is no separate `read.marvel.com` URL
 scheme to harvest, and a new hero needs only the same id harvest described
 below.
 
-`MARVEL` still carries all 1118 harvested ids, 744 of which no longer match any
+`MARVEL` still carries all 1178 harvested ids, 744 of which no longer match any
 issue on the shelf. That is intentional: unused keys cost nothing, and keeping
 them means re-adding a trimmed volume does not require re-running the harvester
 against a rate-limited marvel.com.
 
-Unresolved categories: Amazing Spider-Man Annuals (17), Spider-Man Unlimited (10),
-Sensational Spider-Man #2–11 (10), Web of Spider-Man Annuals (7), Spectacular
-Annuals (7), Venom: Lethal Protector (6), Spider-Man Team-Up (5), Amazing Fantasy
-#15–18 (4), Marvel Team-Up #1/#3/#4 (4), and assorted Clone Saga one-shots.
+Unresolved, largest first: Amazing Spider-Man (1999) — the whole Straczynski
+volume, #30–58 and #500–514 (47) — Amazing Spider-Man Annuals (9), Ultimate
+Avengers vs. New Ultimates (6), Amazing Fantasy #15–18 (4), New Warriors (4),
+Venom: Along Came a Spider (4), The Final Adventure (4), and a long tail of
+one-shots, annuals and Super Specials at one to three each.
+
+Two of those have a known cause rather than an unfound block. **Ultimate
+Avengers vs. New Ultimates** has variant-cover pages on marvel.com (38500–38504,
+38620) but no base-issue page anywhere in 38050–40200 — it looks genuinely
+absent, not misplaced. **Amazing Spider-Man (1999)** is the one worth another
+pass: #1–10 sit in a digital-backfill batch at 37894–37904 and #678–700 in the
+2012 chronological run at 40105–40139, so #11–58 and #500–514 are in backfill
+batches between those two that a sweep has not reached yet.
 
 **The harvesting runbook still works, but marvel.com is much more aggressive
 about rate limiting than it was.** `-P 20` over ~500 ids succeeded once and then
@@ -356,9 +371,24 @@ Also note: ID blocks are contiguous per series, so a **scan** beats a walk badly
 One sweep of 6440–6960 returned all 441 Amazing Spider-Man issues with no gaps.
 Known block seeds: ASM (1963) ≈ 6482–6900, Spectacular (1976) ≈ 14542–14800,
 Web of Spider-Man (1985) ≈ 11973–12100, Spider-Man (1990) ≈ 10767–10870,
-Marvel Team-Up (1972) ≈ 19619–19690, Clone Saga minis + Sensational ≈ 61238–61260.
+Marvel Team-Up (1972) ≈ 19619–19690, Clone Saga minis + Sensational ≈ 61238–61260,
+Ultimate Spider-Man (2000) ≈ 14836–14930, Ultimate Comics Spider-Man #150–160
+≈ 37454–37466, Ultimate Fallout ≈ 39962–39967.
 Annuals live in a different, still-unlocated block (Web of Spider-Man Annual #1
 is 80439, but 80330–80620 did not contain the ASM annuals).
+
+**The id space has three regimes, and knowing which one you are in decides the
+search.** Mapping them by striding is much cheaper than scanning blind:
+
+| Ids | Ordering | How to search |
+|---|---|---|
+| ~1–6400 | chronological by cover date, every series interleaved (~200 ids/month) | date-interpolate; ASM (1999) #526 = 3020 and #539 = 5960 anchor it |
+| ~6400–26000 | one contiguous block per series, blocks in no useful order, issues **lexicographic** by number (#1, #10, #100, #11…) | stride 50–60 to find the block, then scan it end to end |
+| ~33000+ | chronological again, with digital-backfill batches of older material spliced in | stride 20 near the release date, then scan the neighbourhood |
+
+The lexicographic ordering in the middle regime is the surprise: a block that
+starts at #10 has not skipped #1–9, they are at the far end. Do not stop a scan
+because the numbers look wrong.
 
 ### Tooling (`tools/`)
 
@@ -377,8 +407,9 @@ is 80439, but 80330–80620 did not contain the ASM annuals).
   `omnibus_contents_raw.json` or `gen()` KeyErrors), `PLACEHOLDERS` (shelf tiles
   with no contents), and `SHELF` (display order by id). This is where a new
   omnibus, a `spine` label or a `cover` path gets added.
-- `build_omnibus_data.py` — turns the two above into the `OMNI` array **and
-  writes it into `spiderman-reading-tracker.html`**. Run it with no arguments to
+- `build_omnibus_data.py` — turns the two above into the `OMNI` array, and
+  `marvel_ids.json` into the `MARVEL` map, **and writes both into
+  `spiderman-reading-tracker.html`**. Run it with no arguments to
   regenerate; `--check` verifies the file matches without writing (exit 1 if
   not). It also fails loudly on an unknown field, an id in `SHELF` that nothing
   defines, a volume defined but missing from `SHELF`, and an `.o-*` ramp with no
@@ -391,13 +422,15 @@ is 80439, but 80330–80620 did not contain the ASM annuals).
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
   `PLACEHOLDER_PAGES` in the meta module.
-- `marvel_ids.json` — id → marvel.com path fragment, consumed as `MARVEL`.
+- `marvel_ids.json` — id → marvel.com path fragment. `build_omnibus_data.py`
+  splices it in as `MARVEL`, so a harvest lands by regenerating, not by editing
+  the HTML.
 - `build_single_file.py` — composes the three pages into `comics-mobile.html`
   for artifact publishing, inlining cover images as data URIs on the way. See
   "The mobile build" below.
 
-**`OMNI` in the HTML is generated — do not hand-edit it.** Change
-`omnibus_meta.py` and regenerate. The serialization is pinned to
+**`OMNI` and `MARVEL` in the HTML are generated — do not hand-edit them.** Change
+`omnibus_meta.py` (or `marvel_ids.json`) and regenerate. The serialization is pinned to
 `json.dumps(arr, indent=0, ensure_ascii=False)` with a fixed key order
 (`KEY_ORDER`) precisely so a regen shows a small diff instead of reshuffling all
 18 entries.
@@ -643,6 +676,9 @@ a server-side store and is not built.
 4. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
    arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
    would be a genuine improvement — see "Chaptering".
+5. **The Straczynski volume has no Marvel deep links at all** — all 47 of its
+   Amazing Spider-Man (1999) issues fall back to search. The block is findable;
+   see "Marvel deep links" for where the sweeps got to.
 
 ## Testing
 
