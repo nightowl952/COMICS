@@ -1876,6 +1876,22 @@ const SC = {
 "#d5262e",
 "#5c0b10"
 ],
+"Ultimate Spider-Man": [
+"#e02b22",
+"#0e2f7a"
+],
+"Ultimate Comics Spider-Man": [
+"#c21e28",
+"#14173f"
+],
+"Ultimate Avengers vs. New Ultimates": [
+"#3b6fbf",
+"#131a3a"
+],
+"Ultimate Fallout": [
+"#5c6470",
+"#12151c"
+],
 "Amazing Spider-Man Annual": [
 "#e0553a",
 "#6b1a10"
@@ -6937,7 +6953,7 @@ function buildShelf(){
 const chaptersEl=byId("chapters");
 function coverHTML(iss){
   const c=SC[iss.s]||["#4a9fd8","#123c78"];
-  const m=String(iss.t).match(/#(-?[\d.]+)/); const num=m?m[1]:"1";
+  const m=String(iss.t).match(/#(\S+)/); const num=m?m[1]:"1";
   return '<div class="cover" data-toggle="'+iss.id+'" style="background:linear-gradient(160deg,'+c[0]+','+c[1]+')">'+
     '<div class="strip"></div><div class="cnum">'+num+'</div><div class="cser">'+esc(iss.s)+'</div></div>';
 }
