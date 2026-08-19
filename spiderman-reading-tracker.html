@@ -221,6 +221,17 @@
     repeating-conic-gradient(from 8deg at 50% 34%, rgba(255,255,255,.10) 0deg 2.2deg, transparent 2.2deg 24deg),
     radial-gradient(circle at 50% 34%, rgba(255,255,255,.2), transparent 54%);}
 
+  /* ---- summary panels ---- */
+  .sum{display:none;margin:2px 9px 10px 60px;padding:12px 14px;border-radius:13px;font-size:12.5px;line-height:1.62;color:#eef7ff;
+    background:rgba(0,25,60,.42);border:1px solid rgba(160,220,255,.34);}
+  .sum.show{display:block;}
+  .sum.chsum{margin:0 2px 10px;}
+  .sum .sum-hd{font-size:9px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--xyellow);margin-bottom:6px;}
+  .sum .sum-err{color:#ffd0d0;}
+  .sum .spin{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
+    border-top-color:var(--xyellow);margin-right:8px;vertical-align:-1px;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
   /* ================= READING LIST ================= */
   .ch{border-radius:18px;margin-bottom:12px;overflow:hidden;
     background:linear-gradient(180deg, rgba(255,255,255,.2), rgba(160,210,250,.09));
@@ -321,6 +332,7 @@
     .spine .screds{display:none;}
     .omni .plate{padding:30px 9px 9px;} .omni .oname{font-size:11.5px;} .omni .ocre{display:none;}
     .ch-side .pbar{width:62px;}
+    .sum{margin-left:14px;}
     .issue-acts .mini{padding:5px 7px;}
     .upnext-actions{width:100%;} .upnext-actions .btn{flex:1;}
     .obanner{height:150px;}
@@ -419,6 +431,7 @@
         <button class="chip-btn" id="markAll">Mark whole omnibus read</button>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="chip-btn" id="clearSums">Clear saved summaries</button>
         <button class="chip-btn" id="expandAll">Expand all</button>
         <button class="chip-btn" id="collapseAll">Collapse all</button>
       </div>
@@ -6459,7 +6472,9 @@ function buildOmni(o){
         '<div class="ch-tools">'+
           '<button class="mini" data-chread="'+ch.id+'">Mark chapter read</button>'+
           '<button class="mini" data-chskip="'+ch.id+'">Skip chapter</button>'+
+          '<button class="mini" data-sumch="'+ch.id+'">Summarize chapter</button>'+
         '</div>'+
+        '<div class="sum chsum" id="sumch-'+ch.id+'"></div>'+
         ch.issues.map(iss=>{
           const known=!!MARVEL[iss.id];
           return '<div class="issue" data-row="'+iss.id+'">'+
@@ -6470,8 +6485,10 @@ function buildOmni(o){
             '<div class="issue-acts">'+
               '<a class="mini read-link'+(known?'':' approx')+'" href="'+marvelURL(iss)+'" target="_blank" rel="noopener">Read</a>'+
               '<button class="mini" data-skip="'+iss.id+'">Skip</button>'+
+              '<button class="mini" data-sum="'+iss.id+'">Summary</button>'+
               '<button class="orb" role="checkbox" aria-checked="false" data-toggle="'+iss.id+'">&#10003;</button>'+
-            '</div></div>';
+            '</div></div>'+
+            '<div class="sum" id="sum-'+iss.id+'"></div>';
         }).join("")+
       '</div></div>';
   }).join("");
@@ -6570,6 +6587,140 @@ function publishIndex(){
   }catch(e){}
 }
 
+
+/* ============ SUMMARIES ============
+   Same engine as the X-Men tracker: one live call to the Messages API with web
+   search on, then tidy() strips the model's formatting habits. There are no
+   pre-written digests on this shelf -- an omnibus has hundreds of issues -- so
+   every panel here is a live lookup and needs a key.
+
+   The key is NOT owned by this page: it lives under one storage name for the
+   whole site, set from the gear on the C.O.M.I.C.S. homescreen, so one paste
+   covers every tracker. KEY_API_OLD is where the X-Men page used to keep it. */
+const KEY_S="spidey-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
+let sums={};
+async function loadSums(){ try{ const v=await store.get(KEY_S); if(v) sums=JSON.parse(v)||{}; }catch(e){} }
+async function saveSums(){ try{ await store.set(KEY_S, JSON.stringify(sums)); }catch(e){} }
+function getKey(){
+  try{
+    let k=localStorage.getItem(KEY_API);
+    if(!k){
+      const old=localStorage.getItem(KEY_API_OLD);
+      if(old){ localStorage.setItem(KEY_API,old); localStorage.removeItem(KEY_API_OLD); k=old; }
+    }
+    return k||"";
+  }catch(e){ return ""; }
+}
+
+async function askClaude(prompt){
+  const body={model:"claude-opus-5",max_tokens:2000,
+    messages:[{role:"user",content:prompt}],
+    output_config:{effort:"low"},
+    tools:[{type:"web_search_20260209",name:"web_search"}]};
+  const headers={"Content-Type":"application/json"};
+  if(!IN_CLAUDE){
+    const k=getKey();
+    if(!k){ const e=new Error("nokey"); e.code="nokey"; throw e; }
+    headers["x-api-key"]=k;
+    headers["anthropic-version"]="2023-06-01";
+    headers["anthropic-dangerous-direct-browser-access"]="true";
+  }
+  const res=await fetch("https://api.anthropic.com/v1/messages",
+    {method:"POST",headers:headers,body:JSON.stringify(body)});
+  if(!res.ok){
+    let msg="HTTP "+res.status;
+    try{ const j=await res.json(); if(j.error&&j.error.message) msg=j.error.message; }catch(e){}
+    const err=new Error(msg); err.code=(res.status===401||res.status===403)?"badkey":"http";
+    throw err;
+  }
+  const data=await res.json();
+  return (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+}
+
+function summaryError(el,err){
+  const code=err&&err.code;
+  let msg;
+  if(code==="nokey"){
+    msg='Summaries need your own Anthropic API key. Open the <b>gear on the C.O.M.I.C.S. homescreen</b> '+
+        'and paste one in — it is saved in this browser and works on every tracker.';
+  } else if(code==="badkey"){
+    msg='That API key was rejected. Replace it from the gear on the C.O.M.I.C.S. homescreen.';
+  } else {
+    msg='Lookup failed: '+esc(String(err&&err.message||err))+'.';
+  }
+  el.classList.add("show");
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">'+msg+'</div>';
+}
+
+function tidy(txt){
+  if(!txt) return txt;
+  let t=txt.replace(/\r/g,"").trim();
+  t=t.replace(/\*\*|__/g,"").replace(/(^|[\s(])\*(\S)/g,"$1$2").replace(/(\S)\*($|[\s.,;:)])/g,"$1$2");
+  t=t.replace(/^#{1,6}\s*/gm,"").replace(/^\s*[-*•]\s+/gm,"").replace(/^\s*[-=_]{3,}\s*$/gm,"");
+  const bad=/^(i |i'|let me\b|let's\b|now |ok\b|okay\b|here is\b|here's\b|based on\b|according to\b|from the\b|the following\b|searching\b|found\b|great[,.]|perfect[,.]|sure[,.])/i;
+  let lines=t.split("\n");
+  while(lines.length && (lines[0].trim()==="" || bad.test(lines[0].trim()))) lines.shift();
+  while(lines.length && /^(sources?\b|note[:s]\b|references?\b|\[|\()/i.test(lines[lines.length-1].trim())) lines.pop();
+  t=lines.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  const paras=t.split(/\n\s*\n/).map(s=>s.replace(/\n+/g," ").trim()).filter(Boolean);
+  if(paras.length>2) return [paras[0], paras.slice(1).join(" ")].join("\n\n");
+  return paras.join("\n\n");
+}
+const RULES='OUTPUT RULES, follow exactly:\n'+
+  '- Output ONLY the summary text. Nothing before it, nothing after it.\n'+
+  '- Never narrate your process. Do not write "I found", "Let me", "Here is", "Based on", or mention sources, searches or pages at all.\n'+
+  '- No markdown whatsoever: no asterisks, no bold, no italics, no headings, no bullet points, no dashes as separators.\n'+
+  '- Flowing prose only. At most one blank line, separating two paragraphs.';
+function panelLoading(el,label){
+  el.classList.add("show");
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S. · '+esc(label)+'</div><div><span class="spin"></span>Pulling the record…</div>';
+}
+function panelText(el,label,text){
+  el.innerHTML='<div class="sum-hd">C.O.M.I.C.S. · '+esc(label)+'</div><div>'+esc(text).replace(/\n+/g,"<br><br>")+'</div>';
+}
+function issInChapter(id){
+  for(const ch of (currentOmni?currentOmni.chapters:[])) for(const i of ch.issues) if(i.id===id) return {ch:ch,iss:i};
+  return null;
+}
+async function doSummary(id){
+  const el=document.getElementById("sum-"+id);
+  if(!el) return;
+  if(el.classList.contains("show")){ el.classList.remove("show"); return; }
+  if(sums[id]){ el.classList.add("show"); panelText(el,"Spoilers",sums[id]); return; }
+  const hit=issInChapter(id); if(!hit) return;
+  panelLoading(el,"Spoilers");
+  const prompt='SEARCH THE WEB FIRST. Look up the plot synopsis for the Marvel comic "'+hit.iss.t+'" ('+hit.iss.s+
+    '), collected in '+currentOmni.title+(currentOmni.vol?' '+currentOmni.vol:'')+' ('+currentOmni.era+'). '+
+    'Use marvel.fandom.com (Marvel Database) or comicvine. Search again if the first result is thin.\n\n'+
+    'Then write ONE OR TWO SHORT PARAGRAPHS — 120-180 words total — covering only what actually matters in that issue: '+
+    'the main plot beats, any deaths or reveals, and where it leaves things. Full spoilers, no hedging.\n\n'+RULES+'\n'+
+    '- Skip minor cameos, flashback trivia and issue-number references. Hit what a reader needs to know.';
+  try{
+    const txt=tidy(await askClaude(prompt));
+    if(txt){ sums[id]=txt; saveSums(); panelText(el,"Spoilers",txt); }
+    else el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">No record came back. Try again.</div>';
+  }catch(err){ summaryError(el,err); }
+}
+async function doChapterSummary(chId){
+  const el=document.getElementById("sumch-"+chId);
+  if(!el||!currentOmni) return;
+  const ch=currentOmni.chapters.find(c=>c.id===chId); if(!ch) return;
+  const k="CH:"+chId;
+  if(el.classList.contains("show")){ el.classList.remove("show"); return; }
+  if(sums[k]){ el.classList.add("show"); panelText(el,"Chapter digest · spoilers",sums[k]); return; }
+  panelLoading(el,"Chapter digest · spoilers");
+  const list=ch.issues.map(i=>i.t).join(", ");
+  const prompt='SEARCH THE WEB FIRST for these Marvel comics, collected in '+currentOmni.title+
+    (currentOmni.vol?' '+currentOmni.vol:'')+': '+list+'.\n\n'+
+    'Then write a SPOILER-FILLED catch-up for a reader who is SKIPPING them: what happens across the run, '+
+    'who dies or changes, and what carries forward into the rest of the book. 150-220 words.\n\n'+RULES;
+  try{
+    const txt=tidy(await askClaude(prompt));
+    if(txt){ sums[k]=txt; saveSums(); panelText(el,"Chapter digest · spoilers",txt); }
+    else el.innerHTML='<div class="sum-hd">C.O.M.I.C.S.</div><div class="sum-err">No record came back. Try again.</div>';
+  }catch(err){ summaryError(el,err); }
+}
+
 /* ============ ROUTING ============ */
 function showShelf(){
   currentOmni=null;
@@ -6623,6 +6774,10 @@ document.querySelector("#viewShelf .controls").addEventListener("click",e=>{
 });
 
 chaptersEl.addEventListener("click", async e=>{
+  const sm=e.target.closest("[data-sum]");
+  if(sm){ doSummary(sm.dataset.sum); return; }
+  const sc=e.target.closest("[data-sumch]");
+  if(sc){ doChapterSummary(sc.dataset.sumch); return; }
   const head=e.target.closest("[data-ch]");
   if(head){ toggleCh(document.getElementById("ch-"+head.dataset.ch)); return; }
   const t=e.target.closest("[data-toggle]");
@@ -6649,6 +6804,10 @@ document.getElementById("markAll").onclick=async()=>{
   currentOmni.chapters.forEach(c=>c.issues.forEach(i=>{skipSet.delete(i.id);readSet.add(i.id);}));
   await saveState(); refresh();
 };
+document.getElementById("clearSums").onclick=async()=>{
+  sums={}; await saveSums();
+  document.querySelectorAll(".sum").forEach(el=>{ el.classList.remove("show"); el.innerHTML=""; });
+};
 document.getElementById("exportBtn").onclick=exportProgress;
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.files[0]); e.target.value=""; };
@@ -6658,7 +6817,7 @@ document.getElementById("importFile").onchange=e=>{ if(e.target.files[0]) import
   try{ localStorage.setItem("__s_probe","1"); localStorage.removeItem("__s_probe"); }
   catch(e){ storageWorks=true; flagStorage(false); }})();
 
-(async function init(){ await loadState(); route(); })();
+(async function init(){ await loadState(); await loadSums(); route(); })();
 
 </script>
 </body>

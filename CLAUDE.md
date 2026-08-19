@@ -124,6 +124,27 @@ landed), it falls back to reading the tracker's own progress key directly — se
 Because the record is only a cache of the tracker's own state, deleting it is
 always safe.
 
+### The settings gear — one API key for the whole site
+
+The gear in the homescreen header opens a small modal holding the **Anthropic
+API key**, and that is the only place the key is entered. It is stored under one
+name for the whole origin:
+
+    comics-anthropic-key
+
+Every tracker reads that name directly with plain `localStorage` (not through
+`store`), which is why the gear lives on the homescreen and not on a subject
+page — same origin, one paste, summaries live everywhere.
+
+`xmen-anthropic-key` is the name the X-Men page used when it owned the key box.
+Each page's `getKey()` **migrates it forward on first read and then deletes it**,
+so an existing key survives the move without the user noticing. Do not remove
+that fallback until you are willing to make people re-paste.
+
+The X-Men page's own key row is gone; its Backup row in the same `.setup` block
+stayed. Anything that reads a key should call `getKey()` — never
+`localStorage.getItem` directly.
+
 ## The Spider-Man tracker (omnibus shelf)
 
 16 omnibus volumes on the shelf: **15 with contents** (567 issue slots, 564 unique
@@ -569,7 +590,8 @@ harvest. Roughly in order:
 5. **Build the tracker page.** Copy `spiderman-reading-tracker.html` (or
    `hulk-reading-tracker.html`) and change the title, the glyph, the `SC` series
    → cover-colour map, the `.o-*` ramps with their `SPINE_C` entries, the cover
-   textures, and the storage keys (`comics-hero-<id>`, `<hero>-omni-progress-v1`).
+   textures, and the storage keys (`comics-hero-<id>`, `<hero>-omni-progress-v1`,
+   `<hero>-omni-summaries-v1`).
    Empty `OMNI`/`MARVEL` to `const OMNI = [\n];` and `const MARVEL = {\n};` so
    the generator has something to splice into. This is the one genuinely
    hand-made step — it is design, not plumbing.
@@ -608,6 +630,20 @@ the raw wiki contents for the 13 dropped volumes. Nothing on the shelf depends o
 them, but re-adding a dropped volume means re-pulling its page with the MediaWiki
 call under "Where the contents came from". `marvel_ids.json` and the `MARVEL` map
 were *not* trimmed, so the deep links come back for free.
+
+### Summaries on a shelf
+
+Both shelf pages carry the same summary engine as the X-Men tracker, with a
+**Summary** button on every issue row and **Summarize chapter** in each
+chapter's tools. Cached per hero in `<hero>-omni-summaries-v1`; chapter digests
+are keyed `CH:<chapterId>` in the same store, so "Clear saved summaries" drops
+both.
+
+The one real difference: a shelf has **no offline tier**. The X-Men page ships
+27 hand-written `ARC_SUMS` digests, but an omnibus shelf is 660 issues, so
+everything here is a live lookup and nothing works without a key. That is why
+the no-key message points at the homescreen gear rather than offering a
+fallback.
 
 ## The Hulk tracker (omnibus shelf)
 
@@ -731,7 +767,9 @@ progress math.
 The `store` object abstracts both. Keys:
 - `xmen-saga-progress-v2` → `{read:[ids], skip:[ids]}`
 - `xmen-saga-summaries-v3` → cached generated summaries
-- `xmen-anthropic-key` → user's own API key (browser mode only)
+- `comics-anthropic-key` → the user's own API key, **shared with every other
+  tracker** and set from the homescreen gear (browser mode only). Migrated
+  from the page-local `xmen-anthropic-key` on first read
 - `comics-hero-xmen` → summary record written for the homescreen (derived, not
   a source of truth — see "Homescreen" above)
 
@@ -746,9 +784,15 @@ file to a new machine does not carry progress.
 
 - **Arc digests**: pre-written in `ARC_SUMS`. Instant, offline, no key. Every
   chapter has one. This is the reliable tier.
-- **Per-issue**: live call to `api.anthropic.com` (`claude-sonnet-4-6`) with the
-  `web_search_20250305` tool enabled. In-browser it needs the user's own key via
-  `x-api-key` + `anthropic-dangerous-direct-browser-access: true`.
+- **Per-issue**: live call to `api.anthropic.com` (`claude-opus-5`,
+  `output_config.effort: "low"`) with the `web_search_20260209` tool enabled.
+  In-browser it needs the user's own key via `x-api-key` +
+  `anthropic-dangerous-direct-browser-access: true`; the key comes from the
+  homescreen gear. Inside Claude the key check is skipped entirely.
+
+The same engine — `askClaude`, `tidy`, `summaryError`, the panel helpers — is
+**copied into all three trackers**, not shared through a file. That is the
+portability rule: every page stands alone. Change one and change the others.
 
 `tidy()` sanitizes model output — strips markdown, leading process narration
 ("I found…", "Let me…"), bullets, trailing source lists, and collapses to at
@@ -840,11 +884,20 @@ no edit here — register it in `heroes.py` and rebuild.
    emitted as **pure ASCII** (entities in HTML, `\uXXXX` in JS, `\XXXX ` in CSS).
    Without this, en-dashes and middots render as mojibake. The builder asserts
    zero non-ASCII bytes before writing.
-2. **CSP blocks external requests** — the X-Men per-issue summaries call
-   `api.anthropic.com` and cannot work. `getKey()` is stubbed to `""` so the
-   existing "no key" path fires with a rewritten message pointing at the offline
-   arc digests, and the now-useless API-key row is hidden. All 27 arc digests
-   still work; they were always offline.
+2. **CSP blocks external requests** — every live summary call to
+   `api.anthropic.com` is impossible in the artifact, on all three trackers.
+   The builder forces the existing "no key" path on each and rewrites what it
+   says, and hides the homescreen gear (an inert settings gear is worse than
+   none). All 27 X-Men arc digests still work; they were always offline.
+
+   **Stubbing `getKey()` is not sufficient on its own.** Inside Claude
+   `window.storage` exists, so `IN_CLAUDE` is true and `askClaude` skips the key
+   check altogether — it would fetch and die at the CSP with a raw network error
+   instead of the written explanation. The builder therefore also rewrites
+   `if(!IN_CLAUDE){` to `if(true){` in `askClaude`. Both patches go through
+   `must()`, which **fails the build** rather than silently no-opping if the
+   tracker source drifts — that silent no-op is exactly how a broken artifact
+   would ship.
 3. **`<a download>` is inert in the viewer** — so the Back up button would
    silently do nothing, which matters because export/import *is* the
    cross-device story. Both trackers' exports are rewired to
@@ -965,7 +1018,7 @@ designing it: the artifact runs under a CSP that blocks *all* external requests,
 so no artifact-side code can ever reach a sync store. GitHub Pages has no such
 restriction. So the two surfaces cannot share one mechanism — the realistic
 shape is a store reachable from Pages (a private Gist keyed by a token the user
-pastes in, mirroring the existing `xmen-anthropic-key` pattern), with the
+pastes in, mirroring the existing `comics-anthropic-key` pattern), with the
 artifact staying export/import-only. The artifact `artifact` capability is not
 the answer: its live-doc arm only persists DOM inside a marked region, and both
 trackers render their issue rows from JS data, which it does not save.

@@ -164,10 +164,6 @@
   .setup label{display:block;font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#eaf6ff;margin-bottom:7px;}
   .setup .hint{font-weight:400;letter-spacing:.4px;text-transform:none;color:#c3dcf2;font-size:10.5px;}
   .setup-inputs{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
-  .setup input[type=password]{flex:1 1 170px;min-width:150px;font-family:inherit;font-size:12px;padding:7px 11px;border-radius:14px;
-    color:#0a2440;background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.7);}
-  .setup input[type=password]:focus{outline:2px solid var(--xyellow);}
-  #keyState{margin-top:6px;}
   .orb{width:28px;height:28px;flex:0 0 28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
     font-size:14px;font-weight:900;color:transparent;transition:all .18s;
     background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(200,230,255,.32) 40%, rgba(30,80,150,.42));
@@ -257,15 +253,6 @@
   </div>
 
   <div class="setup" id="setupBar">
-    <div class="setup-row">
-      <label for="apiKey">Anthropic API key <span class="hint">&mdash; only needed for per-issue summaries when running this file yourself</span></label>
-      <div class="setup-inputs">
-        <input id="apiKey" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
-        <button class="chip-btn" id="saveKey">Save key</button>
-        <button class="chip-btn" id="clearKey">Remove</button>
-      </div>
-      <div class="hint" id="keyState"></div>
-    </div>
     <div class="setup-row">
       <label>Backup <span class="hint">&mdash; progress lives in this browser only</span></label>
       <div class="setup-inputs">
@@ -662,12 +649,26 @@ function toggleCh(el,force){
 }
 
 /* ============ SUMMARIES ============ */
-function getKey(){ try{ return localStorage.getItem("xmen-anthropic-key")||""; }catch(e){ return ""; } }
+/* The key is shared site-wide and set from the gear on the C.O.M.I.C.S.
+   homescreen, so one paste covers every tracker. KEY_API_OLD is where this page
+   kept it when it owned the key box; it is migrated forward once, then dropped. */
+const KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
+function getKey(){
+  try{
+    let k=localStorage.getItem(KEY_API);
+    if(!k){
+      const old=localStorage.getItem(KEY_API_OLD);
+      if(old){ localStorage.setItem(KEY_API,old); localStorage.removeItem(KEY_API_OLD); k=old; }
+    }
+    return k||"";
+  }catch(e){ return ""; }
+}
 
 async function askClaude(prompt){
-  const body={model:"claude-sonnet-4-6",max_tokens:1000,
+  const body={model:"claude-opus-5",max_tokens:2000,
     messages:[{role:"user",content:prompt}],
-    tools:[{type:"web_search_20250305",name:"web_search"}]};
+    output_config:{effort:"low"},
+    tools:[{type:"web_search_20260209",name:"web_search"}]};
   const headers={"Content-Type":"application/json"};
 
   if(!IN_CLAUDE){
@@ -695,10 +696,11 @@ function summaryError(el,err){
   let msg;
   if(code==="nokey"){
     msg='Per-issue summaries need an Anthropic API key when this file runs outside Claude. '+
-        'Paste one into the key box at the top and it will be saved on this device. '+
+        'Open the <b>gear on the C.O.M.I.C.S. homescreen</b> and paste one in \u2014 it is saved in this '+
+        'browser and works on every tracker. '+
         'Every arc-level digest already works with no key and no connection \u2014 use <b>Summarize this arc</b>.';
   } else if(code==="badkey"){
-    msg='That API key was rejected. Check it in the box at the top of the page.';
+    msg='That API key was rejected. Replace it from the gear on the C.O.M.I.C.S. homescreen.';
   } else {
     msg='Lookup failed: '+esc(String(err&&err.message||err))+'. Arc digests still work offline.';
   }
@@ -840,32 +842,9 @@ document.getElementById("toggleOpt").onclick=e=>{
 
 /* ---- setup bar wiring ---- */
 (function(){
-  const box=document.getElementById("apiKey"), state=document.getElementById("keyState");
-  function paint(){
-    if(IN_CLAUDE){
-      document.getElementById("setupBar").querySelector(".setup-row").style.display="none";
-      return;
-    }
-    const k=getKey();
-    state.innerHTML = k ? "Key saved on this device \u2014 per-issue summaries are live."
-                        : "No key set. Arc digests still work with no key.";
-    if(k) box.value="";
-    box.placeholder = k ? "\u2022\u2022\u2022\u2022 saved \u2014 paste a new key to replace" : "sk-ant-...";
-  }
-  document.getElementById("saveKey").onclick=()=>{
-    const v=box.value.trim();
-    if(!v){ state.textContent="Paste a key first."; return; }
-    try{ localStorage.setItem("xmen-anthropic-key",v); }catch(e){ state.textContent="This browser won't store the key."; return; }
-    paint();
-  };
-  document.getElementById("clearKey").onclick=()=>{
-    try{ localStorage.removeItem("xmen-anthropic-key"); }catch(e){}
-    box.value=""; paint();
-  };
   document.getElementById("exportBtn").onclick=exportProgress;
   document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
   document.getElementById("importFile").onchange=e=>{ if(e.target.files[0]) importProgress(e.target.files[0]); e.target.value=""; };
-  paint();
 })();
 
 /* ---- verify storage actually persists ---- */

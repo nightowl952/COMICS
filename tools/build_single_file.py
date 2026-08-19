@@ -177,6 +177,19 @@ def build():
     return styles, bodies, scripts
 
 # ------------------------------------------------- per-app behavioural patches
+def must(js, old, new, what):
+    """Replace, or fail the build.
+
+    These patches are matched against source that lives in the tracker files, so
+    an edit there can silently turn one into a no-op -- and a no-op here ships an
+    artifact whose summaries or downloads quietly do nothing. Fail loudly instead.
+    """
+    if old not in js:
+        raise SystemExit("build_single_file.py: could not patch %s -- the source "
+                         "it matches has changed. Update the pattern." % what)
+    return js.replace(old, new, 1)
+
+
 def patch_app(app, js):
     key = app["key"]
     if key == "home":
@@ -194,6 +207,10 @@ def patch_app(app, js):
                   {a["file"]: "#" + a["route"] for a in APPS if a["route"] != "/"})) + js
         # the shell drives (re)paint when this panel is shown
         js += '\nwindow.__COMICS.home = async function(){ await loadProgress(); buildShelf(); paintHUD(); paintContinue(); };\n'
+        # the settings gear only holds an API key, and the CSP here blocks the
+        # API outright -- an inert gear is worse than no gear
+        js += ('\n/* bundled build: nothing to configure, the API is unreachable */\n'
+               'try{ byId("gearBtn").style.display="none"; }catch(e){}\n')
     if key == "xmen" or app.get("shelf"):
         js = re.sub(
             r'const blob=new Blob\(\[(JSON\.stringify\(\{.*?\},null,1\))\],\{type:"application/json"\}\);\s*'
@@ -204,21 +221,32 @@ def patch_app(app, js):
             r'setTimeout\(\(\)=>URL\.revokeObjectURL\(a\.href\),2000\);',
             lambda m: 'window.__COMICS_SAVE("%s", %s);' % (m.group(2), m.group(1)),
             js, flags=re.S)
+    if key == "xmen" or app.get("shelf"):
+        # api.anthropic.com is blocked by the artifact CSP, so no summary can
+        # ever be generated here. Force the existing "no key" path and rewrite
+        # what it says, rather than leaving buttons that fail obscurely.
+        js = must(js, GETKEY_SRC,
+                  'function getKey(){ return ""; }  '
+                  '/* bundled build: live summaries are CSP-blocked */',
+                  "%s getKey()" % key)
+        # Stubbing getKey() is not enough on its own: inside Claude the page
+        # skips the key check entirely (window.storage exists, so IN_CLAUDE is
+        # true) and would fetch anyway, failing at the CSP with a raw network
+        # error instead of the written explanation. Force the check to run.
+        js = must(js,
+                  '  if(!IN_CLAUDE){\n    const k=getKey();',
+                  '  if(true){  /* bundled build: always take the no-key path */\n    const k=getKey();',
+                  "%s askClaude key guard" % key)
     if key == "xmen":
-        # api.anthropic.com is blocked by the artifact CSP -> force the existing
-        # "no key" path, which already points the reader at the offline arc digests.
-        js = js.replace('function getKey(){ try{ return localStorage.getItem("xmen-anthropic-key")||""; }catch(e){ return ""; } }',
-                        'function getKey(){ return ""; }  /* bundled build: live per-issue summaries are CSP-blocked */')
-        js = js.replace(
+        js = must(js,
           "msg='Per-issue summaries need an Anthropic API key when this file runs outside Claude. '+\n"
-          "        'Paste one into the key box at the top and it will be saved on this device. '+\n"
+          "        'Open the <b>gear on the C.O.M.I.C.S. homescreen</b> and paste one in \\u2014 it is saved in this '+\n"
+          "        'browser and works on every tracker. '+\n"
           "        'Every arc-level digest already works with no key and no connection \\u2014 use <b>Summarize this arc</b>.';",
           "msg='Live per-issue summaries are turned off in the mobile build \\u2014 this page cannot reach the API. '+\n"
           "        'All 27 arc digests are written into the page and work offline: use <b>Summarize this arc</b>. '+\n"
-          "        'For per-issue summaries, open the desktop copy of the tracker.';")
-        # the API-key box is dead weight in this build - hide the whole row
-        js += ('\n/* bundled build: no key box, since the key can never be used here */\n'
-               'try{ var _sr=qs(".setup .setup-row"); if(_sr) _sr.style.display="none"; }catch(e){}\n')
+          "        'For per-issue summaries, open the desktop copy of the tracker.';",
+          "xmen no-key message")
         js += '\nwindow.__COMICS.xmen = function(){ refresh(); };\n'
     if app.get("shelf"):
         # every shelf page routes on its own hash prefix, e.g. #/hulk/omni/imm-o1
@@ -230,6 +258,12 @@ def patch_app(app, js):
         js = js.replace('byId("backShelf").onclick=()=>{ location.hash=""; };',
                         'byId("backShelf").onclick=()=>{ location.hash="#/%s"; };' % slug)
         js = js.replace('<a class="backlink" href="index.html">', '<a class="backlink" href="#/">')
+        js = must(js,
+          "msg='Summaries need your own Anthropic API key. Open the <b>gear on the C.O.M.I.C.S. homescreen</b> '+\n"
+          "        'and paste one in \u2014 it is saved in this browser and works on every tracker.';",
+          "msg='Summaries are turned off in the mobile build \u2014 this page cannot reach the API. '+\n"
+          "        'Open the shelf on GitHub Pages or a local copy to generate them.';",
+          "%s no-key message" % key)
         js += '\nwindow.__COMICS.%s = function(){ route(); };\n' % key
         js = inline_covers(js)
     return js
@@ -243,6 +277,20 @@ def patch_app(app, js):
 #
 # Cost: base64 is ~33% bigger than the file, and the artifact caps at 16MB.
 # Run `python3 tools/covers.py audit` if this trips.
+# The shared getKey() -- byte-identical in the X-Men page and both shelves, so
+# one pattern stubs all three. Kept here so a drift in the trackers fails the
+# build via must() rather than silently leaving a live API call in the artifact.
+GETKEY_SRC = """function getKey(){
+  try{
+    let k=localStorage.getItem(KEY_API);
+    if(!k){
+      const old=localStorage.getItem(KEY_API_OLD);
+      if(old){ localStorage.setItem(KEY_API,old); localStorage.removeItem(KEY_API_OLD); k=old; }
+    }
+    return k||"";
+  }catch(e){ return ""; }
+}"""
+
 MIME = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png",
         ".webp": "image/webp", ".gif": "image/gif"}
 ARTIFACT_LIMIT = 16 * 1024**2
