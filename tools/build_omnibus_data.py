@@ -150,9 +150,13 @@ def gen(pages, meta, series_extra=None):
                 if cur: runs.append(cur)
                 cur=[code,disp,[(disp,num)]]
         if cur: runs.append(cur)
+        # A volume can force the strategy with `chapterby` in its meta entry:
+        # the average-run-length heuristic is tuned for month-by-month
+        # crossovers, and misreads an anthology of one-shots as one.
         avg=sum(len(r[2]) for r in runs)/len(runs)
+        by=m.get('chapterby') or ('series' if avg>=3.5 else 'parts')
         chapters=[]
-        if avg>=3.5:
+        if by=='series':
             for ci,(code,disp,items) in enumerate(runs):
                 nums=[n for _,n in items]
                 span = spanlabel(nums)
@@ -205,6 +209,7 @@ def build_all(mod):
     for vid in SHELF:
         o = dict(by_id[vid])
         o.pop("count", None)          # derived at runtime by omniStats()
+        o.pop("chapterby", None)      # a build-time strategy hint, not page data
         extra = [k for k in o if k not in KEY_ORDER]
         if extra:
             sys.exit("unknown field(s) %s on %s -- add them to KEY_ORDER" % (extra, vid))

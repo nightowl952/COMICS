@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""Compose index.html + the two trackers into ONE self-contained, hash-routed
+"""Compose index.html + every tracker into ONE self-contained, hash-routed
 page for publishing as a Claude Artifact (artifacts are one file per URL).
 
-The three source files are never modified. Rerun this after editing any of them.
+The source files are never modified. Rerun this after editing any of them.
+
+The page list comes from tools/heroes.py, so registering an omnibus-shelf hero
+there is enough -- nothing in this file names a hero.
 
 What it has to solve:
-  * 83 CSS class names are defined in more than one file with different values
+  * CSS class names are defined in more than one file with different values
     -> every app's stylesheet is scoped under its own #app-<id> panel.
-  * 18 DOM ids collide (statRead, upnext, shelf, ...)
+  * DOM ids collide (statRead, upnext, shelf, ...)
     -> every id is prefixed per app, in the markup AND in the JS that looks it up.
   * top-level JS names collide wholesale (SC, MARVEL, store, refresh, flat, ...)
     -> each script is wrapped in an IIFE, so nothing leaks.
@@ -17,8 +20,9 @@ import re, json, sys, os, base64
 SRC  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 
-# The homescreen and the X-Men page are fixed; every omnibus-shelf hero comes
-# from the registry, so adding one does not mean editing this list.
+# The homescreen and the X-Men page are fixed (neither is an omnibus shelf);
+# every shelf hero comes from the registry, so adding one does not mean editing
+# this list. `shelf` marks the pages patch_app() treats as omnibus shelves.
 def _apps():
     sys.path.insert(0, TOOLS)
     import heroes
@@ -28,7 +32,8 @@ def _apps():
     ]
     for key in sorted(heroes.HEROES):
         h = heroes.HEROES[key]
-        apps.append(dict(key=h["panel"], pfx=h["pfx"], file=h["tracker"], route=h["route"]))
+        apps.append(dict(key=h["panel"], pfx=h["pfx"], file=h["tracker"],
+                         route=h["route"], shelf=True))
     return apps
 
 APPS = _apps()
@@ -156,14 +161,15 @@ def build():
         b = b.replace('Works offline &middot; each protocol is its own file &middot; progress saved in this browser',
                       'Works offline &middot; mobile build &middot; progress saved in this browser &mdash; back it up from a subject page')
         b = b.replace('href="index.html"', 'href="#/"')
-        b = b.replace('href="xmen-reading-tracker.html"', 'href="#/xmen"')
-        b = b.replace('href="spiderman-reading-tracker.html"', 'href="#/spider-man"')
+        for a2 in APPS:
+            if a2["route"] != "/":
+                b = b.replace('href="%s"' % a2["file"], 'href="#%s"' % a2["route"])
         b = prefix_ids_html(b, app["pfx"])
         bodies.append((app, b))
 
         js = part(raw, "script")
         js = prefix_ids_js(js, app["pfx"])
-        js = patch_app(app["key"], js)
+        js = patch_app(app, js)
         scripts.append(
             f'/* ================= {app["file"]} ================= */\n'
             f'(function(){{\n{PREAMBLE % (app["pfx"], app["key"])}\n{js}\n}})();'
@@ -171,7 +177,8 @@ def build():
     return styles, bodies, scripts
 
 # ------------------------------------------------- per-app behavioural patches
-def patch_app(key, js):
+def patch_app(app, js):
+    key = app["key"]
     if key == "home":
         # posters navigate by hash instead of loading another file
         js = js.replace('if(h && h.file) window.location.href = h.file;',
@@ -183,11 +190,11 @@ def patch_app(key, js):
         js = js.replace('byId("contGo").href = h.file;',
                         'byId("contGo").href = ROUTE_OF[h.file] || "#/";')
         js = js.replace('e.target.closest("#mClose")', 'e.target.closest("#hm-mClose")')
-        js = ('const ROUTE_OF={"xmen-reading-tracker.html":"#/xmen",'
-              '"spiderman-reading-tracker.html":"#/spider-man"};\n') + js
+        js = ("const ROUTE_OF=%s;\n" % json.dumps(
+                  {a["file"]: "#" + a["route"] for a in APPS if a["route"] != "/"})) + js
         # the shell drives (re)paint when this panel is shown
         js += '\nwindow.__COMICS.home = async function(){ await loadProgress(); buildShelf(); paintHUD(); paintContinue(); };\n'
-    if key in ("xmen", "spidey"):
+    if key == "xmen" or app.get("shelf"):
         js = re.sub(
             r'const blob=new Blob\(\[(JSON\.stringify\(\{.*?\},null,1\))\],\{type:"application/json"\}\);\s*'
             r'const a=document\.createElement\("a"\);\s*'
@@ -213,15 +220,17 @@ def patch_app(key, js):
         js += ('\n/* bundled build: no key box, since the key can never be used here */\n'
                'try{ var _sr=qs(".setup .setup-row"); if(_sr) _sr.style.display="none"; }catch(e){}\n')
         js += '\nwindow.__COMICS.xmen = function(){ refresh(); };\n'
-    if key == "spidey":
+    if app.get("shelf"):
+        # every shelf page routes on its own hash prefix, e.g. #/hulk/omni/imm-o1
+        slug = app["route"].strip("/")
         js = js.replace('const h=location.hash.replace(/^#\\/?/,"");',
-                        'const h=location.hash.replace(/^#\\/?/,"").replace(/^spider-man\\/?/,"");')
+                        'const h=location.hash.replace(/^#\\/?/,"").replace(/^%s\\/?/,"");' % slug)
         js = js.replace('location.hash="#/omni/"+c.dataset.omni;',
-                        'location.hash="#/spider-man/omni/"+c.dataset.omni;')
+                        'location.hash="#/%s/omni/"+c.dataset.omni;' % slug)
         js = js.replace('byId("backShelf").onclick=()=>{ location.hash=""; };',
-                        'byId("backShelf").onclick=()=>{ location.hash="#/spider-man"; };')
+                        'byId("backShelf").onclick=()=>{ location.hash="#/%s"; };' % slug)
         js = js.replace('<a class="backlink" href="index.html">', '<a class="backlink" href="#/">')
-        js += '\nwindow.__COMICS.spidey = function(){ route(); };\n'
+        js += '\nwindow.__COMICS.%s = function(){ route(); };\n' % key
         js = inline_covers(js)
     return js
 
@@ -318,10 +327,9 @@ window.__COMICS_SAVE = async function(filename, text){
 
 /* ================= shell router ================= */
 (function(){
-  const PANELS={home:"app-home",xmen:"app-xmen",spidey:"app-spidey"};
   function show(which){
-    Object.entries(PANELS).forEach(([k,id])=>{
-      document.getElementById(id).classList.toggle("on",k===which);
+    __PANELS.forEach(k=>{
+      document.getElementById("app-"+k).classList.toggle("on",k===which);
     });
     const fn=window.__COMICS[which];
     if(fn) try{ fn(); }catch(e){ console.error("panel init failed:",which,e); }
@@ -351,7 +359,9 @@ def emit():
     # longest prefix first, so "/spider-man" is not shadowed by a shorter route
     routes = sorted(((a["route"].strip("/"), a["key"]) for a in APPS if a["route"] != "/"),
                     key=lambda r: -len(r[0]))
-    routes_js = "const __ROUTES=%s;\n" % json.dumps([{"p": p_, "k": k} for p_, k in routes])
+    routes_js = ("const __PANELS=%s;\nconst __ROUTES=%s;\n"
+                 % (json.dumps([a["key"] for a in APPS]),
+                    json.dumps([{"p": p_, "k": k} for p_, k in routes])))
     html.append("<script>\nwindow.__COMICS={};\n"
                 + ascii_js("\n".join(scripts) + "\n" + routes_js + SHELL_JS) + "\n</script>")
     doc = "\n".join(html)
