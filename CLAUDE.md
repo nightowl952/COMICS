@@ -372,7 +372,42 @@ pass: #1–10 sit in a digital-backfill batch at 37894–37904 and #678–700 in
 2012 chronological run at 40105–40139, so #11–58 and #500–514 are in backfill
 batches between those two that a sweep has not reached yet.
 
-**The harvesting runbook still works, but marvel.com is much more aggressive
+### Harvest by series, not by id range
+
+`tools/series_harvest.py` is the method to reach for first. Three facts make it
+much cheaper and more reliable than probing an id range:
+
+- `/comics/series/<id>/<anything>` **resolves on the id alone** — the slug in
+  the URL is decoration. So the series-id space can be probed by title the same
+  way the issue-id space is.
+- A series page lists ~20 of its issues as `/comics/issue/<id>/<slug>`, which is
+  exactly the `<id>/<slug>` fragment `MARVEL` stores. No second request, no
+  slug to reconstruct.
+- An **issue page links to its neighbours in the same series**, so one known
+  issue walks out to the whole run at about a request per issue — and unlike a
+  blind scan it cannot skip one.
+
+```bash
+python3 tools/series_harvest.py probe  2350:2650      # series id -> title
+python3 tools/series_harvest.py series 2400 2418      # series -> its issues
+python3 tools/series_harvest.py walk   immortal_hulk_2018:77345
+python3 tools/series_harvest.py write                 # -> marvel_ids.json
+```
+
+The first three append to `tools/series_links.json` and are resumable; `write`
+only adds slugs whose prefix is in `SLUG_PFX`, and prints the ones that are not
+rather than guessing. That is how Immortal Hulk (51 issues), Incredible Hulk
+(2000) (114) and Hulk (2021) (14) were resolved, in minutes rather than hours.
+
+Two things it will not do for you. **Series ids cluster by era but are not
+ordered**, so finding an unknown mini means probing a range near a known
+sibling — the 2007 World War Hulk tie-ins all sit in 2400–2600, which is how
+X-Men, Gamma Corps and World Breaker were found. And **a series page only shows
+the tail of a long run** (Hulk (2008) gives #38–57, and the walk stops at #30
+because marvel.com does not link further back), so pre-2008 material still needs
+the id scan below.
+
+**The id-scanning runbook still works, but marvel.com is much more aggressive
 about rate limiting than it was.** `-P 20` over ~500 ids succeeded once and then
 403'd everything for several minutes; `-P 5` with 2s pauses also tripped it. What
 does work is `tools/harvest.py` — small batches, 3 workers, and **403
@@ -440,9 +475,17 @@ because the numbers look wrong.
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
   `PLACEHOLDER_PAGES` in the meta module.
-- `marvel_ids.json` — id → marvel.com path fragment. `build_omnibus_data.py`
-  splices it in as `MARVEL`, so a harvest lands by regenerating, not by editing
-  the HTML.
+- `series_harvest.py` — the faster harvester: `probe` maps a range of series
+  ids to titles, `series` pulls a series page's issue list, `walk` follows an
+  issue's sibling links across a whole run, and `write` merges the result into
+  `marvel_ids.json` through its `SLUG_PFX` table. See "Harvest by series, not by
+  id range" above. Both heroes' shelves feed from the same store.
+- `series_links.json`, `series_titles.json` — what `series_harvest.py` has
+  banked: issue slug → marvel id, and series id → title. Resumable caches, so a
+  rerun costs nothing.
+- `marvel_ids.json` — id → marvel.com path fragment, **shared by both heroes**.
+  `build_omnibus_data.py` splices it in as `MARVEL`, so a harvest lands by
+  regenerating, not by editing the HTML.
 - `build_single_file.py` — composes every page into `comics-mobile.html` for
   artifact publishing, inlining cover images as data URIs on the way. It reads
   the shelf heroes out of `heroes.py`, so adding one needs no edit here. See
@@ -490,8 +533,9 @@ harvest. Roughly in order:
    Empty `OMNI`/`MARVEL` to `const OMNI = [\n];` and `const MARVEL = {\n};` so
    the generator has something to splice into. This is the one genuinely
    hand-made step — it is design, not plumbing.
-6. **Harvest Marvel ids** with `harvest.py` and merge into `marvel_ids.json`.
-   Expect this to be the slow part; see the rate-limiting notes above.
+6. **Harvest Marvel ids** with `series_harvest.py` (fall back to `harvest.py`
+   for pre-2008 runs) — the store is shared, so anything already in it lands
+   for free. Expect this to be the slow part; see the rate-limiting notes above.
 7. **Generate and publish**: `fetch_covers.py --hero <key>`,
    `build_omnibus_data.py --hero <key>` (in that order — fetch writes the
    `cover=` lines the generator reads), `build_single_file.py`, then flip the
@@ -583,6 +627,21 @@ Twelve volumes take the automatic per-series chapters. Five carry
 anthologies of tie-in minis and one-shots rather than month-by-month crossovers,
 so one chapter per mini is both shorter and more informative. World War Hulk
 lands at 16 chapters that read as the tie-in list it is.
+
+### Marvel deep links
+
+495 of 657 unique issues (75%) resolve to a real marvel.com issue page; the rest
+fall back to `marvel.com/search?query=` and a grey Read button, same convention
+as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
+Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
+Incredible Hulk annuals, and the World War Hulk core minis.
+
+Unresolved, largest first: **Hulk (2008) #1–29** (23 on the shelf — the biggest
+single gap and the one worth another pass), Rampaging Hulk (6), the three
+Maestro minis and Future Imperfect (2015) (5 each), Symbiote Spider-Man:
+Crossroads, New Fantastic Four, Heroes for Hire and Gamma Flight (5 each), and a
+long tail of one-shots and tie-ins at one to four apiece. Immortal Hulk #0 is
+missing too — marvel.com has no `immortal_hulk_2018_0`.
 
 ### Issue ids and the shared id store
 
@@ -781,9 +840,14 @@ a server-side store and is not built.
 4. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
    arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
    would be a genuine improvement — see "Chaptering".
-5. **The Straczynski volume has no Marvel deep links at all** — all 47 of its
-   Amazing Spider-Man (1999) issues fall back to search. The block is findable;
-   see "Marvel deep links" for where the sweeps got to.
+5. **The Straczynski volume has almost no Marvel deep links** — its Amazing
+   Spider-Man (1999) issues mostly fall back to search. Try
+   `series_harvest.py walk the_amazing_spider-man_1999:<any known id>` before
+   another id sweep; see "Harvest by series, not by id range".
+6. **Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf** (23 issues).
+   marvel.com's series page only reaches back to #38 and the sibling walk stops
+   at #30, so these need an id scan — #12 is at 24160, in a 2009 chronological
+   batch rather than a series block.
 
 ## Testing
 
