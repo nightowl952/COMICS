@@ -129,6 +129,33 @@ SLUG_PFX = {
  "heroes_reborn_the_return_1997": "hrret",
  "onslaught_marvel_universe_1996": "onsmu",
  "cutting_edge_1995": "cedge",
+ # Wolverine shelf. The 1988 ongoing and Marvel Comics Presents are the two
+ # big blocks; the rest are minis and event books. Entries for series not yet
+ # harvested are here on purpose -- an unmapped prefix is reported rather than
+ # guessed at, so pre-declaring them means a later harvest lands on `write`
+ # without another edit here.
+ "wolverine_1982": "wolv1",
+ "wolverine_1988": "wolv2",
+ "wolverine_2010": "wolv4",
+ "wolverine_2013": "wolv5",
+ "wolverine_2014": "wolv6",
+ "wolverine_2020": "wolv7",
+ "wolverine_weapon_x_2009": "wvwx",
+ "uncanny_x-force_2010": "uxf",
+ "wolverines_2015": "wvs",
+ "x-men_1991": "xm2",
+ "death_of_wolverine_2014": "dow",
+ "return_of_wolverine_2018": "row",
+ "hunt_for_wolverine_2018": "hfw",
+ "sabretooth_1993": "sab93",
+ "sabretooth_2022": "sab22",
+ "sabretooth_the_exiles_2024": "sabex",
+ "x-men_schism_2011": "schism",
+ "astonishing_spider-man_wolverine_2010": "aspw",
+ "wolverine_infinity_watch_2019": "wiw",
+ "kitty_pryde_and_wolverine_1984": "kpw",
+ "wolverine_manifest_destiny_2008": "wmd",
+ "punisher_war_journal_1988": "pwj",
  # Spider-Man shelf -- the id store is shared, so these land for free
  "the_amazing_spider-man_1963": "asm",
  "the_amazing_spider-man_1999": "asm2",

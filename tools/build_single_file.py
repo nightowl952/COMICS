@@ -432,7 +432,7 @@ if __name__ == "__main__":
     out = os.path.join(SRC, "comics-mobile.html")
     html = emit()
     if len(html) > ARTIFACT_LIMIT:
-        sys.exit(f"{len(html)/1e6:.1f} MB exceeds the {ARTIFACT_LIMIT/1e6:.0f} MB artifact "
+        sys.exit(f"{len(html)/1e6:.1f} MB exceeds the {ARTIFACT_LIMIT/1024**2:.0f} MB build "
                  f"limit.\nShrink the covers: python3 tools/covers.py audit")
     open(out, "w", encoding="utf-8").write(html)
     print(f"wrote {out}  ({len(html):,} bytes, {len(html)/1e6:.1f} MB)")

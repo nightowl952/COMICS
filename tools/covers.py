@@ -104,7 +104,9 @@ def audit():
     print("\n%d/%d volumes have a cover, %.1f MB of art" % (have, len(vols), total / 1e6))
     print("comics-mobile.html is %.1f MB now; page without art is %.1f MB"
           % (now / 1e6, base / 1e6))
-    print("with these covers inlined: ~%.1f MB (limit %.0f MB)" % (est / 1e6, BUDGET / 1e6))
+    # BUDGET is 16 MiB; printing it as /1e6 rendered it as "17 MB"
+    print("with these covers inlined: ~%.1f MB (limit %.0f MB)"
+          % (est / 1e6, BUDGET / 1024 ** 2))
 
     if have:
         per = total / have
@@ -114,7 +116,7 @@ def audit():
             print("\n!! projected build is too big. Re-run `covers.py add` on the\n"
                   "   volumes flagged !! above to shrink them to %dpx/q%d." % (WIDTH, QUALITY))
     if est > BUDGET:
-        sys.exit("\n!! already over the artifact limit -- shrink covers before publishing")
+        sys.exit("\n!! already over the build size limit -- shrink covers before publishing")
 
 
 def save_cover(im, vid, quiet=False):
