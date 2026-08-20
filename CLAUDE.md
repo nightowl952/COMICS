@@ -33,10 +33,12 @@ Keep replies short and plain. This is a hobby project, not a code review.
 
 - `index.html` — the C.O.M.I.C.S. homescreen. Poster grid, Continue Reading panel,
   per-subject dossier modal, filters.
-- `comics-mobile.html` — **generated, do not hand-edit.** All four pages
-  composed into one hash-routed file for publishing as a Claude Artifact
-  (artifacts are one file per URL). Rebuild with
-  `python3 tools/build_single_file.py` after changing any source page.
+- `comics-mobile.html` — **generated, do not hand-edit.** All five pages
+  composed into one hash-routed file. It was built for publishing as a Claude
+  Artifact (artifacts are one file per URL); that artifact is retired, and the
+  file now serves from GitHub Pages as the phone-friendly single-page view.
+  Rebuild with `python3 tools/build_single_file.py` after changing any source
+  page.
 - `xmen-reading-tracker.html` — the X-Men Messiah Saga protocol. A single curated
   chronological read, grouped into acts → chapters → issues.
 - `spiderman-reading-tracker.html` — the Spider-Man omnibus shelf. A different
@@ -51,8 +53,12 @@ Keep replies short and plain. This is a hobby project, not a code review.
   shelf carrying books that are not the title character's own — the Thing's solo
   omnibus and Doctor Doom's. Its `OMNI` array is generated from
   `tools/ff_meta.py`.
-- `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/` — cover scans, committed
-  so GitHub Pages can serve them and the mobile build can inline them.
+- `wolverine-reading-tracker.html` — the Wolverine omnibus shelf. Same shape and
+  tooling again (`--hero wolverine`); 14 volumes of Logan's own books. Its
+  `OMNI` array is generated from `tools/wolverine_meta.py`.
+- `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/` —
+  cover scans, committed so GitHub Pages can serve them and the mobile build
+  can inline them.
 
 No build step, no package.json, no dependencies, no server. Open either file
 directly in a browser.
@@ -67,11 +73,11 @@ There are two ways a hero's tracker can be organised. Pick per hero:
 
 - **Curated chronology** (X-Men) — one researched reading order through a single
   saga. Acts → chapters → issues, all on one page.
-- **Omnibus shelf** (Spider-Man, Hulk, Fantastic Four) — a poster shelf of
-  omnibus volumes, each reproducing exactly what the printed book collects, in
-  print order. Two views in one file, hash-routed (`#/omni/<id>`). Three heroes
-  use this shape; the whole pipeline behind it is hero-agnostic — see "Adding an
-  omnibus hero".
+- **Omnibus shelf** (Spider-Man, Hulk, Fantastic Four, Wolverine) — a poster
+  shelf of omnibus volumes, each reproducing exactly what the printed book
+  collects, in print order. Two views in one file, hash-routed (`#/omni/<id>`).
+  Four heroes use this shape; the whole pipeline behind it is hero-agnostic —
+  see "Adding an omnibus hero".
 
 ### A shelf holds books you can actually buy
 
@@ -373,13 +379,16 @@ regenerates — that is the follow-up command.
 `covers.py audit` prints what every volume has, flags oversized and low-res
 files, and projects the finished build size.
 
-**Size is a real constraint, not a nicety.** The artifact caps at 16MB, and
-`build_single_file.py` inlines every cover as a base64 data URI (see below for
-why it must). Base64 costs ~33% on top of the file, so full-resolution scans do
-not fit: the three original ASM scans average 1.1MB, and 18 of those would
-project to a ~26MB build. `covers.py add` re-encodes to 700px wide / JPEG q82
-(~150KB), which keeps all 18 near 4MB. The builder hard-fails past the limit
-rather than writing a file the artifact will reject.
+**Size used to be a hard constraint and is now only a habit.** The 16MB cap
+`build_single_file.py` enforces is the *artifact* limit, and the artifact was
+retired in Aug 2026 — GitHub Pages serves files up to 100MB. The cap and the
+`covers.py add` re-encode to 700px wide / JPEG q82 (~150KB) both stay for now,
+because four shelves of art at one size is worth more than one shelf at a
+sharper one, and because a 10MB single-file page is already slow enough on a
+phone. But a genuinely better scan can be dropped in without worrying about the
+budget. For the record of why the number was picked: base64 costs ~33% on top of
+the file, the three original ASM scans average 1.1MB, and 18 of those would have
+projected to a ~26MB build against a 16MB ceiling.
 
 Everything is named `Art/Spider-Man/<volume-id>.jpg` — the original
 `The Amazing Spider-Man Vol1.png` style names are gone (git history still has
@@ -393,15 +402,18 @@ small, so refetching will not improve them. They look fine on a standard
 display and soft on a retina tile or in the detail banner. `covers.py audit`
 marks them `soft`. A better scan dropped in via `covers.py add` is the fix.
 
-**Why the mobile build inlines them.** A relative `src="Art/..."` resolves fine
-on GitHub Pages and over `file://`, but the artifact has no sibling files *and*
-its CSP blocks the request outright, so the tile renders empty — and because
-`artHTML()` returns the image instead of the ramp, there is no CSS fallback
-underneath. Inlining is the only form that works on all three surfaces at once.
+**Why the mobile build inlines them, and why it no longer needs to.** A relative
+`src="Art/..."` resolves fine on GitHub Pages and over `file://`. The artifact
+was the exception — no sibling files, and a CSP that blocked the request, so the
+tile rendered empty with no CSS fallback underneath (`artHTML()` returns the
+image *instead of* the ramp). Inlining was the only form that worked everywhere
+at once. With the artifact retired both remaining surfaces resolve the path, so
+the inlining is now pure cost: it is what makes `comics-mobile.html` 10MB rather
+than about 1MB. Open item 10.
 
 ### Marvel deep links
 
-443 of 564 unique issues (79%) resolve to a real marvel.com issue page. The rest
+447 of 564 unique issues (79%) resolve to a real marvel.com issue page. The rest
 fall back to a `marvel.com/search?query=` URL and render a grey Read button —
 same convention as the X-Men tracker.
 
@@ -492,6 +504,31 @@ drifts too: series `world_war_hulk_xmen_2007` holds issues named
 `world_war_hulk_x-men_2007_N`, which is why the issue filter groups by slug stem
 rather than matching the series slug.
 
+### Start with a web search, not with a probe
+
+**An external web search restricted to `marvel.com` hands back
+`/comics/series/<id>/<slug>` and `/comics/issue/<id>/<slug>` URLs verbatim** —
+which is the id you were about to spend several hundred requests hunting for.
+This is emphatically *not* the same thing as marvel.com's own `/search?query=`,
+which is client-rendered and useless (below); it is that a search engine has
+already crawled those pages and indexes the canonical URL.
+
+So the cheap order of operations for any series you can name is:
+
+1. Web-search `marvel.com "comics/series" "<title> <year>"` → the series id.
+2. `series_harvest.py series <id>` → ~20 issues, and a walk seed.
+3. `series_harvest.py walk <slug_prefix>:<seed>` → the rest of the run.
+
+That resolved the Wolverine shelf's last nine series in about a minute each,
+*after* a series-id probe across 1800–3400 and exhaustive issue scans of
+30000–31500 had all missed them. Uncanny X-Force (2010) turned out to be series
+**9976**, issue #1 at id **32573** — the series id an order of magnitude outside
+anything previously probed, and the issue id above every range swept. No amount
+of striding would have found it in reasonable time.
+
+`probe` and `scan` are what remains for material a search cannot name: an
+unknown mini, or pre-2008 runs whose pages are thinly indexed.
+
 Three routes that look promising and are not, so nobody re-walks them:
 `www.marvel.com/sitemap.xml` exists and resolves but carries **no**
 `/comics/issue/` URLs; `/search?query=…` is client-rendered and returns no
@@ -539,15 +576,16 @@ because the numbers look wrong.
   `python3 tools/harvest.py 6440:6960:asm 14500:14820:spectacular` probes those
   id ranges and appends to `tools/marvel_ids.json`. Resumable: already-probed ids
   are skipped, so rerunning after a block costs nothing.
-- `omnibus_contents_raw.json`, `hulk_contents_raw.json`, `ff_contents_raw.json` — the raw ReprintOf
-  lists pulled from the Marvel Database, one entry per omnibus, one file per
-  hero. Regenerate only if a volume's contents change.
+- `omnibus_contents_raw.json`, `hulk_contents_raw.json`, `ff_contents_raw.json`,
+  `wolverine_contents_raw.json` — the raw ReprintOf lists pulled from the Marvel
+  Database, one entry per omnibus, one file per hero. Regenerate only if a
+  volume's contents change.
 - `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
   its tracker filename, art directory, metadata module, panel key and route.
   Every other tool takes `--hero <key>` (default `spider-man`) and reads its
   paths from here. `python3 tools/heroes.py` lists what is registered.
 - `omnibus_meta.py` (Spider-Man), `hulk_meta.py` (Hulk), `ff_meta.py` (Fantastic
-  Four) — the hand-written half,
+  Four), `wolverine_meta.py` (Wolverine) — the hand-written half,
   and **the only place shelf metadata should be edited**: `ORDER` (wiki-backed
   volumes; each key must exist in that hero's raw-contents file or `gen()`
   KeyErrors), `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF`
@@ -567,7 +605,9 @@ because the numbers look wrong.
 - `covers.py` — cover art pipeline. `add <volume-id> <image>` optimises a scan
   to 700px/q82 and prints the line to paste into `omnibus_meta.py`; `audit`
   reports every volume's cover and projects the finished mobile-build size
-  against the 16MB artifact limit. Needs Pillow (`pip install Pillow`).
+  against the 16MB limit the builder still enforces (an artifact limit that no
+  longer binds — see "The Claude Artifact is retired"). Needs Pillow
+  (`pip install Pillow`).
 - `fetch_covers.py` — pulls cover art from the Marvel Database and writes the
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
@@ -585,8 +625,8 @@ because the numbers look wrong.
 - `marvel_ids.json` — id → marvel.com path fragment, **shared by all three heroes**.
   `build_omnibus_data.py` splices it in as `MARVEL`, so a harvest lands by
   regenerating, not by editing the HTML.
-- `build_single_file.py` — composes every page into `comics-mobile.html` for
-  artifact publishing, inlining cover images as data URIs on the way. It reads
+- `build_single_file.py` — composes every page into `comics-mobile.html`,
+  inlining cover images as data URIs on the way. It reads
   the shelf heroes out of `heroes.py`, so adding one needs no edit here. See
   "The mobile build" below.
 
@@ -633,6 +673,22 @@ harvest. Roughly in order:
    Empty `OMNI`/`MARVEL` to `const OMNI = [\n];` and `const MARVEL = {\n};` so
    the generator has something to splice into. This is the one genuinely
    hand-made step — it is design, not plumbing.
+
+   Four things are easy to miss, all found the hard way on the Wolverine page:
+
+   - **`SPINE_C` must use single quotes.** `check_spine_colors()` matches
+     `'([\w-]+)':\s*\[`, so a double-quoted table parses as *zero* entries and
+     the build stops with "no SPINE_C entry for [every ramp]".
+   - **The `.x-emblem` orb is CSS, not part of the glyph SVG.** Swapping the
+     inline `<svg>` leaves the previous hero's coloured orb behind it — the
+     Wolverine page shipped claws on a Hulk-green disc until it was spotted in a
+     screenshot. Its `radial-gradient` and the `drop-shadow` on `.x-emblem svg`
+     both want the new palette.
+   - **The glyph mints a fresh gradient id per call.** Keep the
+     `split("GID").join("<pfx>"+(++gid))` mechanism and give it a new prefix;
+     reusing one id makes every later copy inherit the first one's fill.
+   - **Leave `.o-placeholder` alone** — the build checks it like any other ramp,
+     and a shelf that later gains a placeholder volume needs it.
 6. **Harvest Marvel ids** with `series_harvest.py` (fall back to `harvest.py`
    for pre-2008 runs) — the store is shared, so anything already in it lands
    for free. Expect this to be the slow part; see the rate-limiting notes above.
@@ -744,7 +800,7 @@ lands at 16 chapters that read as the tie-in list it is.
 
 ### Marvel deep links
 
-499 of 657 unique issues (76%) resolve to a real marvel.com issue page; the rest
+506 of 657 unique issues (77%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
 Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
@@ -901,7 +957,186 @@ Two things this shelf's harvest taught that the earlier ones did not:
 - **Do not run two `series_harvest.py` commands against the store at once.**
   Neither process re-reads `series_links.json` mid-run, so the one that finishes
   last silently clobbers the other's entries. That cost a re-run of two series
-  here before it was spotted.
+  on the FF shelf, and it happened again on the Wolverine shelf when a long
+  background `scan` overlapped a `series` pull. **The symptom is that the second
+  command reports issues found and the store then contains none of them** — it
+  looks like the command silently failed, not like a race. Check with
+  `pgrep -f series_harvest` before starting anything, and if you delegate a
+  harvest, make sequential-only the loudest line in the brief.
+
+## The Wolverine tracker (omnibus shelf)
+
+Same code as the other three shelf pages, same tooling, different data: 14
+volumes, 636 issue slots, 635 unique issues, all 14 with contents and cover art.
+No placeholders, and nothing unreleased. `tools/wolverine_meta.py` is the
+hand-written half; run everything with `--hero wolverine`.
+
+### Scope call — Logan's own books
+
+The wiki lists twenty Wolverine-family omnibuses (plus a prose-novel collection
+also called Wolverine: Weapon X Omnibus, which is not comics). Fourteen are on
+the shelf: Wolverine Omnibus Vol. 1–6 (the mainline chronology, 1974–1997), Not Dead Yet
+(which continues it to 2001), then by Mark Millar, by Jason Aaron, Goes to Hell,
+Uncanny X-Force by Rick Remender, Death of Wolverine, Return of Wolverine and
+Sabretooth War.
+
+**Uncanny X-Force is on the shelf because the user asked for it by name.** It is
+a team book, but Wolverine's team, and it is the book people mean when they ask
+about the X-Force with Wolverine in it. Note the thing that is *not* here:
+**the 2008 Kyle & Yost X-Force has no omnibus.** The only `X-Force Omnibus` the
+wiki carries is the 1991 Liefeld run (New Mutants #98 plus X-Force Vol. 1), which
+is neither Logan's book nor the 2008 one, and is off the shelf for the same
+reason Marvel Team-Up is off the Spider-Man shelf.
+
+Deliberately off, every one of these the user's call:
+
+- **Weapon X: The Return** — Wolverine appears in 9 of its 53 issues; the rest is
+  the Weapon X programme's ensemble series. The same reasoning that keeps
+  She-Hulk off the Hulk shelf.
+- **Wolverine & the X-Men by Jason Aaron** — an X-Men team book, unlike Uncanny
+  X-Force, which is Logan's own strike team.
+- **All-New Wolverine** and **X-23** — Laura Kinney is a different character.
+
+Off by the "a shelf holds books you can actually buy" rule: **Wolverine: Old Man
+Logan Omnibus** (solicited December 2026) and **Wolverine: The Return of Weapon X
+Omnibus** (solicited June 2027). Both keep their entries in
+`wolverine_contents_raw.json`, so re-adding either when it ships is a
+`wolverine_meta.py` edit and a regenerate rather than a fresh wiki pull. Millar's
+volume already collects the original Old Man Logan story, so only the 2016–2018
+ongoing is actually missing.
+
+`SHELF` is a reading order, which here runs close to publication order. Two
+placements are deliberate: **millar-o1 sits before aaron-o1** even though Old Man
+Logan (2008) overlaps Aaron's start, because Millar's book is one creator's
+complete run and reads as a unit; and **hell-o1 sits before xforce-o1** because
+Wolverine's own title is the spine of that moment.
+
+**There is one real gap in the shelf, and it is Marvel's, not ours.** Wolverine
+(1988) #159–189 has not been collected in omnibus, so `ndy-o1` ends at #158 in
+2001 and `millar-o1` opens at Wolverine (2003) #20 in 2004. The Return of Weapon X
+Omnibus closes it in June 2027. One issue escapes the gap: **#175**, the
+anniversary issue, is in the Jason Aaron volume, so the shelf's actual holes are
+#159–174 and #176–189. The note on `ndy-o1` says so on the page. Same shape as
+the Hulk shelf's #210–327 gap and the FF shelf's #296–488 one.
+
+**And there is one wiki omission, exactly like Fantastic Four #171.** The Marvel
+Database's page for Wolverine Omnibus Vol. 3 does not list **Wolverine #55**
+anywhere — not in the ReprintOf fields, not in the rendered gallery — though
+#54 and #56 are both there. The shelf reflects what the wiki says, so that
+volume's chapter honestly reads `Wolverine #51–54, #56–59`. Issue pages carry no
+reverse "reprinted in" link, so there is no second source inside the wiki to
+check it against. Almost certainly a wiki omission rather than a book that skips
+one issue mid-run; `wolv-o3` is the volume to fix if a better source turns up.
+
+### Contents, and three data hazards this shelf hit
+
+Pulled the same way as the other three shelves (the `ReprintOf<N>` MediaWiki call
+above), into `tools/wolverine_contents_raw.json`. **ReprintOf order matched the
+rendered gallery order on all 16 volumes**, so unlike `inc-o1` on the Hulk shelf
+nothing needed reordering by hand.
+
+Note that Wolverine Omnibus Vol. 1 genuinely **opens on Weapon X**, not on his
+first appearance — Marvel Comics Presents #72–84 comes first and the book then
+goes back to Incredible Hulk #180. Both sources agree, and it is not the
+group-by-series hazard: Marvel Comics Presents appears in two separate runs in
+that volume (#72–84, then #1–10), which a grouped list would never do.
+
+Three entry shapes had to be repaired, and all three break the same thing — the
+pipeline splits an issue title on its **last space** to get `<series>` and
+`<issue>`, so anything else silently drops out of the shelf:
+
+- **A doubled internal space.** `Havok and Wolverine - Meltdown Vol 1  1` in
+  Vol. 2. Every entry is whitespace-collapsed now.
+- **Subtitles after the issue number.** `Marvel Graphic Novel Vol 1 65: Wolverine:
+  Bloodlust` and two others, exactly as on the FF shelf. Truncated at the first
+  colon after the issue number.
+- **Short-form entries.** `Uncanny X-Force #5.1` and `#19.1` instead of
+  `Uncanny X-Force Vol 1 5.1` — the Hulk shelf's short-form problem again, but
+  here only for two point-issues, and resolvable from the 35 long-form siblings
+  in the same volume.
+
+If any volume is ever re-pulled, re-apply all three.
+
+One entry is deliberately non-ASCII: `Wolverine Vol 2 ½`. That is the printed
+issue number, and the Spider-Man shelf already carries `Ultimate Spider-Man Vol 1
+½`. Pure ASCII is a `comics-mobile.html` build-time constraint, not a
+raw-contents one — the builder escapes it.
+
+### Chaptering
+
+Eleven volumes take the automatic per-series chapters. Three carry
+`chapterby="series"` because the average-run-length heuristic would have chunked
+them into "Part N": `wolv-o5` (3.4), `wolv-o6` (3.1) and `return-o1` (3.05). All
+three are ongoing runs with a long tail of one-shots and minis after them rather
+than month-by-month crossovers — the same reason five Hulk volumes carry the
+override. `return-o1` is the clearest case: as one chapter per mini it reads as
+the Hunt for Wolverine tie-in list it actually is.
+
+Two volumes come out as one long non-contiguous span, and both are correct:
+`millar-o1` renders Wolverine (2003) `#20–32, #66–72` and `hell-o1` renders
+Wolverine (2010) `#1–20, #300–304` across the renumbering. `spanlabel()` is doing
+its job — the Straczynski volume on the Spider-Man shelf has the same shape.
+
+### Issue ids and the one overlap
+
+Exactly one issue slot overlaps between volumes: **Wolverine: Road to Hell #1**,
+the prologue that both Goes to Hell and Uncanny X-Force collect. It shares its id
+across both on purpose, as on every other shelf, and the UI flags it with the
+gold "in 2 omnibuses" pill. That is why the shelf reports 636 slots and 635
+unique issues.
+
+### Marvel deep links
+
+471 of 635 unique issues (74%) resolve to a real marvel.com issue page; the rest
+fall back to `marvel.com/search?query=` and a grey Read button, same convention
+as the other three trackers. Complete or near-complete: Wolverine (1988) all 189
+issues, Marvel Comics Presents all 175, Wolverine (2003), Wolverine (2010),
+Wolverine: Weapon X, Uncanny X-Force, Wolverines, Wolverine (2013)/(2014)/(2020),
+X-Men: Schism and Wolverine: Infinity Watch.
+
+Two harvests did most of the work and are worth knowing about:
+
+- **The two big pre-2008 blocks fell to one `scan` each**, because a
+  middle-regime block is exactly issue-count long. Wolverine (1988) is 189
+  issues at **14036–14224** and Marvel Comics Presents (1988) is 175 at
+  **10010–10184**; both were derived in closed form from four already-known ids
+  plus the lexicographic ordering, then confirmed by a single sweep with no
+  gaps.
+- **Everything modern fell to a web search**, after probing and scanning had
+  both failed — see "Start with a web search, not with a probe". Nine series ids
+  came back in a couple of minutes: Uncanny X-Force **9976**, Wolverines (2015)
+  **19794**, Wolverine (2013) **17615**, Wolverine (2014) **18517**, Wolverine
+  (2020) **28051**, Death of Wolverine (2014) **19073**, Return of Wolverine
+  (2018) **25582**, X-Men: Schism **13880**, Wolverine: Infinity Watch
+  **26369**. That took the shelf from 56% to 74% in one pass.
+
+What is left is a long tail, not a block: the largest single gap is Death of
+Wolverine: The Logan Legacy at 7 issues, then Kitty Pryde and Wolverine (6),
+X-Men (1991) (5), The Weapon X Program (5), both Sabretooth minis (5 each), and
+**59 series at one or two issues apiece** — mostly nineties one-shots
+(Wolverine/Gambit: Victims, Inner Fury, Killing, Global Jeopardy, Doombringer)
+and the Hunt for Wolverine minis. Each needs its own lookup, so this is
+grind rather than technique.
+
+One thing the harvest fixed on the way past: `hulk08-30` had pointed at Hulk
+(2008) **#30.1** rather than #30. A `scan` self-identifies a page's own slug, so
+it corrected the entry. Worth remembering that a harvest can *change* an
+existing link, not only add one — and that a point-issue is the likely reason.
+
+### A hero only sees the shared table plus its own SERIES_EXTRA
+
+`gen()` merges `SERIES` with the hero module's own `SERIES_EXTRA` and nothing
+else, so a series that another shelf already maps is **not** available here — it
+has to be repeated in this module, with **exactly the same short code**, because
+the marvel.com id store is shared and the same series must key the same way
+everywhere. Eight entries at the foot of `wolverine_meta.py` do this
+(`Wolverine Vol 3`, `Uncanny X-Men Vol 1`, `Marvel Graphic Novel Vol 1`,
+`Marvel Fanfare Vol 1`, `Marvel Holiday Special Vol 1`, `Cable Vol 1`,
+`Hulk Vol 1`, `Avengers Vol 7`).
+
+The failure mode is loud but easy to misread: the build prints `!! UNMAPPED` for
+every affected issue and the shelf silently comes out short — 597 slots instead
+of 636, on the first run here.
 
 ## The X-Men tracker
 
@@ -1027,7 +1262,8 @@ Non-obvious placements that are deliberate, not mistakes:
 modified — everything below is done at build time.
 
 Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`, `#/hulk`,
-`#/hulk/omni/<id>`, `#/fantastic-four`, `#/fantastic-four/omni/<id>`.
+`#/hulk/omni/<id>`, `#/fantastic-four`, `#/fantastic-four/omni/<id>`,
+`#/wolverine`, `#/wolverine/omni/<id>`.
 
 **The builder is registry-driven, not hardcoded.** `_apps()` reads the shelf
 heroes out of `heroes.py`; the panel list, the cross-page link rewrites, the
@@ -1063,7 +1299,22 @@ no edit here — register it in `heroes.py` and rebuild.
 - **Top-level JS names collide wholesale** (`SC`, `MARVEL`, `store`, `refresh`,
   `flat`, `esc`…). Each script is wrapped in an IIFE, so nothing leaks.
 
-### Four artifact-environment constraints, each already handled
+### Four artifact-environment constraints — now vestigial
+
+**The artifact was retired in Aug 2026** (see "The Claude Artifact is retired"
+below). All four workarounds below are still applied on every build, because
+nothing has been removed yet. Two of them are merely unnecessary now; two of
+them actively cost something on GitHub Pages, which is the only surface left:
+
+- **#2 is the expensive one.** Live per-issue summaries work fine from Pages —
+  there is no CSP there — but the builder still forces the "no key" path on all
+  four trackers, so the mobile page ships a feature it disables for no reason.
+- **#4 is the other one.** `src="Art/…"` resolves perfectly from Pages, so
+  inlining every cover as a base64 data URI is what makes `comics-mobile.html`
+  10MB instead of about 1MB, for no benefit.
+
+Undoing both is open item 10. Until someone does, the four still read as
+written:
 
 1. **No `<meta charset>`** — the Artifact wrapper owns `<head>`, so the page is
    emitted as **pure ASCII** (entities in HTML, `\uXXXX` in JS, `\XXXX ` in CSS).
@@ -1097,30 +1348,33 @@ no edit here — register it in `heroes.py` and rebuild.
 
 ### Progress does not sync
 
-`localStorage` is per-origin **and per-device**. The artifact, GitHub Pages and
-the local `file://` copies each keep their own progress; nothing syncs between
-phone and laptop. Export/import JSON is the manual bridge. Real sync would need
+`localStorage` is per-origin **and per-device**. GitHub Pages and the local
+`file://` copies each keep their own progress; nothing syncs between phone and
+laptop. Export/import JSON is the manual bridge. Real sync would need
 a server-side store and is not built.
 
 ## Open items — C.O.M.I.C.S.
 
-1. **Three of seven subjects have no reading list yet** (Wolverine, Moon Knight,
-   Daredevil). Their `desc` text in `HEROES` sketches the intended shape of each
-   list but nothing is researched or verified yet — treat it as a starting brief,
-   not a plan.
+1. **Two of seven subjects have no reading list yet** (Moon Knight, Daredevil).
+   Their `desc` text in `HEROES` sketches the intended shape of each list but
+   nothing is researched or verified yet — treat it as a starting brief, not a
+   plan.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Twenty covers are low-res** (~325–400px wide) because that is all the
+3. **Twenty-two covers are low-res** (~325–450px wide) because that is all the
    Marvel Database stores — six on the Spider-Man shelf, six on the Hulk shelf,
-   eight on the Fantastic Four shelf; see "Cover art". Replacing them needs a
-   scan from somewhere else; everything else is 600–700px.
-4. **Fantastic Four #171 is missing from the shelf's data**, because the Marvel
-   Database's page for Fantastic Four Omnibus Vol. 6 does not list it in either
-   the ReprintOf fields or the rendered gallery, and issue pages carry no
-   reverse "reprinted in" link to check against. It is very likely a wiki
-   omission rather than a book that skips one issue mid-run — see "The Fantastic
-   Four tracker".
+   eight on the Fantastic Four shelf, and two on the Wolverine shelf
+   (`aaron-o1`, `xforce-o1`); see "Cover art". Replacing them needs a scan from
+   somewhere else; everything else is 600–700px. Now that the artifact is
+   retired there is no size budget arguing against a big scan.
+4. **Two issues are missing from shelf data because the wiki omits them.**
+   Fantastic Four #171 (from Fantastic Four Omnibus Vol. 6) and Wolverine #55
+   (from Wolverine Omnibus Vol. 3) appear in neither the ReprintOf fields nor
+   the rendered gallery of their volume's page, though the issues either side of
+   them do. Issue pages carry no reverse "reprinted in" link to check against.
+   Both are very likely wiki omissions rather than books that skip one issue
+   mid-run — see "The Fantastic Four tracker" and "The Wolverine tracker".
 5. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
    arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
    would be a genuine improvement — see "Chaptering".
@@ -1143,6 +1397,20 @@ a server-side store and is not built.
    Its marvel.com ids are not one contiguous block, and ids that search engines
    still index for the missing range 404 live, so the material may have been
    pulled. Everything else on that shelf is at 86%.
+10. **`build_single_file.py` still applies all four artifact workarounds to a
+    page that is no longer published as an artifact.** Two of them now cost
+    something on GitHub Pages: it disables the live summary lookups (which work
+    fine there — that is patch #2 plus the `if(!IN_CLAUDE)` rewrite and the
+    hidden homescreen gear), and it inlines every cover as a base64 data URI,
+    which is what makes `comics-mobile.html` 10MB instead of about 1MB. Undoing
+    both is a contained change in `patch_app()` / `inline_art()`, and it would
+    make the mobile page both smaller and more capable. The ASCII-only pass and
+    the `__COMICS_SAVE` download rewire are harmless and can stay. See "The
+    mobile build".
+11. **The Wolverine shelf has the weakest Marvel deep links of the four.**
+    See "The Wolverine tracker" for what is missing and what has already been
+    tried; Uncanny X-Force is the single biggest block and the one worth another
+    pass.
 
 ## Testing
 
@@ -1163,11 +1431,13 @@ node --check /tmp/v.js
 python3 tools/build_omnibus_data.py --check
 python3 tools/build_omnibus_data.py --check --hero hulk
 python3 tools/build_omnibus_data.py --check --hero fantastic-four
+python3 tools/build_omnibus_data.py --check --hero wolverine
 
 # Cover art budget
 python3 tools/covers.py audit
 python3 tools/covers.py audit --hero hulk
 python3 tools/covers.py audit --hero fantastic-four
+python3 tools/covers.py audit --hero wolverine
 
 # The mobile build must stay pure ASCII
 python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"   # 0
@@ -1179,6 +1449,7 @@ python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"  
 The Spider-Man shelf currently reports **16 volumes / 567 issue slots / 564
 unique issues**; the Hulk shelf **17 volumes / 663 issue slots / 657 unique
 issues**; the Fantastic Four shelf **18 volumes / 685 issue slots / 660 unique
+issues**; the Wolverine shelf **14 volumes / 636 issue slots / 635 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
 
@@ -1200,45 +1471,40 @@ folder on one machine as the real project.
 Then publish — a push alone changes nothing anyone can see. See "Seeing a
 change" below.
 
-`comics-mobile.html` is generated but **is committed** — GitHub Pages and the
-Claude Artifact both serve it, and neither runs a build step. A commit that
-changes `index.html`, `xmen-reading-tracker.html` or
-`spiderman-reading-tracker.html` without a matching rebuild ships a stale mobile
-page. Rebuild in the same commit.
+`comics-mobile.html` is generated but **is committed** — GitHub Pages serves it
+and does not run a build step. A commit that changes `index.html` or any tracker
+page without a matching rebuild ships a stale mobile page. Rebuild in the same
+commit.
 
-### Three published surfaces, three separate progress stores
+### Two published surfaces, two separate progress stores
 
 | Surface | URL | Progress lives in |
 |---|---|---|
 | GitHub Pages | `https://nightowl952.github.io/COMICS/` | that origin's `localStorage` |
-| Claude Artifact | the artifact link | artifact `window.storage` |
 | Local `file://` | the clone | that browser's `localStorage` |
 
 They do not sync — see "Progress does not sync". Export/import JSON is the
-bridge. Publishing a new version of either surface does not disturb progress
-already saved there, because progress is never in the HTML.
+bridge. Publishing a new version does not disturb progress already saved there,
+because progress is never in the HTML.
 
-**Cross-device sync is wanted and not built.** Note the asymmetry before
-designing it: the artifact runs under a CSP that blocks *all* external requests,
-so no artifact-side code can ever reach a sync store. GitHub Pages has no such
-restriction. So the two surfaces cannot share one mechanism — the realistic
-shape is a store reachable from Pages (a private Gist keyed by a token the user
-pastes in, mirroring the existing `comics-anthropic-key` pattern), with the
-artifact staying export/import-only. The artifact `artifact` capability is not
-the answer: its live-doc arm only persists DOM inside a marked region, and both
-trackers render their issue rows from JS data, which it does not save.
+**Cross-device sync is wanted and not built.** Retiring the artifact made it
+easier rather than harder: Pages puts no restriction on outbound requests, so
+the realistic shape is now the only shape — a store reachable from the page (a
+private Gist keyed by a token the user pastes in, mirroring the existing
+`comics-anthropic-key` pattern). What made this awkward before was the
+artifact, which blocked *every* external request and so could never have shared
+one mechanism with Pages.
 
 ### Seeing a change — nothing publishes itself
 
-**No surface updates from a `git push`.** Merging to `main` updates Pages only;
-the artifact updates only when someone republishes it. Both are separate,
-explicit steps after the commit lands, and forgetting one is the single most
-common way a change looks "broken" when it is merely unpublished.
+**No surface updates from a `git push`.** Merging to `main` updates Pages, and
+since the artifact was retired that is the only publishing step there is.
+Forgetting it is still the most common way a change looks "broken" when it is
+merely unpublished.
 
 | To see it on | Do this | Lag |
 |---|---|---|
 | GitHub Pages | merge to `main` | ~1 min, then hard-refresh |
-| Claude Artifact | republish `comics-mobile.html` to the URL below | immediate |
 | Local | `python3 -m http.server`, not `file://` | — |
 
 Pages serves the repo root of `main`, so a change sitting on a branch — even a
@@ -1256,14 +1522,31 @@ cache these pages hard, so hard-refresh before believing a stale render.
 `Art/` is committed, so cover images serve from Pages at their relative path —
 spaces in filenames get URL-encoded by the browser and work fine.
 
-### Updating the artifact
+### The Claude Artifact is retired (Aug 2026)
 
-The artifact is **https://claude.ai/code/artifact/a339fcf9-afeb-413c-880c-a4b1aa6b0f81**.
+The site was also published as a Claude Artifact
+(`https://claude.ai/code/artifact/a339fcf9-afeb-413c-880c-a4b1aa6b0f81`) until
+August 2026. **It is no longer maintained — do not republish it.** GitHub Pages
+is the published surface.
 
-Republish `comics-mobile.html` **to that URL** (pass the existing
-URL, don't create a second artifact) with `capabilities: {downloads: true}` —
-without that capability the Back up button silently does nothing.
+The URL is kept here only so a future session recognises it instead of treating
+it as a surface that has silently fallen behind. Anyone still holding that link
+is looking at a frozen copy with three shelves and no Wolverine.
 
-Rebuild before republishing (`python3 tools/build_single_file.py`) or you ship
-whatever was last generated. The builder refuses to write past 16MB; if it
-does, run `python3 tools/covers.py audit` — it is almost certainly cover art.
+What retiring it changes, and what it does not:
+
+- **The 16MB ceiling is gone.** That was an artifact limit, never a GitHub one —
+  Pages serves individual files up to 100MB and a site up to 1GB, and this repo
+  is 19MB in total. Cover art no longer has to be squeezed to fit. `covers.py
+  add` still re-encodes to 700px/q82, because consistency across four shelves is
+  worth more than sharpness on one, but that is now a choice rather than a
+  constraint, and a better scan can simply be dropped in.
+- **Relative image paths would now work.** `Art/…` resolves fine from Pages;
+  inlining covers as data URIs is what makes the mobile build 10MB, and it is
+  no longer necessary.
+- **`build_single_file.py` still applies all four artifact workarounds**, and
+  two of them now cost something rather than nothing — the live summary lookups
+  it disables would work on Pages. See "The mobile build" below. Undoing them is
+  a real improvement and has not been done; it is open item 10.
+- **Nothing else.** `comics-mobile.html` is still generated and still committed.
+  It reads well on a phone straight from Pages, which is what it was for.

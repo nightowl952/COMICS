@@ -13,17 +13,24 @@ works opened straight off disk.
 |---|---|
 | `index.html` | The homescreen. Poster wall of subjects, Continue Reading, per-subject dossiers. |
 | `xmen-reading-tracker.html` | X-Men: the Messiah Saga. 174 issues, 27 arcs, 6 acts, in researched chronological order. |
-| `spiderman-reading-tracker.html` | Spider-Man: an 18-volume omnibus shelf, each volume opening into what the printed book actually collects. |
-| `comics-mobile.html` | Generated. All three pages composed into one hash-routed file for publishing. **Do not hand-edit.** |
+| `spiderman-reading-tracker.html` | Spider-Man: a 16-volume omnibus shelf, each volume opening into what the printed book actually collects. |
+| `hulk-reading-tracker.html` | Hulk: 17 mainline Bruce Banner omnibuses, same shape. |
+| `fantasticfour-reading-tracker.html` | Fantastic Four: 18 omnibuses, plus the Thing's solo book and Doctor Doom's. |
+| `wolverine-reading-tracker.html` | Wolverine: 14 omnibuses of Logan's own books, including Uncanny X-Force. |
+| `comics-mobile.html` | Generated. All five pages composed into one hash-routed file. **Do not hand-edit.** |
 | `tools/` | The generators and the marvel.com ID harvester. |
 | `CLAUDE.md` | The full working notes — architecture, data provenance, every constraint already learned the hard way. Read this before changing anything. |
 
 ## Where it lives
 
 - **Live:** <https://nightowl952.github.io/COMICS/>
-- **Claude artifact:** a single-file mobile build, published from `comics-mobile.html`
 
-Each surface keeps its own reading progress — see "Progress" below.
+`comics-mobile.html` is served from there too, as a phone-friendly single-page
+version of the whole site. It was previously also published as a Claude
+Artifact; that is retired as of August 2026 and is no longer updated.
+
+A local copy keeps its own reading progress, separate from the live site — see
+"Progress" below.
 
 ## Running it
 
@@ -43,15 +50,15 @@ python3 -m http.server
 python3 tools/build_single_file.py
 ```
 
-Run that after editing any of the three source pages, and commit the regenerated
-`comics-mobile.html` alongside them — the published copies don't run a build.
+Run that after editing any of the five source pages, and commit the regenerated
+`comics-mobile.html` alongside it — GitHub Pages doesn't run a build.
 
 ## Progress
 
 Progress is stored per-browser in `localStorage`, never in the HTML. Copying a
-file to another machine does not carry your progress with it; each published
-surface (Pages, the Claude artifact, a local copy) keeps its own. Use the
-Back up / restore JSON buttons to move between them.
+file to another machine does not carry your progress with it; the live site and
+a local copy each keep their own. Use the Back up / restore JSON buttons to move
+between them.
 
 Automatic cross-device sync is not built yet — see the sync notes in
 `CLAUDE.md`.

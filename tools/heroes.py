@@ -43,6 +43,20 @@ HEROES = {
         pfx     = "hk",
         route   = "/hulk",
     ),
+    "wolverine": dict(
+        name    = "Wolverine",
+        tracker = "wolverine-reading-tracker.html",
+        art     = os.path.join("Art", "Wolverine"),
+        meta    = "wolverine_meta",
+        raw     = "wolverine_contents_raw.json",
+        # the same shared store again -- this shelf collects Incredible Hulk,
+        # Marvel Comics Presents, Fantastic Four and Uncanny X-Men issues the
+        # other three shelves already reach for.
+        ids     = "marvel_ids.json",
+        panel   = "wolv",
+        pfx     = "wv",
+        route   = "/wolverine",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",
