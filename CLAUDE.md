@@ -383,7 +383,7 @@ underneath. Inlining is the only form that works on all three surfaces at once.
 
 ### Marvel deep links
 
-434 of 564 unique issues (77%) resolve to a real marvel.com issue page. The rest
+443 of 564 unique issues (79%) resolve to a real marvel.com issue page. The rest
 fall back to a `marvel.com/search?query=` URL and render a grey Read button —
 same convention as the X-Men tracker.
 
@@ -726,7 +726,7 @@ lands at 16 chapters that read as the tie-in list it is.
 
 ### Marvel deep links
 
-495 of 657 unique issues (75%) resolve to a real marvel.com issue page; the rest
+499 of 657 unique issues (76%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
 Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
@@ -848,15 +848,39 @@ them with the gold "in N omnibuses" pill.
 
 ### Marvel deep links
 
-291 of 687 unique issues (42%) resolve to a real marvel.com issue page; the
-rest fall back to `marvel.com/search?query=` and a grey Read button, same
-convention as the other two trackers. This number is mid-harvest and should be
-re-derived from the build output rather than trusted here.
+592 of 687 unique issues (86%) resolve to a real marvel.com issue page — the
+best coverage of the three shelves — and the rest fall back to
+`marvel.com/search?query=` and a grey Read button, same convention as the other
+two trackers. Complete: Fantastic Four (1961) all 416, Fantastic Four (1998),
+FF (2011), FF (2012), Fantastic Four (2012), Fantastic Four (2018), Ultimate
+Fantastic Four, the Fantastic Four annuals, Marvel Team-Up, The Thing, and
+Super-Villain Team-Up bar one issue that 404s on marvel.com.
+
+Unresolved, largest first: Epic Illustrated (9), Marvel 1985 (6), Books of Doom
+(6), Dark Reign: Fantastic Four (5), Fantastic Force (2009) (4), Giant-Size
+Fantastic Four, Marvel Graphic Novel, Uncanny X-Men and Secret Wars (3 each),
+and a long tail of 45 one-shots, annuals and guest appearances at one or two
+apiece. **Astonishing Tales (1970) is the one worth another pass**: its ids are
+not one contiguous block — three separate clusters exist — and ids that search
+engines still index for the gap now 404 live, so 15 of its 36 issues are
+missing and may simply have been pulled from marvel.com.
 
 **One sweep of ids 12860–13340 returned all 416 issues of Fantastic Four (1961)
 with no gaps** — the single most productive harvest on the project so far, and
-the reason the `scan` subcommand exists (see below). That block alone covers
-most of the six mainline Lee/Kirby-through-Pérez volumes.
+the reason the `scan` subcommand exists. That block alone covers most of the six
+mainline Lee/Kirby-through-Pérez volumes.
+
+Two things this shelf's harvest taught that the earlier ones did not:
+
+- **Middle-regime blocks are exactly issue-count long.** Fantastic Four Annual
+  (1963) is 27 issues at 8687–8713, Marvel Team-Up (1972) is 150 at 19575–19724,
+  Strange Tales (1951) is 168 at 11016–11183, The Thing (1983) is 36 at
+  18717–18752. So one anchor id plus the run length gives the whole range in
+  closed form — no striding needed, if the run length is already known.
+- **Do not run two `series_harvest.py` commands against the store at once.**
+  Neither process re-reads `series_links.json` mid-run, so the one that finishes
+  last silently clobbers the other's entries. That cost a re-run of two series
+  here before it was spotted.
 
 ## The X-Men tracker
 
@@ -998,9 +1022,23 @@ no edit here — register it in `heroes.py` and rebuild.
   reset, `body` and the bubbles are hoisted once. `body.hideopt` is special-cased
   so the X-Men "hide optional arcs" toggle still works.
 - **DOM ids collide** (`statRead`, `upnext`, `shelf`, …). Every id is
-  prefixed per app in both the markup and the JS that looks it up;
+  prefixed per app in the markup, in the JS that looks it up, **and in the CSS
+  that targets it**;
   `document.getElementById/querySelector(All)` are rewritten to prefix-aware
   helpers scoped to the panel.
+
+  The CSS half was missing until Aug 2026 and failed in the worst way. Scoping a
+  rule under its panel is not enough: `#storeWarn{display:none}` became
+  `#app-ff #storeWarn`, which matches nothing once the div is `f4-storeWarn`, so
+  the element fell back to `display:block`. Three of the four panels shipped a
+  permanent "Progress isn't saving in this browser" banner over a `localStorage`
+  that was working perfectly. `scope_selector()` now rewrites `#id` in selector
+  headers the same way `prefix_ids_html()` rewrites the markup. Nothing else in
+  the four pages uses a bare id selector, but anything that does will now work.
+
+  Note the asymmetry that hid it: the X-Men page writes its equivalent
+  `display:none` as an inline `style=` attribute, so it was never affected and
+  the bug looked page-specific rather than structural.
 - **Top-level JS names collide wholesale** (`SC`, `MARVEL`, `store`, `refresh`,
   `flat`, `esc`…). Each script is wrapped in an IIFE, so nothing leaks.
 
@@ -1056,17 +1094,27 @@ a server-side store and is not built.
    Marvel Database stores — six on the Spider-Man shelf, six on the Hulk shelf,
    eight on the Fantastic Four shelf; see "Cover art". Replacing them needs a
    scan from somewhere else; everything else is 600–700px.
-4. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
+4. **Fantastic Four #171 is missing from the shelf's data**, because the Marvel
+   Database's page for Fantastic Four Omnibus Vol. 6 does not list it in either
+   the ReprintOf fields or the rendered gallery, and issue pages carry no
+   reverse "reprinted in" link to check against. It is very likely a wiki
+   omission rather than a book that skips one issue mid-run — see "The Fantastic
+   Four tracker".
+5. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
    arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
    would be a genuine improvement — see "Chaptering".
-5. **The Straczynski volume has almost no Marvel deep links** — its Amazing
+6. **The Straczynski volume has almost no Marvel deep links** — its Amazing
    Spider-Man (1999) issues mostly fall back to search. Try
    `series_harvest.py walk the_amazing_spider-man_1999:<any known id>` before
    another id sweep; see "Harvest by series, not by id range".
-6. **Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf** (23 issues).
+7. **Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf** (23 issues).
    marvel.com's series page only reaches back to #38 and the sibling walk stops
    at #30, so these need an id scan — #12 is at 24160, in a 2009 chronological
    batch rather than a series block.
+8. **Astonishing Tales (1970) is 15 issues short on the Fantastic Four shelf.**
+   Its marvel.com ids are not one contiguous block, and ids that search engines
+   still index for the missing range 404 live, so the material may have been
+   pulled. Everything else on that shelf is at 86%.
 
 ## Testing
 
