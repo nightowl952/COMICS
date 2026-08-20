@@ -249,6 +249,46 @@ Two API details that cost time the first time round:
 The wiki's `list=search` returns nothing useful here (`intitle:` included), so
 prefix enumeration is the way in.
 
+### Auditing contents against the solicit
+
+**The `ReprintOf` fields can silently drop an issue, and the rendered gallery is
+not an independent check** — on all three cases found so far the issue was
+missing from both. The genuinely independent source on the same page is the
+**`Solicit` field**, which is Marvel's own retail copy rather than the wiki's
+structured data, and which sometimes ends in an explicit range:
+
+    COLLECTING: THE FANTASTIC FOUR (1961) #164-203 & ANNUAL (1963) #11-13, ...
+
+A sweep in Aug 2026 compared every volume's contents against that line across
+all four shelves. Two results worth knowing:
+
+- **Only 16 of 64 volumes carry an explicit range.** The other 48 are marketing
+  prose with no numbers, so this check cannot cover them. Do not read a clean
+  sweep as a clean shelf.
+- **Both disagreements were real**: Fantastic Four #171 (`ff-o6`) and Incredible
+  Hulk (2000) #75–76 (`rotm-o1`, whose solicit says `#34-76` where the shelf had
+  #34–74). Both are fixed by hand in the raw-contents files.
+
+For the 48 volumes with no range, the fallback that works is: find every small
+numeric gap **shelf-wide** (not per volume — an issue skipped by one book is
+often in the next one), then check the missing issue's **creator credits**
+against what the volume is. A creator-run collection is *supposed* to have
+holes; a numbered `<Series> Omnibus Vol. N` is not. That test cleared five gaps
+as correct and condemned one:
+
+| Gap | Verdict |
+|---|---|
+| Incredible Hulk #329–330 | correct — Al Milgrom, not Peter David |
+| Fantastic Four #219 | correct — Moench/Sienkiewicz, not Byrne |
+| Fantastic Four #351 | correct — Kaminski/Bagley fill-in, not a Doom story |
+| Spider-Man #17 | correct — Nocenti/Leonardi, neither McFarlane nor Larsen |
+| Amazing Spider-Man #242 | correct — a known Stern skip |
+| **Wolverine #55** | **wrong** — Hama/Silvestri, same team as #56, in a complete-run volume |
+
+The scripts for both passes are throwaway; the method is the part worth keeping.
+One limit to be honest about: neither pass can see an issue dropped from a
+volume that has no solicit range *and* leaves no numeric gap.
+
 ### Chaptering — two strategies, chosen automatically
 
 The generator computes runs of consecutive same-series issues and looks at the
@@ -413,7 +453,7 @@ than about 1MB. Open item 10.
 
 ### Marvel deep links
 
-447 of 564 unique issues (79%) resolve to a real marvel.com issue page. The rest
+493 of 564 unique issues (87%) resolve to a real marvel.com issue page. The rest
 fall back to a `marvel.com/search?query=` URL and render a grey Read button —
 same convention as the X-Men tracker.
 
@@ -436,19 +476,19 @@ issue on the shelf. That is intentional: unused keys cost nothing, and keeping
 them means re-adding a trimmed volume does not require re-running the harvester
 against a rate-limited marvel.com.
 
-Unresolved, largest first: Amazing Spider-Man (1999) — the whole Straczynski
-volume, #30–58 and #500–514 (47) — Amazing Spider-Man Annuals (9), Ultimate
-Avengers vs. New Ultimates (6), Amazing Fantasy #15–18 (4), New Warriors (4),
-Venom: Along Came a Spider (4), The Final Adventure (4), and a long tail of
-one-shots, annuals and Super Specials at one to three each.
+**The Straczynski volume is fully linked as of Aug 2026.** All 47 of its Amazing
+Spider-Man (1999) issues (#30–58 and #500–514) resolve. What cracked it was one
+web search for the series id (**454**), a `series` pull for a seed, and a `walk`
+from **#36 at id 42508** — after several id sweeps had failed. See "Start with a
+web search, not with a probe".
 
-Two of those have a known cause rather than an unfound block. **Ultimate
-Avengers vs. New Ultimates** has variant-cover pages on marvel.com (38500–38504,
-38620) but no base-issue page anywhere in 38050–40200 — it looks genuinely
-absent, not misplaced. **Amazing Spider-Man (1999)** is the one worth another
-pass: #1–10 sit in a digital-backfill batch at 37894–37904 and #678–700 in the
-2012 chronological run at 40105–40139, so #11–58 and #500–514 are in backfill
-batches between those two that a sweep has not reached yet.
+Unresolved, largest first: Ultimate Avengers vs. New Ultimates (6), Amazing
+Fantasy #15–18 (4), New Warriors (4), Venom: Along Came a Spider (4), The Final
+Adventure (4), and a long tail of one-shots, annuals and Super Specials at one
+to three each. **Ultimate Avengers vs. New Ultimates** has a known cause rather
+than an unfound block: variant-cover pages exist on marvel.com (38500–38504,
+38620) but no base-issue page anywhere in 38050–40200, so it looks genuinely
+absent rather than misplaced.
 
 ### Harvest by series, not by id range
 
@@ -744,8 +784,8 @@ fallback.
 
 ## The Hulk tracker (omnibus shelf)
 
-Same code as the Spider-Man page, same tooling, different data: 17 volumes, 663
-issue slots, 657 unique issues, all 17 with contents and cover art. No
+Same code as the Spider-Man page, same tooling, different data: 17 volumes, 665
+issue slots, 659 unique issues, all 17 with contents and cover art. No
 placeholders. `tools/hulk_meta.py` is the hand-written half; run everything with
 `--hero hulk`.
 
@@ -769,7 +809,9 @@ deliberate:
 - **maestro-o1 sits after pad-o4**, with the Peter David run it grew out of,
   even though half its contents are 2020–2022.
 - **pad-o5 sits after rotm-o1**, because its Incredible Hulk (2000) #77–87 picks
-  up directly from where Return of the Monster stops at #74.
+  up directly from where Return of the Monster stops, at #76. (It was recorded
+  as stopping at #74 until Aug 2026 — the wiki had dropped #75–76; see open
+  item 4.)
 
 **There is one real gap in the shelf, and it is Marvel's, not ours.** Incredible
 Hulk (1962) #210–327 has never been collected in omnibus, so `inc-o4` ends at
@@ -789,8 +831,16 @@ it — `inc-o1` lists Incredible Hulk #102 seventh, straight after #1–6, when 
 book prints it last, after Tales to Astonish #101 (which is the issue it
 continues from). `hulk_contents_raw.json` carries the corrected order.
 
-If a volume's contents are ever re-pulled, re-check that fix — a fresh pull will
-reintroduce it.
+**Incredible Hulk (2000) #75–76 were missing from `rotm-o1` until Aug 2026.**
+The wiki's ReprintOf fields and gallery both stopped at #74, but the volume's own
+`Solicit` field says `Collecting INCREDIBLE HULK (2000) #34-76`. Restored by
+hand. It was invisible for a long time because it fell exactly on a volume
+boundary — `pad-o5` starts at #77, so nothing on the shelf looked out of place;
+only a shelf-wide gap check catches that shape. See "Auditing contents against
+the solicit".
+
+If a volume's contents are ever re-pulled, re-check both fixes — a fresh pull
+will reintroduce them.
 
 ### Chaptering
 
@@ -803,18 +853,22 @@ lands at 16 chapters that read as the tie-in list it is.
 
 ### Marvel deep links
 
-506 of 657 unique issues (77%) resolve to a real marvel.com issue page; the rest
+527 of 659 unique issues (80%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
 Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
 Incredible Hulk annuals, and the World War Hulk core minis.
 
-Unresolved, largest first: **Hulk (2008) #1–29** (23 on the shelf — the biggest
-single gap and the one worth another pass), Rampaging Hulk (6), the three
-Maestro minis and Future Imperfect (2015) (5 each), Symbiote Spider-Man:
-Crossroads, New Fantastic Four, Heroes for Hire and Gamma Flight (5 each), and a
-long tail of one-shots and tie-ins at one to four apiece. Immortal Hulk #0 is
-missing too — marvel.com has no `immortal_hulk_2018_0`.
+**Hulk (2008) is fully linked as of Aug 2026** — all 24 issues on the shelf,
+walked from **#1 at id 17623**, which a web search turned up after the series
+page and a sibling walk had both dead-ended at #30. See "Start with a web
+search, not with a probe".
+
+Unresolved, largest first: Rampaging Hulk (6), the three Maestro minis and
+Future Imperfect (2015) (5 each), Symbiote Spider-Man: Crossroads, New Fantastic
+Four, Heroes for Hire and Gamma Flight (5 each), and a long tail of one-shots
+and tie-ins at one to four apiece. Immortal Hulk #0 is missing too — marvel.com
+has no `immortal_hulk_2018_0`.
 
 ### Issue ids and the shared id store
 
@@ -832,7 +886,7 @@ tracker carries some ids it does not use, which was already true of Spider-Man's
 ## The Fantastic Four tracker (omnibus shelf)
 
 Same code as the Spider-Man and Hulk pages, same tooling, different data: 18
-volumes, 685 issue slots, 660 unique issues, all 18 with contents and cover art.
+volumes, 686 issue slots, 661 unique issues, all 18 with contents and cover art.
 No placeholders, and nothing unreleased. `tools/ff_meta.py` is the hand-written
 half; run everything with `--hero fantastic-four`.
 
@@ -891,11 +945,13 @@ the Hulk shelf and one went worse:
   which that form cannot survive, so the raw file drops the subtitles. If those
   volumes are ever re-pulled, re-apply that.
 
-One known data gap: **the wiki's page for Fantastic Four Omnibus Vol. 6 does
-not list Fantastic Four #171** anywhere — not in the ReprintOf fields, not in
-the gallery. The issue pages carry no reverse "reprinted in" links, so there is
-no second source inside the wiki to check it against, and the shelf reflects
-what the wiki says. If a better source turns up, `ff-o6` is the volume to fix.
+**Fantastic Four #171 was missing until Aug 2026** — the wiki's page for
+Fantastic Four Omnibus Vol. 6 lists it in neither the ReprintOf fields nor the
+gallery. It is on the shelf now, restored by hand in `ff_contents_raw.json`
+after the volume's own `Solicit` field was found to say
+`COLLECTING: THE FANTASTIC FOUR (1961) #164-203`, which settles it. See "Auditing
+contents against the solicit" — and re-apply the fix if this volume is ever
+re-pulled.
 
 ### Chaptering
 
@@ -928,8 +984,8 @@ them with the gold "in N omnibuses" pill.
 
 ### Marvel deep links
 
-568 of 660 unique issues (86%) resolve to a real marvel.com issue page — the
-best coverage of the three shelves — and the rest fall back to
+569 of 661 unique issues (86%) resolve to a real marvel.com issue page, and the
+rest fall back to
 `marvel.com/search?query=` and a grey Read button, same convention as the other
 two trackers. Complete: Fantastic Four (1961) all 416, Fantastic Four (1998),
 FF (2011), FF (2012), Fantastic Four (2012), Fantastic Four (2018), Ultimate
@@ -970,7 +1026,7 @@ Two things this shelf's harvest taught that the earlier ones did not:
 ## The Wolverine tracker (omnibus shelf)
 
 Same code as the other three shelf pages, same tooling, different data: 14
-volumes, 636 issue slots, 635 unique issues, all 14 with contents and cover art.
+volumes, 637 issue slots, 636 unique issues, all 14 with contents and cover art.
 No placeholders, and nothing unreleased. `tools/wolverine_meta.py` is the
 hand-written half; run everything with `--hero wolverine`.
 
@@ -1022,14 +1078,14 @@ anniversary issue, is in the Jason Aaron volume, so the shelf's actual holes are
 #159–174 and #176–189. The note on `ndy-o1` says so on the page. Same shape as
 the Hulk shelf's #210–327 gap and the FF shelf's #296–488 one.
 
-**And there is one wiki omission, exactly like Fantastic Four #171.** The Marvel
-Database's page for Wolverine Omnibus Vol. 3 does not list **Wolverine #55**
-anywhere — not in the ReprintOf fields, not in the rendered gallery — though
-#54 and #56 are both there. The shelf reflects what the wiki says, so that
-volume's chapter honestly reads `Wolverine #51–54, #56–59`. Issue pages carry no
-reverse "reprinted in" link, so there is no second source inside the wiki to
-check it against. Almost certainly a wiki omission rather than a book that skips
-one issue mid-run; `wolv-o3` is the volume to fix if a better source turns up.
+**Wolverine #55 was missing until Aug 2026**, exactly like Fantastic Four #171 —
+the wiki's page for Wolverine Omnibus Vol. 3 lists it in neither the ReprintOf
+fields nor the gallery, though #54 and #56 are both there. It is restored by
+hand in `wolverine_contents_raw.json` now, so the chapter reads `#51–59`. What
+settled it was the creator credits: #55 is Larry Hama and Marc Silvestri, the
+same team as #56 which the volume does hold, and `wolv-o3` is a complete-run
+volume rather than a creator selection. Re-apply the fix if this volume is ever
+re-pulled.
 
 ### Contents, and three data hazards this shelf hit
 
@@ -1090,7 +1146,7 @@ unique issues.
 
 ### Marvel deep links
 
-471 of 635 unique issues (74%) resolve to a real marvel.com issue page; the rest
+472 of 636 unique issues (74%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other three trackers. Complete or near-complete: Wolverine (1988) all 189
 issues, Marvel Comics Presents all 175, Wolverine (2003), Wolverine (2010),
@@ -1371,24 +1427,21 @@ a server-side store and is not built.
    (`aaron-o1`, `xforce-o1`); see "Cover art". Replacing them needs a scan from
    somewhere else; everything else is 600–700px. Now that the artifact is
    retired there is no size budget arguing against a big scan.
-4. **Two issues are missing from shelf data because the wiki omits them.**
-   Fantastic Four #171 (from Fantastic Four Omnibus Vol. 6) and Wolverine #55
-   (from Wolverine Omnibus Vol. 3) appear in neither the ReprintOf fields nor
-   the rendered gallery of their volume's page, though the issues either side of
-   them do. Issue pages carry no reverse "reprinted in" link to check against.
-   Both are very likely wiki omissions rather than books that skip one issue
-   mid-run — see "The Fantastic Four tracker" and "The Wolverine tracker".
+4. **Three wiki omissions were found and fixed in Aug 2026** — Fantastic Four
+   #171, Wolverine #55, and Incredible Hulk (2000) #75–76 — all restored by
+   hand in their raw-contents files. **A re-pull of `ff-o6`, `wolv-o3` or
+   `rotm-o1` will reintroduce all of them**, the same way re-pulling `inc-o1`
+   reintroduces its ordering bug. The audit that found them, and what it can and
+   cannot cover, is written up under "Auditing contents against the solicit".
 5. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
    arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
    would be a genuine improvement — see "Chaptering".
-6. **The Straczynski volume has almost no Marvel deep links** — its Amazing
-   Spider-Man (1999) issues mostly fall back to search. Try
-   `series_harvest.py walk the_amazing_spider-man_1999:<any known id>` before
-   another id sweep; see "Harvest by series, not by id range".
-7. **Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf** (23 issues).
-   marvel.com's series page only reaches back to #38 and the sibling walk stops
-   at #30, so these need an id scan — #12 is at 24160, in a 2009 chronological
-   batch rather than a series block.
+6. ~~The Straczynski volume has almost no Marvel deep links.~~ **Done Aug
+   2026** — all 47 issues resolve. Web-searched the series id (454), pulled a
+   seed, walked from #36 at id 42508.
+7. ~~Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf.~~ **Done Aug
+   2026** — all 24 on-shelf issues resolve, walked from #1 at id 17623, found by
+   web search after the series page dead-ended at #38.
 8. **The Hulk shelf still carries an unreleased volume.** Incredible Hulk
    Omnibus Vol. 4 (`inc-o4`) is solicited for February 2027 and sits on the
    shelf with an "Announced" badge, which is exactly what "A shelf holds books
@@ -1410,10 +1463,12 @@ a server-side store and is not built.
     make the mobile page both smaller and more capable. The ASCII-only pass and
     the `__COMICS_SAVE` download rewire are harmless and can stay. See "The
     mobile build".
-11. **The Wolverine shelf has the weakest Marvel deep links of the four.**
-    See "The Wolverine tracker" for what is missing and what has already been
-    tried; Uncanny X-Force is the single biggest block and the one worth another
-    pass.
+11. **Deep links are now a long tail on every shelf, not a block.** Spider-Man
+    87%, Hulk 80%, Fantastic Four 86%, Wolverine 74%. What is left is 30–60
+    series per shelf at one or two issues each — mostly nineties one-shots,
+    annuals and tie-ins. Each needs its own web search, so this is grind rather
+    than technique. The largest single remaining item anywhere is Epic
+    Illustrated at 9 issues on the FF shelf.
 
 ## Testing
 
@@ -1450,9 +1505,9 @@ python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"  
 ```
 
 The Spider-Man shelf currently reports **16 volumes / 567 issue slots / 564
-unique issues**; the Hulk shelf **17 volumes / 663 issue slots / 657 unique
-issues**; the Fantastic Four shelf **18 volumes / 685 issue slots / 660 unique
-issues**; the Wolverine shelf **14 volumes / 636 issue slots / 635 unique
+unique issues**; the Hulk shelf **17 volumes / 665 issue slots / 659 unique
+issues**; the Fantastic Four shelf **18 volumes / 686 issue slots / 661 unique
+issues**; the Wolverine shelf **14 volumes / 637 issue slots / 636 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
 

@@ -105,7 +105,8 @@ PLACEHOLDERS = []
 
 # Display order of the shelf, by id. Curated reading order, so Maestro sits with
 # the Peter David run it belongs to and pad-o5 sits after Return of the Monster,
-# where its Incredible Hulk (2000) #77–87 actually continues from.
+# where its Incredible Hulk (2000) #77–87 actually continues from -- rotm-o1
+# ends at #76, so the two books meet with no gap at all.
 SHELF = [
   "inc-o1", "inc-o2", "inc-o3", "inc-o4",
   "pad-o1", "pad-o2", "pad-o3", "pad-o4", "maestro-o1",
