@@ -43,6 +43,20 @@ HEROES = {
         pfx     = "hk",
         route   = "/hulk",
     ),
+    "fantastic-four": dict(
+        name    = "Fantastic Four",
+        tracker = "fantasticfour-reading-tracker.html",
+        art     = os.path.join("Art", "Fantastic-Four"),
+        meta    = "ff_meta",
+        raw     = "ff_contents_raw.json",
+        # the same shared store again -- the FF shelf collects Marvel Team-Up,
+        # Strange Tales and Fantastic Four issues the other two shelves already
+        # reach for, so an overlap resolves without being harvested twice.
+        ids     = "marvel_ids.json",
+        panel   = "ff",
+        pfx     = "f4",
+        route   = "/fantastic-four",
+    ),
 }
 
 DEFAULT = "spider-man"
