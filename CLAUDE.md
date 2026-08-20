@@ -73,6 +73,24 @@ There are two ways a hero's tracker can be organised. Pick per hero:
   use this shape; the whole pipeline behind it is hero-agnostic — see "Adding an
   omnibus hero".
 
+### A shelf holds books you can actually buy
+
+**Never put an unreleased omnibus on a shelf.** If Marvel has solicited it but
+not printed it, it does not go in `ORDER` or `SHELF` — no tile, no issue list,
+no contribution to the hero's `total`. A shelf is a reading list, and an
+announced book is not something anyone can read.
+
+That is what the `released="Announced"` badge is for and why almost nothing
+should use it: a book that ships between one session and the next, not a
+standing category. Fantastic Four by Dan Slott Vol. 2 (solicited December 2026)
+was on the shelf briefly and came off for exactly this reason.
+
+The cheap way to re-add one when it ships: **leave its entry in the hero's
+`<hero>_contents_raw.json`** when you drop it. The raw file is only read for
+keys named in `ORDER`, so an unused entry costs nothing, and re-adding the
+volume is then a meta-module edit plus a regenerate rather than a fresh wiki
+pull.
+
 The omnibus shape is what to copy when the goal is "read the collections as
 published" rather than "read this story in the right order".
 
@@ -754,19 +772,24 @@ tracker carries some ids it does not use, which was already true of Spider-Man's
 
 ## The Fantastic Four tracker (omnibus shelf)
 
-Same code as the Spider-Man and Hulk pages, same tooling, different data: 19
-volumes, 712 issue slots, 687 unique issues, all 19 with contents and cover art.
-No placeholders. `tools/ff_meta.py` is the hand-written half; run everything
-with `--hero fantastic-four`.
+Same code as the Spider-Man and Hulk pages, same tooling, different data: 18
+volumes, 685 issue slots, 660 unique issues, all 18 with contents and cover art.
+No placeholders, and nothing unreleased. `tools/ff_meta.py` is the hand-written
+half; run everything with `--hero fantastic-four`.
 
 ### Scope call — the team's own books, plus two the user asked for
 
 The wiki lists rather more Fantastic Four omnibuses than are on the shelf. The
-fifteen mainline volumes are the obvious core: Fantastic Four Omnibus Vol. 1–6
+fourteen mainline volumes are the obvious core: Fantastic Four Omnibus Vol. 1–6
 (Lee/Kirby through the Pérez era), by John Byrne Vol. 1–2, by Waid & Wieringo,
 by Millar & Hitch, by Jonathan Hickman Vol. 1–2, by Matt Fraction, and by Dan
-Slott Vol. 1–2. Both Ultimate Fantastic Four volumes are on too, matching the
-call that put Ultimate Spider-Man on the Spider-Man shelf.
+Slott Vol. 1. Both Ultimate Fantastic Four volumes are on too, matching the call
+that put Ultimate Spider-Man on the Spider-Man shelf.
+
+**By Dan Slott Vol. 2 is deliberately absent.** It is solicited for December
+2026 and has not been printed — see "A shelf holds books you can actually buy".
+Its contents stay in `ff_contents_raw.json`, so re-adding it when it ships is an
+`ff_meta.py` edit and a regenerate, not a fresh pull.
 
 Two family books are on the shelf because the user asked for them by name, not
 because a rule put them there: **the Thing Omnibus** (Ben Grimm's solo series,
@@ -791,8 +814,6 @@ Four #296–488 has never been collected in omnibus, so byrne-o2 ends at #295 in
 including the whole DeFalco and Simonson runs and the 1996 Heroes Reborn year.
 The note on waid-o1 says so on the page. Same shape as the Hulk shelf's
 #210–327 gap.
-
-`slott-o2` is solicited for December 2026 and carries `released="Announced"`.
 
 ### Contents
 
@@ -848,7 +869,7 @@ them with the gold "in N omnibuses" pill.
 
 ### Marvel deep links
 
-592 of 687 unique issues (86%) resolve to a real marvel.com issue page — the
+568 of 660 unique issues (86%) resolve to a real marvel.com issue page — the
 best coverage of the three shelves — and the rest fall back to
 `marvel.com/search?query=` and a grey Read button, same convention as the other
 two trackers. Complete: Fantastic Four (1961) all 416, Fantastic Four (1998),
@@ -1111,7 +1132,14 @@ a server-side store and is not built.
    marvel.com's series page only reaches back to #38 and the sibling walk stops
    at #30, so these need an id scan — #12 is at 24160, in a 2009 chronological
    batch rather than a series block.
-8. **Astonishing Tales (1970) is 15 issues short on the Fantastic Four shelf.**
+8. **The Hulk shelf still carries an unreleased volume.** Incredible Hulk
+   Omnibus Vol. 4 (`inc-o4`) is solicited for February 2027 and sits on the
+   shelf with an "Announced" badge, which is exactly what "A shelf holds books
+   you can actually buy" now forbids. It predates the rule and has not been
+   removed yet; doing so means dropping it from `ORDER` and `SHELF` in
+   `hulk_meta.py`, rewording `pad-o1`'s note about the #210–327 gap (which gets
+   bigger), and updating the Hulk `total` on the homescreen.
+9. **Astonishing Tales (1970) is 15 issues short on the Fantastic Four shelf.**
    Its marvel.com ids are not one contiguous block, and ids that search engines
    still index for the missing range 404 live, so the material may have been
    pulled. Everything else on that shelf is at 86%.
@@ -1150,7 +1178,7 @@ python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"  
 
 The Spider-Man shelf currently reports **16 volumes / 567 issue slots / 564
 unique issues**; the Hulk shelf **17 volumes / 663 issue slots / 657 unique
-issues**; the Fantastic Four shelf **19 volumes / 712 issue slots / 687 unique
+issues**; the Fantastic Four shelf **18 volumes / 685 issue slots / 660 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
 
