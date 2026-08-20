@@ -19,6 +19,7 @@ CLAUDE.md for which id regime is which.
     python3 tools/series_harvest.py probe  2350:2650        # id -> series title
     python3 tools/series_harvest.py series 2400 2418 2538   # series -> issues
     python3 tools/series_harvest.py walk   immortal_hulk_2018:77345
+    python3 tools/series_harvest.py scan   12860:13340      # blind id scan, pre-2008 material
     python3 tools/series_harvest.py write                   # -> marvel_ids.json
 
 The first three append to tools/series_links.json (slug -> id) and are
@@ -33,6 +34,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 LINKS = os.path.join(HERE, "series_links.json")
 TITLES = os.path.join(HERE, "series_titles.json")
 IDS = os.path.join(HERE, "marvel_ids.json")
+SCANNED = os.path.join(HERE, "series_scanned.json")
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120 Safari/537.36")
@@ -107,6 +109,18 @@ SLUG_PFX = {
  "new_fantastic_four_2022": "nff",
  "fantastic_four_1998": "ff3",
  "fantastic_four_1961": "ff",
+ "fantastic_four_1998": "ff3",
+ "fantastic_four_2012": "ff4",
+ "fantastic_four_2018": "ff6",
+ "ff_2011": "ff11",
+ "ff_2012": "ff12",
+ "fantastic_four_annual_1963": "ffann",
+ "fantastic_four_annual_1998": "ff3ann",
+ "ultimate_fantastic_four_2003": "uff",
+ "thing_1983": "thing",
+ "marvel_team-up_1972": "mtu",
+ "astonishing_tales_1970": "astt",
+ "super-villain_team-up_1975": "svtu",
  "amazing_fantasy_2004": "af2",
  "x-factor_1986": "xfac",
  "cable_1993": "cable",
@@ -265,6 +279,46 @@ def cmd_walk(args):
             print("   %s: %d issues known, %d queued" % (prefix, n, len(queue)), flush=True)
 
 
+# ------------------------------------------------------------- blind id scan
+def cmd_scan(args):
+    """walk can't help pre-2008: marvel.com doesn't link siblings that far
+    back. So probe every id in a range and self-match the page's own slug --
+    a live issue page links `/comics/issue/<id>/x` (the url we requested) and
+    `/comics/issue/<id>/<real-slug>` both, several times each; a dead id
+    soft-404s with no /comics/issue/<id>/... links at all, which is how it's
+    told apart from a live one without trusting the http status."""
+    scanned, links = load(SCANNED), load(LINKS)
+
+    def one(iid):
+        code, body = get("https://www.marvel.com/comics/issue/%d/x" % iid)
+        if code == "403":
+            return None
+        matches = [s for i, s in ISS.findall(body) if i == str(iid)]
+        slug = next((s for s in matches if s != "x"), "")
+        if not slug and matches:
+            # every self-match was the "x" placeholder we requested -- try the
+            # canonical link / og:url meta before giving up on this id
+            m = (re.search(r'rel="canonical" href="https://www\.marvel\.com/comics/issue/\d+/([a-z0-9_-]+)"', body)
+                 or re.search(r'property="og:url" content="https://www\.marvel\.com/comics/issue/\d+/([a-z0-9_-]+)"', body))
+            slug = m.group(1) if m and m.group(1) != "x" else ""
+        return (iid, slug)
+
+    probed = banked = 0
+    for spec in args:
+        lo, hi = (int(x) for x in spec.split(":"))
+        todo = [i for i in range(lo, hi + 1) if str(i) not in scanned]
+        print("[%d-%d] %d ids to probe" % (lo, hi, len(todo)), flush=True)
+        for res in batched(todo, one, spec):
+            for iid, slug in res:
+                scanned[str(iid)] = slug
+                probed += 1
+                if slug:
+                    links[slug] = str(iid)
+                    banked += 1
+            save(SCANNED, scanned); save(LINKS, links)
+            print("  [%s] %d probed, %d slugs banked so far" % (spec, probed, banked), flush=True)
+
+
 # ------------------------------------------------------------------- write out
 def cmd_write(args):
     links, ids = load(LINKS), load(IDS)
@@ -294,7 +348,8 @@ def cmd_write(args):
         print("now run: python3 tools/build_omnibus_data.py --hero <key>")
 
 
-CMDS = {"probe": cmd_probe, "series": cmd_series, "walk": cmd_walk, "write": cmd_write}
+CMDS = {"probe": cmd_probe, "series": cmd_series, "walk": cmd_walk, "scan": cmd_scan,
+        "write": cmd_write}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in CMDS:

@@ -72,10 +72,21 @@ def split_rules(css):
         i = j
     return out
 
-def scope_selector(sel, root):
+# an `#id` in a selector header is always an id -- hex colours live in the
+# block, never here -- so this is safe to rewrite wholesale
+ID_SEL = re.compile(r'#(?![0-9])([A-Za-z_-][\w-]*)')
+
+def scope_selector(sel, root, pfx):
     sel = sel.strip()
     if not sel: return sel
     if sel in GLOBAL_SELECTORS: return sel
+    # the markup's ids are namespaced per app, so the CSS that targets them has
+    # to be namespaced the same way. Scoping under the panel is not enough: a
+    # rule left as `#storeWarn` matches nothing once the div is `f4-storeWarn`,
+    # and a `display:none` that never applies shows the element instead of
+    # hiding it -- which is how three panels shipped a permanent "progress
+    # isn't saving" banner over a localStorage that was working fine.
+    sel = ID_SEL.sub(lambda m: "#%s-%s" % (pfx, m.group(1)), sel)
     # `body.hideopt .ch.tier3` -> keep the body hook, scope the descendant part
     m = re.match(r'^body([.#][\w-]+)?(\s+(.*))?$', sel)
     if m:
@@ -84,7 +95,7 @@ def scope_selector(sel, root):
         return f"{bodypart} {root} {rest}" if rest else root
     return f"{root} {sel}"
 
-def scope_css(css, root, seen_globals):
+def scope_css(css, root, pfx, seen_globals):
     out = []
     for kind, header, block in split_rules(css):
         if kind == "at":
@@ -99,7 +110,7 @@ def scope_css(css, root, seen_globals):
                     if k2 == "at":
                         inner.append(f"{h2}{{{b2}}}")
                     else:
-                        sels = ",".join(scope_selector(s, root) for s in h2.split(","))
+                        sels = ",".join(scope_selector(s, root, pfx) for s in h2.split(","))
                         inner.append(f"{sels}{{{b2}}}")
                 out.append(f"{header}{{{''.join(inner)}}}")
             else:
@@ -120,7 +131,7 @@ def scope_css(css, root, seen_globals):
                 seen_globals.add("body")
                 out.append(f"body{{{block}}}")
             continue
-        out.append(",".join(scope_selector(s, root) for s in sels) + "{" + block + "}")
+        out.append(",".join(scope_selector(s, root, pfx) for s in sels) + "{" + block + "}")
     return "\n".join(out)
 
 # ------------------------------------------------------------- id namespacing
@@ -153,7 +164,7 @@ def build():
         raw = open(os.path.join(SRC, app["file"]), encoding="utf-8").read()
         root = f'#app-{app["key"]}'
         styles.append(f'/* ===== {app["file"]} ===== */\n'
-                      + scope_css(part(raw, "style"), root, seen_globals))
+                      + scope_css(part(raw, "style"), root, app["pfx"], seen_globals))
 
         b = body_html(raw)
         b = re.sub(r'<div class="bubble[^>]*></div>', "", b)   # bubbles live in the shell

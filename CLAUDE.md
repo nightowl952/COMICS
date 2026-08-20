@@ -46,8 +46,13 @@ Keep replies short and plain. This is a hobby project, not a code review.
 - `hulk-reading-tracker.html` — the Hulk omnibus shelf. Same shape and same
   tooling as the Spider-Man page (`--hero hulk`); 17 mainline Bruce Banner
   volumes. Its `OMNI` array is generated from `tools/hulk_meta.py`.
-- `Art/Spider-Man/`, `Art/Hulk/` — cover scans, committed so GitHub Pages can
-  serve them and the mobile build can inline them.
+- `fantasticfour-reading-tracker.html` — the Fantastic Four omnibus shelf. Same
+  shape and tooling again (`--hero fantastic-four`); 19 volumes, and the only
+  shelf carrying books that are not the title character's own — the Thing's solo
+  omnibus and Doctor Doom's. Its `OMNI` array is generated from
+  `tools/ff_meta.py`.
+- `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/` — cover scans, committed
+  so GitHub Pages can serve them and the mobile build can inline them.
 
 No build step, no package.json, no dependencies, no server. Open either file
 directly in a browser.
@@ -62,10 +67,29 @@ There are two ways a hero's tracker can be organised. Pick per hero:
 
 - **Curated chronology** (X-Men) — one researched reading order through a single
   saga. Acts → chapters → issues, all on one page.
-- **Omnibus shelf** (Spider-Man, Hulk) — a poster shelf of omnibus volumes, each
-  reproducing exactly what the printed book collects, in print order. Two views
-  in one file, hash-routed (`#/omni/<id>`). Two heroes use this shape; the whole
-  pipeline behind it is hero-agnostic — see "Adding an omnibus hero".
+- **Omnibus shelf** (Spider-Man, Hulk, Fantastic Four) — a poster shelf of
+  omnibus volumes, each reproducing exactly what the printed book collects, in
+  print order. Two views in one file, hash-routed (`#/omni/<id>`). Three heroes
+  use this shape; the whole pipeline behind it is hero-agnostic — see "Adding an
+  omnibus hero".
+
+### A shelf holds books you can actually buy
+
+**Never put an unreleased omnibus on a shelf.** If Marvel has solicited it but
+not printed it, it does not go in `ORDER` or `SHELF` — no tile, no issue list,
+no contribution to the hero's `total`. A shelf is a reading list, and an
+announced book is not something anyone can read.
+
+That is what the `released="Announced"` badge is for and why almost nothing
+should use it: a book that ships between one session and the next, not a
+standing category. Fantastic Four by Dan Slott Vol. 2 (solicited December 2026)
+was on the shelf briefly and came off for exactly this reason.
+
+The cheap way to re-add one when it ships: **leave its entry in the hero's
+`<hero>_contents_raw.json`** when you drop it. The raw file is only read for
+keys named in `ORDER`, so an unused entry costs nothing, and re-adding the
+volume is then a meta-module edit plus a regenerate rather than a fresh wiki
+pull.
 
 The omnibus shape is what to copy when the goal is "read the collections as
 published" rather than "read this story in the right order".
@@ -377,7 +401,7 @@ underneath. Inlining is the only form that works on all three surfaces at once.
 
 ### Marvel deep links
 
-434 of 564 unique issues (77%) resolve to a real marvel.com issue page. The rest
+443 of 564 unique issues (79%) resolve to a real marvel.com issue page. The rest
 fall back to a `marvel.com/search?query=` URL and render a grey Read button —
 same convention as the X-Men tracker.
 
@@ -433,8 +457,19 @@ much cheaper and more reliable than probing an id range:
 python3 tools/series_harvest.py probe  2350:2650      # series id -> title
 python3 tools/series_harvest.py series 2400 2418      # series -> its issues
 python3 tools/series_harvest.py walk   immortal_hulk_2018:77345
+python3 tools/series_harvest.py scan   12860:13340    # blind id sweep
 python3 tools/series_harvest.py write                 # -> marvel_ids.json
 ```
+
+**`scan` is the way into the pre-2008 material**, where `walk` is useless
+because marvel.com stops linking siblings that far back. It probes an issue-id
+range and reads each page's *own* slug back out of it — the live page links
+`/comics/issue/<id>/<real-slug>` alongside the `/x` placeholder that was
+requested, and a dead id carries no self-link at all, which is how the two are
+told apart without trusting the HTTP status. That means it banks slug → id like
+every other subcommand, so `write` can consume it; `harvest.py` banks id →
+*title*, which `write` cannot. Probed ids (dead ones included) are recorded in
+`series_scanned.json`, so a rerun after a 403 storm costs nothing.
 
 The first three append to `tools/series_links.json` and are resumable; `write`
 only adds slugs whose prefix is in `SLUG_PFX`, and prints the ones that are not
@@ -504,14 +539,15 @@ because the numbers look wrong.
   `python3 tools/harvest.py 6440:6960:asm 14500:14820:spectacular` probes those
   id ranges and appends to `tools/marvel_ids.json`. Resumable: already-probed ids
   are skipped, so rerunning after a block costs nothing.
-- `omnibus_contents_raw.json`, `hulk_contents_raw.json` — the raw ReprintOf
+- `omnibus_contents_raw.json`, `hulk_contents_raw.json`, `ff_contents_raw.json` — the raw ReprintOf
   lists pulled from the Marvel Database, one entry per omnibus, one file per
   hero. Regenerate only if a volume's contents change.
 - `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
   its tracker filename, art directory, metadata module, panel key and route.
   Every other tool takes `--hero <key>` (default `spider-man`) and reads its
   paths from here. `python3 tools/heroes.py` lists what is registered.
-- `omnibus_meta.py` (Spider-Man), `hulk_meta.py` (Hulk) — the hand-written half,
+- `omnibus_meta.py` (Spider-Man), `hulk_meta.py` (Hulk), `ff_meta.py` (Fantastic
+  Four) — the hand-written half,
   and **the only place shelf metadata should be edited**: `ORDER` (wiki-backed
   volumes; each key must exist in that hero's raw-contents file or `gen()`
   KeyErrors), `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF`
@@ -538,13 +574,15 @@ because the numbers look wrong.
   `PLACEHOLDER_PAGES` in the meta module.
 - `series_harvest.py` — the faster harvester: `probe` maps a range of series
   ids to titles, `series` pulls a series page's issue list, `walk` follows an
-  issue's sibling links across a whole run, and `write` merges the result into
-  `marvel_ids.json` through its `SLUG_PFX` table. See "Harvest by series, not by
-  id range" above. Both heroes' shelves feed from the same store.
-- `series_links.json`, `series_titles.json` — what `series_harvest.py` has
-  banked: issue slug → marvel id, and series id → title. Resumable caches, so a
-  rerun costs nothing.
-- `marvel_ids.json` — id → marvel.com path fragment, **shared by both heroes**.
+  issue's sibling links across a whole run, `scan` blind-probes a range of issue
+  ids for the pre-2008 material the other three cannot reach, and `write` merges
+  the result into `marvel_ids.json` through its `SLUG_PFX` table. See "Harvest by
+  series, not by id range" above. All three shelves feed from the same store.
+- `series_links.json`, `series_titles.json`, `series_scanned.json` — what
+  `series_harvest.py` has banked: issue slug → marvel id, series id → title, and
+  which issue ids `scan` has already probed (dead ones included). Resumable
+  caches, so a rerun costs nothing.
+- `marvel_ids.json` — id → marvel.com path fragment, **shared by all three heroes**.
   `build_omnibus_data.py` splices it in as `MARVEL`, so a harvest lands by
   regenerating, not by editing the HTML.
 - `build_single_file.py` — composes every page into `comics-mobile.html` for
@@ -706,7 +744,7 @@ lands at 16 chapters that read as the tie-in list it is.
 
 ### Marvel deep links
 
-495 of 657 unique issues (75%) resolve to a real marvel.com issue page; the rest
+499 of 657 unique issues (76%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
 Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
@@ -731,6 +769,139 @@ deliberate: the store is keyed by issue id, several series (Web of Spider-Man,
 Marvel Comics Presents, Fantastic Four) appear on both shelves, and one store
 means an overlap resolves without being harvested twice. The cost is that each
 tracker carries some ids it does not use, which was already true of Spider-Man's.
+
+## The Fantastic Four tracker (omnibus shelf)
+
+Same code as the Spider-Man and Hulk pages, same tooling, different data: 18
+volumes, 685 issue slots, 660 unique issues, all 18 with contents and cover art.
+No placeholders, and nothing unreleased. `tools/ff_meta.py` is the hand-written
+half; run everything with `--hero fantastic-four`.
+
+### Scope call — the team's own books, plus two the user asked for
+
+The wiki lists rather more Fantastic Four omnibuses than are on the shelf. The
+fourteen mainline volumes are the obvious core: Fantastic Four Omnibus Vol. 1–6
+(Lee/Kirby through the Pérez era), by John Byrne Vol. 1–2, by Waid & Wieringo,
+by Millar & Hitch, by Jonathan Hickman Vol. 1–2, by Matt Fraction, and by Dan
+Slott Vol. 1. Both Ultimate Fantastic Four volumes are on too, matching the call
+that put Ultimate Spider-Man on the Spider-Man shelf.
+
+**By Dan Slott Vol. 2 is deliberately absent.** It is solicited for December
+2026 and has not been printed — see "A shelf holds books you can actually buy".
+Its contents stay in `ff_contents_raw.json`, so re-adding it when it ships is an
+`ff_meta.py` edit and a regenerate, not a fresh pull.
+
+Two family books are on the shelf because the user asked for them by name, not
+because a rule put them there: **the Thing Omnibus** (Ben Grimm's solo series,
+a different character by the reasoning that keeps She-Hulk off the Hulk shelf)
+and **Doctor Doom: The Book of Doom** (the antagonist's book, not the team's).
+
+Deliberately off: **Marvel Two-In-One** (the Thing's team-up book — the same
+call that dropped Marvel Team-Up from the Spider-Man shelf), **Fantastic
+Four/Doom 2099** (mostly Doom 2099's own series, unlike Maestro on the Hulk
+shelf, which was all Hulk books), **Heroes Reborn** (a mixed Avengers / Captain
+America / Iron Man / FF book) and the **Silver Surfer** omnibuses.
+
+`SHELF` is a reading order. One placement is deliberate: **thing-o1 sits
+between the two Byrne volumes**, because that is when it was published and what
+it reads alongside — Byrne Vol. 1 ends on Thing #1–2. The two cross-era
+anthologies (Doom, Ultimate) sit at the end rather than interrupting the main
+line.
+
+**There is one real gap in the shelf, and it is Marvel's, not ours.** Fantastic
+Four #296–488 has never been collected in omnibus, so byrne-o2 ends at #295 in
+1986 and waid-o1 opens at Fantastic Four (1998) #60 in 2002 — sixteen years,
+including the whole DeFalco and Simonson runs and the 1996 Heroes Reborn year.
+The note on waid-o1 says so on the page. Same shape as the Hulk shelf's
+#210–327 gap.
+
+### Contents
+
+Pulled the same way as the other two shelves (the `ReprintOf<N>` MediaWiki call
+above), into `tools/ff_contents_raw.json`. Two things went better here than on
+the Hulk shelf and one went worse:
+
+- **Every FF page writes the full form** (`Fantastic Four Vol 1 1`), not the
+  short form the Hulk pages used, so no gallery cross-reference was needed to
+  disambiguate a retitled series.
+- **ReprintOf order matched the rendered gallery order on all 19 volumes**, so
+  unlike `inc-o1` on the Hulk shelf nothing needed reordering by hand.
+- **Three Marvel Graphic Novel entries carry a subtitle after the issue
+  number** — `Marvel Graphic Novel Vol 1 27: Emperor Doom` and two others. The
+  pipeline splits a title on its last space to get `<series>` and `<issue>`,
+  which that form cannot survive, so the raw file drops the subtitles. If those
+  volumes are ever re-pulled, re-apply that.
+
+One known data gap: **the wiki's page for Fantastic Four Omnibus Vol. 6 does
+not list Fantastic Four #171** anywhere — not in the ReprintOf fields, not in
+the gallery. The issue pages carry no reverse "reprinted in" links, so there is
+no second source inside the wiki to check it against, and the shelf reflects
+what the wiki says. If a better source turns up, `ff-o6` is the volume to fix.
+
+### Chaptering
+
+Eighteen volumes take the automatic per-series chapters. Only `slott-o1` carries
+`chapterby="series"`: it is an ongoing with one-shots threaded through it
+(Wedding Special, 4 Yancy Street, Negative Zone, the Empyre tie-ins), which
+scores under the 3.5 average-run-length threshold for the same reason the Hulk
+anthologies did, and reads far better as ten named chapters than as five
+"Part N" blocks.
+
+`waid-o1` comes out as a single 36-issue chapter, which looks wrong and is not:
+the volume is one series throughout, and `spanlabel()` correctly renders the
+renumbering as `#60–70, #500–524` rather than claiming 465 issues. The
+Straczynski volume on the Spider-Man shelf has exactly the same shape.
+
+### Issue ids and the overlaps
+
+Twenty-five issue slots overlap between volumes — far more than the other two
+shelves, and all of it deliberate:
+
+- **Fantastic Four #91–93 are in both Omnibus Vol. 3 and Vol. 4.** That is the
+  printed books, not a data error; Vol. 4 reprints the tail of Vol. 3.
+- **The Thing Omnibus** shares Thing #1–2 with Byrne Vol. 1, and further Thing
+  and Fantastic Four issues with Byrne Vol. 2.
+- **The Book of Doom** doubles back across fifteen years of Lee/Kirby, Byrne and
+  later material, so most of its overlap is with the mainline volumes.
+
+They share ids on purpose, exactly as on the other two shelves, and the UI flags
+them with the gold "in N omnibuses" pill.
+
+### Marvel deep links
+
+568 of 660 unique issues (86%) resolve to a real marvel.com issue page — the
+best coverage of the three shelves — and the rest fall back to
+`marvel.com/search?query=` and a grey Read button, same convention as the other
+two trackers. Complete: Fantastic Four (1961) all 416, Fantastic Four (1998),
+FF (2011), FF (2012), Fantastic Four (2012), Fantastic Four (2018), Ultimate
+Fantastic Four, the Fantastic Four annuals, Marvel Team-Up, The Thing, and
+Super-Villain Team-Up bar one issue that 404s on marvel.com.
+
+Unresolved, largest first: Epic Illustrated (9), Marvel 1985 (6), Books of Doom
+(6), Dark Reign: Fantastic Four (5), Fantastic Force (2009) (4), Giant-Size
+Fantastic Four, Marvel Graphic Novel, Uncanny X-Men and Secret Wars (3 each),
+and a long tail of 45 one-shots, annuals and guest appearances at one or two
+apiece. **Astonishing Tales (1970) is the one worth another pass**: its ids are
+not one contiguous block — three separate clusters exist — and ids that search
+engines still index for the gap now 404 live, so 15 of its 36 issues are
+missing and may simply have been pulled from marvel.com.
+
+**One sweep of ids 12860–13340 returned all 416 issues of Fantastic Four (1961)
+with no gaps** — the single most productive harvest on the project so far, and
+the reason the `scan` subcommand exists. That block alone covers most of the six
+mainline Lee/Kirby-through-Pérez volumes.
+
+Two things this shelf's harvest taught that the earlier ones did not:
+
+- **Middle-regime blocks are exactly issue-count long.** Fantastic Four Annual
+  (1963) is 27 issues at 8687–8713, Marvel Team-Up (1972) is 150 at 19575–19724,
+  Strange Tales (1951) is 168 at 11016–11183, The Thing (1983) is 36 at
+  18717–18752. So one anchor id plus the run length gives the whole range in
+  closed form — no striding needed, if the run length is already known.
+- **Do not run two `series_harvest.py` commands against the store at once.**
+  Neither process re-reads `series_links.json` mid-run, so the one that finishes
+  last silently clobbers the other's entries. That cost a re-run of two series
+  here before it was spotted.
 
 ## The X-Men tracker
 
@@ -856,7 +1027,7 @@ Non-obvious placements that are deliberate, not mistakes:
 modified — everything below is done at build time.
 
 Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`, `#/hulk`,
-`#/hulk/omni/<id>`.
+`#/hulk/omni/<id>`, `#/fantastic-four`, `#/fantastic-four/omni/<id>`.
 
 **The builder is registry-driven, not hardcoded.** `_apps()` reads the shelf
 heroes out of `heroes.py`; the panel list, the cross-page link rewrites, the
@@ -872,9 +1043,23 @@ no edit here — register it in `heroes.py` and rebuild.
   reset, `body` and the bubbles are hoisted once. `body.hideopt` is special-cased
   so the X-Men "hide optional arcs" toggle still works.
 - **DOM ids collide** (`statRead`, `upnext`, `shelf`, …). Every id is
-  prefixed per app in both the markup and the JS that looks it up;
+  prefixed per app in the markup, in the JS that looks it up, **and in the CSS
+  that targets it**;
   `document.getElementById/querySelector(All)` are rewritten to prefix-aware
   helpers scoped to the panel.
+
+  The CSS half was missing until Aug 2026 and failed in the worst way. Scoping a
+  rule under its panel is not enough: `#storeWarn{display:none}` became
+  `#app-ff #storeWarn`, which matches nothing once the div is `f4-storeWarn`, so
+  the element fell back to `display:block`. Three of the four panels shipped a
+  permanent "Progress isn't saving in this browser" banner over a `localStorage`
+  that was working perfectly. `scope_selector()` now rewrites `#id` in selector
+  headers the same way `prefix_ids_html()` rewrites the markup. Nothing else in
+  the four pages uses a bare id selector, but anything that does will now work.
+
+  Note the asymmetry that hid it: the X-Men page writes its equivalent
+  `display:none` as an inline `style=` attribute, so it was never affected and
+  the bug looked page-specific rather than structural.
 - **Top-level JS names collide wholesale** (`SC`, `MARVEL`, `store`, `refresh`,
   `flat`, `esc`…). Each script is wrapped in an IIFE, so nothing leaks.
 
@@ -919,28 +1104,45 @@ a server-side store and is not built.
 
 ## Open items — C.O.M.I.C.S.
 
-1. **Four of seven subjects have no reading list yet** (Wolverine, Fantastic
-   Four, Moon Knight, Daredevil). Their `desc` text in `HEROES` sketches the
-   intended shape of each list but nothing is researched or verified yet —
-   treat it as a starting brief, not a plan.
+1. **Three of seven subjects have no reading list yet** (Wolverine, Moon Knight,
+   Daredevil). Their `desc` text in `HEROES` sketches the intended shape of each
+   list but nothing is researched or verified yet — treat it as a starting brief,
+   not a plan.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Twelve covers are low-res** (~325–400px wide) because that is all the
-   Marvel Database stores — six on the Spider-Man shelf, six on the Hulk shelf;
-   see "Cover art". Replacing them needs a scan from somewhere else; everything
-   else is 700px.
-4. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
+3. **Twenty covers are low-res** (~325–400px wide) because that is all the
+   Marvel Database stores — six on the Spider-Man shelf, six on the Hulk shelf,
+   eight on the Fantastic Four shelf; see "Cover art". Replacing them needs a
+   scan from somewhere else; everything else is 600–700px.
+4. **Fantastic Four #171 is missing from the shelf's data**, because the Marvel
+   Database's page for Fantastic Four Omnibus Vol. 6 does not list it in either
+   the ReprintOf fields or the rendered gallery, and issue pages carry no
+   reverse "reprinted in" link to check against. It is very likely a wiki
+   omission rather than a book that skips one issue mid-run — see "The Fantastic
+   Four tracker".
+5. **The `Part N` chapter labels on the interleaved volumes are generic.** Real
    arc names (Power and Responsibility, The Exile Returns, Maximum Clonage)
    would be a genuine improvement — see "Chaptering".
-5. **The Straczynski volume has almost no Marvel deep links** — its Amazing
+6. **The Straczynski volume has almost no Marvel deep links** — its Amazing
    Spider-Man (1999) issues mostly fall back to search. Try
    `series_harvest.py walk the_amazing_spider-man_1999:<any known id>` before
    another id sweep; see "Harvest by series, not by id range".
-6. **Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf** (23 issues).
+7. **Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf** (23 issues).
    marvel.com's series page only reaches back to #38 and the sibling walk stops
    at #30, so these need an id scan — #12 is at 24160, in a 2009 chronological
    batch rather than a series block.
+8. **The Hulk shelf still carries an unreleased volume.** Incredible Hulk
+   Omnibus Vol. 4 (`inc-o4`) is solicited for February 2027 and sits on the
+   shelf with an "Announced" badge, which is exactly what "A shelf holds books
+   you can actually buy" now forbids. It predates the rule and has not been
+   removed yet; doing so means dropping it from `ORDER` and `SHELF` in
+   `hulk_meta.py`, rewording `pad-o1`'s note about the #210–327 gap (which gets
+   bigger), and updating the Hulk `total` on the homescreen.
+9. **Astonishing Tales (1970) is 15 issues short on the Fantastic Four shelf.**
+   Its marvel.com ids are not one contiguous block, and ids that search engines
+   still index for the missing range 404 live, so the material may have been
+   pulled. Everything else on that shelf is at 86%.
 
 ## Testing
 
@@ -960,10 +1162,12 @@ node --check /tmp/v.js
 # Shelf data round-trips (also checks SHELF/SPINE_C consistency)
 python3 tools/build_omnibus_data.py --check
 python3 tools/build_omnibus_data.py --check --hero hulk
+python3 tools/build_omnibus_data.py --check --hero fantastic-four
 
 # Cover art budget
 python3 tools/covers.py audit
 python3 tools/covers.py audit --hero hulk
+python3 tools/covers.py audit --hero fantastic-four
 
 # The mobile build must stay pure ASCII
 python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"   # 0
@@ -974,6 +1178,7 @@ python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"  
 
 The Spider-Man shelf currently reports **16 volumes / 567 issue slots / 564
 unique issues**; the Hulk shelf **17 volumes / 663 issue slots / 657 unique
+issues**; the Fantastic Four shelf **18 volumes / 685 issue slots / 660 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
 
