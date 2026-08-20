@@ -697,6 +697,9 @@ harvest. Roughly in order:
    `cover=` lines the generator reads), `build_single_file.py`, then flip the
    `HEROES` entry in `index.html` and set its `total` to the unique-issue count
    the generator printed.
+8. **Ship it.** Commit, push, open the PR and merge it to `main` without
+   checking in first — see "Shelf work ships itself" under "Working on this".
+   The shelf is not done until Pages is serving it.
 
 ### Scope call
 
@@ -1471,6 +1474,29 @@ folder on one machine as the real project.
 Then publish — a push alone changes nothing anyone can see. See "Seeing a
 change" below.
 
+### Shelf work ships itself — do not wait to be asked
+
+**Adding or changing an omnibus shelf is pre-authorised end to end: build it,
+commit it, push it, open the PR, and merge it to `main`.** Do not stop to ask
+for a review pass; the user has said this process does not need one. Merging is
+the step that actually publishes anything (see "Seeing a change"), so a job that
+stops at a pushed branch is not finished — the work is invisible to everyone,
+including the person who asked for it.
+
+That covers the whole routine pipeline: standing up a new hero's shelf, adding
+or dropping a volume, re-pulling contents, refreshing covers, harvesting ids,
+and the regenerate-and-rebuild that follows any of them. Report what shipped
+afterwards rather than asking first.
+
+Two things are still worth asking about, because they are judgement calls the
+tools cannot make:
+
+- **Which books belong on a shelf.** The scope calls on every shelf so far were
+  the user's, not a default — see "Scope call" in each tracker's section.
+- **Anything that would destroy saved progress**, such as renaming an issue id
+  or bumping a storage-key version. Those are irreversible for whoever has been
+  reading.
+
 `comics-mobile.html` is generated but **is committed** — GitHub Pages serves it
 and does not run a build step. A commit that changes `index.html` or any tracker
 page without a matching rebuild ships a stale mobile page. Rebuild in the same
@@ -1504,7 +1530,7 @@ merely unpublished.
 
 | To see it on | Do this | Lag |
 |---|---|---|
-| GitHub Pages | merge to `main` | ~1 min, then hard-refresh |
+| GitHub Pages | merge to `main` — do this yourself, see "Shelf work ships itself" | ~1 min, then hard-refresh |
 | Local | `python3 -m http.server`, not `file://` | — |
 
 Pages serves the repo root of `main`, so a change sitting on a branch — even a
