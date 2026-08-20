@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C.O.M.I.C.S. // Spider-Man Omnibus Protocol</title>
+<title>C.O.M.I.C.S. // Fantastic Four Omnibus Protocol</title>
 <style>
   :root{
     --sky-top:#8fd0f5; --sky-mid:#4a9fd8; --sky-deep:#1b5fa8; --navy:#0d2f5e;
@@ -54,9 +54,9 @@
     border-radius:22px 22px 50% 50%/22px 22px 30px 30px;}
   .hud-top{display:flex;align-items:center;gap:16px;}
   .x-emblem{width:62px;height:62px;flex:0 0 62px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-    background:radial-gradient(circle at 30% 25%, #fff, #ffd0cf 30%, #d8262e 62%, #5c0b10 100%);
+    background:radial-gradient(circle at 30% 25%, #fff, #cfe3ff 30%, #3f6fc9 62%, #0c1a44 100%);
     border:2px solid rgba(255,255,255,.75);box-shadow:0 4px 12px rgba(0,20,60,.5), inset 0 -6px 10px rgba(60,0,0,.4);}
-  .x-emblem svg{width:40px;height:40px;filter:drop-shadow(0 2px 2px rgba(30,0,0,.6));}
+  .x-emblem svg{width:40px;height:40px;filter:drop-shadow(0 2px 3px rgba(0,10,40,.6));}
   .hud-title h1{font-size:clamp(20px,4.2vw,30px);font-style:italic;font-weight:900;letter-spacing:.5px;text-transform:uppercase;
     background:linear-gradient(180deg,#fff 30%, #bfe3ff 55%, #6db6ea 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 3px rgba(0,20,60,.6));}
@@ -171,8 +171,8 @@
     background:linear-gradient(104deg, rgba(255,255,255,.30), transparent 72%);}
   .vig{position:absolute;inset:0;pointer-events:none;
     background:radial-gradient(ellipse 92% 72% at 50% 32%, transparent 42%, rgba(0,8,26,.5) 100%);}
-  .omni .spidey{position:absolute;left:0;right:0;top:13%;display:flex;align-items:center;justify-content:center;}
-  .omni .spidey svg{width:47%;max-width:104px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,10,35,.6));}
+  .omni .glyph{position:absolute;left:0;right:0;top:13%;display:flex;align-items:center;justify-content:center;}
+  .omni .glyph svg{width:47%;max-width:104px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,10,35,.6));}
   .omni .plate{position:absolute;left:0;right:0;bottom:0;padding:38px 12px 11px;
     background:linear-gradient(180deg, transparent, rgba(4,18,44,.66) 40%, rgba(3,13,34,.94));}
   .omni .oname{font-size:13.5px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.4px;line-height:1.14;
@@ -189,37 +189,41 @@
     text-shadow:0 1px 3px rgba(0,10,30,.8);letter-spacing:1px;}
 
   /* ---- omnibus cover ramps (placeholders until real art is dropped in) ---- */
-  .o-ditko{background:linear-gradient(163deg,#e2483f 0%,#b81f26 34%,#1d3f8c 70%,#0b1d47 100%);}
-  .o-untold{background:linear-gradient(163deg,#f0c874 0%,#c9702e 32%,#8d2226 66%,#2a1024 100%);}
-  .o-romita{background:linear-gradient(163deg,#ff6a5e 0%,#d92a30 34%,#2454b0 70%,#0d2154 100%);}
-  .o-teamup{background:linear-gradient(163deg,#ffb24d 0%,#e2661f 32%,#7d2a8e 68%,#25113f 100%);}
-  .o-conway{background:linear-gradient(163deg,#ee5a4a 0%,#bd2028 36%,#16306e 70%,#080f33 100%);}
-  .o-spectacular{background:linear-gradient(163deg,#7fc0f2 0%,#3566c4 34%,#4a2a92 68%,#140b34 100%);}
-  .o-eighties{background:linear-gradient(163deg,#f2564c 0%,#a8151d 36%,#2b2b33 72%,#0a0a10 100%);}
-  .o-stern{background:linear-gradient(163deg,#ffd66b 0%,#e07a1c 32%,#a3161d 66%,#2c0810 100%);}
-  .o-black{background:linear-gradient(163deg,#6d7f9c 0%,#31405c 34%,#141a2c 70%,#05070f 100%);}
-  .o-mcfarlane{background:linear-gradient(163deg,#8f6fd6 0%,#4a2f9c 34%,#1c1140 70%,#07040f 100%);}
-  .o-larsen{background:linear-gradient(163deg,#5fd3d0 0%,#1f8f9c 32%,#a8231f 70%,#2b0708 100%);}
-  .o-bagley{background:linear-gradient(163deg,#ff5f52 0%,#d5121a 34%,#1b4fb5 70%,#0a1b4d 100%);}
-  .o-dematteis{background:linear-gradient(163deg,#8fd45c 0%,#3f8c2c 34%,#5c2a8e 70%,#1a0a33 100%);}
-  .o-clone{background:linear-gradient(163deg,#9fe06a 0%,#3f9433 32%,#a81d22 68%,#280609 100%);}
-  .o-benreilly{background:linear-gradient(163deg,#ff5a52 0%,#c2161c 32%,#1e3f96 68%,#080f33 100%);}
-  .o-jms{background:linear-gradient(163deg,#c94f3a 0%,#8c1a22 34%,#3a1f5e 70%,#0d0718 100%);}
-  .o-ultimate{background:linear-gradient(163deg,#ff4d4d 0%,#d01018 32%,#123a99 68%,#050f33 100%);}
+  .o-kirby{background:linear-gradient(163deg,#a8d8ff 0%,#2f6fc9 34%,#5a2a92 70%,#180a33 100%);}
+  .o-bronze{background:linear-gradient(163deg,#f5b56a 0%,#d67a1f 32%,#1e3f7a 68%,#0a1530 100%);}
+  .o-perez{background:linear-gradient(163deg,#6adfd0 0%,#1f9c8f 34%,#a82fa0 70%,#2a0a2b 100%);}
+  .o-byrne{background:linear-gradient(163deg,#eaf6ff 0%,#7fc2f5 30%,#2f6fc9 68%,#0c1a44 100%);}
+  .o-waid{background:linear-gradient(163deg,#ffe07a 0%,#ffb92f 32%,#2f6fc9 68%,#0c1a44 100%);}
+  .o-millar{background:linear-gradient(163deg,#dfe6ee 0%,#7d8fa3 34%,#a8232f 70%,#2b0509 100%);}
+  .o-hickman{background:linear-gradient(163deg,#ffffff 0%,#cbb8f0 30%,#6a3aa8 68%,#180a33 100%);}
+  .o-fraction{background:linear-gradient(163deg,#ffb15a 0%,#e0701c 32%,#1f9c8f 68%,#082a26 100%);}
+  .o-slott{background:linear-gradient(163deg,#ffe07a 0%,#f0a500 30%,#2f4fa8 68%,#0a1240 100%);}
+  .o-ultimate{background:linear-gradient(163deg,#9fe8ff 0%,#2fa8c9 34%,#123a4a 70%,#040c10 100%);}
+  .o-thing{background:linear-gradient(163deg,#f0a35c 0%,#c9702f 34%,#6a3a1a 70%,#1a0d06 100%);}
+  .o-doom{background:linear-gradient(163deg,#6f9c7a 0%,#2f5a3f 34%,#12291a 70%,#040a06 100%);}
   .o-placeholder{background:linear-gradient(163deg,#8ba3bd 0%,#4d6480 34%,#26344a 70%,#0d141f 100%);}
 
   /* ---- cover textures ---- */
-  .tex-web{background:
-    repeating-conic-gradient(from 0deg at 50% 26%, rgba(255,255,255,.13) 0deg .6deg, transparent .6deg 22.5deg),
-    radial-gradient(circle at 50% 26%, transparent 0 6%, rgba(255,255,255,.12) 6% 6.6%, transparent 6.6% 14%,
-      rgba(255,255,255,.11) 14% 14.6%, transparent 14.6% 24%, rgba(255,255,255,.1) 24% 24.6%, transparent 24.6% 36%,
-      rgba(255,255,255,.09) 36% 36.6%, transparent 36.6% 50%, rgba(255,255,255,.07) 50% 50.6%, transparent 50.6%);}
+  .tex-krackle{background:
+    repeating-radial-gradient(circle at 28% 22%, rgba(0,0,0,.18) 0 3px, transparent 3px 21px),
+    repeating-radial-gradient(circle at 68% 58%, rgba(0,0,0,.14) 0 4px, transparent 4px 27px),
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,.14), transparent 60%);}
+  .tex-cosmic{background:
+    radial-gradient(circle at 18% 16%, rgba(255,255,255,.8) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 72% 10%, rgba(255,255,255,.65) 0 1.3px, transparent 1.8px),
+    radial-gradient(circle at 88% 33%, rgba(255,255,255,.55) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 35% 42%, rgba(255,255,255,.7) 0 1.2px, transparent 1.7px),
+    radial-gradient(circle at 10% 58%, rgba(255,255,255,.5) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 63% 66%, rgba(255,255,255,.65) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 83% 78%, rgba(255,255,255,.45) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 27% 84%, rgba(255,255,255,.55) 0 1.2px, transparent 1.7px);}
+  .tex-negzone{background:
+    radial-gradient(circle at 50% 32%, transparent 0 8%, rgba(255,255,255,.14) 8% 8.8%, transparent 8.8% 17%,
+      rgba(255,255,255,.12) 17% 17.8%, transparent 17.8% 28%, rgba(255,255,255,.1) 28% 28.8%, transparent 28.8% 41%,
+      rgba(255,255,255,.08) 41% 41.8%, transparent 41.8% 56%);}
   .tex-halftone{background:
     radial-gradient(circle at 50% 50%, rgba(255,255,255,.16) 0 1.4px, transparent 1.8px) 0 0/9px 9px,
     radial-gradient(circle at 50% 50%, rgba(0,0,0,.10) 0 1.2px, transparent 1.6px) 4px 4px/9px 9px;}
-  .tex-burst{background:
-    repeating-conic-gradient(from 8deg at 50% 34%, rgba(255,255,255,.10) 0deg 2.2deg, transparent 2.2deg 24deg),
-    radial-gradient(circle at 50% 34%, rgba(255,255,255,.2), transparent 54%);}
 
   /* ---- summary panels ---- */
   .sum{display:none;margin:2px 9px 10px 60px;padding:12px 14px;border-radius:13px;font-size:12.5px;line-height:1.62;color:#eef7ff;
@@ -347,26 +351,23 @@
   <nav class="topnav">
     <a class="backlink" href="index.html"><span class="caret">&#9664;</span> C.O.M.I.C.S.</a>
     <button class="backlink hidden" id="backShelf"><span class="caret">&#9664;</span> All omnibuses</button>
-    <span class="crumb" id="crumb">Subject &middot; Spider-Man</span>
+    <span class="crumb" id="crumb">Subject &middot; Fantastic Four</span>
   </nav>
 
   <header class="hud">
     <div class="hud-top">
       <div class="x-emblem">
         <svg viewBox="0 0 100 100" aria-hidden="true">
-          <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="12%" stop-color="#ffffff"/><stop offset="55%" stop-color="#ffe0dc"/><stop offset="100%" stop-color="#8d1016"/>
+          <defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="12%" stop-color="#ffffff"/><stop offset="55%" stop-color="#bfe0ff"/><stop offset="100%" stop-color="#0c1a44"/>
           </linearGradient></defs>
-          <g fill="url(#sg)"><ellipse cx="50" cy="60" rx="12" ry="18"/><ellipse cx="50" cy="38" rx="8.5" ry="9.5"/></g>
-          <g fill="none" stroke="url(#sg)" stroke-width="4.2" stroke-linecap="round">
-            <path d="M42,35 Q25,25 21,9"/><path d="M40,44 Q20,38 12,25"/><path d="M40,52 Q19,52 12,45"/><path d="M42,60 Q24,66 20,81"/>
-            <path d="M58,35 Q75,25 79,9"/><path d="M60,44 Q80,38 88,25"/><path d="M60,52 Q81,52 88,45"/><path d="M58,60 Q76,66 80,81"/>
-          </g>
+          <circle cx="50" cy="50" r="40" fill="none" stroke="url(#fg)" stroke-width="5"/>
+          <g fill="none" stroke="url(#fg)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M60,20 L30,62 L72,62"/><path d="M60,20 L60,84"/></g>
         </svg>
       </div>
       <div class="hud-title">
         <h1 id="hudTitle">Omnibus Protocol</h1>
-        <div class="sub" id="hudSub">Amazing Fantasy #15 &rarr; Ultimate Spider-Man &middot; 1962&ndash;2011</div>
+        <div class="sub" id="hudSub">Fantastic Four #1 &rarr; Multiverse Saga &middot; 1961&ndash;2018</div>
       </div>
     </div>
     <div class="hud-stats">
@@ -443,323 +444,63 @@
 </div>
 
 <script>const SC = {
-"Amazing Fantasy": [
-"#c9822a",
-"#5c2f0c"
-],
-"Amazing Spider-Man": [
-"#d5262e",
-"#5c0b10"
-],
-"Amazing Spider-Man (1999)": [
-"#d5262e",
-"#5c0b10"
-],
-"Ultimate Spider-Man": [
-"#e02b22",
-"#0e2f7a"
-],
-"Ultimate Comics Spider-Man": [
-"#c21e28",
-"#14173f"
-],
-"Ultimate Avengers vs. New Ultimates": [
-"#3b6fbf",
-"#131a3a"
-],
-"Ultimate Fallout": [
-"#5c6470",
-"#12151c"
-],
-"Amazing Spider-Man Annual": [
-"#e0553a",
-"#6b1a10"
-],
-"Amazing Spider-Man Annual (1999)": [
-"#e0553a",
-"#6b1a10"
-],
-"Spectacular Spider-Man": [
-"#2f6fc4",
-"#122f66"
-],
-"Spectacular Spider-Man Annual": [
-"#3f80d0",
-"#16306b"
-],
-"Spectacular Spider-Man Magazine": [
-"#4a5a7a",
-"#1c2438"
-],
-"Web of Spider-Man": [
-"#2a3550",
-"#0b1020"
-],
-"Web of Spider-Man Annual": [
-"#38466a",
-"#131a2e"
-],
-"Spider-Man (1990)": [
-"#4a2f9c",
-"#1a0f40"
-],
-"Spider-Man Unlimited": [
-"#6a3fb0",
-"#241048"
-],
-"Sensational Spider-Man": [
-"#c2161c",
-"#3d060a"
-],
-"Marvel Team-Up": [
-"#e2661f",
-"#5c2408"
-],
-"Marvel Team-Up Annual": [
-"#ef7a2c",
-"#66290a"
-],
-"Untold Tales of Spider-Man": [
-"#c9702e",
-"#4c2010"
-],
-"Untold Tales of Spider-Man Annual": [
-"#d98a45",
-"#563018"
-],
-"Untold Tales: Strange Encounters": [
-"#b06030",
-"#3e1c0e"
-],
-"Scarlet Spider": [
-"#b0181e",
-"#3a0508"
-],
-"Scarlet Spider Unlimited": [
-"#c02026",
-"#40070a"
-],
-"Web of Scarlet Spider": [
-"#8e1418",
-"#2e0406"
-],
-"Amazing Scarlet Spider": [
-"#c8232a",
-"#450709"
-],
-"Spectacular Scarlet Spider": [
-"#a81d22",
-"#380608"
-],
-"Green Goblin": [
-"#4d9c2c",
-"#173a0d"
-],
-"New Warriors": [
-"#1f8f9c",
-"#08343a"
-],
-"New Warriors Annual": [
-"#26a3b0",
-"#0b3f47"
-],
-"Venom: Lethal Protector": [
-"#1d1d24",
-"#050508"
-],
-"Venom: Along Came a Spider": [
-"#26262f",
-"#07070a"
-],
-"X-Force": [
-"#3a4f8c",
-"#111a38"
-],
-"Nova": [
-"#d8a020",
-"#5c4008"
-],
-"Daredevil": [
-"#a8151d",
-"#380508"
-],
 "Fantastic Four": [
-"#2454b0",
-"#0b2054"
+"#7fc2f5",
+"#0c1a44"
 ],
 "Fantastic Four Annual": [
-"#2f66c8",
-"#102a66"
+"#7fc2f5",
+"#0e2044"
 ],
-"Strange Tales Annual": [
-"#6a4fb0",
-"#241a48"
+"Fantastic Four (1998)": [
+"#4f8fd0",
+"#0e2a5c"
 ],
-"Incredible Hulk": [
-"#4d9c2c",
-"#173a0d"
+"Fantastic Four (2012)": [
+"#e0701c",
+"#123a34"
 ],
-"Marvel Super-Heroes": [
-"#c04a20",
-"#40170a"
+"Fantastic Four (2018)": [
+"#f0a500",
+"#1a2f7a"
 ],
-"Marvel Comics Presents": [
-"#7a5ab0",
-"#2a1c48"
+"FF": [
+"#8a5fd0",
+"#140a2b"
 ],
-"What If?": [
-"#5a6a8c",
-"#1e2434"
+"Ultimate Fantastic Four": [
+"#2fa8c9",
+"#0a1f28"
 ],
-"Not Brand Echh": [
-"#d8a83a",
-"#5c4610"
-],
-"101 Ways to End the Clone Saga": [
-"#4a9fd8",
-"#123c78"
-],
-"Amazing Spider-Man Ashcan": [
-"#4a9fd8",
-"#123c78"
-],
-"Amazing Spider-Man Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Collectors' Preview": [
-"#4a9fd8",
-"#123c78"
-],
-"Dead Man's Hand": [
-"#4a9fd8",
-"#123c78"
-],
-"Funeral for an Octopus": [
-"#4a9fd8",
-"#123c78"
-],
-"Giant-Size Spider-Man": [
-"#4a9fd8",
-"#123c78"
-],
-"Giant-Size Super-Heroes": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Bicentennial Calendar 1976": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Guide to Collecting Comics": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Memory Album Calendar 1977": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Premiere": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Tales": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Treasury Edition": [
-"#4a9fd8",
-"#123c78"
+"Thing": [
+"#c9702f",
+"#2b1608"
 ],
 "Marvel Two-In-One": [
-"#4a9fd8",
-"#123c78"
+"#d9862f",
+"#3a1e08"
 ],
-"Maximum Clonage Alpha": [
-"#4a9fd8",
-"#123c78"
+"Marvel Team-Up": [
+"#c9262e",
+"#12204a"
 ],
-"Maximum Clonage Omega": [
-"#4a9fd8",
-"#123c78"
+"Strange Tales": [
+"#ff6a2f",
+"#3a0f06"
 ],
-"Mighty Marvel Calendar 1975": [
-"#4a9fd8",
-"#123c78"
+"Astonishing Tales": [
+"#a8602f",
+"#241206"
 ],
-"Official Marvel Try-Out Book": [
-"#4a9fd8",
-"#123c78"
+"Super-Villain Team-Up": [
+"#3f6a4a",
+"#0a1710"
 ],
-"Osborn Journals": [
-"#4a9fd8",
-"#123c78"
-],
-"Soul of the Hunter": [
-"#4a9fd8",
-"#123c78"
-],
-"Spectacular Spider-Man Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man Holiday Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man Team-Up": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man/Punisher: Family Plot": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man: Redemption": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man: Revelations": [
-"#4a9fd8",
-"#123c78"
-],
-"The Clone Journal": [
-"#4a9fd8",
-"#123c78"
-],
-"The Final Adventure": [
-"#4a9fd8",
-"#123c78"
-],
-"The Jackal Files": [
-"#4a9fd8",
-"#123c78"
-],
-"The Lost Years": [
-"#4a9fd8",
-"#123c78"
-],
-"The Parker Years": [
-"#4a9fd8",
-"#123c78"
-],
-"Venom Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Web of Spider-Man Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Wizard Mini-Comic": [
-"#4a9fd8",
-"#123c78"
+"Doctor Doom": [
+"#2f5a3f",
+"#040a06"
 ]
-};
+}
 
 /* ============ OMNIBUS DATA ============
    Contents come from the Marvel Database's structured ReprintOf fields for each
@@ -769,260 +510,179 @@
    CSS placeholder art is replaced automatically. */
 const OMNI = [
 {
-"id": "asm-o1",
-"spine": "Amazing Spider-Man",
-"cover": "Art/Spider-Man/asm-o1.jpg",
-"title": "Amazing Spider-Man Omnibus",
+"id": "ff-o1",
+"spine": "Fantastic Four",
+"cover": "Art/Fantastic-Four/ff-o1.jpg",
+"title": "Fantastic Four Omnibus",
 "vol": "Vol. 1",
-"creators": "Stan Lee & Steve Ditko",
-"era": "1962–1966",
-"released": "Apr 2007",
-"art": "o-ditko",
-"tex": "tex-halftone",
-"note": "The complete Lee/Ditko run. Everything Spider-Man is starts here — Amazing Fantasy #15 through the Master Planner saga and Ditko's exit.",
+"creators": "Stan Lee & Jack Kirby",
+"era": "1961–1964",
+"released": "Jan 2005",
+"art": "o-kirby",
+"tex": "tex-krackle",
+"note": "Where the Marvel Universe starts. Thirty issues and the first annual, inventing the Skrulls, Doctor Doom, the Puppet Master and Namor's return one month at a time.",
 "chapters": [
 {
-"id": "asm-o1-c1",
-"title": "Amazing Fantasy #15",
-"era": "1962–1966",
+"id": "ff-o1-c1",
+"title": "Fantastic Four #1–30",
+"era": "1961–1964",
 "issues": [
 {
-"id": "af-15",
-"t": "Amazing Fantasy #15",
-"s": "Amazing Fantasy"
+"id": "ff-1",
+"t": "Fantastic Four #1",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-2",
+"t": "Fantastic Four #2",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-3",
+"t": "Fantastic Four #3",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-4",
+"t": "Fantastic Four #4",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-5",
+"t": "Fantastic Four #5",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-6",
+"t": "Fantastic Four #6",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-7",
+"t": "Fantastic Four #7",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-8",
+"t": "Fantastic Four #8",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-9",
+"t": "Fantastic Four #9",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-10",
+"t": "Fantastic Four #10",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-11",
+"t": "Fantastic Four #11",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-12",
+"t": "Fantastic Four #12",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-13",
+"t": "Fantastic Four #13",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-14",
+"t": "Fantastic Four #14",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-15",
+"t": "Fantastic Four #15",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-16",
+"t": "Fantastic Four #16",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-17",
+"t": "Fantastic Four #17",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-18",
+"t": "Fantastic Four #18",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-19",
+"t": "Fantastic Four #19",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-20",
+"t": "Fantastic Four #20",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-21",
+"t": "Fantastic Four #21",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-22",
+"t": "Fantastic Four #22",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-23",
+"t": "Fantastic Four #23",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-24",
+"t": "Fantastic Four #24",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-25",
+"t": "Fantastic Four #25",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-26",
+"t": "Fantastic Four #26",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-27",
+"t": "Fantastic Four #27",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-28",
+"t": "Fantastic Four #28",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-29",
+"t": "Fantastic Four #29",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-30",
+"t": "Fantastic Four #30",
+"s": "Fantastic Four"
 }
 ]
 },
 {
-"id": "asm-o1-c2",
-"title": "Amazing Spider-Man #1–38",
-"era": "1962–1966",
-"issues": [
-{
-"id": "asm-1",
-"t": "Amazing Spider-Man #1",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-2",
-"t": "Amazing Spider-Man #2",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-3",
-"t": "Amazing Spider-Man #3",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-4",
-"t": "Amazing Spider-Man #4",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-5",
-"t": "Amazing Spider-Man #5",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-6",
-"t": "Amazing Spider-Man #6",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-7",
-"t": "Amazing Spider-Man #7",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-8",
-"t": "Amazing Spider-Man #8",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-9",
-"t": "Amazing Spider-Man #9",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-10",
-"t": "Amazing Spider-Man #10",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-11",
-"t": "Amazing Spider-Man #11",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-12",
-"t": "Amazing Spider-Man #12",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-13",
-"t": "Amazing Spider-Man #13",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-14",
-"t": "Amazing Spider-Man #14",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-15",
-"t": "Amazing Spider-Man #15",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-16",
-"t": "Amazing Spider-Man #16",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-17",
-"t": "Amazing Spider-Man #17",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-18",
-"t": "Amazing Spider-Man #18",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-19",
-"t": "Amazing Spider-Man #19",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-20",
-"t": "Amazing Spider-Man #20",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-21",
-"t": "Amazing Spider-Man #21",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-22",
-"t": "Amazing Spider-Man #22",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-23",
-"t": "Amazing Spider-Man #23",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-24",
-"t": "Amazing Spider-Man #24",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-25",
-"t": "Amazing Spider-Man #25",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-26",
-"t": "Amazing Spider-Man #26",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-27",
-"t": "Amazing Spider-Man #27",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-28",
-"t": "Amazing Spider-Man #28",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-29",
-"t": "Amazing Spider-Man #29",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-30",
-"t": "Amazing Spider-Man #30",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-31",
-"t": "Amazing Spider-Man #31",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-32",
-"t": "Amazing Spider-Man #32",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-33",
-"t": "Amazing Spider-Man #33",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-34",
-"t": "Amazing Spider-Man #34",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-35",
-"t": "Amazing Spider-Man #35",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-36",
-"t": "Amazing Spider-Man #36",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-37",
-"t": "Amazing Spider-Man #37",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-38",
-"t": "Amazing Spider-Man #38",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "asm-o1-c3",
-"title": "Amazing Spider-Man Annual #1–2",
-"era": "1962–1966",
-"issues": [
-{
-"id": "asmann-1",
-"t": "Amazing Spider-Man Annual #1",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "asmann-2",
-"t": "Amazing Spider-Man Annual #2",
-"s": "Amazing Spider-Man Annual"
-}
-]
-},
-{
-"id": "asm-o1-c4",
-"title": "Strange Tales Annual #2",
-"era": "1962–1966",
-"issues": [
-{
-"id": "stann-2",
-"t": "Strange Tales Annual #2",
-"s": "Strange Tales Annual"
-}
-]
-},
-{
-"id": "asm-o1-c5",
+"id": "ff-o1-c2",
 "title": "Fantastic Four Annual #1",
-"era": "1962–1966",
+"era": "1961–1964",
 "issues": [
 {
 "id": "ffann-1",
@@ -1034,1217 +694,1168 @@ const OMNI = [
 ]
 },
 {
-"id": "asm-o2",
-"spine": "Amazing Spider-Man",
-"cover": "Art/Spider-Man/asm-o2.jpg",
-"title": "Amazing Spider-Man Omnibus",
+"id": "ff-o2",
+"spine": "Fantastic Four",
+"cover": "Art/Fantastic-Four/ff-o2.jpg",
+"title": "Fantastic Four Omnibus",
 "vol": "Vol. 2",
-"creators": "Stan Lee & John Romita Sr.",
-"era": "1966–1968",
-"released": "Apr 2012",
-"art": "o-romita",
-"tex": "tex-halftone",
-"note": "Romita takes over. The Green Goblin's identity, Mary Jane's entrance, the Kingpin's debut, and \"Spider-Man No More!\"",
+"creators": "Stan Lee & Jack Kirby",
+"era": "1964–1967",
+"released": "Jun 2007",
+"art": "o-kirby",
+"tex": "tex-cosmic",
+"note": "The imperial run: the Frightful Four, the Inhumans, Wyatt Wingfoot — and #48–50, the Galactus Trilogy, which is where the book stops being a superhero comic and starts being cosmic.",
 "chapters": [
 {
-"id": "asm-o2-c1",
-"title": "Amazing Spider-Man #39–67",
-"era": "1966–1968",
+"id": "ff-o2-c1",
+"title": "Fantastic Four #31–60",
+"era": "1964–1967",
 "issues": [
 {
-"id": "asm-39",
-"t": "Amazing Spider-Man #39",
-"s": "Amazing Spider-Man"
+"id": "ff-31",
+"t": "Fantastic Four #31",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-40",
-"t": "Amazing Spider-Man #40",
-"s": "Amazing Spider-Man"
+"id": "ff-32",
+"t": "Fantastic Four #32",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-41",
-"t": "Amazing Spider-Man #41",
-"s": "Amazing Spider-Man"
+"id": "ff-33",
+"t": "Fantastic Four #33",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-42",
-"t": "Amazing Spider-Man #42",
-"s": "Amazing Spider-Man"
+"id": "ff-34",
+"t": "Fantastic Four #34",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-43",
-"t": "Amazing Spider-Man #43",
-"s": "Amazing Spider-Man"
+"id": "ff-35",
+"t": "Fantastic Four #35",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-44",
-"t": "Amazing Spider-Man #44",
-"s": "Amazing Spider-Man"
+"id": "ff-36",
+"t": "Fantastic Four #36",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-45",
-"t": "Amazing Spider-Man #45",
-"s": "Amazing Spider-Man"
+"id": "ff-37",
+"t": "Fantastic Four #37",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-46",
-"t": "Amazing Spider-Man #46",
-"s": "Amazing Spider-Man"
+"id": "ff-38",
+"t": "Fantastic Four #38",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-47",
-"t": "Amazing Spider-Man #47",
-"s": "Amazing Spider-Man"
+"id": "ff-39",
+"t": "Fantastic Four #39",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-48",
-"t": "Amazing Spider-Man #48",
-"s": "Amazing Spider-Man"
+"id": "ff-40",
+"t": "Fantastic Four #40",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-49",
-"t": "Amazing Spider-Man #49",
-"s": "Amazing Spider-Man"
+"id": "ff-41",
+"t": "Fantastic Four #41",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-50",
-"t": "Amazing Spider-Man #50",
-"s": "Amazing Spider-Man"
+"id": "ff-42",
+"t": "Fantastic Four #42",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-51",
-"t": "Amazing Spider-Man #51",
-"s": "Amazing Spider-Man"
+"id": "ff-43",
+"t": "Fantastic Four #43",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-52",
-"t": "Amazing Spider-Man #52",
-"s": "Amazing Spider-Man"
+"id": "ff-44",
+"t": "Fantastic Four #44",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-53",
-"t": "Amazing Spider-Man #53",
-"s": "Amazing Spider-Man"
+"id": "ff-45",
+"t": "Fantastic Four #45",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-54",
-"t": "Amazing Spider-Man #54",
-"s": "Amazing Spider-Man"
+"id": "ff-46",
+"t": "Fantastic Four #46",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-55",
-"t": "Amazing Spider-Man #55",
-"s": "Amazing Spider-Man"
+"id": "ff-47",
+"t": "Fantastic Four #47",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-56",
-"t": "Amazing Spider-Man #56",
-"s": "Amazing Spider-Man"
+"id": "ff-48",
+"t": "Fantastic Four #48",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-57",
-"t": "Amazing Spider-Man #57",
-"s": "Amazing Spider-Man"
+"id": "ff-49",
+"t": "Fantastic Four #49",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-58",
-"t": "Amazing Spider-Man #58",
-"s": "Amazing Spider-Man"
+"id": "ff-50",
+"t": "Fantastic Four #50",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-59",
-"t": "Amazing Spider-Man #59",
-"s": "Amazing Spider-Man"
+"id": "ff-51",
+"t": "Fantastic Four #51",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-60",
-"t": "Amazing Spider-Man #60",
-"s": "Amazing Spider-Man"
+"id": "ff-52",
+"t": "Fantastic Four #52",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-61",
-"t": "Amazing Spider-Man #61",
-"s": "Amazing Spider-Man"
+"id": "ff-53",
+"t": "Fantastic Four #53",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-62",
-"t": "Amazing Spider-Man #62",
-"s": "Amazing Spider-Man"
+"id": "ff-54",
+"t": "Fantastic Four #54",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-63",
-"t": "Amazing Spider-Man #63",
-"s": "Amazing Spider-Man"
+"id": "ff-55",
+"t": "Fantastic Four #55",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-64",
-"t": "Amazing Spider-Man #64",
-"s": "Amazing Spider-Man"
+"id": "ff-56",
+"t": "Fantastic Four #56",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-65",
-"t": "Amazing Spider-Man #65",
-"s": "Amazing Spider-Man"
+"id": "ff-57",
+"t": "Fantastic Four #57",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-66",
-"t": "Amazing Spider-Man #66",
-"s": "Amazing Spider-Man"
+"id": "ff-58",
+"t": "Fantastic Four #58",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-67",
-"t": "Amazing Spider-Man #67",
-"s": "Amazing Spider-Man"
+"id": "ff-59",
+"t": "Fantastic Four #59",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-60",
+"t": "Fantastic Four #60",
+"s": "Fantastic Four"
 }
 ]
 },
 {
-"id": "asm-o2-c2",
-"title": "Amazing Spider-Man Annual #3–5",
-"era": "1966–1968",
+"id": "ff-o2-c2",
+"title": "Fantastic Four Annual #2–4",
+"era": "1964–1967",
 "issues": [
 {
-"id": "asmann-3",
-"t": "Amazing Spider-Man Annual #3",
-"s": "Amazing Spider-Man Annual"
+"id": "ffann-2",
+"t": "Fantastic Four Annual #2",
+"s": "Fantastic Four Annual"
 },
 {
-"id": "asmann-4",
-"t": "Amazing Spider-Man Annual #4",
-"s": "Amazing Spider-Man Annual"
+"id": "ffann-3",
+"t": "Fantastic Four Annual #3",
+"s": "Fantastic Four Annual"
 },
 {
-"id": "asmann-5",
-"t": "Amazing Spider-Man Annual #5",
-"s": "Amazing Spider-Man Annual"
-}
-]
-},
-{
-"id": "asm-o2-c3",
-"title": "Spectacular Spider-Man Magazine #1–2",
-"era": "1966–1968",
-"issues": [
-{
-"id": "ppmag-1",
-"t": "Spectacular Spider-Man Magazine #1",
-"s": "Spectacular Spider-Man Magazine"
-},
-{
-"id": "ppmag-2",
-"t": "Spectacular Spider-Man Magazine #2",
-"s": "Spectacular Spider-Man Magazine"
-}
-]
-},
-{
-"id": "asm-o2-c4",
-"title": "Not Brand Echh #2, #6, #11",
-"era": "1966–1968",
-"issues": [
-{
-"id": "nbe-2",
-"t": "Not Brand Echh #2",
-"s": "Not Brand Echh"
-},
-{
-"id": "nbe-6",
-"t": "Not Brand Echh #6",
-"s": "Not Brand Echh"
-},
-{
-"id": "nbe-11",
-"t": "Not Brand Echh #11",
-"s": "Not Brand Echh"
+"id": "ffann-4",
+"t": "Fantastic Four Annual #4",
+"s": "Fantastic Four Annual"
 }
 ]
 }
 ]
 },
 {
-"id": "asm-o3",
-"spine": "Amazing Spider-Man",
-"cover": "Art/Spider-Man/asm-o3.jpg",
-"title": "Amazing Spider-Man Omnibus",
+"id": "ff-o3",
+"spine": "Fantastic Four",
+"cover": "Art/Fantastic-Four/ff-o3.jpg",
+"title": "Fantastic Four Omnibus",
 "vol": "Vol. 3",
-"creators": "Lee, Romita Sr. & Gil Kane",
-"era": "1968–1971",
-"released": "May 2017",
-"art": "o-romita",
-"tex": "tex-web",
-"note": "The Stone Tablet saga, Captain Stacy's death, the Comics Code-defying drug issues, and Morbius's debut.",
+"creators": "Stan Lee & Jack Kirby",
+"era": "1967–1970",
+"released": "Apr 2015",
+"art": "o-kirby",
+"tex": "tex-negzone",
+"note": "The end of Lee and Kirby together. The Black Panther's debut, Annihilus and the Negative Zone, the Kree Sentry, and Franklin Richards born.",
 "chapters": [
 {
-"id": "asm-o3-c1",
-"title": "Amazing Spider-Man #68–104",
-"era": "1968–1971",
+"id": "ff-o3-c1",
+"title": "Fantastic Four #61–93",
+"era": "1967–1970",
 "issues": [
 {
-"id": "asm-68",
-"t": "Amazing Spider-Man #68",
-"s": "Amazing Spider-Man"
+"id": "ff-61",
+"t": "Fantastic Four #61",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-69",
-"t": "Amazing Spider-Man #69",
-"s": "Amazing Spider-Man"
+"id": "ff-62",
+"t": "Fantastic Four #62",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-70",
-"t": "Amazing Spider-Man #70",
-"s": "Amazing Spider-Man"
+"id": "ff-63",
+"t": "Fantastic Four #63",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-71",
-"t": "Amazing Spider-Man #71",
-"s": "Amazing Spider-Man"
+"id": "ff-64",
+"t": "Fantastic Four #64",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-72",
-"t": "Amazing Spider-Man #72",
-"s": "Amazing Spider-Man"
+"id": "ff-65",
+"t": "Fantastic Four #65",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-73",
-"t": "Amazing Spider-Man #73",
-"s": "Amazing Spider-Man"
+"id": "ff-66",
+"t": "Fantastic Four #66",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-74",
-"t": "Amazing Spider-Man #74",
-"s": "Amazing Spider-Man"
+"id": "ff-67",
+"t": "Fantastic Four #67",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-75",
-"t": "Amazing Spider-Man #75",
-"s": "Amazing Spider-Man"
+"id": "ff-68",
+"t": "Fantastic Four #68",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-76",
-"t": "Amazing Spider-Man #76",
-"s": "Amazing Spider-Man"
+"id": "ff-69",
+"t": "Fantastic Four #69",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-77",
-"t": "Amazing Spider-Man #77",
-"s": "Amazing Spider-Man"
+"id": "ff-70",
+"t": "Fantastic Four #70",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-78",
-"t": "Amazing Spider-Man #78",
-"s": "Amazing Spider-Man"
+"id": "ff-71",
+"t": "Fantastic Four #71",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-79",
-"t": "Amazing Spider-Man #79",
-"s": "Amazing Spider-Man"
+"id": "ff-72",
+"t": "Fantastic Four #72",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-80",
-"t": "Amazing Spider-Man #80",
-"s": "Amazing Spider-Man"
+"id": "ff-73",
+"t": "Fantastic Four #73",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-81",
-"t": "Amazing Spider-Man #81",
-"s": "Amazing Spider-Man"
+"id": "ff-74",
+"t": "Fantastic Four #74",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-82",
-"t": "Amazing Spider-Man #82",
-"s": "Amazing Spider-Man"
+"id": "ff-75",
+"t": "Fantastic Four #75",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-83",
-"t": "Amazing Spider-Man #83",
-"s": "Amazing Spider-Man"
+"id": "ff-76",
+"t": "Fantastic Four #76",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-84",
-"t": "Amazing Spider-Man #84",
-"s": "Amazing Spider-Man"
+"id": "ff-77",
+"t": "Fantastic Four #77",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-85",
-"t": "Amazing Spider-Man #85",
-"s": "Amazing Spider-Man"
+"id": "ff-78",
+"t": "Fantastic Four #78",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-86",
-"t": "Amazing Spider-Man #86",
-"s": "Amazing Spider-Man"
+"id": "ff-79",
+"t": "Fantastic Four #79",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-87",
-"t": "Amazing Spider-Man #87",
-"s": "Amazing Spider-Man"
+"id": "ff-80",
+"t": "Fantastic Four #80",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-88",
-"t": "Amazing Spider-Man #88",
-"s": "Amazing Spider-Man"
+"id": "ff-81",
+"t": "Fantastic Four #81",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-89",
-"t": "Amazing Spider-Man #89",
-"s": "Amazing Spider-Man"
+"id": "ff-82",
+"t": "Fantastic Four #82",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-90",
-"t": "Amazing Spider-Man #90",
-"s": "Amazing Spider-Man"
+"id": "ff-83",
+"t": "Fantastic Four #83",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-91",
-"t": "Amazing Spider-Man #91",
-"s": "Amazing Spider-Man"
+"id": "ff-84",
+"t": "Fantastic Four #84",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-92",
-"t": "Amazing Spider-Man #92",
-"s": "Amazing Spider-Man"
+"id": "ff-85",
+"t": "Fantastic Four #85",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-93",
-"t": "Amazing Spider-Man #93",
-"s": "Amazing Spider-Man"
+"id": "ff-86",
+"t": "Fantastic Four #86",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-94",
-"t": "Amazing Spider-Man #94",
-"s": "Amazing Spider-Man"
+"id": "ff-87",
+"t": "Fantastic Four #87",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-95",
-"t": "Amazing Spider-Man #95",
-"s": "Amazing Spider-Man"
+"id": "ff-88",
+"t": "Fantastic Four #88",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-96",
-"t": "Amazing Spider-Man #96",
-"s": "Amazing Spider-Man"
+"id": "ff-89",
+"t": "Fantastic Four #89",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-97",
-"t": "Amazing Spider-Man #97",
-"s": "Amazing Spider-Man"
+"id": "ff-90",
+"t": "Fantastic Four #90",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-98",
-"t": "Amazing Spider-Man #98",
-"s": "Amazing Spider-Man"
+"id": "ff-91",
+"t": "Fantastic Four #91",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-99",
-"t": "Amazing Spider-Man #99",
-"s": "Amazing Spider-Man"
+"id": "ff-92",
+"t": "Fantastic Four #92",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-100",
-"t": "Amazing Spider-Man #100",
-"s": "Amazing Spider-Man"
+"id": "ff-93",
+"t": "Fantastic Four #93",
+"s": "Fantastic Four"
+}
+]
 },
 {
-"id": "asm-101",
-"t": "Amazing Spider-Man #101",
-"s": "Amazing Spider-Man"
+"id": "ff-o3-c2",
+"title": "Fantastic Four Annual #5–7",
+"era": "1967–1970",
+"issues": [
+{
+"id": "ffann-5",
+"t": "Fantastic Four Annual #5",
+"s": "Fantastic Four Annual"
 },
 {
-"id": "asm-102",
-"t": "Amazing Spider-Man #102",
-"s": "Amazing Spider-Man"
+"id": "ffann-6",
+"t": "Fantastic Four Annual #6",
+"s": "Fantastic Four Annual"
 },
 {
-"id": "asm-103",
-"t": "Amazing Spider-Man #103",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-104",
-"t": "Amazing Spider-Man #104",
-"s": "Amazing Spider-Man"
+"id": "ffann-7",
+"t": "Fantastic Four Annual #7",
+"s": "Fantastic Four Annual"
 }
 ]
 }
 ]
 },
 {
-"id": "asm-o4",
-"spine": "Amazing Spider-Man",
-"cover": "Art/Spider-Man/asm-o4.jpg",
-"title": "Amazing Spider-Man Omnibus",
+"id": "ff-o4",
+"spine": "Fantastic Four",
+"cover": "Art/Fantastic-Four/ff-o4.jpg",
+"title": "Fantastic Four Omnibus",
 "vol": "Vol. 4",
-"creators": "Gerry Conway & Ross Andru",
-"era": "1972–1975",
-"released": "May 2019",
-"art": "o-conway",
-"tex": "tex-web",
-"note": "The Night Gwen Stacy Died, the death of the Green Goblin, and the first Punisher and Clone Saga.",
-"chapters": [
-{
-"id": "asm-o4-c1",
-"title": "Amazing Spider-Man #105–142",
-"era": "1972–1975",
-"issues": [
-{
-"id": "asm-105",
-"t": "Amazing Spider-Man #105",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-106",
-"t": "Amazing Spider-Man #106",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-107",
-"t": "Amazing Spider-Man #107",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-108",
-"t": "Amazing Spider-Man #108",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-109",
-"t": "Amazing Spider-Man #109",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-110",
-"t": "Amazing Spider-Man #110",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-111",
-"t": "Amazing Spider-Man #111",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-112",
-"t": "Amazing Spider-Man #112",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-113",
-"t": "Amazing Spider-Man #113",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-114",
-"t": "Amazing Spider-Man #114",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-115",
-"t": "Amazing Spider-Man #115",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-116",
-"t": "Amazing Spider-Man #116",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-117",
-"t": "Amazing Spider-Man #117",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-118",
-"t": "Amazing Spider-Man #118",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-119",
-"t": "Amazing Spider-Man #119",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-120",
-"t": "Amazing Spider-Man #120",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-121",
-"t": "Amazing Spider-Man #121",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-122",
-"t": "Amazing Spider-Man #122",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-123",
-"t": "Amazing Spider-Man #123",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-124",
-"t": "Amazing Spider-Man #124",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-125",
-"t": "Amazing Spider-Man #125",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-126",
-"t": "Amazing Spider-Man #126",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-127",
-"t": "Amazing Spider-Man #127",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-128",
-"t": "Amazing Spider-Man #128",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-129",
-"t": "Amazing Spider-Man #129",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-130",
-"t": "Amazing Spider-Man #130",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-131",
-"t": "Amazing Spider-Man #131",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-132",
-"t": "Amazing Spider-Man #132",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-133",
-"t": "Amazing Spider-Man #133",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-134",
-"t": "Amazing Spider-Man #134",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-135",
-"t": "Amazing Spider-Man #135",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-136",
-"t": "Amazing Spider-Man #136",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-137",
-"t": "Amazing Spider-Man #137",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-138",
-"t": "Amazing Spider-Man #138",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-139",
-"t": "Amazing Spider-Man #139",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-140",
-"t": "Amazing Spider-Man #140",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-141",
-"t": "Amazing Spider-Man #141",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-142",
-"t": "Amazing Spider-Man #142",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "asm-o4-c2",
-"title": "Giant-Size Super-Heroes #1",
-"era": "1972–1975",
-"issues": [
-{
-"id": "gssh-1",
-"t": "Giant-Size Super-Heroes #1",
-"s": "Giant-Size Super-Heroes"
-}
-]
-},
-{
-"id": "asm-o4-c3",
-"title": "Marvel Super-Heroes #14",
-"era": "1972–1975",
-"issues": [
-{
-"id": "msh-14",
-"t": "Marvel Super-Heroes #14",
-"s": "Marvel Super-Heroes"
-}
-]
-}
-]
-},
-{
-"id": "utsm-o1",
-"spine": "Untold Tales",
-"cover": "Art/Spider-Man/utsm-o1.jpg",
-"title": "Untold Tales of Spider-Man Omnibus",
-"vol": "",
-"creators": "Kurt Busiek & Pat Olliffe",
-"era": "Set 1962–1965",
-"released": "Apr 2012",
-"art": "o-untold",
+"creators": "Stan Lee, John Buscema & John Romita Sr.",
+"era": "1969–1972",
+"released": "Aug 2021",
+"art": "o-bronze",
 "tex": "tex-halftone",
-"note": "Published 1995–97 but set between the early Lee/Ditko issues. Slots here by story chronology, not print date — read it alongside Omnibus Vol. 1 or straight after.",
+"note": "After Kirby. Lee writes on with Buscema and Romita — Agatha Harkness, the Overmind, Annihilus again — and the book closes with The Lost Adventure, the Kirby story Marvel did not print until 2008. It reprints #91–93 from Vol. 3, so those three share their ids across both volumes.",
 "chapters": [
 {
-"id": "utsm-o1-c1",
-"title": "Untold Tales of Spider-Man #1–25, #-1",
-"era": "Set 1962–1965",
+"id": "ff-o4-c1",
+"title": "Fantastic Four #91–125",
+"era": "1969–1972",
 "issues": [
 {
-"id": "utsm-1",
-"t": "Untold Tales of Spider-Man #1",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-91",
+"t": "Fantastic Four #91",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-2",
-"t": "Untold Tales of Spider-Man #2",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-92",
+"t": "Fantastic Four #92",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-3",
-"t": "Untold Tales of Spider-Man #3",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-93",
+"t": "Fantastic Four #93",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-4",
-"t": "Untold Tales of Spider-Man #4",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-94",
+"t": "Fantastic Four #94",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-5",
-"t": "Untold Tales of Spider-Man #5",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-95",
+"t": "Fantastic Four #95",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-6",
-"t": "Untold Tales of Spider-Man #6",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-96",
+"t": "Fantastic Four #96",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-7",
-"t": "Untold Tales of Spider-Man #7",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-97",
+"t": "Fantastic Four #97",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-8",
-"t": "Untold Tales of Spider-Man #8",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-98",
+"t": "Fantastic Four #98",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-9",
-"t": "Untold Tales of Spider-Man #9",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-99",
+"t": "Fantastic Four #99",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-10",
-"t": "Untold Tales of Spider-Man #10",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-100",
+"t": "Fantastic Four #100",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-11",
-"t": "Untold Tales of Spider-Man #11",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-101",
+"t": "Fantastic Four #101",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-12",
-"t": "Untold Tales of Spider-Man #12",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-102",
+"t": "Fantastic Four #102",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-13",
-"t": "Untold Tales of Spider-Man #13",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-103",
+"t": "Fantastic Four #103",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-14",
-"t": "Untold Tales of Spider-Man #14",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-104",
+"t": "Fantastic Four #104",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-15",
-"t": "Untold Tales of Spider-Man #15",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-105",
+"t": "Fantastic Four #105",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-16",
-"t": "Untold Tales of Spider-Man #16",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-106",
+"t": "Fantastic Four #106",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-17",
-"t": "Untold Tales of Spider-Man #17",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-107",
+"t": "Fantastic Four #107",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-18",
-"t": "Untold Tales of Spider-Man #18",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-108",
+"t": "Fantastic Four #108",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-19",
-"t": "Untold Tales of Spider-Man #19",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-109",
+"t": "Fantastic Four #109",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-20",
-"t": "Untold Tales of Spider-Man #20",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-110",
+"t": "Fantastic Four #110",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-21",
-"t": "Untold Tales of Spider-Man #21",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-111",
+"t": "Fantastic Four #111",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-22",
-"t": "Untold Tales of Spider-Man #22",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-112",
+"t": "Fantastic Four #112",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-23",
-"t": "Untold Tales of Spider-Man #23",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-113",
+"t": "Fantastic Four #113",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-24",
-"t": "Untold Tales of Spider-Man #24",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-114",
+"t": "Fantastic Four #114",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm-25",
-"t": "Untold Tales of Spider-Man #25",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-115",
+"t": "Fantastic Four #115",
+"s": "Fantastic Four"
 },
 {
-"id": "utsm--1",
-"t": "Untold Tales of Spider-Man #-1",
-"s": "Untold Tales of Spider-Man"
+"id": "ff-116",
+"t": "Fantastic Four #116",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-117",
+"t": "Fantastic Four #117",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-118",
+"t": "Fantastic Four #118",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-119",
+"t": "Fantastic Four #119",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-120",
+"t": "Fantastic Four #120",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-121",
+"t": "Fantastic Four #121",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-122",
+"t": "Fantastic Four #122",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-123",
+"t": "Fantastic Four #123",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-124",
+"t": "Fantastic Four #124",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-125",
+"t": "Fantastic Four #125",
+"s": "Fantastic Four"
 }
 ]
 },
 {
-"id": "utsm-o1-c2",
-"title": "Untold Tales of Spider-Man Annual #1996–1997",
-"era": "Set 1962–1965",
+"id": "ff-o4-c2",
+"title": "Fantastic Four: The Lost Adventure #1",
+"era": "1969–1972",
 "issues": [
 {
-"id": "utsmann-1996",
-"t": "Untold Tales of Spider-Man Annual #1996",
-"s": "Untold Tales of Spider-Man Annual"
-},
-{
-"id": "utsmann-1997",
-"t": "Untold Tales of Spider-Man Annual #1997",
-"s": "Untold Tales of Spider-Man Annual"
-}
-]
-},
-{
-"id": "utsm-o1-c3",
-"title": "Untold Tales: Strange Encounters #1",
-"era": "Set 1962–1965",
-"issues": [
-{
-"id": "utsmse-1",
-"t": "Untold Tales: Strange Encounters #1",
-"s": "Untold Tales: Strange Encounters"
-}
-]
-},
-{
-"id": "utsm-o1-c4",
-"title": "Amazing Fantasy #16–18",
-"era": "Set 1962–1965",
-"issues": [
-{
-"id": "af-16",
-"t": "Amazing Fantasy #16",
-"s": "Amazing Fantasy"
-},
-{
-"id": "af-17",
-"t": "Amazing Fantasy #17",
-"s": "Amazing Fantasy"
-},
-{
-"id": "af-18",
-"t": "Amazing Fantasy #18",
-"s": "Amazing Fantasy"
-}
-]
-},
-{
-"id": "utsm-o1-c5",
-"title": "Amazing Spider-Man Annual (1999) #37",
-"era": "Set 1962–1965",
-"issues": [
-{
-"id": "asm2ann-37",
-"t": "Amazing Spider-Man Annual (1999) #37",
-"s": "Amazing Spider-Man Annual (1999)"
+"id": "ffla-1",
+"t": "Fantastic Four: The Lost Adventure #1",
+"s": "Fantastic Four: The Lost Adventure"
 }
 ]
 }
 ]
 },
 {
-"id": "stern-o1",
-"spine": "By Roger Stern",
-"cover": "Art/Spider-Man/stern-o1.jpg",
-"title": "Spider-Man by Roger Stern Omnibus",
-"vol": "",
-"creators": "Roger Stern, JRJR & John Byrne",
-"era": "1980–1984",
-"released": "Apr 2014",
-"art": "o-stern",
-"tex": "tex-web",
-"note": "The Hobgoblin mystery, \"The Kid Who Collects Spider-Man,\" and Nothing Can Stop the Juggernaut.",
+"id": "ff-o5",
+"spine": "Fantastic Four",
+"cover": "Art/Fantastic-Four/ff-o5.jpg",
+"title": "Fantastic Four Omnibus",
+"vol": "Vol. 5",
+"creators": "Roy Thomas, Gerry Conway & John Buscema",
+"era": "1972–1975",
+"released": "Nov 2024",
+"art": "o-bronze",
+"tex": "tex-krackle",
+"note": "Thomas and Conway hold the line: Thundra, Quicksilver and Crystal's wedding, and Reed shutting down his own son's mind — the decision the next twenty years keep coming back to.",
 "chapters": [
 {
-"id": "stern-o1-c1",
-"title": "Spectacular Spider-Man #43–59, #18, #60–61",
-"era": "1980–1984",
+"id": "ff-o5-c1",
+"title": "Fantastic Four #126–149",
+"era": "1972–1975",
 "issues": [
 {
-"id": "pp-43",
-"t": "Spectacular Spider-Man #43",
-"s": "Spectacular Spider-Man"
+"id": "ff-126",
+"t": "Fantastic Four #126",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-44",
-"t": "Spectacular Spider-Man #44",
-"s": "Spectacular Spider-Man"
+"id": "ff-127",
+"t": "Fantastic Four #127",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-45",
-"t": "Spectacular Spider-Man #45",
-"s": "Spectacular Spider-Man"
+"id": "ff-128",
+"t": "Fantastic Four #128",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-46",
-"t": "Spectacular Spider-Man #46",
-"s": "Spectacular Spider-Man"
+"id": "ff-129",
+"t": "Fantastic Four #129",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-47",
-"t": "Spectacular Spider-Man #47",
-"s": "Spectacular Spider-Man"
+"id": "ff-130",
+"t": "Fantastic Four #130",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-48",
-"t": "Spectacular Spider-Man #48",
-"s": "Spectacular Spider-Man"
+"id": "ff-131",
+"t": "Fantastic Four #131",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-49",
-"t": "Spectacular Spider-Man #49",
-"s": "Spectacular Spider-Man"
+"id": "ff-132",
+"t": "Fantastic Four #132",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-50",
-"t": "Spectacular Spider-Man #50",
-"s": "Spectacular Spider-Man"
+"id": "ff-133",
+"t": "Fantastic Four #133",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-51",
-"t": "Spectacular Spider-Man #51",
-"s": "Spectacular Spider-Man"
+"id": "ff-134",
+"t": "Fantastic Four #134",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-52",
-"t": "Spectacular Spider-Man #52",
-"s": "Spectacular Spider-Man"
+"id": "ff-135",
+"t": "Fantastic Four #135",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-53",
-"t": "Spectacular Spider-Man #53",
-"s": "Spectacular Spider-Man"
+"id": "ff-136",
+"t": "Fantastic Four #136",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-54",
-"t": "Spectacular Spider-Man #54",
-"s": "Spectacular Spider-Man"
+"id": "ff-137",
+"t": "Fantastic Four #137",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-55",
-"t": "Spectacular Spider-Man #55",
-"s": "Spectacular Spider-Man"
+"id": "ff-138",
+"t": "Fantastic Four #138",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-56",
-"t": "Spectacular Spider-Man #56",
-"s": "Spectacular Spider-Man"
+"id": "ff-139",
+"t": "Fantastic Four #139",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-57",
-"t": "Spectacular Spider-Man #57",
-"s": "Spectacular Spider-Man"
+"id": "ff-140",
+"t": "Fantastic Four #140",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-58",
-"t": "Spectacular Spider-Man #58",
-"s": "Spectacular Spider-Man"
+"id": "ff-141",
+"t": "Fantastic Four #141",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-59",
-"t": "Spectacular Spider-Man #59",
-"s": "Spectacular Spider-Man"
+"id": "ff-142",
+"t": "Fantastic Four #142",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-18",
-"t": "Spectacular Spider-Man #18",
-"s": "Spectacular Spider-Man"
+"id": "ff-143",
+"t": "Fantastic Four #143",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-60",
-"t": "Spectacular Spider-Man #60",
-"s": "Spectacular Spider-Man"
+"id": "ff-144",
+"t": "Fantastic Four #144",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-61",
-"t": "Spectacular Spider-Man #61",
-"s": "Spectacular Spider-Man"
+"id": "ff-145",
+"t": "Fantastic Four #145",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-146",
+"t": "Fantastic Four #146",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-147",
+"t": "Fantastic Four #147",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-148",
+"t": "Fantastic Four #148",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-149",
+"t": "Fantastic Four #149",
+"s": "Fantastic Four"
 }
 ]
 },
 {
-"id": "stern-o1-c2",
-"title": "Spectacular Spider-Man Annual #3",
-"era": "1980–1984",
+"id": "ff-o5-c2",
+"title": "Avengers #127",
+"era": "1972–1975",
 "issues": [
 {
-"id": "ppann-3",
-"t": "Spectacular Spider-Man Annual #3",
-"s": "Spectacular Spider-Man Annual"
+"id": "av-127",
+"t": "Avengers #127",
+"s": "Avengers"
 }
 ]
 },
 {
-"id": "stern-o1-c3",
-"title": "Amazing Spider-Man #203, #224–241, #243–252",
-"era": "1980–1984",
+"id": "ff-o5-c3",
+"title": "Fantastic Four #150–163",
+"era": "1972–1975",
 "issues": [
 {
-"id": "asm-203",
-"t": "Amazing Spider-Man #203",
-"s": "Amazing Spider-Man"
+"id": "ff-150",
+"t": "Fantastic Four #150",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-224",
-"t": "Amazing Spider-Man #224",
-"s": "Amazing Spider-Man"
+"id": "ff-151",
+"t": "Fantastic Four #151",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-225",
-"t": "Amazing Spider-Man #225",
-"s": "Amazing Spider-Man"
+"id": "ff-152",
+"t": "Fantastic Four #152",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-226",
-"t": "Amazing Spider-Man #226",
-"s": "Amazing Spider-Man"
+"id": "ff-153",
+"t": "Fantastic Four #153",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-227",
-"t": "Amazing Spider-Man #227",
-"s": "Amazing Spider-Man"
+"id": "ff-154",
+"t": "Fantastic Four #154",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-228",
-"t": "Amazing Spider-Man #228",
-"s": "Amazing Spider-Man"
+"id": "ff-155",
+"t": "Fantastic Four #155",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-229",
-"t": "Amazing Spider-Man #229",
-"s": "Amazing Spider-Man"
+"id": "ff-156",
+"t": "Fantastic Four #156",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-230",
-"t": "Amazing Spider-Man #230",
-"s": "Amazing Spider-Man"
+"id": "ff-157",
+"t": "Fantastic Four #157",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-231",
-"t": "Amazing Spider-Man #231",
-"s": "Amazing Spider-Man"
+"id": "ff-158",
+"t": "Fantastic Four #158",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-232",
-"t": "Amazing Spider-Man #232",
-"s": "Amazing Spider-Man"
+"id": "ff-159",
+"t": "Fantastic Four #159",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-233",
-"t": "Amazing Spider-Man #233",
-"s": "Amazing Spider-Man"
+"id": "ff-160",
+"t": "Fantastic Four #160",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-234",
-"t": "Amazing Spider-Man #234",
-"s": "Amazing Spider-Man"
+"id": "ff-161",
+"t": "Fantastic Four #161",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-235",
-"t": "Amazing Spider-Man #235",
-"s": "Amazing Spider-Man"
+"id": "ff-162",
+"t": "Fantastic Four #162",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-236",
-"t": "Amazing Spider-Man #236",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-237",
-"t": "Amazing Spider-Man #237",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-238",
-"t": "Amazing Spider-Man #238",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-239",
-"t": "Amazing Spider-Man #239",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-240",
-"t": "Amazing Spider-Man #240",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-241",
-"t": "Amazing Spider-Man #241",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-243",
-"t": "Amazing Spider-Man #243",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-244",
-"t": "Amazing Spider-Man #244",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-245",
-"t": "Amazing Spider-Man #245",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-246",
-"t": "Amazing Spider-Man #246",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-247",
-"t": "Amazing Spider-Man #247",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-248",
-"t": "Amazing Spider-Man #248",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-249",
-"t": "Amazing Spider-Man #249",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-250",
-"t": "Amazing Spider-Man #250",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-251",
-"t": "Amazing Spider-Man #251",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-252",
-"t": "Amazing Spider-Man #252",
-"s": "Amazing Spider-Man"
+"id": "ff-163",
+"t": "Fantastic Four #163",
+"s": "Fantastic Four"
 }
 ]
 },
 {
-"id": "stern-o1-c4",
-"title": "Amazing Spider-Man Annual #15–17",
-"era": "1980–1984",
+"id": "ff-o5-c4",
+"title": "Giant-Size Super-Stars #1",
+"era": "1972–1975",
 "issues": [
 {
-"id": "asmann-15",
-"t": "Amazing Spider-Man Annual #15",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "asmann-16",
-"t": "Amazing Spider-Man Annual #16",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "asmann-17",
-"t": "Amazing Spider-Man Annual #17",
-"s": "Amazing Spider-Man Annual"
+"id": "gsss-1",
+"t": "Giant-Size Super-Stars #1",
+"s": "Giant-Size Super-Stars"
 }
 ]
 },
 {
-"id": "stern-o1-c5",
-"title": "Web of Spider-Man Annual #3",
-"era": "1980–1984",
+"id": "ff-o5-c5",
+"title": "Giant-Size Fantastic Four #2–4",
+"era": "1972–1975",
 "issues": [
 {
-"id": "webann-3",
-"t": "Web of Spider-Man Annual #3",
-"s": "Web of Spider-Man Annual"
+"id": "gsff-2",
+"t": "Giant-Size Fantastic Four #2",
+"s": "Giant-Size Fantastic Four"
+},
+{
+"id": "gsff-3",
+"t": "Giant-Size Fantastic Four #3",
+"s": "Giant-Size Fantastic Four"
+},
+{
+"id": "gsff-4",
+"t": "Giant-Size Fantastic Four #4",
+"s": "Giant-Size Fantastic Four"
+}
+]
 }
 ]
 },
 {
-"id": "stern-o1-c6",
-"title": "What If? #34",
-"era": "1980–1984",
+"id": "ff-o6",
+"spine": "Fantastic Four",
+"cover": "Art/Fantastic-Four/ff-o6.jpg",
+"title": "Fantastic Four Omnibus",
+"vol": "Vol. 6",
+"creators": "Roy Thomas, Len Wein, Marv Wolfman & George Pérez",
+"era": "1975–1978",
+"released": "Jun 2025",
+"art": "o-perez",
+"tex": "tex-cosmic",
+"note": "Pérez arrives on the book that made him, and the Impossible Man, Galactus and the Brute run through it. Closes with the What If? that asks what the Marvel Bullpen would have done with the powers.",
+"chapters": [
+{
+"id": "ff-o6-c1",
+"title": "Fantastic Four #164–170, #172–203",
+"era": "1975–1978",
 "issues": [
 {
-"id": "wi-34",
-"t": "What If? #34",
+"id": "ff-164",
+"t": "Fantastic Four #164",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-165",
+"t": "Fantastic Four #165",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-166",
+"t": "Fantastic Four #166",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-167",
+"t": "Fantastic Four #167",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-168",
+"t": "Fantastic Four #168",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-169",
+"t": "Fantastic Four #169",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-170",
+"t": "Fantastic Four #170",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-172",
+"t": "Fantastic Four #172",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-173",
+"t": "Fantastic Four #173",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-174",
+"t": "Fantastic Four #174",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-175",
+"t": "Fantastic Four #175",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-176",
+"t": "Fantastic Four #176",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-177",
+"t": "Fantastic Four #177",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-178",
+"t": "Fantastic Four #178",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-179",
+"t": "Fantastic Four #179",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-180",
+"t": "Fantastic Four #180",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-181",
+"t": "Fantastic Four #181",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-182",
+"t": "Fantastic Four #182",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-183",
+"t": "Fantastic Four #183",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-184",
+"t": "Fantastic Four #184",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-185",
+"t": "Fantastic Four #185",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-186",
+"t": "Fantastic Four #186",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-187",
+"t": "Fantastic Four #187",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-188",
+"t": "Fantastic Four #188",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-189",
+"t": "Fantastic Four #189",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-190",
+"t": "Fantastic Four #190",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-191",
+"t": "Fantastic Four #191",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-192",
+"t": "Fantastic Four #192",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-193",
+"t": "Fantastic Four #193",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-194",
+"t": "Fantastic Four #194",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-195",
+"t": "Fantastic Four #195",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-196",
+"t": "Fantastic Four #196",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-197",
+"t": "Fantastic Four #197",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-198",
+"t": "Fantastic Four #198",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-199",
+"t": "Fantastic Four #199",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-200",
+"t": "Fantastic Four #200",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-201",
+"t": "Fantastic Four #201",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-202",
+"t": "Fantastic Four #202",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-203",
+"t": "Fantastic Four #203",
+"s": "Fantastic Four"
+}
+]
+},
+{
+"id": "ff-o6-c2",
+"title": "Fantastic Four Annual #11",
+"era": "1975–1978",
+"issues": [
+{
+"id": "ffann-11",
+"t": "Fantastic Four Annual #11",
+"s": "Fantastic Four Annual"
+}
+]
+},
+{
+"id": "ff-o6-c3",
+"title": "Marvel Two-In-One Annual #1",
+"era": "1975–1978",
+"issues": [
+{
+"id": "mtioann-1",
+"t": "Marvel Two-In-One Annual #1",
+"s": "Marvel Two-In-One Annual"
+}
+]
+},
+{
+"id": "ff-o6-c4",
+"title": "Marvel Two-In-One #20",
+"era": "1975–1978",
+"issues": [
+{
+"id": "mtio-20",
+"t": "Marvel Two-In-One #20",
+"s": "Marvel Two-In-One"
+}
+]
+},
+{
+"id": "ff-o6-c5",
+"title": "Fantastic Four Annual #12–13",
+"era": "1975–1978",
+"issues": [
+{
+"id": "ffann-12",
+"t": "Fantastic Four Annual #12",
+"s": "Fantastic Four Annual"
+},
+{
+"id": "ffann-13",
+"t": "Fantastic Four Annual #13",
+"s": "Fantastic Four Annual"
+}
+]
+},
+{
+"id": "ff-o6-c6",
+"title": "What If? #1, #6, #11",
+"era": "1975–1978",
+"issues": [
+{
+"id": "wi-1",
+"t": "What If? #1",
+"s": "What If?"
+},
+{
+"id": "wi-6",
+"t": "What If? #6",
+"s": "What If?"
+},
+{
+"id": "wi-11",
+"t": "What If? #11",
 "s": "What If?"
 }
 ]
@@ -2252,2005 +1863,3255 @@ const OMNI = [
 ]
 },
 {
-"id": "mcf-o1",
-"spine": "Michelinie & McFarlane",
-"cover": "Art/Spider-Man/mcf-o1.jpg",
-"title": "ASM by Michelinie & McFarlane Omnibus",
-"vol": "",
-"creators": "David Michelinie & Todd McFarlane",
-"era": "1987–1990",
-"released": "Aug 2011",
-"art": "o-mcfarlane",
-"tex": "tex-web",
-"note": "ASM #300 — the first full Venom. McFarlane's run that reset what a Spider-Man comic looked like.",
+"id": "byrne-o1",
+"spine": "By John Byrne",
+"cover": "Art/Fantastic-Four/byrne-o1.jpg",
+"title": "Fantastic Four by John Byrne Omnibus",
+"vol": "Vol. 1",
+"creators": "John Byrne",
+"era": "1977–1983",
+"released": "Nov 2011",
+"art": "o-byrne",
+"tex": "tex-cosmic",
+"note": "Writing and drawing both, Byrne makes this the best-regarded run since Kirby. Opens with the Marvel Team-Ups he drew first, then FF #232 onward — Doom, the Negative Zone, and Sue finally written as the most powerful one in the room.",
 "chapters": [
 {
-"id": "mcf-o1-c1",
-"title": "Amazing Spider-Man #296–329",
-"era": "1987–1990",
+"id": "byrne-o1-c1",
+"title": "Marvel Team-Up #61–62",
+"era": "1977–1983",
 "issues": [
 {
-"id": "asm-296",
-"t": "Amazing Spider-Man #296",
-"s": "Amazing Spider-Man"
+"id": "mtu-61",
+"t": "Marvel Team-Up #61",
+"s": "Marvel Team-Up"
 },
 {
-"id": "asm-297",
-"t": "Amazing Spider-Man #297",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-298",
-"t": "Amazing Spider-Man #298",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-299",
-"t": "Amazing Spider-Man #299",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-300",
-"t": "Amazing Spider-Man #300",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-301",
-"t": "Amazing Spider-Man #301",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-302",
-"t": "Amazing Spider-Man #302",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-303",
-"t": "Amazing Spider-Man #303",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-304",
-"t": "Amazing Spider-Man #304",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-305",
-"t": "Amazing Spider-Man #305",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-306",
-"t": "Amazing Spider-Man #306",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-307",
-"t": "Amazing Spider-Man #307",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-308",
-"t": "Amazing Spider-Man #308",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-309",
-"t": "Amazing Spider-Man #309",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-310",
-"t": "Amazing Spider-Man #310",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-311",
-"t": "Amazing Spider-Man #311",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-312",
-"t": "Amazing Spider-Man #312",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-313",
-"t": "Amazing Spider-Man #313",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-314",
-"t": "Amazing Spider-Man #314",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-315",
-"t": "Amazing Spider-Man #315",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-316",
-"t": "Amazing Spider-Man #316",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-317",
-"t": "Amazing Spider-Man #317",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-318",
-"t": "Amazing Spider-Man #318",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-319",
-"t": "Amazing Spider-Man #319",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-320",
-"t": "Amazing Spider-Man #320",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-321",
-"t": "Amazing Spider-Man #321",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-322",
-"t": "Amazing Spider-Man #322",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-323",
-"t": "Amazing Spider-Man #323",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-324",
-"t": "Amazing Spider-Man #324",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-325",
-"t": "Amazing Spider-Man #325",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-326",
-"t": "Amazing Spider-Man #326",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-327",
-"t": "Amazing Spider-Man #327",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-328",
-"t": "Amazing Spider-Man #328",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-329",
-"t": "Amazing Spider-Man #329",
-"s": "Amazing Spider-Man"
+"id": "mtu-62",
+"t": "Marvel Team-Up #62",
+"s": "Marvel Team-Up"
 }
 ]
 },
 {
-"id": "mcf-o1-c2",
-"title": "Spectacular Spider-Man Annual #10",
-"era": "1987–1990",
+"id": "byrne-o1-c2",
+"title": "Marvel Two-In-One #50",
+"era": "1977–1983",
 "issues": [
 {
-"id": "ppann-10",
-"t": "Spectacular Spider-Man Annual #10",
-"s": "Spectacular Spider-Man Annual"
+"id": "mtio-50",
+"t": "Marvel Two-In-One #50",
+"s": "Marvel Two-In-One"
+}
+]
+},
+{
+"id": "byrne-o1-c3",
+"title": "Fantastic Four #209–218, #220–221, #232–260",
+"era": "1977–1983",
+"issues": [
+{
+"id": "ff-209",
+"t": "Fantastic Four #209",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-210",
+"t": "Fantastic Four #210",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-211",
+"t": "Fantastic Four #211",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-212",
+"t": "Fantastic Four #212",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-213",
+"t": "Fantastic Four #213",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-214",
+"t": "Fantastic Four #214",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-215",
+"t": "Fantastic Four #215",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-216",
+"t": "Fantastic Four #216",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-217",
+"t": "Fantastic Four #217",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-218",
+"t": "Fantastic Four #218",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-220",
+"t": "Fantastic Four #220",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-221",
+"t": "Fantastic Four #221",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-232",
+"t": "Fantastic Four #232",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-233",
+"t": "Fantastic Four #233",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-234",
+"t": "Fantastic Four #234",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-235",
+"t": "Fantastic Four #235",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-236",
+"t": "Fantastic Four #236",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-237",
+"t": "Fantastic Four #237",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-238",
+"t": "Fantastic Four #238",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-239",
+"t": "Fantastic Four #239",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-240",
+"t": "Fantastic Four #240",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-241",
+"t": "Fantastic Four #241",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-242",
+"t": "Fantastic Four #242",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-243",
+"t": "Fantastic Four #243",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-244",
+"t": "Fantastic Four #244",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-245",
+"t": "Fantastic Four #245",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-246",
+"t": "Fantastic Four #246",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-247",
+"t": "Fantastic Four #247",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-248",
+"t": "Fantastic Four #248",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-249",
+"t": "Fantastic Four #249",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-250",
+"t": "Fantastic Four #250",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-251",
+"t": "Fantastic Four #251",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-252",
+"t": "Fantastic Four #252",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-253",
+"t": "Fantastic Four #253",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-254",
+"t": "Fantastic Four #254",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-255",
+"t": "Fantastic Four #255",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-256",
+"t": "Fantastic Four #256",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-257",
+"t": "Fantastic Four #257",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-258",
+"t": "Fantastic Four #258",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-259",
+"t": "Fantastic Four #259",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-260",
+"t": "Fantastic Four #260",
+"s": "Fantastic Four"
+}
+]
+},
+{
+"id": "byrne-o1-c4",
+"title": "Fantastic Four Annual #17",
+"era": "1977–1983",
+"issues": [
+{
+"id": "ffann-17",
+"t": "Fantastic Four Annual #17",
+"s": "Fantastic Four Annual"
+}
+]
+},
+{
+"id": "byrne-o1-c5",
+"title": "Avengers #233",
+"era": "1977–1983",
+"issues": [
+{
+"id": "av-233",
+"t": "Avengers #233",
+"s": "Avengers"
+}
+]
+},
+{
+"id": "byrne-o1-c6",
+"title": "The Thing #2",
+"era": "1977–1983",
+"issues": [
+{
+"id": "thing-2",
+"t": "The Thing #2",
+"s": "The Thing"
 }
 ]
 }
 ]
 },
 {
-"id": "larsen-o1",
-"spine": "Michelinie & Larsen",
-"cover": "Art/Spider-Man/larsen-o1.jpg",
-"title": "Spider-Man by Michelinie & Larsen Omnibus",
+"id": "thing-o1",
+"spine": "The Thing",
+"cover": "Art/Fantastic-Four/thing-o1.jpg",
+"title": "Thing Omnibus",
 "vol": "",
-"creators": "David Michelinie & Erik Larsen",
-"era": "1990–1991",
-"released": "Jun 2017",
-"art": "o-larsen",
-"tex": "tex-burst",
-"note": "Picks up directly from the McFarlane omnibus. Overlaps it at ASM #324, #327 and #329.",
-"chapters": [
-{
-"id": "larsen-o1-c1",
-"title": "Amazing Spider-Man #287, #324, #327, #329–350",
-"era": "1990–1991",
-"issues": [
-{
-"id": "asm-287",
-"t": "Amazing Spider-Man #287",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-324",
-"t": "Amazing Spider-Man #324",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-327",
-"t": "Amazing Spider-Man #327",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-329",
-"t": "Amazing Spider-Man #329",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-330",
-"t": "Amazing Spider-Man #330",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-331",
-"t": "Amazing Spider-Man #331",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-332",
-"t": "Amazing Spider-Man #332",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-333",
-"t": "Amazing Spider-Man #333",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-334",
-"t": "Amazing Spider-Man #334",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-335",
-"t": "Amazing Spider-Man #335",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-336",
-"t": "Amazing Spider-Man #336",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-337",
-"t": "Amazing Spider-Man #337",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-338",
-"t": "Amazing Spider-Man #338",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-339",
-"t": "Amazing Spider-Man #339",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-340",
-"t": "Amazing Spider-Man #340",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-341",
-"t": "Amazing Spider-Man #341",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-342",
-"t": "Amazing Spider-Man #342",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-343",
-"t": "Amazing Spider-Man #343",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-344",
-"t": "Amazing Spider-Man #344",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-345",
-"t": "Amazing Spider-Man #345",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-346",
-"t": "Amazing Spider-Man #346",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-347",
-"t": "Amazing Spider-Man #347",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-348",
-"t": "Amazing Spider-Man #348",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-349",
-"t": "Amazing Spider-Man #349",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-350",
-"t": "Amazing Spider-Man #350",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "larsen-o1-c2",
-"title": "Spider-Man (1990) #15, #18–23",
-"era": "1990–1991",
-"issues": [
-{
-"id": "spm-15",
-"t": "Spider-Man (1990) #15",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-18",
-"t": "Spider-Man (1990) #18",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-19",
-"t": "Spider-Man (1990) #19",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-20",
-"t": "Spider-Man (1990) #20",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-21",
-"t": "Spider-Man (1990) #21",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-22",
-"t": "Spider-Man (1990) #22",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-23",
-"t": "Spider-Man (1990) #23",
-"s": "Spider-Man (1990)"
-}
-]
-},
-{
-"id": "larsen-o1-c3",
-"title": "Marvel Comics Presents #48–50",
-"era": "1990–1991",
-"issues": [
-{
-"id": "mcp-48",
-"t": "Marvel Comics Presents #48",
-"s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-49",
-"t": "Marvel Comics Presents #49",
-"s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-50",
-"t": "Marvel Comics Presents #50",
-"s": "Marvel Comics Presents"
-}
-]
-},
-{
-"id": "larsen-o1-c4",
-"title": "Amazing Spider-Man (1999) #19–21",
-"era": "1990–1991",
-"issues": [
-{
-"id": "asm2-19",
-"t": "Amazing Spider-Man (1999) #19",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-20",
-"t": "Amazing Spider-Man (1999) #20",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-21",
-"t": "Amazing Spider-Man (1999) #21",
-"s": "Amazing Spider-Man (1999)"
-}
-]
-}
-]
-},
-{
-"id": "vs-venom-o1",
-"spine": "Spider-Man vs. Venom",
-"cover": "Art/Spider-Man/vs-venom-o1.jpg",
-"title": "Spider-Man vs. Venom Omnibus",
-"vol": "",
-"creators": "Various",
-"era": "1988–1994",
-"released": "Contents pending",
-"art": "o-placeholder",
+"creators": "John Byrne, Mike Carlin & Ron Wilson",
+"era": "1983–1991",
+"released": "Dec 2022",
+"art": "o-thing",
 "tex": "tex-halftone",
-"note": "Placeholder — the issue list for this volume has not been added to the tracker yet.",
-"placeholder": true,
-"chapters": []
-},
-{
-"id": "mcf-o2",
-"spine": "By Todd McFarlane",
-"cover": "Art/Spider-Man/mcf-o2.jpg",
-"title": "Spider-Man by Todd McFarlane Omnibus",
-"vol": "",
-"creators": "Todd McFarlane",
-"era": "1990–1991",
-"released": "Aug 2016",
-"art": "o-mcfarlane",
-"tex": "tex-web",
-"note": "The adjectiveless Spider-Man #1 — one of the best-selling comics ever printed — and McFarlane's solo writer/artist run.",
+"note": "Ben Grimm on his own, spun out of Byrne's run and meant to be read alongside it — which is why it sits between the two Byrne volumes here. Its first two issues are in Byrne Vol. 1 as well, and share their ids.",
 "chapters": [
 {
-"id": "mcf-o2-c1",
-"title": "Spider-Man (1990) #1–14, #16",
-"era": "1990–1991",
+"id": "thing-o1-c1",
+"title": "The Thing #1–36",
+"era": "1983–1991",
 "issues": [
 {
-"id": "spm-1",
-"t": "Spider-Man (1990) #1",
-"s": "Spider-Man (1990)"
+"id": "thing-1",
+"t": "The Thing #1",
+"s": "The Thing"
 },
 {
-"id": "spm-2",
-"t": "Spider-Man (1990) #2",
-"s": "Spider-Man (1990)"
+"id": "thing-2",
+"t": "The Thing #2",
+"s": "The Thing"
 },
 {
-"id": "spm-3",
-"t": "Spider-Man (1990) #3",
-"s": "Spider-Man (1990)"
+"id": "thing-3",
+"t": "The Thing #3",
+"s": "The Thing"
 },
 {
-"id": "spm-4",
-"t": "Spider-Man (1990) #4",
-"s": "Spider-Man (1990)"
+"id": "thing-4",
+"t": "The Thing #4",
+"s": "The Thing"
 },
 {
-"id": "spm-5",
-"t": "Spider-Man (1990) #5",
-"s": "Spider-Man (1990)"
+"id": "thing-5",
+"t": "The Thing #5",
+"s": "The Thing"
 },
 {
-"id": "spm-6",
-"t": "Spider-Man (1990) #6",
-"s": "Spider-Man (1990)"
+"id": "thing-6",
+"t": "The Thing #6",
+"s": "The Thing"
 },
 {
-"id": "spm-7",
-"t": "Spider-Man (1990) #7",
-"s": "Spider-Man (1990)"
+"id": "thing-7",
+"t": "The Thing #7",
+"s": "The Thing"
 },
 {
-"id": "spm-8",
-"t": "Spider-Man (1990) #8",
-"s": "Spider-Man (1990)"
+"id": "thing-8",
+"t": "The Thing #8",
+"s": "The Thing"
 },
 {
-"id": "spm-9",
-"t": "Spider-Man (1990) #9",
-"s": "Spider-Man (1990)"
+"id": "thing-9",
+"t": "The Thing #9",
+"s": "The Thing"
 },
 {
-"id": "spm-10",
-"t": "Spider-Man (1990) #10",
-"s": "Spider-Man (1990)"
+"id": "thing-10",
+"t": "The Thing #10",
+"s": "The Thing"
 },
 {
-"id": "spm-11",
-"t": "Spider-Man (1990) #11",
-"s": "Spider-Man (1990)"
+"id": "thing-11",
+"t": "The Thing #11",
+"s": "The Thing"
 },
 {
-"id": "spm-12",
-"t": "Spider-Man (1990) #12",
-"s": "Spider-Man (1990)"
+"id": "thing-12",
+"t": "The Thing #12",
+"s": "The Thing"
 },
 {
-"id": "spm-13",
-"t": "Spider-Man (1990) #13",
-"s": "Spider-Man (1990)"
+"id": "thing-13",
+"t": "The Thing #13",
+"s": "The Thing"
 },
 {
-"id": "spm-14",
-"t": "Spider-Man (1990) #14",
-"s": "Spider-Man (1990)"
+"id": "thing-14",
+"t": "The Thing #14",
+"s": "The Thing"
 },
 {
-"id": "spm-16",
-"t": "Spider-Man (1990) #16",
-"s": "Spider-Man (1990)"
+"id": "thing-15",
+"t": "The Thing #15",
+"s": "The Thing"
+},
+{
+"id": "thing-16",
+"t": "The Thing #16",
+"s": "The Thing"
+},
+{
+"id": "thing-17",
+"t": "The Thing #17",
+"s": "The Thing"
+},
+{
+"id": "thing-18",
+"t": "The Thing #18",
+"s": "The Thing"
+},
+{
+"id": "thing-19",
+"t": "The Thing #19",
+"s": "The Thing"
+},
+{
+"id": "thing-20",
+"t": "The Thing #20",
+"s": "The Thing"
+},
+{
+"id": "thing-21",
+"t": "The Thing #21",
+"s": "The Thing"
+},
+{
+"id": "thing-22",
+"t": "The Thing #22",
+"s": "The Thing"
+},
+{
+"id": "thing-23",
+"t": "The Thing #23",
+"s": "The Thing"
+},
+{
+"id": "thing-24",
+"t": "The Thing #24",
+"s": "The Thing"
+},
+{
+"id": "thing-25",
+"t": "The Thing #25",
+"s": "The Thing"
+},
+{
+"id": "thing-26",
+"t": "The Thing #26",
+"s": "The Thing"
+},
+{
+"id": "thing-27",
+"t": "The Thing #27",
+"s": "The Thing"
+},
+{
+"id": "thing-28",
+"t": "The Thing #28",
+"s": "The Thing"
+},
+{
+"id": "thing-29",
+"t": "The Thing #29",
+"s": "The Thing"
+},
+{
+"id": "thing-30",
+"t": "The Thing #30",
+"s": "The Thing"
+},
+{
+"id": "thing-31",
+"t": "The Thing #31",
+"s": "The Thing"
+},
+{
+"id": "thing-32",
+"t": "The Thing #32",
+"s": "The Thing"
+},
+{
+"id": "thing-33",
+"t": "The Thing #33",
+"s": "The Thing"
+},
+{
+"id": "thing-34",
+"t": "The Thing #34",
+"s": "The Thing"
+},
+{
+"id": "thing-35",
+"t": "The Thing #35",
+"s": "The Thing"
+},
+{
+"id": "thing-36",
+"t": "The Thing #36",
+"s": "The Thing"
 }
 ]
 },
 {
-"id": "mcf-o2-c2",
-"title": "X-Force #4",
-"era": "1990–1991",
+"id": "thing-o1-c2",
+"title": "Fantastic Four #274, #277, #296",
+"era": "1983–1991",
 "issues": [
 {
-"id": "xf-4",
-"t": "X-Force #4",
-"s": "X-Force"
-}
-]
+"id": "ff-274",
+"t": "Fantastic Four #274",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-277",
+"t": "Fantastic Four #277",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-296",
+"t": "Fantastic Four #296",
+"s": "Fantastic Four"
 }
 ]
 },
 {
-"id": "clone-o1",
-"spine": "Clone Saga",
-"cover": "Art/Spider-Man/clone-o1.jpg",
-"title": "Spider-Man: Clone Saga Omnibus",
-"vol": "Vol. 1",
-"creators": "Various",
-"era": "1994–1995",
-"released": "Oct 2016",
-"art": "o-clone",
-"tex": "tex-burst",
-"note": "Printed in true crossover reading order — Web, Amazing, Spider-Man and Spectacular interleave month by month, which is how the chapters below are grouped.",
-"chapters": [
-{
-"id": "clone-o1-c1",
-"title": "Part 1",
-"era": "Web of Spider-Man #117 → Spider-Man Unlimited #7",
+"id": "thing-o1-c3",
+"title": "Secret Wars II #7",
+"era": "1983–1991",
 "issues": [
 {
-"id": "web-117",
-"t": "Web of Spider-Man #117",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-394",
-"t": "Amazing Spider-Man #394",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-51",
-"t": "Spider-Man (1990) #51",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-217",
-"t": "Spectacular Spider-Man #217",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-118",
-"t": "Web of Spider-Man #118",
-"s": "Web of Spider-Man"
-},
-{
-"id": "spun-7",
-"t": "Spider-Man Unlimited #7",
-"s": "Spider-Man Unlimited"
+"id": "swars2-7",
+"t": "Secret Wars II #7",
+"s": "Secret Wars II"
 }
 ]
 },
 {
-"id": "clone-o1-c2",
-"title": "Part 2",
-"era": "Spider-Man (1990) #52 → Amazing Spider-Man #396",
+"id": "thing-o1-c4",
+"title": "West Coast Avengers #10",
+"era": "1983–1991",
 "issues": [
 {
-"id": "spm-52",
-"t": "Spider-Man (1990) #52",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "web-119",
-"t": "Web of Spider-Man #119",
-"s": "Web of Spider-Man"
-},
-{
-"id": "spm-53",
-"t": "Spider-Man (1990) #53",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "asm-395",
-"t": "Amazing Spider-Man #395",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "pp-218",
-"t": "Spectacular Spider-Man #218",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "asm-396",
-"t": "Amazing Spider-Man #396",
-"s": "Amazing Spider-Man"
+"id": "wca-10",
+"t": "West Coast Avengers #10",
+"s": "West Coast Avengers"
 }
 ]
 },
 {
-"id": "clone-o1-c3",
-"title": "Part 3",
-"era": "Spectacular Spider-Man #219 → Amazing Spider-Man #397",
+"id": "thing-o1-c5",
+"title": "Questprobe #3",
+"era": "1983–1991",
 "issues": [
 {
-"id": "pp-219",
-"t": "Spectacular Spider-Man #219",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-120",
-"t": "Web of Spider-Man #120",
-"s": "Web of Spider-Man"
-},
-{
-"id": "spm-54",
-"t": "Spider-Man (1990) #54",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "web-121",
-"t": "Web of Spider-Man #121",
-"s": "Web of Spider-Man"
-},
-{
-"id": "spm-55",
-"t": "Spider-Man (1990) #55",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "asm-397",
-"t": "Amazing Spider-Man #397",
-"s": "Amazing Spider-Man"
+"id": "qprobe-3",
+"t": "Questprobe #3",
+"s": "Questprobe"
 }
 ]
 },
 {
-"id": "clone-o1-c4",
-"title": "Part 4",
-"era": "Spectacular Spider-Man #220 → Funeral for an Octopus #3",
+"id": "thing-o1-c6",
+"title": "Marvel Tales #198",
+"era": "1983–1991",
 "issues": [
 {
-"id": "pp-220",
-"t": "Spectacular Spider-Man #220",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "asm-398",
-"t": "Amazing Spider-Man #398",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "pp-221",
-"t": "Spectacular Spider-Man #221",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "ffo-1",
-"t": "Funeral for an Octopus #1",
-"s": "Funeral for an Octopus"
-},
-{
-"id": "ffo-2",
-"t": "Funeral for an Octopus #2",
-"s": "Funeral for an Octopus"
-},
-{
-"id": "ffo-3",
-"t": "Funeral for an Octopus #3",
-"s": "Funeral for an Octopus"
+"id": "mtales-198",
+"t": "Marvel Tales #198",
+"s": "Marvel Tales"
 }
 ]
 },
 {
-"id": "clone-o1-c5",
-"title": "Part 5",
-"era": "Spider-Man Unlimited #8 → Spectacular Spider-Man #222",
+"id": "thing-o1-c7",
+"title": "Marvel Graphic Novel #29",
+"era": "1983–1991",
 "issues": [
 {
-"id": "spun-8",
-"t": "Spider-Man Unlimited #8",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "web-122",
-"t": "Web of Spider-Man #122",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-399",
-"t": "Amazing Spider-Man #399",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-56",
-"t": "Spider-Man (1990) #56",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "cj-1",
-"t": "The Clone Journal #1",
-"s": "The Clone Journal"
-},
-{
-"id": "pp-222",
-"t": "Spectacular Spider-Man #222",
-"s": "Spectacular Spider-Man"
+"id": "mgn-29",
+"t": "Marvel Graphic Novel #29",
+"s": "Marvel Graphic Novel"
 }
 ]
 },
 {
-"id": "clone-o1-c6",
-"title": "Part 6",
-"era": "Web of Spider-Man #123 → Amazing Spider-Man #401",
+"id": "thing-o1-c8",
+"title": "Marvel Fanfare #15",
+"era": "1983–1991",
 "issues": [
 {
-"id": "web-123",
-"t": "Web of Spider-Man #123",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-400",
-"t": "Amazing Spider-Man #400",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-57",
-"t": "Spider-Man (1990) #57",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-223",
-"t": "Spectacular Spider-Man #223",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-124",
-"t": "Web of Spider-Man #124",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-401",
-"t": "Amazing Spider-Man #401",
-"s": "Amazing Spider-Man"
+"id": "mfan-15",
+"t": "Marvel Fanfare #15",
+"s": "Marvel Fanfare"
 }
 ]
 },
 {
-"id": "clone-o1-c7",
-"title": "Part 7",
-"era": "Spider-Man (1990) #58 → Collectors' Preview #1",
+"id": "thing-o1-c9",
+"title": "Marvel Super-Heroes (1990) #5",
+"era": "1983–1991",
 "issues": [
 {
-"id": "spm-58",
-"t": "Spider-Man (1990) #58",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-224",
-"t": "Spectacular Spider-Man #224",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-125",
-"t": "Web of Spider-Man #125",
-"s": "Web of Spider-Man"
-},
-{
-"id": "spun-9",
-"t": "Spider-Man Unlimited #9",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "cp-1",
-"t": "Collectors' Preview #1",
-"s": "Collectors' Preview"
+"id": "msh2-5",
+"t": "Marvel Super-Heroes (1990) #5",
+"s": "Marvel Super-Heroes (1990)"
 }
 ]
 }
 ]
 },
 {
-"id": "clone-o2",
-"spine": "Clone Saga",
-"cover": "Art/Spider-Man/clone-o2.jpg",
-"title": "Spider-Man: Clone Saga Omnibus",
+"id": "byrne-o2",
+"spine": "By John Byrne",
+"cover": "Art/Fantastic-Four/byrne-o2.jpg",
+"title": "Fantastic Four by John Byrne Omnibus",
 "vol": "Vol. 2",
-"creators": "Various",
-"era": "1995",
-"released": "Nov 2017",
-"art": "o-clone",
-"tex": "tex-burst",
-"note": "Maximum Clonage and the Jackal's endgame. Also interleaved in reading order.",
+"creators": "John Byrne",
+"era": "1984–1986",
+"released": "Dec 2013",
+"art": "o-byrne",
+"tex": "tex-negzone",
+"note": "Secret Wars breaks the team up: the Thing stays behind on Battleworld, She-Hulk takes his chair, and Doom comes back remade. Runs to where Byrne walked off the book.",
 "chapters": [
 {
-"id": "clone-o2-c1",
-"title": "Part 1",
-"era": "Amazing Spider-Man #402 → Spider-Man (1990) #60",
+"id": "byrne-o2-c1",
+"title": "Fantastic Four #261–295",
+"era": "1984–1986",
 "issues": [
 {
-"id": "asm-402",
-"t": "Amazing Spider-Man #402",
-"s": "Amazing Spider-Man"
+"id": "ff-261",
+"t": "Fantastic Four #261",
+"s": "Fantastic Four"
 },
 {
-"id": "spm-59",
-"t": "Spider-Man (1990) #59",
-"s": "Spider-Man (1990)"
+"id": "ff-262",
+"t": "Fantastic Four #262",
+"s": "Fantastic Four"
 },
 {
-"id": "pp-225",
-"t": "Spectacular Spider-Man #225",
-"s": "Spectacular Spider-Man"
+"id": "ff-263",
+"t": "Fantastic Four #263",
+"s": "Fantastic Four"
 },
 {
-"id": "web-126",
-"t": "Web of Spider-Man #126",
-"s": "Web of Spider-Man"
+"id": "ff-264",
+"t": "Fantastic Four #264",
+"s": "Fantastic Four"
 },
 {
-"id": "asm-403",
-"t": "Amazing Spider-Man #403",
-"s": "Amazing Spider-Man"
+"id": "ff-265",
+"t": "Fantastic Four #265",
+"s": "Fantastic Four"
 },
 {
-"id": "spm-60",
-"t": "Spider-Man (1990) #60",
-"s": "Spider-Man (1990)"
+"id": "ff-266",
+"t": "Fantastic Four #266",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-267",
+"t": "Fantastic Four #267",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-268",
+"t": "Fantastic Four #268",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-269",
+"t": "Fantastic Four #269",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-270",
+"t": "Fantastic Four #270",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-271",
+"t": "Fantastic Four #271",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-272",
+"t": "Fantastic Four #272",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-273",
+"t": "Fantastic Four #273",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-274",
+"t": "Fantastic Four #274",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-275",
+"t": "Fantastic Four #275",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-276",
+"t": "Fantastic Four #276",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-277",
+"t": "Fantastic Four #277",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-278",
+"t": "Fantastic Four #278",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-279",
+"t": "Fantastic Four #279",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-280",
+"t": "Fantastic Four #280",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-281",
+"t": "Fantastic Four #281",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-282",
+"t": "Fantastic Four #282",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-283",
+"t": "Fantastic Four #283",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-284",
+"t": "Fantastic Four #284",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-285",
+"t": "Fantastic Four #285",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-286",
+"t": "Fantastic Four #286",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-287",
+"t": "Fantastic Four #287",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-288",
+"t": "Fantastic Four #288",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-289",
+"t": "Fantastic Four #289",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-290",
+"t": "Fantastic Four #290",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-291",
+"t": "Fantastic Four #291",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-292",
+"t": "Fantastic Four #292",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-293",
+"t": "Fantastic Four #293",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-294",
+"t": "Fantastic Four #294",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-295",
+"t": "Fantastic Four #295",
+"s": "Fantastic Four"
 }
 ]
 },
 {
-"id": "clone-o2-c2",
-"title": "Part 2",
-"era": "Spectacular Spider-Man #226 → Amazing Spider-Man #404",
+"id": "byrne-o2-c2",
+"title": "Fantastic Four Annual #18–19",
+"era": "1984–1986",
 "issues": [
 {
-"id": "pp-226",
-"t": "Spectacular Spider-Man #226",
-"s": "Spectacular Spider-Man"
+"id": "ffann-18",
+"t": "Fantastic Four Annual #18",
+"s": "Fantastic Four Annual"
 },
 {
-"id": "jf-1",
-"t": "The Jackal Files #1",
-"s": "The Jackal Files"
-},
-{
-"id": "nw-61",
-"t": "New Warriors #61",
-"s": "New Warriors"
-},
-{
-"id": "mca-1",
-"t": "Maximum Clonage Alpha #1",
-"s": "Maximum Clonage Alpha"
-},
-{
-"id": "web-127",
-"t": "Web of Spider-Man #127",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-404",
-"t": "Amazing Spider-Man #404",
-"s": "Amazing Spider-Man"
+"id": "ffann-19",
+"t": "Fantastic Four Annual #19",
+"s": "Fantastic Four Annual"
 }
 ]
 },
 {
-"id": "clone-o2-c3",
-"title": "Part 3",
-"era": "Spider-Man (1990) #61 → Spider-Man Super Special #1",
+"id": "byrne-o2-c3",
+"title": "Alpha Flight #4",
+"era": "1984–1986",
 "issues": [
 {
-"id": "spm-61",
-"t": "Spider-Man (1990) #61",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-227",
-"t": "Spectacular Spider-Man #227",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "mco-1",
-"t": "Maximum Clonage Omega #1",
-"s": "Maximum Clonage Omega"
-},
-{
-"id": "nw-62",
-"t": "New Warriors #62",
-"s": "New Warriors"
-},
-{
-"id": "asmss-1",
-"t": "Amazing Spider-Man Super Special #1",
-"s": "Amazing Spider-Man Super Special"
-},
-{
-"id": "spmss-1",
-"t": "Spider-Man Super Special #1",
-"s": "Spider-Man Super Special"
+"id": "alf-4",
+"t": "Alpha Flight #4",
+"s": "Alpha Flight"
 }
 ]
 },
 {
-"id": "clone-o2-c4",
-"title": "Part 4",
-"era": "Venom Super Special #1 → Spider-Man (1990) #62",
+"id": "byrne-o2-c4",
+"title": "The Thing #7, #10, #19",
+"era": "1984–1986",
 "issues": [
 {
-"id": "vss-1",
-"t": "Venom Super Special #1",
-"s": "Venom Super Special"
+"id": "thing-7",
+"t": "The Thing #7",
+"s": "The Thing"
 },
 {
-"id": "ppss-1",
-"t": "Spectacular Spider-Man Super Special #1",
-"s": "Spectacular Spider-Man Super Special"
+"id": "thing-10",
+"t": "The Thing #10",
+"s": "The Thing"
 },
 {
-"id": "webss-1",
-"t": "Web of Spider-Man Super Special #1",
-"s": "Web of Spider-Man Super Special"
-},
-{
-"id": "web-128",
-"t": "Web of Spider-Man #128",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-405",
-"t": "Amazing Spider-Man #405",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-62",
-"t": "Spider-Man (1990) #62",
-"s": "Spider-Man (1990)"
+"id": "thing-19",
+"t": "The Thing #19",
+"s": "The Thing"
 }
 ]
 },
 {
-"id": "clone-o2-c5",
-"title": "Part 5",
-"era": "Spider-Man Unlimited #10 → New Warriors #65",
+"id": "byrne-o2-c5",
+"title": "Fantastic Four Roast #1",
+"era": "1984–1986",
 "issues": [
 {
-"id": "spun-10",
-"t": "Spider-Man Unlimited #10",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "pp-228",
-"t": "Spectacular Spider-Man #228",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-129",
-"t": "Web of Spider-Man #129",
-"s": "Web of Spider-Man"
-},
-{
-"id": "nw-63",
-"t": "New Warriors #63",
-"s": "New Warriors"
-},
-{
-"id": "nw-64",
-"t": "New Warriors #64",
-"s": "New Warriors"
-},
-{
-"id": "nw-65",
-"t": "New Warriors #65",
-"s": "New Warriors"
+"id": "ffrst-1",
+"t": "Fantastic Four Roast #1",
+"s": "Fantastic Four Roast"
 }
 ]
 },
 {
-"id": "clone-o2-c6",
-"title": "Part 6",
-"era": "New Warriors #66 → The Lost Years #1",
+"id": "byrne-o2-c6",
+"title": "Fantastic Four Special Edition #1",
+"era": "1984–1986",
 "issues": [
 {
-"id": "nw-66",
-"t": "New Warriors #66",
-"s": "New Warriors"
-},
-{
-"id": "asm-406",
-"t": "Amazing Spider-Man #406",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-63",
-"t": "Spider-Man (1990) #63",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "stu-1",
-"t": "Spider-Man Team-Up #1",
-"s": "Spider-Man Team-Up"
-},
-{
-"id": "pp-229",
-"t": "Spectacular Spider-Man #229",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "ly-1",
-"t": "The Lost Years #1",
-"s": "The Lost Years"
+"id": "ffse-1",
+"t": "Fantastic Four Special Edition #1",
+"s": "Fantastic Four Special Edition"
 }
 ]
 },
 {
-"id": "clone-o2-c7",
-"title": "Part 7",
-"era": "The Lost Years #2 → The Parker Years #1",
+"id": "byrne-o2-c7",
+"title": "Secret Wars II #2",
+"era": "1984–1986",
 "issues": [
 {
-"id": "ly-2",
-"t": "The Lost Years #2",
-"s": "The Lost Years"
+"id": "swars2-2",
+"t": "Secret Wars II #2",
+"s": "Secret Wars II"
+}
+]
 },
 {
-"id": "ly-3",
-"t": "The Lost Years #3",
-"s": "The Lost Years"
+"id": "byrne-o2-c8",
+"title": "Avengers Annual #14",
+"era": "1984–1986",
+"issues": [
+{
+"id": "avann-14",
+"t": "Avengers Annual #14",
+"s": "Avengers Annual"
+}
+]
 },
 {
-"id": "py-1",
-"t": "The Parker Years #1",
-"s": "The Parker Years"
+"id": "byrne-o2-c9",
+"title": "What If? #36",
+"era": "1984–1986",
+"issues": [
+{
+"id": "wi-36",
+"t": "What If? #36",
+"s": "What If?"
+}
+]
+},
+{
+"id": "byrne-o2-c10",
+"title": "What The--?! #2, #10",
+"era": "1984–1986",
+"issues": [
+{
+"id": "wthe-2",
+"t": "What The--?! #2",
+"s": "What The--?!"
+},
+{
+"id": "wthe-10",
+"t": "What The--?! #10",
+"s": "What The--?!"
+}
+]
+},
+{
+"id": "byrne-o2-c11",
+"title": "Epic Illustrated #26–34",
+"era": "1984–1986",
+"issues": [
+{
+"id": "epic-26",
+"t": "Epic Illustrated #26",
+"s": "Epic Illustrated"
+},
+{
+"id": "epic-27",
+"t": "Epic Illustrated #27",
+"s": "Epic Illustrated"
+},
+{
+"id": "epic-28",
+"t": "Epic Illustrated #28",
+"s": "Epic Illustrated"
+},
+{
+"id": "epic-29",
+"t": "Epic Illustrated #29",
+"s": "Epic Illustrated"
+},
+{
+"id": "epic-30",
+"t": "Epic Illustrated #30",
+"s": "Epic Illustrated"
+},
+{
+"id": "epic-31",
+"t": "Epic Illustrated #31",
+"s": "Epic Illustrated"
+},
+{
+"id": "epic-32",
+"t": "Epic Illustrated #32",
+"s": "Epic Illustrated"
+},
+{
+"id": "epic-33",
+"t": "Epic Illustrated #33",
+"s": "Epic Illustrated"
+},
+{
+"id": "epic-34",
+"t": "Epic Illustrated #34",
+"s": "Epic Illustrated"
 }
 ]
 }
 ]
 },
 {
-"id": "ben-o1",
-"spine": "Ben Reilly",
-"cover": "Art/Spider-Man/ben-o1.jpg",
-"title": "Spider-Man: Ben Reilly Omnibus",
+"id": "waid-o1",
+"spine": "Waid & Wieringo",
+"cover": "Art/Fantastic-Four/waid-o1.jpg",
+"title": "Fantastic Four by Waid & Wieringo Omnibus",
+"vol": "",
+"creators": "Mark Waid & Mike Wieringo",
+"era": "2002–2005",
+"released": "Dec 2018",
+"art": "o-waid",
+"tex": "tex-krackle",
+"note": "Note the jump — Fantastic Four #296–488 has never been collected in omnibus, so sixteen years pass between this book and Byrne's last one. Waid and Wieringo restart from first principles, and Unthinkable is the best Doom story in decades.",
+"chapters": [
+{
+"id": "waid-o1-c1",
+"title": "Fantastic Four (1998) #60–70, #500–524",
+"era": "2002–2005",
+"issues": [
+{
+"id": "ff3-60",
+"t": "Fantastic Four (1998) #60",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-61",
+"t": "Fantastic Four (1998) #61",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-62",
+"t": "Fantastic Four (1998) #62",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-63",
+"t": "Fantastic Four (1998) #63",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-64",
+"t": "Fantastic Four (1998) #64",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-65",
+"t": "Fantastic Four (1998) #65",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-66",
+"t": "Fantastic Four (1998) #66",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-67",
+"t": "Fantastic Four (1998) #67",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-68",
+"t": "Fantastic Four (1998) #68",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-69",
+"t": "Fantastic Four (1998) #69",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-70",
+"t": "Fantastic Four (1998) #70",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-500",
+"t": "Fantastic Four (1998) #500",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-501",
+"t": "Fantastic Four (1998) #501",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-502",
+"t": "Fantastic Four (1998) #502",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-503",
+"t": "Fantastic Four (1998) #503",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-504",
+"t": "Fantastic Four (1998) #504",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-505",
+"t": "Fantastic Four (1998) #505",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-506",
+"t": "Fantastic Four (1998) #506",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-507",
+"t": "Fantastic Four (1998) #507",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-508",
+"t": "Fantastic Four (1998) #508",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-509",
+"t": "Fantastic Four (1998) #509",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-510",
+"t": "Fantastic Four (1998) #510",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-511",
+"t": "Fantastic Four (1998) #511",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-512",
+"t": "Fantastic Four (1998) #512",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-513",
+"t": "Fantastic Four (1998) #513",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-514",
+"t": "Fantastic Four (1998) #514",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-515",
+"t": "Fantastic Four (1998) #515",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-516",
+"t": "Fantastic Four (1998) #516",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-517",
+"t": "Fantastic Four (1998) #517",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-518",
+"t": "Fantastic Four (1998) #518",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-519",
+"t": "Fantastic Four (1998) #519",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-520",
+"t": "Fantastic Four (1998) #520",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-521",
+"t": "Fantastic Four (1998) #521",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-522",
+"t": "Fantastic Four (1998) #522",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-523",
+"t": "Fantastic Four (1998) #523",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-524",
+"t": "Fantastic Four (1998) #524",
+"s": "Fantastic Four (1998)"
+}
+]
+}
+]
+},
+{
+"id": "millar-o1",
+"spine": "Millar & Hitch",
+"cover": "Art/Fantastic-Four/millar-o1.jpg",
+"title": "Fantastic Four by Millar & Hitch Omnibus",
+"vol": "",
+"creators": "Mark Millar & Bryan Hitch",
+"era": "2008–2009",
+"released": "Apr 2023",
+"art": "o-millar",
+"tex": "tex-cosmic",
+"note": "Widescreen and loud: the Marquis of Death, Doom's origin retold, Ben's wedding, and Marvel 1985 collected alongside as the odd one out.",
+"chapters": [
+{
+"id": "millar-o1-c1",
+"title": "Fantastic Four (1998) #554–569",
+"era": "2008–2009",
+"issues": [
+{
+"id": "ff3-554",
+"t": "Fantastic Four (1998) #554",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-555",
+"t": "Fantastic Four (1998) #555",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-556",
+"t": "Fantastic Four (1998) #556",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-557",
+"t": "Fantastic Four (1998) #557",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-558",
+"t": "Fantastic Four (1998) #558",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-559",
+"t": "Fantastic Four (1998) #559",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-560",
+"t": "Fantastic Four (1998) #560",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-561",
+"t": "Fantastic Four (1998) #561",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-562",
+"t": "Fantastic Four (1998) #562",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-563",
+"t": "Fantastic Four (1998) #563",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-564",
+"t": "Fantastic Four (1998) #564",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-565",
+"t": "Fantastic Four (1998) #565",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-566",
+"t": "Fantastic Four (1998) #566",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-567",
+"t": "Fantastic Four (1998) #567",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-568",
+"t": "Fantastic Four (1998) #568",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-569",
+"t": "Fantastic Four (1998) #569",
+"s": "Fantastic Four (1998)"
+}
+]
+},
+{
+"id": "millar-o1-c2",
+"title": "Fantastic Four Annual (1998) #32",
+"era": "2008–2009",
+"issues": [
+{
+"id": "ff3ann-32",
+"t": "Fantastic Four Annual (1998) #32",
+"s": "Fantastic Four Annual (1998)"
+}
+]
+},
+{
+"id": "millar-o1-c3",
+"title": "Fantastic Force (2009) #1–4",
+"era": "2008–2009",
+"issues": [
+{
+"id": "ffor-1",
+"t": "Fantastic Force (2009) #1",
+"s": "Fantastic Force (2009)"
+},
+{
+"id": "ffor-2",
+"t": "Fantastic Force (2009) #2",
+"s": "Fantastic Force (2009)"
+},
+{
+"id": "ffor-3",
+"t": "Fantastic Force (2009) #3",
+"s": "Fantastic Force (2009)"
+},
+{
+"id": "ffor-4",
+"t": "Fantastic Force (2009) #4",
+"s": "Fantastic Force (2009)"
+}
+]
+},
+{
+"id": "millar-o1-c4",
+"title": "Marvel 1985 #1–6",
+"era": "2008–2009",
+"issues": [
+{
+"id": "m1985-1",
+"t": "Marvel 1985 #1",
+"s": "Marvel 1985"
+},
+{
+"id": "m1985-2",
+"t": "Marvel 1985 #2",
+"s": "Marvel 1985"
+},
+{
+"id": "m1985-3",
+"t": "Marvel 1985 #3",
+"s": "Marvel 1985"
+},
+{
+"id": "m1985-4",
+"t": "Marvel 1985 #4",
+"s": "Marvel 1985"
+},
+{
+"id": "m1985-5",
+"t": "Marvel 1985 #5",
+"s": "Marvel 1985"
+},
+{
+"id": "m1985-6",
+"t": "Marvel 1985 #6",
+"s": "Marvel 1985"
+}
+]
+}
+]
+},
+{
+"id": "hick-o1",
+"spine": "By Hickman",
+"cover": "Art/Fantastic-Four/hick-o1.jpg",
+"title": "Fantastic Four by Jonathan Hickman Omnibus",
 "vol": "Vol. 1",
-"creators": "Various",
-"era": "1995–1996",
-"released": "Jan 2019",
-"art": "o-benreilly",
-"tex": "tex-burst",
-"note": "Ben Reilly takes over as Spider-Man. The Scarlet Spider titles and the Sensational relaunch.",
+"creators": "Jonathan Hickman, Dale Eaglesham & Steve Epting",
+"era": "2009–2011",
+"released": "Oct 2013",
+"art": "o-hickman",
+"tex": "tex-negzone",
+"note": "The long game. The Council of Reeds, the Future Foundation, the War of Four Cities being set up years before it lands — and the death that turns Fantastic Four into FF.",
 "chapters": [
 {
-"id": "ben-o1-c1",
-"title": "Part 1",
-"era": "Scarlet Spider Unlimited #1 → Web of Scarlet Spider #2",
+"id": "hick-o1-c1",
+"title": "Dark Reign: Fantastic Four #1–5",
+"era": "2009–2011",
 "issues": [
 {
-"id": "ssu-1",
-"t": "Scarlet Spider Unlimited #1",
-"s": "Scarlet Spider Unlimited"
+"id": "drff-1",
+"t": "Dark Reign: Fantastic Four #1",
+"s": "Dark Reign: Fantastic Four"
 },
 {
-"id": "wss-1",
-"t": "Web of Scarlet Spider #1",
-"s": "Web of Scarlet Spider"
+"id": "drff-2",
+"t": "Dark Reign: Fantastic Four #2",
+"s": "Dark Reign: Fantastic Four"
 },
 {
-"id": "ass-1",
-"t": "Amazing Scarlet Spider #1",
-"s": "Amazing Scarlet Spider"
+"id": "drff-3",
+"t": "Dark Reign: Fantastic Four #3",
+"s": "Dark Reign: Fantastic Four"
 },
 {
-"id": "ss-1",
-"t": "Scarlet Spider #1",
-"s": "Scarlet Spider"
+"id": "drff-4",
+"t": "Dark Reign: Fantastic Four #4",
+"s": "Dark Reign: Fantastic Four"
 },
 {
-"id": "pss-1",
-"t": "Spectacular Scarlet Spider #1",
-"s": "Spectacular Scarlet Spider"
-},
-{
-"id": "wss-2",
-"t": "Web of Scarlet Spider #2",
-"s": "Web of Scarlet Spider"
+"id": "drff-5",
+"t": "Dark Reign: Fantastic Four #5",
+"s": "Dark Reign: Fantastic Four"
 }
 ]
 },
 {
-"id": "ben-o1-c2",
-"title": "Part 2",
-"era": "Amazing Scarlet Spider #2 → Amazing Spider-Man #407",
+"id": "hick-o1-c2",
+"title": "Dark Reign: The Cabal #1",
+"era": "2009–2011",
 "issues": [
 {
-"id": "ass-2",
-"t": "Amazing Scarlet Spider #2",
-"s": "Amazing Scarlet Spider"
+"id": "drcab-1",
+"t": "Dark Reign: The Cabal #1",
+"s": "Dark Reign: The Cabal"
+}
+]
 },
 {
-"id": "gg-3",
-"t": "Green Goblin #3",
-"s": "Green Goblin"
+"id": "hick-o1-c3",
+"title": "Fantastic Four (1998) #570–588",
+"era": "2009–2011",
+"issues": [
+{
+"id": "ff3-570",
+"t": "Fantastic Four (1998) #570",
+"s": "Fantastic Four (1998)"
 },
 {
-"id": "ss-2",
-"t": "Scarlet Spider #2",
-"s": "Scarlet Spider"
+"id": "ff3-571",
+"t": "Fantastic Four (1998) #571",
+"s": "Fantastic Four (1998)"
 },
 {
-"id": "pss-2",
-"t": "Spectacular Scarlet Spider #2",
-"s": "Spectacular Scarlet Spider"
+"id": "ff3-572",
+"t": "Fantastic Four (1998) #572",
+"s": "Fantastic Four (1998)"
 },
 {
-"id": "sen-0",
-"t": "Sensational Spider-Man #0",
-"s": "Sensational Spider-Man"
+"id": "ff3-573",
+"t": "Fantastic Four (1998) #573",
+"s": "Fantastic Four (1998)"
 },
 {
-"id": "asm-407",
-"t": "Amazing Spider-Man #407",
+"id": "ff3-574",
+"t": "Fantastic Four (1998) #574",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-575",
+"t": "Fantastic Four (1998) #575",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-576",
+"t": "Fantastic Four (1998) #576",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-577",
+"t": "Fantastic Four (1998) #577",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-578",
+"t": "Fantastic Four (1998) #578",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-579",
+"t": "Fantastic Four (1998) #579",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-580",
+"t": "Fantastic Four (1998) #580",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-581",
+"t": "Fantastic Four (1998) #581",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-582",
+"t": "Fantastic Four (1998) #582",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-583",
+"t": "Fantastic Four (1998) #583",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-584",
+"t": "Fantastic Four (1998) #584",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-585",
+"t": "Fantastic Four (1998) #585",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-586",
+"t": "Fantastic Four (1998) #586",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-587",
+"t": "Fantastic Four (1998) #587",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-588",
+"t": "Fantastic Four (1998) #588",
+"s": "Fantastic Four (1998)"
+}
+]
+},
+{
+"id": "hick-o1-c4",
+"title": "FF (2011) #1–5",
+"era": "2009–2011",
+"issues": [
+{
+"id": "ff11-1",
+"t": "FF (2011) #1",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-2",
+"t": "FF (2011) #2",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-3",
+"t": "FF (2011) #3",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-4",
+"t": "FF (2011) #4",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-5",
+"t": "FF (2011) #5",
+"s": "FF (2011)"
+}
+]
+}
+]
+},
+{
+"id": "hick-o2",
+"spine": "By Hickman",
+"cover": "Art/Fantastic-Four/hick-o2.jpg",
+"title": "Fantastic Four by Jonathan Hickman Omnibus",
+"vol": "Vol. 2",
+"creators": "Jonathan Hickman, Steve Epting & Barry Kitson",
+"era": "2011–2012",
+"released": "Nov 2014",
+"art": "o-hickman",
+"tex": "tex-cosmic",
+"note": "Both books at once — FF and the restored Fantastic Four, month by month — through to #611, where every thread planted in Vol. 1 is paid off at the same time.",
+"chapters": [
+{
+"id": "hick-o2-c1",
+"title": "FF (2011) #6–11",
+"era": "2011–2012",
+"issues": [
+{
+"id": "ff11-6",
+"t": "FF (2011) #6",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-7",
+"t": "FF (2011) #7",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-8",
+"t": "FF (2011) #8",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-9",
+"t": "FF (2011) #9",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-10",
+"t": "FF (2011) #10",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-11",
+"t": "FF (2011) #11",
+"s": "FF (2011)"
+}
+]
+},
+{
+"id": "hick-o2-c2",
+"title": "Fantastic Four (1998) #600–604",
+"era": "2011–2012",
+"issues": [
+{
+"id": "ff3-600",
+"t": "Fantastic Four (1998) #600",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-601",
+"t": "Fantastic Four (1998) #601",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-602",
+"t": "Fantastic Four (1998) #602",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-603",
+"t": "Fantastic Four (1998) #603",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-604",
+"t": "Fantastic Four (1998) #604",
+"s": "Fantastic Four (1998)"
+}
+]
+},
+{
+"id": "hick-o2-c3",
+"title": "FF (2011) #12–16",
+"era": "2011–2012",
+"issues": [
+{
+"id": "ff11-12",
+"t": "FF (2011) #12",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-13",
+"t": "FF (2011) #13",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-14",
+"t": "FF (2011) #14",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-15",
+"t": "FF (2011) #15",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-16",
+"t": "FF (2011) #16",
+"s": "FF (2011)"
+}
+]
+},
+{
+"id": "hick-o2-c4",
+"title": "Fantastic Four (1998) #605–611, #605.1",
+"era": "2011–2012",
+"issues": [
+{
+"id": "ff3-605",
+"t": "Fantastic Four (1998) #605",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-605.1",
+"t": "Fantastic Four (1998) #605.1",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-606",
+"t": "Fantastic Four (1998) #606",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-607",
+"t": "Fantastic Four (1998) #607",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-608",
+"t": "Fantastic Four (1998) #608",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-609",
+"t": "Fantastic Four (1998) #609",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-610",
+"t": "Fantastic Four (1998) #610",
+"s": "Fantastic Four (1998)"
+},
+{
+"id": "ff3-611",
+"t": "Fantastic Four (1998) #611",
+"s": "Fantastic Four (1998)"
+}
+]
+},
+{
+"id": "hick-o2-c5",
+"title": "FF (2011) #17–23",
+"era": "2011–2012",
+"issues": [
+{
+"id": "ff11-17",
+"t": "FF (2011) #17",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-18",
+"t": "FF (2011) #18",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-19",
+"t": "FF (2011) #19",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-20",
+"t": "FF (2011) #20",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-21",
+"t": "FF (2011) #21",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-22",
+"t": "FF (2011) #22",
+"s": "FF (2011)"
+},
+{
+"id": "ff11-23",
+"t": "FF (2011) #23",
+"s": "FF (2011)"
+}
+]
+}
+]
+},
+{
+"id": "frac-o1",
+"spine": "By Fraction",
+"cover": "Art/Fantastic-Four/frac-o1.jpg",
+"title": "Fantastic Four by Matt Fraction Omnibus",
+"vol": "",
+"creators": "Matt Fraction, Mark Bagley & Michael Allred",
+"era": "2012–2013",
+"released": "Feb 2015",
+"art": "o-fraction",
+"tex": "tex-krackle",
+"note": "A family road trip through space and time, while a substitute team minds the Baxter Building and Allred draws them. Both Marvel NOW! series in one book.",
+"chapters": [
+{
+"id": "frac-o1-c1",
+"title": "Marvel NOW! Point One #1",
+"era": "2012–2013",
+"issues": [
+{
+"id": "mnpo-1",
+"t": "Marvel NOW! Point One #1",
+"s": "Marvel NOW! Point One"
+}
+]
+},
+{
+"id": "frac-o1-c2",
+"title": "Fantastic Four (2012) #1–16",
+"era": "2012–2013",
+"issues": [
+{
+"id": "ff4-1",
+"t": "Fantastic Four (2012) #1",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-2",
+"t": "Fantastic Four (2012) #2",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-3",
+"t": "Fantastic Four (2012) #3",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-4",
+"t": "Fantastic Four (2012) #4",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-5",
+"t": "Fantastic Four (2012) #5",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-6",
+"t": "Fantastic Four (2012) #6",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-7",
+"t": "Fantastic Four (2012) #7",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-8",
+"t": "Fantastic Four (2012) #8",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-9",
+"t": "Fantastic Four (2012) #9",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-10",
+"t": "Fantastic Four (2012) #10",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-11",
+"t": "Fantastic Four (2012) #11",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-12",
+"t": "Fantastic Four (2012) #12",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-13",
+"t": "Fantastic Four (2012) #13",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-14",
+"t": "Fantastic Four (2012) #14",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-15",
+"t": "Fantastic Four (2012) #15",
+"s": "Fantastic Four (2012)"
+},
+{
+"id": "ff4-16",
+"t": "Fantastic Four (2012) #16",
+"s": "Fantastic Four (2012)"
+}
+]
+},
+{
+"id": "frac-o1-c3",
+"title": "FF (2012) #1–16",
+"era": "2012–2013",
+"issues": [
+{
+"id": "ff12-1",
+"t": "FF (2012) #1",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-2",
+"t": "FF (2012) #2",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-3",
+"t": "FF (2012) #3",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-4",
+"t": "FF (2012) #4",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-5",
+"t": "FF (2012) #5",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-6",
+"t": "FF (2012) #6",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-7",
+"t": "FF (2012) #7",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-8",
+"t": "FF (2012) #8",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-9",
+"t": "FF (2012) #9",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-10",
+"t": "FF (2012) #10",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-11",
+"t": "FF (2012) #11",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-12",
+"t": "FF (2012) #12",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-13",
+"t": "FF (2012) #13",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-14",
+"t": "FF (2012) #14",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-15",
+"t": "FF (2012) #15",
+"s": "FF (2012)"
+},
+{
+"id": "ff12-16",
+"t": "FF (2012) #16",
+"s": "FF (2012)"
+}
+]
+},
+{
+"id": "frac-o1-c4",
+"title": "Fantastic Four (2012) #5AU",
+"era": "2012–2013",
+"issues": [
+{
+"id": "ff4-5AU",
+"t": "Fantastic Four (2012) #5AU",
+"s": "Fantastic Four (2012)"
+}
+]
+}
+]
+},
+{
+"id": "slott-o1",
+"spine": "By Dan Slott",
+"cover": "Art/Fantastic-Four/slott-o1.jpg",
+"title": "Fantastic Four by Dan Slott Omnibus",
+"vol": "Vol. 1",
+"creators": "Dan Slott, Sara Pichelli & Aaron Kuder",
+"era": "2018–2020",
+"released": "Jul 2026",
+"art": "o-slott",
+"tex": "tex-cosmic",
+"note": "The family comes home after Secret Wars. Ben and Alicia's wedding, the Griever at the End of All Things, and Doom written as the most dangerous man alive again.",
+"chapters": [
+{
+"id": "slott-o1-c1",
+"title": "Fantastic Four (2018) #1–4",
+"era": "2018–2020",
+"issues": [
+{
+"id": "ff6-1",
+"t": "Fantastic Four (2018) #1",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-2",
+"t": "Fantastic Four (2018) #2",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-3",
+"t": "Fantastic Four (2018) #3",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-4",
+"t": "Fantastic Four (2018) #4",
+"s": "Fantastic Four (2018)"
+}
+]
+},
+{
+"id": "slott-o1-c2",
+"title": "Fantastic Four: Wedding Special #1",
+"era": "2018–2020",
+"issues": [
+{
+"id": "ffws-1",
+"t": "Fantastic Four: Wedding Special #1",
+"s": "Fantastic Four: Wedding Special"
+}
+]
+},
+{
+"id": "slott-o1-c3",
+"title": "Fantastic Four (2018) #5–20",
+"era": "2018–2020",
+"issues": [
+{
+"id": "ff6-5",
+"t": "Fantastic Four (2018) #5",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-6",
+"t": "Fantastic Four (2018) #6",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-7",
+"t": "Fantastic Four (2018) #7",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-8",
+"t": "Fantastic Four (2018) #8",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-9",
+"t": "Fantastic Four (2018) #9",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-10",
+"t": "Fantastic Four (2018) #10",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-11",
+"t": "Fantastic Four (2018) #11",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-12",
+"t": "Fantastic Four (2018) #12",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-13",
+"t": "Fantastic Four (2018) #13",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-14",
+"t": "Fantastic Four (2018) #14",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-15",
+"t": "Fantastic Four (2018) #15",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-16",
+"t": "Fantastic Four (2018) #16",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-17",
+"t": "Fantastic Four (2018) #17",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-18",
+"t": "Fantastic Four (2018) #18",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-19",
+"t": "Fantastic Four (2018) #19",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-20",
+"t": "Fantastic Four (2018) #20",
+"s": "Fantastic Four (2018)"
+}
+]
+},
+{
+"id": "slott-o1-c4",
+"title": "Fantastic Four: 4 Yancy Street #1",
+"era": "2018–2020",
+"issues": [
+{
+"id": "ffys-1",
+"t": "Fantastic Four: 4 Yancy Street #1",
+"s": "Fantastic Four: 4 Yancy Street"
+}
+]
+},
+{
+"id": "slott-o1-c5",
+"title": "Fantastic Four: Negative Zone #1",
+"era": "2018–2020",
+"issues": [
+{
+"id": "ffnz-1",
+"t": "Fantastic Four: Negative Zone #1",
+"s": "Fantastic Four: Negative Zone"
+}
+]
+},
+{
+"id": "slott-o1-c6",
+"title": "Empyre: Fantastic Four #0",
+"era": "2018–2020",
+"issues": [
+{
+"id": "empff-0",
+"t": "Empyre: Fantastic Four #0",
+"s": "Empyre: Fantastic Four"
+}
+]
+},
+{
+"id": "slott-o1-c7",
+"title": "Fantastic Four (2018) #21–23",
+"era": "2018–2020",
+"issues": [
+{
+"id": "ff6-21",
+"t": "Fantastic Four (2018) #21",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-22",
+"t": "Fantastic Four (2018) #22",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-23",
+"t": "Fantastic Four (2018) #23",
+"s": "Fantastic Four (2018)"
+}
+]
+},
+{
+"id": "slott-o1-c8",
+"title": "Empyre: Fallout Fantastic Four #1",
+"era": "2018–2020",
+"issues": [
+{
+"id": "empfo-1",
+"t": "Empyre: Fallout Fantastic Four #1",
+"s": "Empyre: Fallout Fantastic Four"
+}
+]
+},
+{
+"id": "slott-o1-c9",
+"title": "Fantastic Four (2018) #24",
+"era": "2018–2020",
+"issues": [
+{
+"id": "ff6-24",
+"t": "Fantastic Four (2018) #24",
+"s": "Fantastic Four (2018)"
+}
+]
+},
+{
+"id": "slott-o1-c10",
+"title": "Fantastic Four: Grimm Noir #1",
+"era": "2018–2020",
+"issues": [
+{
+"id": "ffgn-1",
+"t": "Fantastic Four: Grimm Noir #1",
+"s": "Fantastic Four: Grimm Noir"
+}
+]
+}
+]
+},
+{
+"id": "slott-o2",
+"spine": "By Dan Slott",
+"cover": "Art/Fantastic-Four/slott-o2.jpg",
+"title": "Fantastic Four by Dan Slott Omnibus",
+"vol": "Vol. 2",
+"creators": "Dan Slott, R.B. Silva & Rachael Stott",
+"era": "2020–2022",
+"released": "Announced",
+"art": "o-slott",
+"tex": "tex-negzone",
+"note": "The back half of the run, ending in the Reckoning War. Solicited for December 2026.",
+"chapters": [
+{
+"id": "slott-o2-c1",
+"title": "Fantastic Four (2018) #25–27",
+"era": "2020–2022",
+"issues": [
+{
+"id": "ff6-25",
+"t": "Fantastic Four (2018) #25",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-26",
+"t": "Fantastic Four (2018) #26",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-27",
+"t": "Fantastic Four (2018) #27",
+"s": "Fantastic Four (2018)"
+}
+]
+},
+{
+"id": "slott-o2-c2",
+"title": "Fantastic Four: Road Trip #1",
+"era": "2020–2022",
+"issues": [
+{
+"id": "ffrt-1",
+"t": "Fantastic Four: Road Trip #1",
+"s": "Fantastic Four: Road Trip"
+}
+]
+},
+{
+"id": "slott-o2-c3",
+"title": "Fantastic Four (2018) #28–39",
+"era": "2020–2022",
+"issues": [
+{
+"id": "ff6-28",
+"t": "Fantastic Four (2018) #28",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-29",
+"t": "Fantastic Four (2018) #29",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-30",
+"t": "Fantastic Four (2018) #30",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-31",
+"t": "Fantastic Four (2018) #31",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-32",
+"t": "Fantastic Four (2018) #32",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-33",
+"t": "Fantastic Four (2018) #33",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-34",
+"t": "Fantastic Four (2018) #34",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-35",
+"t": "Fantastic Four (2018) #35",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-36",
+"t": "Fantastic Four (2018) #36",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-37",
+"t": "Fantastic Four (2018) #37",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-38",
+"t": "Fantastic Four (2018) #38",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-39",
+"t": "Fantastic Four (2018) #39",
+"s": "Fantastic Four (2018)"
+}
+]
+},
+{
+"id": "slott-o2-c4",
+"title": "Fantastic Four: Reckoning War Alpha #1",
+"era": "2020–2022",
+"issues": [
+{
+"id": "ffrwa-1",
+"t": "Fantastic Four: Reckoning War Alpha #1",
+"s": "Fantastic Four: Reckoning War Alpha"
+}
+]
+},
+{
+"id": "slott-o2-c5",
+"title": "Fantastic Four (2018) #40–41",
+"era": "2020–2022",
+"issues": [
+{
+"id": "ff6-40",
+"t": "Fantastic Four (2018) #40",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-41",
+"t": "Fantastic Four (2018) #41",
+"s": "Fantastic Four (2018)"
+}
+]
+},
+{
+"id": "slott-o2-c6",
+"title": "Reckoning War: Trial of the Watcher #1",
+"era": "2020–2022",
+"issues": [
+{
+"id": "rwtw-1",
+"t": "Reckoning War: Trial of the Watcher #1",
+"s": "Reckoning War: Trial of the Watcher"
+}
+]
+},
+{
+"id": "slott-o2-c7",
+"title": "Fantastic Four (2018) #42–48",
+"era": "2020–2022",
+"issues": [
+{
+"id": "ff6-42",
+"t": "Fantastic Four (2018) #42",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-43",
+"t": "Fantastic Four (2018) #43",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-44",
+"t": "Fantastic Four (2018) #44",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-45",
+"t": "Fantastic Four (2018) #45",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-46",
+"t": "Fantastic Four (2018) #46",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-47",
+"t": "Fantastic Four (2018) #47",
+"s": "Fantastic Four (2018)"
+},
+{
+"id": "ff6-48",
+"t": "Fantastic Four (2018) #48",
+"s": "Fantastic Four (2018)"
+}
+]
+}
+]
+},
+{
+"id": "doom-o1",
+"spine": "Book of Doom",
+"cover": "Art/Fantastic-Four/doom-o1.jpg",
+"title": "Doctor Doom: The Book of Doom Omnibus",
+"vol": "",
+"creators": "Stan Lee, Jack Kirby, Roy Thomas & Wally Wood",
+"era": "1962–1977",
+"released": "Aug 2022",
+"art": "o-doom",
+"tex": "tex-halftone",
+"note": "Latveria's side of the story, gathered across fifteen years and a dozen titles, so it doubles back over the Lee/Kirby volumes and shares their ids. Astonishing Tales and Super-Villain Team-Up are the parts hardest to find anywhere else.",
+"chapters": [
+{
+"id": "doom-o1-c1",
+"title": "Fantastic Four #5–6, #39–40, #236, #246–247, #258, #278–279, #350, #352, #358",
+"era": "1962–1977",
+"issues": [
+{
+"id": "ff-5",
+"t": "Fantastic Four #5",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-6",
+"t": "Fantastic Four #6",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-39",
+"t": "Fantastic Four #39",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-40",
+"t": "Fantastic Four #40",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-236",
+"t": "Fantastic Four #236",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-246",
+"t": "Fantastic Four #246",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-247",
+"t": "Fantastic Four #247",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-258",
+"t": "Fantastic Four #258",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-278",
+"t": "Fantastic Four #278",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-279",
+"t": "Fantastic Four #279",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-350",
+"t": "Fantastic Four #350",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-352",
+"t": "Fantastic Four #352",
+"s": "Fantastic Four"
+},
+{
+"id": "ff-358",
+"t": "Fantastic Four #358",
+"s": "Fantastic Four"
+}
+]
+},
+{
+"id": "doom-o1-c2",
+"title": "Fantastic Four Annual #2",
+"era": "1962–1977",
+"issues": [
+{
+"id": "ffann-2",
+"t": "Fantastic Four Annual #2",
+"s": "Fantastic Four Annual"
+}
+]
+},
+{
+"id": "doom-o1-c3",
+"title": "Amazing Spider-Man #5",
+"era": "1962–1977",
+"issues": [
+{
+"id": "asm-5",
+"t": "Amazing Spider-Man #5",
 "s": "Amazing Spider-Man"
 }
 ]
 },
 {
-"id": "ben-o1-c3",
-"title": "Part 3",
-"era": "Spider-Man (1990) #64 → Spider-Man/Punisher: Family Plot #1",
+"id": "doom-o1-c4",
+"title": "Marvel Super-Heroes #20",
+"era": "1962–1977",
 "issues": [
 {
-"id": "spm-64",
-"t": "Spider-Man (1990) #64",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "sen-1",
-"t": "Sensational Spider-Man #1",
-"s": "Sensational Spider-Man"
-},
-{
-"id": "asm-408",
-"t": "Amazing Spider-Man #408",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-65",
-"t": "Spider-Man (1990) #65",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-230",
-"t": "Spectacular Spider-Man #230",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "fp-1",
-"t": "Spider-Man/Punisher: Family Plot #1",
-"s": "Spider-Man/Punisher: Family Plot"
+"id": "msh-20",
+"t": "Marvel Super-Heroes #20",
+"s": "Marvel Super-Heroes"
 }
 ]
 },
 {
-"id": "ben-o1-c4",
-"title": "Part 4",
-"era": "Spider-Man/Punisher: Family Plot #2 → Venom: Along Came a Spider #1",
+"id": "doom-o1-c5",
+"title": "Giant-Size Super-Villain Team-Up #1–2",
+"era": "1962–1977",
 "issues": [
 {
-"id": "fp-2",
-"t": "Spider-Man/Punisher: Family Plot #2",
-"s": "Spider-Man/Punisher: Family Plot"
+"id": "gssvtu-1",
+"t": "Giant-Size Super-Villain Team-Up #1",
+"s": "Giant-Size Super-Villain Team-Up"
 },
 {
-"id": "wss-3",
-"t": "Web of Scarlet Spider #3",
-"s": "Web of Scarlet Spider"
-},
-{
-"id": "nw-67",
-"t": "New Warriors #67",
-"s": "New Warriors"
-},
-{
-"id": "wss-4",
-"t": "Web of Scarlet Spider #4",
-"s": "Web of Scarlet Spider"
-},
-{
-"id": "hs-1995",
-"t": "Spider-Man Holiday Special #1995",
-"s": "Spider-Man Holiday Special"
-},
-{
-"id": "vacs-1",
-"t": "Venom: Along Came a Spider #1",
-"s": "Venom: Along Came a Spider"
+"id": "gssvtu-2",
+"t": "Giant-Size Super-Villain Team-Up #2",
+"s": "Giant-Size Super-Villain Team-Up"
 }
 ]
 },
 {
-"id": "ben-o1-c5",
-"title": "Part 5",
-"era": "Venom: Along Came a Spider #2 → Sensational Spider-Man #2",
+"id": "doom-o1-c6",
+"title": "Super-Villain Team-Up #13–14",
+"era": "1962–1977",
 "issues": [
 {
-"id": "vacs-2",
-"t": "Venom: Along Came a Spider #2",
-"s": "Venom: Along Came a Spider"
+"id": "svtu-13",
+"t": "Super-Villain Team-Up #13",
+"s": "Super-Villain Team-Up"
 },
 {
-"id": "vacs-3",
-"t": "Venom: Along Came a Spider #3",
-"s": "Venom: Along Came a Spider"
+"id": "svtu-14",
+"t": "Super-Villain Team-Up #14",
+"s": "Super-Villain Team-Up"
+}
+]
 },
 {
-"id": "vacs-4",
-"t": "Venom: Along Came a Spider #4",
-"s": "Venom: Along Came a Spider"
+"id": "doom-o1-c7",
+"title": "Champions #16",
+"era": "1962–1977",
+"issues": [
+{
+"id": "champ-16",
+"t": "Champions #16",
+"s": "Champions"
+}
+]
 },
 {
-"id": "asmann-1996",
-"t": "Amazing Spider-Man Annual #1996",
+"id": "doom-o1-c8",
+"title": "Amazing Spider-Man Annual #14",
+"era": "1962–1977",
+"issues": [
+{
+"id": "asmann-14",
+"t": "Amazing Spider-Man Annual #14",
 "s": "Amazing Spider-Man Annual"
-},
-{
-"id": "pp-231",
-"t": "Spectacular Spider-Man #231",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "sen-2",
-"t": "Sensational Spider-Man #2",
-"s": "Sensational Spider-Man"
 }
 ]
 },
 {
-"id": "ben-o1-c6",
-"title": "Part 6",
-"era": "Amazing Spider-Man #409 → Spider-Man (1990) #67",
+"id": "doom-o1-c9",
+"title": "Uncanny X-Men #145–147",
+"era": "1962–1977",
 "issues": [
 {
-"id": "asm-409",
-"t": "Amazing Spider-Man #409",
-"s": "Amazing Spider-Man"
+"id": "uxm-145",
+"t": "Uncanny X-Men #145",
+"s": "Uncanny X-Men"
 },
 {
-"id": "spm-66",
-"t": "Spider-Man (1990) #66",
-"s": "Spider-Man (1990)"
+"id": "uxm-146",
+"t": "Uncanny X-Men #146",
+"s": "Uncanny X-Men"
 },
 {
-"id": "pp-232",
-"t": "Spectacular Spider-Man #232",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "sen-3",
-"t": "Sensational Spider-Man #3",
-"s": "Sensational Spider-Man"
-},
-{
-"id": "asm-410",
-"t": "Amazing Spider-Man #410",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-67",
-"t": "Spider-Man (1990) #67",
-"s": "Spider-Man (1990)"
+"id": "uxm-147",
+"t": "Uncanny X-Men #147",
+"s": "Uncanny X-Men"
 }
 ]
 },
 {
-"id": "ben-o1-c7",
-"title": "Part 7",
-"era": "Spectacular Spider-Man #233 → Spider-Man Team-Up #2",
+"id": "doom-o1-c10",
+"title": "Iron Man #149–150",
+"era": "1962–1977",
 "issues": [
 {
-"id": "pp-233",
-"t": "Spectacular Spider-Man #233",
-"s": "Spectacular Spider-Man"
+"id": "im-149",
+"t": "Iron Man #149",
+"s": "Iron Man"
 },
 {
-"id": "fa-1",
-"t": "The Final Adventure #1",
-"s": "The Final Adventure"
-},
-{
-"id": "fa-2",
-"t": "The Final Adventure #2",
-"s": "The Final Adventure"
-},
-{
-"id": "fa-3",
-"t": "The Final Adventure #3",
-"s": "The Final Adventure"
-},
-{
-"id": "fa-4",
-"t": "The Final Adventure #4",
-"s": "The Final Adventure"
-},
-{
-"id": "stu-2",
-"t": "Spider-Man Team-Up #2",
-"s": "Spider-Man Team-Up"
+"id": "im-150",
+"t": "Iron Man #150",
+"s": "Iron Man"
 }
 ]
 },
 {
-"id": "ben-o1-c8",
-"title": "Part 8",
-"era": "Spider-Man Team-Up #3 → Wizard Mini-Comic #3",
+"id": "doom-o1-c11",
+"title": "Secret Wars #10–12",
+"era": "1962–1977",
 "issues": [
 {
-"id": "stu-3",
-"t": "Spider-Man Team-Up #3",
-"s": "Spider-Man Team-Up"
+"id": "swars-10",
+"t": "Secret Wars #10",
+"s": "Secret Wars"
 },
 {
-"id": "spun-11",
-"t": "Spider-Man Unlimited #11",
-"s": "Spider-Man Unlimited"
+"id": "swars-11",
+"t": "Secret Wars #11",
+"s": "Secret Wars"
 },
 {
-"id": "wiz-3",
-"t": "Wizard Mini-Comic #3",
-"s": "Wizard Mini-Comic"
+"id": "swars-12",
+"t": "Secret Wars #12",
+"s": "Secret Wars"
 }
 ]
-}
-]
 },
 {
-"id": "jms-o1",
-"spine": "By J.M. Straczynski",
-"cover": "Art/Spider-Man/jms-o1.jpg",
-"title": "Amazing Spider-Man by J. Michael Straczynski Omnibus",
-"vol": "",
-"creators": "J. Michael Straczynski & John Romita Jr.",
-"era": "2001–2005",
-"released": "May 2019",
-"art": "o-jms",
-"tex": "tex-web",
-"note": "The post-9/11 relaunch. Ezekiel and the totem question, Aunt May finding out, and \"The Conversation.\"",
-"chapters": [
-{
-"id": "jms-o1-c1",
-"title": "Amazing Spider-Man (1999) #30–58, #500–514",
-"era": "2001–2005",
+"id": "doom-o1-c12",
+"title": "Marvel Graphic Novel #27, #49",
+"era": "1962–1977",
 "issues": [
 {
-"id": "asm2-30",
-"t": "Amazing Spider-Man (1999) #30",
-"s": "Amazing Spider-Man (1999)"
+"id": "mgn-27",
+"t": "Marvel Graphic Novel #27",
+"s": "Marvel Graphic Novel"
 },
 {
-"id": "asm2-31",
-"t": "Amazing Spider-Man (1999) #31",
-"s": "Amazing Spider-Man (1999)"
+"id": "mgn-49",
+"t": "Marvel Graphic Novel #49",
+"s": "Marvel Graphic Novel"
+}
+]
 },
 {
-"id": "asm2-32",
-"t": "Amazing Spider-Man (1999) #32",
-"s": "Amazing Spider-Man (1999)"
+"id": "doom-o1-c13",
+"title": "Fantastic Four (1998) #67–70, #500",
+"era": "1962–1977",
+"issues": [
+{
+"id": "ff3-67",
+"t": "Fantastic Four (1998) #67",
+"s": "Fantastic Four (1998)"
 },
 {
-"id": "asm2-33",
-"t": "Amazing Spider-Man (1999) #33",
-"s": "Amazing Spider-Man (1999)"
+"id": "ff3-68",
+"t": "Fantastic Four (1998) #68",
+"s": "Fantastic Four (1998)"
 },
 {
-"id": "asm2-34",
-"t": "Amazing Spider-Man (1999) #34",
-"s": "Amazing Spider-Man (1999)"
+"id": "ff3-69",
+"t": "Fantastic Four (1998) #69",
+"s": "Fantastic Four (1998)"
 },
 {
-"id": "asm2-35",
-"t": "Amazing Spider-Man (1999) #35",
-"s": "Amazing Spider-Man (1999)"
+"id": "ff3-70",
+"t": "Fantastic Four (1998) #70",
+"s": "Fantastic Four (1998)"
 },
 {
-"id": "asm2-36",
-"t": "Amazing Spider-Man (1999) #36",
-"s": "Amazing Spider-Man (1999)"
+"id": "ff3-500",
+"t": "Fantastic Four (1998) #500",
+"s": "Fantastic Four (1998)"
+}
+]
 },
 {
-"id": "asm2-37",
-"t": "Amazing Spider-Man (1999) #37",
-"s": "Amazing Spider-Man (1999)"
+"id": "doom-o1-c14",
+"title": "Fantastic Four Special #1",
+"era": "1962–1977",
+"issues": [
+{
+"id": "ffsp-1",
+"t": "Fantastic Four Special #1",
+"s": "Fantastic Four Special"
+}
+]
 },
 {
-"id": "asm2-38",
-"t": "Amazing Spider-Man (1999) #38",
-"s": "Amazing Spider-Man (1999)"
+"id": "doom-o1-c15",
+"title": "Books of Doom #1–6",
+"era": "1962–1977",
+"issues": [
+{
+"id": "bodoom-1",
+"t": "Books of Doom #1",
+"s": "Books of Doom"
 },
 {
-"id": "asm2-39",
-"t": "Amazing Spider-Man (1999) #39",
-"s": "Amazing Spider-Man (1999)"
+"id": "bodoom-2",
+"t": "Books of Doom #2",
+"s": "Books of Doom"
 },
 {
-"id": "asm2-40",
-"t": "Amazing Spider-Man (1999) #40",
-"s": "Amazing Spider-Man (1999)"
+"id": "bodoom-3",
+"t": "Books of Doom #3",
+"s": "Books of Doom"
 },
 {
-"id": "asm2-41",
-"t": "Amazing Spider-Man (1999) #41",
-"s": "Amazing Spider-Man (1999)"
+"id": "bodoom-4",
+"t": "Books of Doom #4",
+"s": "Books of Doom"
 },
 {
-"id": "asm2-42",
-"t": "Amazing Spider-Man (1999) #42",
-"s": "Amazing Spider-Man (1999)"
+"id": "bodoom-5",
+"t": "Books of Doom #5",
+"s": "Books of Doom"
 },
 {
-"id": "asm2-43",
-"t": "Amazing Spider-Man (1999) #43",
-"s": "Amazing Spider-Man (1999)"
+"id": "bodoom-6",
+"t": "Books of Doom #6",
+"s": "Books of Doom"
+}
+]
 },
 {
-"id": "asm2-44",
-"t": "Amazing Spider-Man (1999) #44",
-"s": "Amazing Spider-Man (1999)"
+"id": "doom-o1-c16",
+"title": "Astonishing Tales #1–8",
+"era": "1962–1977",
+"issues": [
+{
+"id": "astt-1",
+"t": "Astonishing Tales #1",
+"s": "Astonishing Tales"
 },
 {
-"id": "asm2-45",
-"t": "Amazing Spider-Man (1999) #45",
-"s": "Amazing Spider-Man (1999)"
+"id": "astt-2",
+"t": "Astonishing Tales #2",
+"s": "Astonishing Tales"
 },
 {
-"id": "asm2-46",
-"t": "Amazing Spider-Man (1999) #46",
-"s": "Amazing Spider-Man (1999)"
+"id": "astt-3",
+"t": "Astonishing Tales #3",
+"s": "Astonishing Tales"
 },
 {
-"id": "asm2-47",
-"t": "Amazing Spider-Man (1999) #47",
-"s": "Amazing Spider-Man (1999)"
+"id": "astt-4",
+"t": "Astonishing Tales #4",
+"s": "Astonishing Tales"
 },
 {
-"id": "asm2-48",
-"t": "Amazing Spider-Man (1999) #48",
-"s": "Amazing Spider-Man (1999)"
+"id": "astt-5",
+"t": "Astonishing Tales #5",
+"s": "Astonishing Tales"
 },
 {
-"id": "asm2-49",
-"t": "Amazing Spider-Man (1999) #49",
-"s": "Amazing Spider-Man (1999)"
+"id": "astt-6",
+"t": "Astonishing Tales #6",
+"s": "Astonishing Tales"
 },
 {
-"id": "asm2-50",
-"t": "Amazing Spider-Man (1999) #50",
-"s": "Amazing Spider-Man (1999)"
+"id": "astt-7",
+"t": "Astonishing Tales #7",
+"s": "Astonishing Tales"
 },
 {
-"id": "asm2-51",
-"t": "Amazing Spider-Man (1999) #51",
-"s": "Amazing Spider-Man (1999)"
+"id": "astt-8",
+"t": "Astonishing Tales #8",
+"s": "Astonishing Tales"
+}
+]
 },
 {
-"id": "asm2-52",
-"t": "Amazing Spider-Man (1999) #52",
-"s": "Amazing Spider-Man (1999)"
+"id": "doom-o1-c17",
+"title": "Marvel Double Shot #2",
+"era": "1962–1977",
+"issues": [
+{
+"id": "mdshot-2",
+"t": "Marvel Double Shot #2",
+"s": "Marvel Double Shot"
+}
+]
 },
 {
-"id": "asm2-53",
-"t": "Amazing Spider-Man (1999) #53",
-"s": "Amazing Spider-Man (1999)"
-},
+"id": "doom-o1-c18",
+"title": "FOOM #4",
+"era": "1962–1977",
+"issues": [
 {
-"id": "asm2-54",
-"t": "Amazing Spider-Man (1999) #54",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-55",
-"t": "Amazing Spider-Man (1999) #55",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-56",
-"t": "Amazing Spider-Man (1999) #56",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-57",
-"t": "Amazing Spider-Man (1999) #57",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-58",
-"t": "Amazing Spider-Man (1999) #58",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-500",
-"t": "Amazing Spider-Man (1999) #500",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-501",
-"t": "Amazing Spider-Man (1999) #501",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-502",
-"t": "Amazing Spider-Man (1999) #502",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-503",
-"t": "Amazing Spider-Man (1999) #503",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-504",
-"t": "Amazing Spider-Man (1999) #504",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-505",
-"t": "Amazing Spider-Man (1999) #505",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-506",
-"t": "Amazing Spider-Man (1999) #506",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-507",
-"t": "Amazing Spider-Man (1999) #507",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-508",
-"t": "Amazing Spider-Man (1999) #508",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-509",
-"t": "Amazing Spider-Man (1999) #509",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-510",
-"t": "Amazing Spider-Man (1999) #510",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-511",
-"t": "Amazing Spider-Man (1999) #511",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-512",
-"t": "Amazing Spider-Man (1999) #512",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-513",
-"t": "Amazing Spider-Man (1999) #513",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-514",
-"t": "Amazing Spider-Man (1999) #514",
-"s": "Amazing Spider-Man (1999)"
+"id": "foom-4",
+"t": "FOOM #4",
+"s": "FOOM"
 }
 ]
 }
 ]
 },
 {
-"id": "ult-o1",
-"spine": "Ultimate Spider-Man",
-"cover": "Art/Spider-Man/ult-o1.jpg",
-"title": "Ultimate Spider-Man Omnibus",
+"id": "uff-o1",
+"spine": "Ultimate FF",
+"cover": "Art/Fantastic-Four/uff-o1.jpg",
+"title": "Ultimate Fantastic Four Omnibus",
 "vol": "Vol. 1",
-"creators": "Brian Michael Bendis & Mark Bagley",
-"era": "2000–2003",
-"released": "Jun 2012",
+"creators": "Brian Michael Bendis, Mark Millar & Adam Kubert",
+"era": "2004–2006",
+"released": "Mar 2025",
 "art": "o-ultimate",
-"tex": "tex-web",
-"note": "A separate continuity, not the next chapter of the one above — the origin retold for 2000. Bendis and Bagley from #1 through the Venom arc and Gwen Stacy's death.",
+"tex": "tex-negzone",
+"note": "A separate universe and a younger team — the accident is a teleporter, not a rocket, and Reed is a prodigy the government keeps in a building with the others. Marvel Zombies starts here.",
 "chapters": [
 {
-"id": "ult-o1-c1",
-"title": "Ultimate Spider-Man #1–39, #½",
-"era": "2000–2003",
+"id": "uff-o1-c1",
+"title": "Ultimate Fantastic Four #1–32",
+"era": "2004–2006",
 "issues": [
 {
-"id": "usm-1",
-"t": "Ultimate Spider-Man #1",
-"s": "Ultimate Spider-Man"
+"id": "uff-1",
+"t": "Ultimate Fantastic Four #1",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-2",
-"t": "Ultimate Spider-Man #2",
-"s": "Ultimate Spider-Man"
+"id": "uff-2",
+"t": "Ultimate Fantastic Four #2",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-3",
-"t": "Ultimate Spider-Man #3",
-"s": "Ultimate Spider-Man"
+"id": "uff-3",
+"t": "Ultimate Fantastic Four #3",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-4",
-"t": "Ultimate Spider-Man #4",
-"s": "Ultimate Spider-Man"
+"id": "uff-4",
+"t": "Ultimate Fantastic Four #4",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-5",
-"t": "Ultimate Spider-Man #5",
-"s": "Ultimate Spider-Man"
+"id": "uff-5",
+"t": "Ultimate Fantastic Four #5",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-6",
-"t": "Ultimate Spider-Man #6",
-"s": "Ultimate Spider-Man"
+"id": "uff-6",
+"t": "Ultimate Fantastic Four #6",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-7",
-"t": "Ultimate Spider-Man #7",
-"s": "Ultimate Spider-Man"
+"id": "uff-7",
+"t": "Ultimate Fantastic Four #7",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-8",
-"t": "Ultimate Spider-Man #8",
-"s": "Ultimate Spider-Man"
+"id": "uff-8",
+"t": "Ultimate Fantastic Four #8",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-9",
-"t": "Ultimate Spider-Man #9",
-"s": "Ultimate Spider-Man"
+"id": "uff-9",
+"t": "Ultimate Fantastic Four #9",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-10",
-"t": "Ultimate Spider-Man #10",
-"s": "Ultimate Spider-Man"
+"id": "uff-10",
+"t": "Ultimate Fantastic Four #10",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-11",
-"t": "Ultimate Spider-Man #11",
-"s": "Ultimate Spider-Man"
+"id": "uff-11",
+"t": "Ultimate Fantastic Four #11",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-12",
-"t": "Ultimate Spider-Man #12",
-"s": "Ultimate Spider-Man"
+"id": "uff-12",
+"t": "Ultimate Fantastic Four #12",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-13",
-"t": "Ultimate Spider-Man #13",
-"s": "Ultimate Spider-Man"
+"id": "uff-13",
+"t": "Ultimate Fantastic Four #13",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-14",
-"t": "Ultimate Spider-Man #14",
-"s": "Ultimate Spider-Man"
+"id": "uff-14",
+"t": "Ultimate Fantastic Four #14",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-15",
-"t": "Ultimate Spider-Man #15",
-"s": "Ultimate Spider-Man"
+"id": "uff-15",
+"t": "Ultimate Fantastic Four #15",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-16",
-"t": "Ultimate Spider-Man #16",
-"s": "Ultimate Spider-Man"
+"id": "uff-16",
+"t": "Ultimate Fantastic Four #16",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-17",
-"t": "Ultimate Spider-Man #17",
-"s": "Ultimate Spider-Man"
+"id": "uff-17",
+"t": "Ultimate Fantastic Four #17",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-18",
-"t": "Ultimate Spider-Man #18",
-"s": "Ultimate Spider-Man"
+"id": "uff-18",
+"t": "Ultimate Fantastic Four #18",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-19",
-"t": "Ultimate Spider-Man #19",
-"s": "Ultimate Spider-Man"
+"id": "uff-19",
+"t": "Ultimate Fantastic Four #19",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-20",
-"t": "Ultimate Spider-Man #20",
-"s": "Ultimate Spider-Man"
+"id": "uff-20",
+"t": "Ultimate Fantastic Four #20",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-21",
-"t": "Ultimate Spider-Man #21",
-"s": "Ultimate Spider-Man"
+"id": "uff-21",
+"t": "Ultimate Fantastic Four #21",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-22",
-"t": "Ultimate Spider-Man #22",
-"s": "Ultimate Spider-Man"
+"id": "uff-22",
+"t": "Ultimate Fantastic Four #22",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-23",
-"t": "Ultimate Spider-Man #23",
-"s": "Ultimate Spider-Man"
+"id": "uff-23",
+"t": "Ultimate Fantastic Four #23",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-24",
-"t": "Ultimate Spider-Man #24",
-"s": "Ultimate Spider-Man"
+"id": "uff-24",
+"t": "Ultimate Fantastic Four #24",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-25",
-"t": "Ultimate Spider-Man #25",
-"s": "Ultimate Spider-Man"
+"id": "uff-25",
+"t": "Ultimate Fantastic Four #25",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-26",
-"t": "Ultimate Spider-Man #26",
-"s": "Ultimate Spider-Man"
+"id": "uff-26",
+"t": "Ultimate Fantastic Four #26",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-27",
-"t": "Ultimate Spider-Man #27",
-"s": "Ultimate Spider-Man"
+"id": "uff-27",
+"t": "Ultimate Fantastic Four #27",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-28",
-"t": "Ultimate Spider-Man #28",
-"s": "Ultimate Spider-Man"
+"id": "uff-28",
+"t": "Ultimate Fantastic Four #28",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-29",
-"t": "Ultimate Spider-Man #29",
-"s": "Ultimate Spider-Man"
+"id": "uff-29",
+"t": "Ultimate Fantastic Four #29",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-30",
-"t": "Ultimate Spider-Man #30",
-"s": "Ultimate Spider-Man"
+"id": "uff-30",
+"t": "Ultimate Fantastic Four #30",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-31",
-"t": "Ultimate Spider-Man #31",
-"s": "Ultimate Spider-Man"
+"id": "uff-31",
+"t": "Ultimate Fantastic Four #31",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "usm-32",
-"t": "Ultimate Spider-Man #32",
-"s": "Ultimate Spider-Man"
+"id": "uff-32",
+"t": "Ultimate Fantastic Four #32",
+"s": "Ultimate Fantastic Four"
+}
+]
 },
 {
-"id": "usm-33",
-"t": "Ultimate Spider-Man #33",
-"s": "Ultimate Spider-Man"
-},
+"id": "uff-o1-c2",
+"title": "Ultimate Fantastic Four Annual #1",
+"era": "2004–2006",
+"issues": [
 {
-"id": "usm-34",
-"t": "Ultimate Spider-Man #34",
-"s": "Ultimate Spider-Man"
-},
-{
-"id": "usm-35",
-"t": "Ultimate Spider-Man #35",
-"s": "Ultimate Spider-Man"
-},
-{
-"id": "usm-36",
-"t": "Ultimate Spider-Man #36",
-"s": "Ultimate Spider-Man"
-},
-{
-"id": "usm-37",
-"t": "Ultimate Spider-Man #37",
-"s": "Ultimate Spider-Man"
-},
-{
-"id": "usm-38",
-"t": "Ultimate Spider-Man #38",
-"s": "Ultimate Spider-Man"
-},
-{
-"id": "usm-39",
-"t": "Ultimate Spider-Man #39",
-"s": "Ultimate Spider-Man"
-},
-{
-"id": "usm-½",
-"t": "Ultimate Spider-Man #½",
-"s": "Ultimate Spider-Man"
+"id": "uffann-1",
+"t": "Ultimate Fantastic Four Annual #1",
+"s": "Ultimate Fantastic Four Annual"
 }
 ]
 }
 ]
 },
 {
-"id": "ult-death-o1",
-"spine": "Death of Ultimate",
-"cover": "Art/Spider-Man/ult-death-o1.jpg",
-"title": "Death of Ultimate Spider-Man Omnibus",
-"vol": "",
-"creators": "Brian Michael Bendis & Mark Bagley",
-"era": "2010–2011",
-"released": "Nov 2012",
-"art": "o-black",
-"tex": "tex-burst",
-"note": "The end of Ultimate Peter Parker. Jumps well past the volume above — the 100-odd issues between the two are not collected in omnibus.",
+"id": "uff-o2",
+"spine": "Ultimate FF",
+"cover": "Art/Fantastic-Four/uff-o2.jpg",
+"title": "Ultimate Fantastic Four Omnibus",
+"vol": "Vol. 2",
+"creators": "Mike Carey, Mark Millar & Pasqual Ferry",
+"era": "2006–2009",
+"released": "Apr 2026",
+"art": "o-ultimate",
+"tex": "tex-cosmic",
+"note": "Ultimate Doom, the back half of Ultimate Extinction, and the crossovers that close the line out before Ultimatum ends it.",
 "chapters": [
 {
-"id": "ult-death-o1-c1",
-"title": "Ultimate Comics Spider-Man #15, #150–160",
-"era": "2010–2011",
+"id": "uff-o2-c1",
+"title": "Ultimate Fantastic Four #33–41",
+"era": "2006–2009",
 "issues": [
 {
-"id": "ucsm-15",
-"t": "Ultimate Comics Spider-Man #15",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-33",
+"t": "Ultimate Fantastic Four #33",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ucsm-150",
-"t": "Ultimate Comics Spider-Man #150",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-34",
+"t": "Ultimate Fantastic Four #34",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ucsm-151",
-"t": "Ultimate Comics Spider-Man #151",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-35",
+"t": "Ultimate Fantastic Four #35",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ucsm-152",
-"t": "Ultimate Comics Spider-Man #152",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-36",
+"t": "Ultimate Fantastic Four #36",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ucsm-153",
-"t": "Ultimate Comics Spider-Man #153",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-37",
+"t": "Ultimate Fantastic Four #37",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ucsm-154",
-"t": "Ultimate Comics Spider-Man #154",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-38",
+"t": "Ultimate Fantastic Four #38",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ucsm-155",
-"t": "Ultimate Comics Spider-Man #155",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-39",
+"t": "Ultimate Fantastic Four #39",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ucsm-156",
-"t": "Ultimate Comics Spider-Man #156",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-40",
+"t": "Ultimate Fantastic Four #40",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ucsm-157",
-"t": "Ultimate Comics Spider-Man #157",
-"s": "Ultimate Comics Spider-Man"
-},
-{
-"id": "ucsm-158",
-"t": "Ultimate Comics Spider-Man #158",
-"s": "Ultimate Comics Spider-Man"
-},
-{
-"id": "ucsm-159",
-"t": "Ultimate Comics Spider-Man #159",
-"s": "Ultimate Comics Spider-Man"
-},
-{
-"id": "ucsm-160",
-"t": "Ultimate Comics Spider-Man #160",
-"s": "Ultimate Comics Spider-Man"
+"id": "uff-41",
+"t": "Ultimate Fantastic Four #41",
+"s": "Ultimate Fantastic Four"
 }
 ]
 },
 {
-"id": "ult-death-o1-c2",
-"title": "Ultimate Avengers vs. New Ultimates #1–6",
-"era": "2010–2011",
+"id": "uff-o2-c2",
+"title": "Ultimate Fantastic Four Annual #2",
+"era": "2006–2009",
 "issues": [
 {
-"id": "uavn-1",
-"t": "Ultimate Avengers vs. New Ultimates #1",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-2",
-"t": "Ultimate Avengers vs. New Ultimates #2",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-3",
-"t": "Ultimate Avengers vs. New Ultimates #3",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-4",
-"t": "Ultimate Avengers vs. New Ultimates #4",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-5",
-"t": "Ultimate Avengers vs. New Ultimates #5",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-6",
-"t": "Ultimate Avengers vs. New Ultimates #6",
-"s": "Ultimate Avengers vs. New Ultimates"
+"id": "uffann-2",
+"t": "Ultimate Fantastic Four Annual #2",
+"s": "Ultimate Fantastic Four Annual"
 }
 ]
 },
 {
-"id": "ult-death-o1-c3",
-"title": "Ultimate Fallout #1–6",
-"era": "2010–2011",
+"id": "uff-o2-c3",
+"title": "Ultimate Fantastic Four #42–57",
+"era": "2006–2009",
 "issues": [
 {
-"id": "ufal-1",
-"t": "Ultimate Fallout #1",
-"s": "Ultimate Fallout"
+"id": "uff-42",
+"t": "Ultimate Fantastic Four #42",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ufal-2",
-"t": "Ultimate Fallout #2",
-"s": "Ultimate Fallout"
+"id": "uff-43",
+"t": "Ultimate Fantastic Four #43",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ufal-3",
-"t": "Ultimate Fallout #3",
-"s": "Ultimate Fallout"
+"id": "uff-44",
+"t": "Ultimate Fantastic Four #44",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ufal-4",
-"t": "Ultimate Fallout #4",
-"s": "Ultimate Fallout"
+"id": "uff-45",
+"t": "Ultimate Fantastic Four #45",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ufal-5",
-"t": "Ultimate Fallout #5",
-"s": "Ultimate Fallout"
+"id": "uff-46",
+"t": "Ultimate Fantastic Four #46",
+"s": "Ultimate Fantastic Four"
 },
 {
-"id": "ufal-6",
-"t": "Ultimate Fallout #6",
-"s": "Ultimate Fallout"
+"id": "uff-47",
+"t": "Ultimate Fantastic Four #47",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-48",
+"t": "Ultimate Fantastic Four #48",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-49",
+"t": "Ultimate Fantastic Four #49",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-50",
+"t": "Ultimate Fantastic Four #50",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-51",
+"t": "Ultimate Fantastic Four #51",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-52",
+"t": "Ultimate Fantastic Four #52",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-53",
+"t": "Ultimate Fantastic Four #53",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-54",
+"t": "Ultimate Fantastic Four #54",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-55",
+"t": "Ultimate Fantastic Four #55",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-56",
+"t": "Ultimate Fantastic Four #56",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-57",
+"t": "Ultimate Fantastic Four #57",
+"s": "Ultimate Fantastic Four"
+}
+]
+},
+{
+"id": "uff-o2-c4",
+"title": "Ultimate X-Men/Ultimate FF Annual #1",
+"era": "2006–2009",
+"issues": [
+{
+"id": "uxmufa-1",
+"t": "Ultimate X-Men/Ultimate FF Annual #1",
+"s": "Ultimate X-Men/Ultimate FF Annual"
+}
+]
+},
+{
+"id": "uff-o2-c5",
+"title": "Ultimate FF/Ultimate X-Men Annual #1",
+"era": "2006–2009",
+"issues": [
+{
+"id": "uffuxa-1",
+"t": "Ultimate FF/Ultimate X-Men Annual #1",
+"s": "Ultimate FF/Ultimate X-Men Annual"
+}
+]
+},
+{
+"id": "uff-o2-c6",
+"title": "Ultimate Fantastic Four #58–60",
+"era": "2006–2009",
+"issues": [
+{
+"id": "uff-58",
+"t": "Ultimate Fantastic Four #58",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-59",
+"t": "Ultimate Fantastic Four #59",
+"s": "Ultimate Fantastic Four"
+},
+{
+"id": "uff-60",
+"t": "Ultimate Fantastic Four #60",
+"s": "Ultimate Fantastic Four"
+}
+]
+},
+{
+"id": "uff-o2-c7",
+"title": "Ultimatum: Fantastic Four Requiem #1",
+"era": "2006–2009",
+"issues": [
+{
+"id": "ultffr-1",
+"t": "Ultimatum: Fantastic Four Requiem #1",
+"s": "Ultimatum: Fantastic Four Requiem"
+}
+]
+},
+{
+"id": "uff-o2-c8",
+"title": "Ultimate X-Men/Fantastic Four #1",
+"era": "2006–2009",
+"issues": [
+{
+"id": "uxmff-1",
+"t": "Ultimate X-Men/Fantastic Four #1",
+"s": "Ultimate X-Men/Fantastic Four"
+}
+]
+},
+{
+"id": "uff-o2-c9",
+"title": "Ultimate Fantastic Four/X-Men #1",
+"era": "2006–2009",
+"issues": [
+{
+"id": "uffxm-1",
+"t": "Ultimate Fantastic Four/X-Men #1",
+"s": "Ultimate Fantastic Four/X-Men"
 }
 ]
 }
@@ -6694,7 +7555,7 @@ const MARVEL = {
 };
 
 /* ============ STATE ============ */
-const KEY_P="spidey-omni-progress-v1";
+const KEY_P="ff-omni-progress-v1";
 let readSet=new Set(), skipSet=new Set();
 
 /* Flatten once. `flat` drives Up Next and every progress figure.
@@ -6738,7 +7599,7 @@ function exportProgress(){
   const blob=new Blob([JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet)},null,1)],{type:"application/json"});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
-  a.download="spider-man-omnibus-progress.json";
+  a.download="fantasticfour-omnibus-progress.json";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),2000);
 }
@@ -6773,15 +7634,13 @@ function artHTML(o,banner){
   return '<div class="art '+o.art+'"></div><div class="tex '+o.tex+'"></div>'+
          (banner?'':'<div class="vig"></div>')+'<div class="gloss"></div>';
 }
-const SPIDER_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="GID" x1="0" y1="0" x2="0" y2="1">'+
+const FF_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="GID" x1="0" y1="0" x2="0" y2="1">'+
  '<stop offset="10%" stop-color="rgba(255,255,255,.95)"/><stop offset="60%" stop-color="rgba(255,255,255,.55)"/>'+
  '<stop offset="100%" stop-color="rgba(255,255,255,.2)"/></linearGradient></defs>'+
- '<g fill="url(#GID)"><ellipse cx="50" cy="60" rx="12" ry="18"/><ellipse cx="50" cy="38" rx="8.5" ry="9.5"/></g>'+
- '<g fill="none" stroke="url(#GID)" stroke-width="4.2" stroke-linecap="round">'+
- '<path d="M42,35 Q25,25 21,9"/><path d="M40,44 Q20,38 12,25"/><path d="M40,52 Q19,52 12,45"/><path d="M42,60 Q24,66 20,81"/>'+
- '<path d="M58,35 Q75,25 79,9"/><path d="M60,44 Q80,38 88,25"/><path d="M60,52 Q81,52 88,45"/><path d="M58,60 Q76,66 80,81"/></g></svg>';
+ '<circle cx="50" cy="50" r="40" fill="none" stroke="url(#GID)" stroke-width="5"/>'+
+ '<g fill="none" stroke="url(#GID)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"><path d="M60,20 L30,62 L72,62"/><path d="M60,20 L60,84"/></g></svg>';
 let gid=0;
-const spiderSVG = () => SPIDER_SVG.split("GID").join("sp"+(++gid));
+const ffSVG = () => FF_SVG.split("GID").join("ff"+(++gid));
 
 /* ============ SHELF ============ */
 const shelfEl=document.getElementById("shelf");
@@ -6789,14 +7648,13 @@ const shelfEl=document.getElementById("shelf");
    black/red Marvel trade dress. build_omnibus_data.py still checks that each
    .o-* ramp has an entry here, and it is one line to revert to coloured spines. */
 const SPINE_C={
-  'o-ditko':['#b81f26','#1d3f8c'],'o-untold':['#c9702e','#8d2226'],'o-romita':['#d92a30','#2454b0'],
-  'o-teamup':['#e2661f','#7d2a8e'],'o-conway':['#bd2028','#16306e'],'o-spectacular':['#3566c4','#4a2a92'],
-  'o-eighties':['#a8151d','#2b2b33'],'o-stern':['#e07a1c','#a3161d'],'o-black':['#31405c','#141a2c'],
-  'o-mcfarlane':['#4a2f9c','#1c1140'],'o-larsen':['#1f8f9c','#a8231f'],'o-bagley':['#d5121a','#1b4fb5'],
-  'o-dematteis':['#3f8c2c','#5c2a8e'],'o-clone':['#3f9433','#a81d22'],'o-benreilly':['#c2161c','#1e3f96'],
-  'o-jms':['#8c1a22','#3a1f5e'],'o-ultimate':['#d01018','#123a99'],
+  'o-kirby':['#2f6fc9','#5a2a92'],'o-bronze':['#d67a1f','#1e3f7a'],'o-perez':['#1f9c8f','#a82fa0'],
+  'o-byrne':['#7fc2f5','#2f6fc9'],'o-waid':['#ffb92f','#2f6fc9'],'o-millar':['#7d8fa3','#a8232f'],
+  'o-hickman':['#cbb8f0','#6a3aa8'],'o-fraction':['#e0701c','#1f9c8f'],'o-slott':['#f0a500','#2f4fa8'],
+  'o-ultimate':['#2fa8c9','#123a4a'],'o-thing':['#c9702f','#6a3a1a'],'o-doom':['#2f5a3f','#12291a'],
   'o-placeholder':['#4d6480','#26344a']
 };
+
 /* A printed omnibus is ~1.5-3in across a 7.4in-wide cover, i.e. 20-40% of the
    tile width -- not the 22-40px sliver this used to draw. Placeholders (0 issues)
    fall through to the 42px floor, which still reads as a real omnibus. */
@@ -6830,7 +7688,7 @@ function buildShelf(){
         '<div class="face">'+
           artHTML(o)+
           '<span class="onum">'+num+'</span>'+ badge +
-          (o.cover?'':'<div class="spidey">'+spiderSVG()+'</div>')+
+          (o.cover?'':'<div class="glyph">'+ffSVG()+'</div>')+
           '<div class="plate">'+
             '<div class="oname">'+esc(o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'')+'</div>'+
             '<div class="ocre">'+esc(o.creators)+'</div>'+
@@ -6986,7 +7844,7 @@ function publishIndex(){
   try{
     let r=0,s=0; uniqIds.forEach(id=>{ if(readSet.has(id))r++; else if(skipSet.has(id))s++; });
     const n=flat.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
-    store.set("comics-hero-spider-man", JSON.stringify({
+    store.set("comics-hero-fantastic-four", JSON.stringify({
       total:uniqIds.size, read:r, skip:s,
       next: n ? {t:n.issue.t, arc:n.o.title+(n.o.vol?" "+n.o.vol:""), ch:n.ch.title} : null
     })).catch(()=>{});
@@ -7003,7 +7861,7 @@ function publishIndex(){
    The key is NOT owned by this page: it lives under one storage name for the
    whole site, set from the gear on the C.O.M.I.C.S. homescreen, so one paste
    covers every tracker. KEY_API_OLD is where the X-Men page used to keep it. */
-const KEY_S="spidey-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
+const KEY_S="ff-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
 let sums={};
 async function loadSums(){ try{ const v=await store.get(KEY_S); if(v) sums=JSON.parse(v)||{}; }catch(e){} }
 async function saveSums(){ try{ await store.set(KEY_S, JSON.stringify(sums)); }catch(e){} }
@@ -7133,9 +7991,9 @@ function showShelf(){
   document.getElementById("viewShelf").classList.remove("hidden");
   document.getElementById("viewOmni").classList.add("hidden");
   document.getElementById("backShelf").classList.add("hidden");
-  document.getElementById("crumb").textContent="Subject · Spider-Man";
+  document.getElementById("crumb").textContent="Subject · Fantastic Four";
   document.getElementById("hudTitle").textContent="Omnibus Protocol";
-  document.getElementById("hudSub").innerHTML="Amazing Fantasy #15 &rarr; Ultimate Spider-Man &middot; 1962&ndash;2011";
+  document.getElementById("hudSub").innerHTML="Fantastic Four #1 &rarr; Multiverse Saga &middot; 1961&ndash;2018";
   buildShelf(); refresh();
   window.scrollTo(0,0);
 }
@@ -7146,7 +8004,7 @@ function showOmni(id){
   document.getElementById("viewShelf").classList.add("hidden");
   document.getElementById("viewOmni").classList.remove("hidden");
   document.getElementById("backShelf").classList.remove("hidden");
-  document.getElementById("crumb").textContent="Spider-Man · "+o.title+(o.vol?" "+o.vol:"");
+  document.getElementById("crumb").textContent="Fantastic Four · "+o.title+(o.vol?" "+o.vol:"");
   document.getElementById("hudTitle").textContent=o.title+(o.vol?" "+o.vol:"");
   document.getElementById("hudSub").textContent=o.creators+" · "+o.era;
   buildOmni(o); refresh();
