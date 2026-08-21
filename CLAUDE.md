@@ -65,6 +65,9 @@ Keep replies short and plain. This is a hobby project, not a code review.
 - `Art/covers/` — the original hand-supplied scans the seven `Art/Heroes/`
   files were derived from, at full size. Nothing reads this folder; it is kept
   so a poster can be re-cropped without re-sourcing the art.
+- `Art/Logos/` — one printed logo per homescreen subject, `<hero id>.png`,
+  cropped to its artwork and alpha-backed. See "The plate" below. The
+  source-named originals the user supplied are not kept; git history has them.
 
 No build step, no package.json, no dependencies, no server. Open any of these
 files directly in a browser.
@@ -123,11 +126,18 @@ indefinitely with no tracker file, and nothing breaks.
 ## Homescreen (`index.html`)
 
 The `HEROES` array is the whole configuration. Each entry:
-`{id, name, art, tex, emblem, era, file, total, desc, light?}`.
+`{id, name, art, tex, emblem, cover, pos, plate, logo, era, file, total, desc, light?}`.
 - `file: null` → poster renders dimmed with a "Curating" badge, and clicking it
   opens the dossier modal instead of navigating.
-- `file: "…"` → poster gets a gold "Ready" badge, a progress bar, and clicking it
-  navigates straight to the tracker. The small "i" button opens the dossier.
+- `file: "…"` → poster gets a progress bar, and clicking it navigates straight
+  to the tracker. The small "i" button opens the dossier.
+
+**There is no "Ready" badge** (Aug 2026). It was a gold pill on every live
+poster, and once all seven subjects were live it labelled nothing — seven
+identical badges is not information. The badge element itself stays, because
+"Curating" on a subject with no list *is* worth flagging; only the `.live`
+variant went. Re-adding a distinction between live posters means finding
+something that actually differs between them.
 
 ### Artwork
 
@@ -142,7 +152,7 @@ outright. They are painted pieces rather than printed covers, and that turns
 out to matter for this particular job: no logo, no barcode strip and no trade
 dress fighting the poster plate, so the subject name sits on clean art on all
 seven. Keep that property in mind when swapping one — a scan of a printed cover
-will put a logo where the name goes.
+will put a logo where the plate goes.
 
 `tools/fetch_hero_art.py` is now the **fallback** route, not the live one. Its
 `PICKS` table still holds a wiki pick and the reasoning for every subject, and
@@ -216,6 +226,63 @@ cover is a dark blue night piece, so that is no longer true. What is still true
 is that the flag governs the `.a-moon` fallback ramp, which is as pale as it
 ever was — dropping `cover`, or a scan that fails to load, brings the ink emblem
 back and needs it.
+
+### The plate — the subject's colour, and its logo
+
+The plate is the band across the foot of each poster. Until Aug 2026 it was one
+shared navy carrying the subject name, the "N / N logged" count and the
+progress bar. It now carries **the subject's printed logo on the subject's own
+colour**, and no text at all.
+
+`plate` on a `HEROES` entry is `[mid, foot]` as two **rgb triples** — the stops
+the gradient interpolates between, set as `--p1`/`--p2` on the element by
+`plateVars()`. They are triples rather than hex so the CSS can vary the alpha
+per stop (`rgba(var(--p1),.86)`), which is what lets the band fade into the art
+above it instead of starting as a hard edge. An entry with no `plate` falls
+back to the old navy, so the field is optional and nothing breaks without it.
+
+| Subject | Plate | Why |
+|---|---|---|
+| spider-man | blue | the suit's other half; the art above is red |
+| wolverine | yellow, run deep | see below |
+| hulk | **purple** | the user's call, and the right one — a green plate under green art disappears |
+| xmen | green | |
+| fantastic-four | uniform blue, nudged toward teal | |
+| moon-knight | black | |
+| daredevil | red, run deep | see below |
+
+**Wolverine's and Daredevil's plates are noticeably deeper than the other
+five**, and that is the one non-obvious thing here. Both logos are the same hue
+as the plate the subject asked for — a yellow Wolverine logo on yellow, a red
+Daredevil logo on red — so at the brightness the other five use, the logo
+vanished into its own background. Deepening the plate keeps the colour identity
+and gives the art something to sit on. Expect to do the same for any future
+subject whose logo matches its colour.
+
+The logo is `logo` on the entry, one PNG per subject at `Art/Logos/<id>.png`.
+Two things about how it is sized:
+
+- **It is cropped to its alpha bounding box** by `tools/logos.py`, not used as
+  supplied. Logo PNGs arrive with wildly different transparent margins — two of
+  the seven were 320x320 files holding a 288x109 logo — and since the plate
+  sizes the `<img>`, that margin is real layout. Uncropped, a logo with 40%
+  padding renders 40% smaller than one without and the wall looks arbitrary.
+- **A two-line logo is height-limited where a wide one is width-limited.** Moon
+  Knight, Fantastic Four and X-Men are the tall ones and rendered visibly small
+  against Spider-Man's and Wolverine's until `max-height` went from 46px to
+  56px. Changing that number means re-checking all seven, not just the one that
+  looked wrong.
+
+**The name is gone as text but not as data.** It is still the poster's
+`aria-label`, and still the `alt` on the logo `<img>` — so a missing or broken
+logo file shows the name rather than an empty band. `.pname` also still renders
+in full for any subject with no `logo` at all. That is the same
+degrade-don't-vanish rule `cover` follows, and it is worth keeping: the poster
+is now an image-only button, so without it a failed request leaves a nameless
+tile.
+
+The progress bar stayed. With the count text gone it is the only progress
+visible from the wall.
 
 ### How the homescreen knows your progress
 
@@ -864,6 +931,13 @@ ambiguous or rejected; no hit means Marvel does not have it.
   holds which cover and why; `SUPPLIED` lists the subjects it will not
   overwrite without `--replace`. Nothing is generated from it — the `cover`
   field in `HEROES` is hand-written — so a new pick is an edit in both places.
+- `logos.py` — the homescreen logo pipeline. `add <hero-id> <image>` crops a
+  logo to its alpha bounding box, downscales to 500px and writes
+  `Art/Logos/<hero-id>.png`; `audit` lists what every subject has and flags any
+  file with no alpha channel, which would render as a box. There is no fetch
+  route — a printed logo is not on the Marvel Database as a clean transparent
+  asset, so these are supplied by hand and the tool only normalises them.
+  Needs Pillow.
 - `covers.py` — cover art pipeline. `add <volume-id> <image>` optimises a scan
   to 700px/q82 and prints the line to paste into `omnibus_meta.py`; `audit`
   reports every volume's cover and how much art the shelf carries — a download
@@ -2001,6 +2075,9 @@ python3 tools/build_omnibus_data.py --check --hero daredevil
 # Expect: 0 matched, 0 ambiguous, and one standing rejection (tta3-1, which is
 # deliberate -- see "An unmapped series is derived, not dropped").
 python3 tools/link_issues.py
+
+# Homescreen logos (every subject has one, and every one has an alpha channel)
+python3 tools/logos.py audit
 
 # Cover art (every volume has one, and how heavy it is)
 python3 tools/covers.py audit
