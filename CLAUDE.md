@@ -453,8 +453,8 @@ than about 1MB. Open item 10.
 
 ### Marvel deep links
 
-553 of 564 unique issues (98%) resolve to a real marvel.com issue page, and all
-553 are readable on Marvel Unlimited. The 11 that do not are not on marvel.com
+558 of 564 unique issues (99%) resolve to a real marvel.com issue page, and all
+558 are readable on Marvel Unlimited. The 6 that do not are not on marvel.com
 at all; they fall back to a `marvel.com/search?query=` URL and render a grey
 Read button — same convention as the X-Men tracker.
 
@@ -570,17 +570,31 @@ that might belong in it — so unlike `SLUG_PFX` it cannot grow silently.
 
 ### What is left, and why
 
-**2461 of 2520 issue slots across the four shelves resolve (98%), and 2393 are
-readable on Marvel Unlimited.** The 59 that do not resolve were each checked
-against the catalog: they are not on marvel.com at all. `tools/unlinked.json`
-is the written record, refreshed by `link_issues.py --dump`.
+**2480 of 2520 issue slots across the four shelves resolve (98%), and 2412 are
+readable on Marvel Unlimited.** The 40 that do not were each checked against the
+catalog: they are not on marvel.com at all. `tools/unlinked.json` is the written
+record, refreshed by `link_issues.py --dump`.
 
 The largest are Epic Illustrated (9 — a magazine, never digitised), Marvel
-Graphic Novel #49/50/65/67, Iron Fist: Wolverine (4), the 1992–93 Marvel Holiday
-Specials, Spectacular Spider-Man Magazine, and a tail of ashcans, `#-1` and `#½`
-oddities and Free Comic Book Day issues. Astonishing Tales (1970) is still short
-— the catalog holds 21 of its 36 issues, which confirms the older finding that
-the rest were pulled rather than merely unfound.
+Graphic Novel #49/50/65/67 (the catalog holds 17 of that line and not those),
+the 1992–93 Marvel Holiday Specials, Spectacular Spider-Man Magazine, What
+The--?! #2 and #10, and a tail of ashcans, `#-1` and `#½` oddities and
+promotional one-shots. Astonishing Tales (1970) is still short — the catalog
+holds 21 of its 36 issues, which confirms the older finding that the rest were
+pulled rather than merely unfound.
+
+**Nine of those 40 were recovered in a later pass**, all after the user found
+`wolverine_1988_102.5` by hand, so treat "not in the catalog" as a claim worth
+re-testing rather than a verdict. What the pass added, and why each was missed:
+
+| Shape | Example |
+|---|---|
+| point issue filed under an invented name | the wiki's "Wolverine Special #102.5" is Wolverine (1988) #102.5 |
+| marvel.com carries the shelf's name inside a longer one | "Peter Parker, The Spectacular Spider-Man Annual"; "Iron Fist/Wolverine: The Return Of K'un Lun" |
+| the prefix's usual series does not hold this number | Ultimate Spider-Man #½ is its own series |
+| a one-shot filed as #0 | Ghost Rider/Wolverine/Punisher: The Dark Design |
+| a series named for the one issue it holds | "UNTOLD TALES OF SPIDER-MAN -1" |
+| abbreviation | the shelf's FCBD and FF for Free Comic Book Day and Fantastic Four |
 
 **Everything below this line is the superseded route.** `series_harvest.py` and
 `harvest.py` still work and their id-space notes are still true, but there is no
@@ -976,7 +990,7 @@ lands at 16 chapters that read as the tie-in list it is.
 
 ### Marvel deep links
 
-646 of 659 unique issues (98%) resolve to a real marvel.com issue page; the rest
+652 of 659 unique issues (99%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
 Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
@@ -1107,7 +1121,7 @@ them with the gold "in N omnibuses" pill.
 
 ### Marvel deep links
 
-641 of 661 unique issues (97%) resolve to a real marvel.com issue page, and the
+643 of 661 unique issues (97%) resolve to a real marvel.com issue page, and the
 rest fall back to
 `marvel.com/search?query=` and a grey Read button, same convention as the other
 two trackers. Complete: Fantastic Four (1961) all 416, Fantastic Four (1998),
@@ -1268,7 +1282,7 @@ unique issues.
 
 ### Marvel deep links
 
-621 of 636 unique issues (98%) resolve to a real marvel.com issue page; the rest
+627 of 636 unique issues (99%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other three trackers. Complete or near-complete: Wolverine (1988) all 189
 issues, Marvel Comics Presents all 175, Wolverine (2003), Wolverine (2010),
@@ -1618,13 +1632,16 @@ a server-side store and is not built.
     make the mobile page both smaller and more capable. The ASCII-only pass and
     the `__COMICS_SAVE` download rewire are harmless and can stay. See "The
     mobile build".
-11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — all four
-    shelves are at 97–98% (Spider-Man 553/564, Hulk 646/659, Fantastic Four
-    641/661, Wolverine 621/636), and 2393 of the 2461 linked issues are readable
-    on Marvel Unlimited. The remaining 58 are not on marvel.com at all;
+11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the four
+    shelves are at 97–99% (Spider-Man 558/564, Hulk 652/659, Fantastic Four
+    643/661, Wolverine 627/636), and 2412 of the 2480 linked issues are readable
+    on Marvel Unlimited. The remaining 40 are not on marvel.com at all;
     `tools/unlinked.json` names every one. What closed it was sweeping
     marvel.com's open JSON catalog rather than searching per series — see
-    "Linking issues" and "How the links used to be missed".
+    "Linking issues" and "How the links used to be missed". The last nine came
+    from a naming pass prompted by the user finding one by hand, so a fresh
+    `--dump` list is a hypothesis, not a verdict: re-test it before believing
+    marvel.com lacks something.
 
 ## Testing
 
