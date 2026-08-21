@@ -1,0 +1,306 @@
+#!/usr/bin/env python3
+"""Link every shelf issue to its marvel.com page, using the local catalog.
+
+This replaces the old hand-maintained route (harvest an id range, then add a
+`SLUG_PFX` entry by hand so `series_harvest.py write` will keep it). That route
+silently dropped anything nobody had thought to add a table entry for, which is
+how Books of Doom sat unlinked while all six issues were live on marvel.com.
+
+Here nothing is hand-maintained. The catalog (tools/catalog.py) holds every
+Marvel issue with its series id and issue number, and this matches shelf issues
+against it two ways:
+
+  1. **Learn from what already works.** Every issue that IS linked tells us
+     which marvel.com series its id prefix belongs to. `wolv-118` resolving to
+     wolverine_1988_118 means prefix `wolv` is series 2014, so `wolv-55` must be
+     issue 55 of series 2014. This is exact and needs no name matching.
+  2. **Name-match the rest.** For a prefix with no linked issue yet, compare the
+     shelf's series name against the catalog's series titles. A match is only
+     accepted when it is unambiguous AND the series actually carries that issue
+     number. Anything ambiguous is REPORTED, never guessed -- guessing quietly
+     is the failure this tool exists to prevent.
+
+    python3 tools/link_issues.py            # report only, writes nothing
+    python3 tools/link_issues.py --write    # merge into tools/marvel_ids.json
+"""
+import json, os, re, sys
+from collections import Counter, defaultdict
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+CAT = os.path.join(HERE, "marvel_catalog.json")
+SER = os.path.join(HERE, "marvel_series.json")
+IDS = os.path.join(HERE, "marvel_ids.json")
+
+TRACKERS = {
+    "spider-man": "spiderman-reading-tracker.html",
+    "hulk": "hulk-reading-tracker.html",
+    "fantastic-four": "fantasticfour-reading-tracker.html",
+    "wolverine": "wolverine-reading-tracker.html",
+}
+
+
+def load(p, d=None):
+    try:
+        return json.load(open(p, encoding="utf-8"))
+    except Exception:
+        return {} if d is None else d
+
+
+# The two sources name the same book differently in small, repetitive ways, so
+# fold both sides hard rather than keeping a table of every difference:
+#   "Hulk/Wolverine: 6 Hours"  vs  "Hulk/Wolverine: Six Hours"
+#   "Wolverine and the Punisher: ..."  vs  "Wolverine/Punisher: ..."
+#   "Wolverine: Doombringer"  vs  "WOLVERINE: DOOMBRINGER 1 (1997 - Present)"
+NUMWORD = {"1": "one", "2": "two", "3": "three", "4": "four", "5": "five",
+           "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten",
+           "11": "eleven", "12": "twelve"}
+NOISE = re.compile(r"\b(the|a|an|and|of|vs|volume|vol|one[- ]?shot|"
+                   r"marvels|digital|comic)\b")
+
+
+def norm(s):
+    """Fold a series name to something comparable across the two sources."""
+    s = s.lower()
+    s = re.sub(r"\(\s*\d{4}.*?\)", " ", s)        # drop "(1988 - 1997)"
+    s = re.sub(r"[^a-z0-9]+", " ", s)
+    s = " ".join(NUMWORD.get(w, w) for w in s.split())
+    s = NOISE.sub(" ", s)
+    return re.sub(r"\s+", " ", s).strip()
+
+
+# Genuine naming disagreements -- not spelling, different names for the same
+# book. Keep this SHORT: it is a last resort, and the report at the bottom of a
+# run names anything that might belong here, so it never grows silently.
+ALIAS = {
+    "uncanny x-men": "X-Men (1963 - 2011)",
+    "aftersmash: damage control": "Wwh Aftersmash: Damage Control (2008)",
+    "x-men spotlight": "X-Men Spotlight On Starjammers (1990)",
+    "giant-size super-heroes": "Giant-Size Super-Heroes Featuring Spider-Man (1974)",
+}
+
+
+def name_keys(title):
+    """Every way a catalog series title might be written on a shelf.
+
+    Marvel titles a lot of one-shots "<NAME> 1", and prefixes minis with the
+    lead character ("Spider-Man: Funeral For An Octopus" for a book the shelf
+    just calls "Funeral for an Octopus"), so index the bare tail too.
+    """
+    keys = {norm(title)}
+    bare = re.sub(r"\(\s*\d{4}.*?\)", "", title).strip()
+    keys.add(norm(re.sub(r"\s+\d+$", "", bare)))       # trailing " 1"
+    if ":" in bare:
+        tail = bare.rsplit(":", 1)[-1]
+        keys.add(norm(re.sub(r"\s+\d+$", "", tail)))   # after the colon
+    return {k for k in keys if len(k) > 3}
+
+
+def numkey(n):
+    """Issue numbers arrive as 5, '5', '5.1', '1/2'. Compare as text."""
+    if n is None:
+        return None
+    s = str(n).strip()
+    if s.endswith(".0"):
+        s = s[:-2]
+    return s.replace("½", "0.5").replace("1/2", "0.5")
+
+
+def era_range(era):
+    """'1961-1964' -> (1961, 1964). The volume's era is what disambiguates a
+    reused series name -- there are seven X-Forces, but only one of them was
+    running while the book that collects it was set."""
+    if not era:
+        return None
+    yrs = [int(y) for y in re.findall(r"(\d{4})", era)]
+    return (min(yrs), max(yrs)) if yrs else None
+
+
+def series_years(title):
+    """'X-Men (1963 - 2011)' -> (1963, 2011). 'Present' means still running."""
+    m = re.search(r"\((\d{4})\s*(?:-\s*(\d{4}|Present))?\)", title or "",
+                  re.I)
+    if not m:
+        return None
+    a = int(m.group(1))
+    b = m.group(2)
+    return (a, 9999 if (b or "").lower() == "present" else int(b or a))
+
+
+def slug_year(slug):
+    m = re.search(r"_(\d{4})_", slug)
+    return int(m.group(1)) if m else None
+
+
+def shelf_issues():
+    """-> list of dicts for every issue on every shelf, linked or not."""
+    out = []
+    for hero, fn in TRACKERS.items():
+        src = open(os.path.join(ROOT, fn), encoding="utf-8").read()
+        omni = json.loads(re.search(r"const OMNI = (\[.*?\n\]);", src, re.S).group(1))
+        mar = json.loads(re.search(r"const MARVEL = (\{.*?\n\});", src, re.S).group(1))
+        seen = set()
+        for o in omni:
+            for ch in o.get("chapters", []):
+                for it in ch["issues"]:
+                    if it["id"] in seen:
+                        continue
+                    seen.add(it["id"])
+                    m = re.match(r"^(.*?)-([0-9]+(?:\.[0-9]+)?|-1|½|.+)$", it["id"])
+                    pfx, num = (m.group(1), m.group(2)) if m else (it["id"], None)
+                    yr = re.search(r"\((\d{4})\)", it["s"])
+                    out.append(dict(hero=hero, vol=o["id"], id=it["id"],
+                                    t=it["t"], s=it["s"], pfx=pfx,
+                                    num=numkey(num), link=mar.get(it["id"]),
+                                    year=int(yr.group(1)) if yr else None,
+                                    era=era_range(o.get("era"))))
+    return out
+
+
+def tiebreak(hit, it, sers):
+    """Narrow several same-named series down to one, or leave it ambiguous.
+
+    A title gets reused a lot -- seven X-Forces, four Amazing Fantasys. Each
+    rule below is tried in turn and the first that leaves exactly one candidate
+    wins; if none does, the caller reports it rather than picking.
+    """
+    yrs = {c: series_years(sers.get(str(c), "")) for c in hit}
+    lo, hi = it["era"] or (0, 9999)
+    rules = [
+        # the shelf named a year ("Spider-Man 2099 (2014)") -- trust it first
+        lambda c: it["year"] and yrs[c] and yrs[c][0] <= it["year"] <= yrs[c][1],
+        # else the series has to have been running while the volume was set
+        lambda c: yrs[c] and yrs[c][0] <= hi and yrs[c][1] >= lo,
+        # a revival continuing the old numbering beats a later reboot
+        lambda c: yrs[c] and yrs[c][0] == min(
+            v[0] for v in yrs.values() if v),
+        # an exact title match beats one found through a shortened key
+        lambda c: norm(sers.get(str(c), "")) == norm(it["s"]),
+    ]
+    for rule in rules:
+        got = [c for c in hit if rule(c)]
+        if len(got) == 1:
+            return got
+        if got:
+            hit = got            # narrowed but still tied -- keep going
+    return hit
+
+
+def match():
+    """-> (added {issue id: 'cid/slug'}, ambiguous, unmatched, issues)."""
+    cat, sers = load(CAT), load(SER)
+    if not cat:
+        sys.exit("no catalog yet -- run: python3 tools/catalog.py sweep")
+
+    # (series_id, issue number) -> comic id, preferring the non-variant record
+    by_ser = {}
+    for cid, (slug, sid, num, mu, var) in cat.items():
+        if sid is None:
+            continue
+        k = (sid, numkey(num))
+        if k not in by_ser or (var == 0 and cat[by_ser[k]][4] == 1):
+            by_ser[k] = cid
+    # series name -> set of series ids
+    by_name = defaultdict(set)
+    for sid, title in sers.items():
+        for k in name_keys(title):
+            by_name[k].add(int(sid))
+
+    issues = shelf_issues()
+    # step 1: learn prefix -> marvel series id from issues that already resolve
+    votes = defaultdict(Counter)
+    slug_to_cid = {v[0]: k for k, v in cat.items()}
+    for it in issues:
+        if not it["link"]:
+            continue
+        cid = it["link"].split("/", 1)[0]
+        rec = cat.get(cid)
+        if rec is None:
+            rec = cat.get(slug_to_cid.get(it["link"].split("/", 1)[1], ""))
+        if rec and rec[1]:
+            votes[it["pfx"]][rec[1]] += 1
+    learned = {p: c.most_common(1)[0][0] for p, c in votes.items()}
+    # which prefix already owns each marvel series, from links that work
+    claimed = {sid: p for p, sid in learned.items()}
+
+    added, unmatched, ambiguous, mistimed = {}, [], [], []
+    for it in issues:
+        if it["link"] or it["num"] is None:
+            continue
+        sid = learned.get(it["pfx"])
+        why = "learned"
+        if sid is None:                              # step 2: name match
+            al = ALIAS.get(it["s"].lower())
+            cands = by_name.get(norm(al if al else it["s"]), set())
+            hit = [s for s in cands if (s, it["num"]) in by_ser]
+            if not hit and re.fullmatch(r"(19|20)\d\d", it["num"] or ""):
+                # An annual numbered by year ("Wolverine Annual #1995") is a
+                # one-issue series of that year on marvel.com, not issue 1995.
+                hit = [s for s in cands
+                       if (s, "1") in by_ser
+                       and slug_year(cat[by_ser[(s, "1")]][0]) == int(it["num"])]
+                if len(hit) == 1:
+                    it = dict(it, num="1")
+            if len(hit) > 1:
+                hit = tiebreak(hit, it, sers)
+            if len(hit) == 1:
+                sid, why = hit[0], "name"
+            elif len(hit) > 1:
+                ambiguous.append((it, sorted(hit)))
+                continue
+        cid = by_ser.get((sid, it["num"])) if sid else None
+        if cid and why == "name" and claimed.get(sid, it["pfx"]) != it["pfx"]:
+            # Two shelf series cannot be one marvel.com series. The shelf keeps
+            # the wiki's volumes apart (`tta` is Tales to Astonish Vol 1, `tta3`
+            # is Vol 3), so if a prefix whose links already work owns this
+            # series, a second prefix matching it by name is a different comic
+            # that merely shares a title and an issue number.
+            mistimed.append((it, sers.get(str(sid), "?"),
+                             claimed[sid]))
+            continue
+        if not cid:
+            unmatched.append((it, sid))
+            continue
+        added[it["id"]] = "%s/%s" % (cid, cat[cid][0])
+        it["why"] = why
+
+    return added, ambiguous, unmatched, mistimed, issues
+
+
+def main(argv):
+    added, ambiguous, unmatched, mistimed, issues = match()
+    if "--dump" in argv:
+        json.dump([dict(i, sid=s) for i, s in unmatched],
+                  open(os.path.join(HERE, "unlinked.json"), "w"), indent=1)
+    print("%d unlinked issues on the shelves" % sum(1 for i in issues if not i["link"]))
+    print("  %d matched  (%d by learned series, %d by name)"
+          % (len(added),
+             sum(1 for i in issues if i.get("why") == "learned"),
+             sum(1 for i in issues if i.get("why") == "name")))
+    print("  %d ambiguous (reported, never guessed)" % len(ambiguous))
+    print("  %d not in the catalog" % len(unmatched))
+    print("  %d rejected: that series already belongs to another shelf series"
+          % len(mistimed))
+    for it, t, owner in mistimed[:15]:
+        print("    rejected:  %-14s %-34s already linked as '%s'"
+              % (it["id"], t, owner))
+    for it, hit in ambiguous[:25]:
+        print("    ambiguous: %-34s %-30s -> series %s"
+              % (it["id"], it["s"], hit))
+    if unmatched:
+        print("\n  not found, by series:")
+        for s, n in Counter(i["s"] for i, _ in unmatched).most_common(25):
+            print("    %-46s %d" % (s, n))
+
+    if "--write" in argv:
+        ids = load(IDS)
+        ids.update(added)
+        json.dump(ids, open(IDS, "w", encoding="utf-8"), indent=0,
+                  ensure_ascii=False)
+        print("\nwrote %d new ids -> tools/marvel_ids.json" % len(added))
+        print("now run build_omnibus_data.py for each hero, then "
+              "build_single_file.py")
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

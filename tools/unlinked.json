@@ -1,0 +1,930 @@
+[
+ {
+  "hero": "spider-man",
+  "vol": "asm-o2",
+  "id": "ppmag-1",
+  "t": "Spectacular Spider-Man Magazine #1",
+  "s": "Spectacular Spider-Man Magazine",
+  "pfx": "ppmag",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1966,
+   1968
+  ],
+  "sid": null
+ },
+ {
+  "hero": "spider-man",
+  "vol": "asm-o2",
+  "id": "ppmag-2",
+  "t": "Spectacular Spider-Man Magazine #2",
+  "s": "Spectacular Spider-Man Magazine",
+  "pfx": "ppmag",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   1966,
+   1968
+  ],
+  "sid": null
+ },
+ {
+  "hero": "spider-man",
+  "vol": "utsm-o1",
+  "id": "utsm--1",
+  "t": "Untold Tales of Spider-Man #-1",
+  "s": "Untold Tales of Spider-Man",
+  "pfx": "utsm",
+  "num": "-1",
+  "link": null,
+  "year": null,
+  "era": [
+   1962,
+   1965
+  ],
+  "sid": 2088
+ },
+ {
+  "hero": "spider-man",
+  "vol": "utsm-o1",
+  "id": "utsmse-1",
+  "t": "Untold Tales: Strange Encounters #1",
+  "s": "Untold Tales: Strange Encounters",
+  "pfx": "utsmse",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1962,
+   1965
+  ],
+  "sid": null
+ },
+ {
+  "hero": "spider-man",
+  "vol": "stern-o1",
+  "id": "ppann-3",
+  "t": "Spectacular Spider-Man Annual #3",
+  "s": "Spectacular Spider-Man Annual",
+  "pfx": "ppann",
+  "num": "3",
+  "link": null,
+  "year": null,
+  "era": [
+   1980,
+   1984
+  ],
+  "sid": null
+ },
+ {
+  "hero": "spider-man",
+  "vol": "mcf-o1",
+  "id": "ppann-10",
+  "t": "Spectacular Spider-Man Annual #10",
+  "s": "Spectacular Spider-Man Annual",
+  "pfx": "ppann",
+  "num": "10",
+  "link": null,
+  "year": null,
+  "era": [
+   1987,
+   1990
+  ],
+  "sid": null
+ },
+ {
+  "hero": "spider-man",
+  "vol": "clone-o1",
+  "id": "cp-1",
+  "t": "Collectors' Preview #1",
+  "s": "Collectors' Preview",
+  "pfx": "cp",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1994,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "spider-man",
+  "vol": "ben-o1",
+  "id": "hs-1995",
+  "t": "Spider-Man Holiday Special #1995",
+  "s": "Spider-Man Holiday Special",
+  "pfx": "hs",
+  "num": "1995",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1996
+  ],
+  "sid": null
+ },
+ {
+  "hero": "spider-man",
+  "vol": "ben-o1",
+  "id": "asmann-1996",
+  "t": "Amazing Spider-Man Annual #1996",
+  "s": "Amazing Spider-Man Annual",
+  "pfx": "asmann",
+  "num": "1996",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1996
+  ],
+  "sid": 2984
+ },
+ {
+  "hero": "spider-man",
+  "vol": "ben-o1",
+  "id": "wiz-3",
+  "t": "Wizard Mini-Comic #3",
+  "s": "Wizard Mini-Comic",
+  "pfx": "wiz",
+  "num": "3",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1996
+  ],
+  "sid": null
+ },
+ {
+  "hero": "spider-man",
+  "vol": "ult-o1",
+  "id": "usm-\u00bd",
+  "t": "Ultimate Spider-Man #\u00bd",
+  "s": "Ultimate Spider-Man",
+  "pfx": "usm",
+  "num": "0.5",
+  "link": null,
+  "year": null,
+  "era": [
+   2000,
+   2003
+  ],
+  "sid": 466
+ },
+ {
+  "hero": "hulk",
+  "vol": "pad-o2",
+  "id": "mhs-1992",
+  "t": "Marvel Holiday Special #1992",
+  "s": "Marvel Holiday Special",
+  "pfx": "mhs",
+  "num": "1992",
+  "link": null,
+  "year": null,
+  "era": [
+   1990,
+   1992
+  ],
+  "sid": null
+ },
+ {
+  "hero": "hulk",
+  "vol": "pad-o3",
+  "id": "hkash-1",
+  "t": "Incredible Hulk Ashcan #1",
+  "s": "Incredible Hulk Ashcan",
+  "pfx": "hkash",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "hulk",
+  "vol": "pad-o3",
+  "id": "mhs-1993",
+  "t": "Marvel Holiday Special #1993",
+  "s": "Marvel Holiday Special",
+  "pfx": "mhs",
+  "num": "1993",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "hulk",
+  "vol": "pad-o4",
+  "id": "hulk--1",
+  "t": "Incredible Hulk #-1",
+  "s": "Incredible Hulk",
+  "pfx": "hulk",
+  "num": "-1",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1997
+  ],
+  "sid": 2021
+ },
+ {
+  "hero": "hulk",
+  "vol": "pad-o4",
+  "id": "hkann-1997",
+  "t": "Incredible Hulk Annual #1997",
+  "s": "Incredible Hulk Annual",
+  "pfx": "hkann",
+  "num": "1997",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1997
+  ],
+  "sid": 2983
+ },
+ {
+  "hero": "hulk",
+  "vol": "pad-o4",
+  "id": "hkherc-1",
+  "t": "Hulk: Hercules Unleashed #1",
+  "s": "Hulk: Hercules Unleashed",
+  "pfx": "hkherc",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1997
+  ],
+  "sid": null
+ },
+ {
+  "hero": "hulk",
+  "vol": "pad-o5",
+  "id": "wiross-1",
+  "t": "What If? General Ross #1",
+  "s": "What If? General Ross",
+  "pfx": "wiross",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2002,
+   2021
+  ],
+  "sid": null
+ },
+ {
+  "hero": "hulk",
+  "vol": "pad-o5",
+  "id": "hklc-1",
+  "t": "Hulk: Last Call #1",
+  "s": "Hulk: Last Call",
+  "pfx": "hklc",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2002,
+   2021
+  ],
+  "sid": null
+ },
+ {
+  "hero": "hulk",
+  "vol": "wwh-o1",
+  "id": "mspwwh-1",
+  "t": "Marvel Spotlight: World War Hulk #1",
+  "s": "Marvel Spotlight: World War Hulk",
+  "pfx": "mspwwh",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2007,
+   2008
+  ],
+  "sid": null
+ },
+ {
+  "hero": "hulk",
+  "vol": "loeb-o1",
+  "id": "hulk3-600",
+  "t": "Incredible Hulk (2009) #600",
+  "s": "Incredible Hulk (2009)",
+  "pfx": "hulk3",
+  "num": "600",
+  "link": null,
+  "year": 2009,
+  "era": [
+   2008,
+   2010
+  ],
+  "sid": null
+ },
+ {
+  "hero": "hulk",
+  "vol": "imm-o1",
+  "id": "imm-0",
+  "t": "Immortal Hulk #0",
+  "s": "Immortal Hulk",
+  "pfx": "imm",
+  "num": "0",
+  "link": null,
+  "year": null,
+  "era": [
+   2018,
+   2021
+  ],
+  "sid": 24278
+ },
+ {
+  "hero": "hulk",
+  "vol": "cates-o1",
+  "id": "fcbd21-1",
+  "t": "FCBD 2021: Avengers/Hulk #1",
+  "s": "FCBD 2021: Avengers/Hulk",
+  "pfx": "fcbd21",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2021,
+   2022
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "ff-o5",
+  "id": "gsss-1",
+  "t": "Giant-Size Super-Stars #1",
+  "s": "Giant-Size Super-Stars",
+  "pfx": "gsss",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1972,
+   1975
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "thing-o1",
+  "id": "mtales-198",
+  "t": "Marvel Tales #198",
+  "s": "Marvel Tales",
+  "pfx": "mtales",
+  "num": "198",
+  "link": null,
+  "year": null,
+  "era": [
+   1983,
+   1991
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "ffse-1",
+  "t": "Fantastic Four Special Edition #1",
+  "s": "Fantastic Four Special Edition",
+  "pfx": "ffse",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "wthe-2",
+  "t": "What The--?! #2",
+  "s": "What The--?!",
+  "pfx": "wthe",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "wthe-10",
+  "t": "What The--?! #10",
+  "s": "What The--?!",
+  "pfx": "wthe",
+  "num": "10",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-26",
+  "t": "Epic Illustrated #26",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "26",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-27",
+  "t": "Epic Illustrated #27",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "27",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-28",
+  "t": "Epic Illustrated #28",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "28",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-29",
+  "t": "Epic Illustrated #29",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "29",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-30",
+  "t": "Epic Illustrated #30",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "30",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-31",
+  "t": "Epic Illustrated #31",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "31",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-32",
+  "t": "Epic Illustrated #32",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "32",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-33",
+  "t": "Epic Illustrated #33",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "33",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "byrne-o2",
+  "id": "epic-34",
+  "t": "Epic Illustrated #34",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "34",
+  "link": null,
+  "year": null,
+  "era": [
+   1984,
+   1986
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "frac-o1",
+  "id": "ff4-5AU",
+  "t": "Fantastic Four (2012) #5AU",
+  "s": "Fantastic Four (2012)",
+  "pfx": "ff4",
+  "num": "5AU",
+  "link": null,
+  "year": 2012,
+  "era": [
+   2012,
+   2013
+  ],
+  "sid": 16557
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "doom-o1",
+  "id": "mgn-49",
+  "t": "Marvel Graphic Novel #49",
+  "s": "Marvel Graphic Novel",
+  "pfx": "mgn",
+  "num": "49",
+  "link": null,
+  "year": null,
+  "era": [
+   1962,
+   1977
+  ],
+  "sid": 16385
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "doom-o1",
+  "id": "astt-7",
+  "t": "Astonishing Tales #7",
+  "s": "Astonishing Tales",
+  "pfx": "astt",
+  "num": "7",
+  "link": null,
+  "year": null,
+  "era": [
+   1962,
+   1977
+  ],
+  "sid": 16431
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "doom-o1",
+  "id": "foom-4",
+  "t": "FOOM #4",
+  "s": "FOOM",
+  "pfx": "foom",
+  "num": "4",
+  "link": null,
+  "year": null,
+  "era": [
+   1962,
+   1977
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "uff-o2",
+  "id": "uxmufa-1",
+  "t": "Ultimate X-Men/Ultimate FF Annual #1",
+  "s": "Ultimate X-Men/Ultimate FF Annual",
+  "pfx": "uxmufa",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2006,
+   2009
+  ],
+  "sid": null
+ },
+ {
+  "hero": "fantastic-four",
+  "vol": "uff-o2",
+  "id": "uffuxa-1",
+  "t": "Ultimate FF/Ultimate X-Men Annual #1",
+  "s": "Ultimate FF/Ultimate X-Men Annual",
+  "pfx": "uffuxa",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2006,
+   2009
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o1",
+  "id": "mcvol-335",
+  "t": "Marvel Comic #335",
+  "s": "Marvel Comic",
+  "pfx": "mcvol",
+  "num": "335",
+  "link": null,
+  "year": null,
+  "era": [
+   1974,
+   1989
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o1",
+  "id": "bomc-1",
+  "t": "Best of Marvel Comics #1",
+  "s": "Best of Marvel Comics",
+  "pfx": "bomc",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1974,
+   1989
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o2",
+  "id": "mgn-50",
+  "t": "Marvel Graphic Novel #50",
+  "s": "Marvel Graphic Novel",
+  "pfx": "mgn",
+  "num": "50",
+  "link": null,
+  "year": null,
+  "era": [
+   1988,
+   1990
+  ],
+  "sid": 16385
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o2",
+  "id": "mgn-65",
+  "t": "Marvel Graphic Novel #65",
+  "s": "Marvel Graphic Novel",
+  "pfx": "mgn",
+  "num": "65",
+  "link": null,
+  "year": null,
+  "era": [
+   1988,
+   1990
+  ],
+  "sid": 16385
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o3",
+  "id": "mgn-67",
+  "t": "Marvel Graphic Novel #67",
+  "s": "Marvel Graphic Novel",
+  "pfx": "mgn",
+  "num": "67",
+  "link": null,
+  "year": null,
+  "era": [
+   1990,
+   1992
+  ],
+  "sid": 16385
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o4",
+  "id": "spsdg-1",
+  "t": "Spider-Man, Punisher, Sabretooth: Designer Genes #1",
+  "s": "Spider-Man, Punisher, Sabretooth: Designer Genes",
+  "pfx": "spsdg",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   1993
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o4",
+  "id": "mhs-1992",
+  "t": "Marvel Holiday Special #1992",
+  "s": "Marvel Holiday Special",
+  "pfx": "mhs",
+  "num": "1992",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   1993
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o5",
+  "id": "grwptd-1",
+  "t": "Ghost Rider/Wolverine/Punisher: The Dark Design #1",
+  "s": "Ghost Rider/Wolverine/Punisher: The Dark Design",
+  "pfx": "grwptd",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1996
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o6",
+  "id": "wsp-102.5",
+  "t": "Wolverine Special #102.5",
+  "s": "Wolverine Special",
+  "pfx": "wsp",
+  "num": "102.5",
+  "link": null,
+  "year": null,
+  "era": [
+   1996,
+   1997
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o6",
+  "id": "wolv2-\u00bd",
+  "t": "Wolverine #\u00bd",
+  "s": "Wolverine",
+  "pfx": "wolv2",
+  "num": "0.5",
+  "link": null,
+  "year": null,
+  "era": [
+   1996,
+   1997
+  ],
+  "sid": 2097
+ },
+ {
+  "hero": "wolverine",
+  "vol": "wolv-o6",
+  "id": "wolv2--1",
+  "t": "Wolverine #-1",
+  "s": "Wolverine",
+  "pfx": "wolv2",
+  "num": "-1",
+  "link": null,
+  "year": null,
+  "era": [
+   1996,
+   1997
+  ],
+  "sid": 2097
+ },
+ {
+  "hero": "wolverine",
+  "vol": "ndy-o1",
+  "id": "ifw-1",
+  "t": "Iron Fist: Wolverine #1",
+  "s": "Iron Fist: Wolverine",
+  "pfx": "ifw",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1997,
+   2001
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "ndy-o1",
+  "id": "ifw-2",
+  "t": "Iron Fist: Wolverine #2",
+  "s": "Iron Fist: Wolverine",
+  "pfx": "ifw",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   1997,
+   2001
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "ndy-o1",
+  "id": "ifw-3",
+  "t": "Iron Fist: Wolverine #3",
+  "s": "Iron Fist: Wolverine",
+  "pfx": "ifw",
+  "num": "3",
+  "link": null,
+  "year": null,
+  "era": [
+   1997,
+   2001
+  ],
+  "sid": null
+ },
+ {
+  "hero": "wolverine",
+  "vol": "ndy-o1",
+  "id": "ifw-4",
+  "t": "Iron Fist: Wolverine #4",
+  "s": "Iron Fist: Wolverine",
+  "pfx": "ifw",
+  "num": "4",
+  "link": null,
+  "year": null,
+  "era": [
+   1997,
+   2001
+  ],
+  "sid": null
+ }
+]
