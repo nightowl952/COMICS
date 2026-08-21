@@ -132,21 +132,23 @@
   /* The plate is the subject's own colour, not one shared navy. `plate` on the
      HEROES entry supplies the two rgb triples as --p1 (mid) and --p2 (foot);
      these defaults are only what an entry without one falls back to. */
-  .poster .plate{position:absolute;left:0;right:0;bottom:0;padding:56px 13px 13px;
+  .poster .plate{position:absolute;left:0;right:0;bottom:0;padding:52px 13px 34px;
     --p1:4,20,48; --p2:4,16,40;
     background:linear-gradient(180deg, transparent,
       rgba(var(--p1),.62) 44%, rgba(var(--p2),.93));}
   /* Printed covers put their own art right up against the plate, so over a scan
      it has to read as its own band rather than as a soft fade. */
-  .poster.hascover .plate{padding-top:68px;
+  .poster.hascover .plate{padding-top:64px;
     background:linear-gradient(180deg, transparent,
       rgba(var(--p1),.86) 42%, rgba(var(--p2),.985));}
   /* Shown only when that subject has no logo file -- see posterHTML(). */
   .poster .pname{font-size:clamp(14px,1.5vw,17px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.6px;line-height:1.1;
     text-shadow:0 2px 4px rgba(0,15,45,.8);}
-  .poster .plogo{display:block;width:100%;max-height:56px;object-fit:contain;object-position:50% 100%;
+  /* `--lw` is set per subject by plateStyle() -- three of the seven are wide
+     single-line logos that read oversized next to the two-line ones at 100%. */
+  .poster .plogo{display:block;width:var(--lw,100%);margin:0 auto;max-height:56px;
+    object-fit:contain;object-position:50% 100%;
     filter:drop-shadow(0 2px 5px rgba(0,10,30,.55));}
-  .poster .plate .pbar{height:7px;margin-top:10px;}
   .info-dot{position:absolute;top:9px;left:9px;z-index:3;width:26px;height:26px;border-radius:50%;cursor:pointer;
     display:flex;align-items:center;justify-content:center;font-family:inherit;font-size:13px;font-weight:900;font-style:italic;
     color:var(--ink);opacity:0;transition:opacity .18s, transform .12s;
@@ -267,8 +269,8 @@
 
   @media (max-width:600px){
     .shelf{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;}
-    .poster .plate{padding:48px 10px 11px;}
-    .poster.hascover .plate{padding-top:56px;}
+    .poster .plate{padding:44px 10px 27px;}
+    .poster.hascover .plate{padding-top:52px;}
     .poster .plogo{max-height:44px;}
     .continue .thumb{display:none;}
     .continue-actions{width:100%;} .continue-actions .btn{width:100%;}
@@ -431,15 +433,15 @@ function emblemSVG(name, dark){
    `total` is the fallback issue count used before that tracker has ever been opened —
    once opened, the tracker publishes a live record and that wins. */
 const HEROES = [
-  { id:"spider-man", name:"Spider-Man", art:"a-spider", tex:"tex-web", emblem:"spider", cover:"Art/Heroes/spider-man.jpg", pos:"14%", plate:["29,74,168","7,18,54"], logo:"Art/Logos/spider-man.png",
+  { id:"spider-man", name:"Spider-Man", art:"a-spider", tex:"tex-web", emblem:"spider", cover:"Art/Heroes/spider-man.jpg", pos:"14%", plate:["29,74,168","7,18,54"], logo:"Art/Logos/spider-man.png", logow:"84%",
     era:"The Omnibus Shelf · 1962–2011", file:"spiderman-reading-tracker.html", total:564,
     desc:"A curated Spider-Man shelf of 16 omnibus volumes — each one collecting exactly what the printed book collects, in print order. 15 volumes carry full issue lists (564 issues) across Lee/Ditko, Romita, Conway, Untold Tales, Stern, McFarlane, Larsen, the Clone Saga, Ben Reilly, Straczynski and Ultimate Spider-Man; one sits on the shelf as a placeholder until its contents are added." },
 
-  { id:"wolverine", name:"Wolverine", art:"a-wolverine", tex:"tex-claw", emblem:"claws", cover:"Art/Heroes/wolverine.jpg", pos:"13%", plate:["188,130,10","46,28,2"], logo:"Art/Logos/wolverine.png",
+  { id:"wolverine", name:"Wolverine", art:"a-wolverine", tex:"tex-claw", emblem:"claws", cover:"Art/Heroes/wolverine.jpg", pos:"13%", plate:["188,130,10","46,28,2"], logo:"Art/Logos/wolverine.png", logow:"84%",
     era:"Omnibus Shelf · 1974–2024", file:"wolverine-reading-tracker.html", total:636,
     desc:"Fourteen omnibuses on a shelf, from Incredible Hulk #180 to the end of the Sabretooth War — 635 issues reproducing exactly what each printed book holds. Six mainline volumes carry 1974–1997 and Not Dead Yet runs on to 2001; after that it is the creator runs and the event books — Millar's Enemy of the State and Old Man Logan, Aaron's two stretches, Remender's Uncanny X-Force, and the death and the return. One gap is Marvel's, not ours: Wolverine #159–189 is not collected in omnibus until 2027. Laura Kinney's books and the X-Men team titles are a different subject and are not here." },
 
-  { id:"hulk", name:"Hulk", art:"a-hulk", tex:"tex-smash", emblem:"fist", cover:"Art/Heroes/hulk.jpg", pos:"41%", plate:["104,52,158","26,10,50"], logo:"Art/Logos/hulk.png",
+  { id:"hulk", name:"Hulk", art:"a-hulk", tex:"tex-smash", emblem:"fist", cover:"Art/Heroes/hulk.jpg", pos:"41%", plate:["104,52,158","26,10,50"], logo:"Art/Logos/hulk.png", logow:"84%",
     era:"Omnibus Shelf · 1962–2022", file:"hulk-reading-tracker.html", total:659,
     desc:"Seventeen mainline omnibuses on a shelf, from the six-issue 1962 series through Banner of War — every Bruce Banner volume Marvel has collected, reproducing exactly what each printed book holds. Peter David's twelve-year run is the spine of it, with Planet Hulk, World War Hulk and the Immortal era around it. She-Hulk's books are a different subject and are not here." },
 
@@ -521,9 +523,14 @@ function artHTML(h, banner){
 }
 
 /* `plate` on a HEROES entry is [mid, foot] as rgb triples -- the two stops the
-   .plate gradient interpolates between. Absent, the CSS default navy stands. */
-function plateVars(h){
-  return h.plate ? ' style="--p1:' + esc(h.plate[0]) + ';--p2:' + esc(h.plate[1]) + '"' : '';
+   .plate gradient interpolates between. Absent, the CSS default navy stands.
+   `logow` is that subject's logo width, for the ones that read too large at
+   full width; absent, the CSS default 100% stands. */
+function plateStyle(h){
+  const v = [];
+  if(h.plate) v.push("--p1:" + esc(h.plate[0]), "--p2:" + esc(h.plate[1]));
+  if(h.logow) v.push("--lw:" + esc(h.logow));
+  return v.length ? ' style="' + v.join(";") + '"' : '';
 }
 
 function posterHTML(h){
@@ -531,14 +538,11 @@ function posterHTML(h){
   const live = !!h.file;
   const done = p ? p.read + p.skip : 0;
   const pct = p && p.total ? Math.round(done / p.total * 100) : 0;
-  let meta, bar = "";
-  if(live && p && p.total){
-    meta = done + " / " + p.total + " logged · " + pct + "%";
-    bar = '<div class="pbar"><div class="fill rd" style="width:' + (p.read / p.total * 100) + '%"></div>' +
-          '<div class="fill sk" style="width:' + (p.skip / p.total * 100) + '%"></div></div>';
-  }else{
-    meta = "List in curation";
-  }
+  /* The plate is the logo and nothing else -- no name, no count, no progress
+     bar. Progress is still on the Continue panel and in the dossier. */
+  const meta = live && p && p.total
+    ? done + " / " + p.total + " logged · " + pct + "%"
+    : "List in curation";
   /* The plate carries the subject's printed logo, so the name is not drawn as
      text. It stays as the aria-label, and as the `alt` the logo falls back to
      if the file is missing -- same degrade-don't-vanish rule as `cover`. */
@@ -555,7 +559,7 @@ function posterHTML(h){
       (live ? '' : '<span class="badge">Curating</span>') +
       /* A cover carries its own logo and figure; the emblem would only crowd it. */
       (h.cover ? '' : '<div class="emblem">' + emblemSVG(h.emblem, h.light) + '</div>') +
-      '<div class="plate"' + plateVars(h) + '>' + mark + bar +
+      '<div class="plate"' + plateStyle(h) + '>' + mark +
       '</div>' +
     '</button>' +
     '<button class="info-dot" data-info="' + h.id + '" aria-label="Details for ' + esc(h.name) + '">i</button>' +

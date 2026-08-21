@@ -126,7 +126,7 @@ indefinitely with no tracker file, and nothing breaks.
 ## Homescreen (`index.html`)
 
 The `HEROES` array is the whole configuration. Each entry:
-`{id, name, art, tex, emblem, cover, pos, plate, logo, era, file, total, desc, light?}`.
+`{id, name, art, tex, emblem, cover, pos, plate, logo, logow?, era, file, total, desc, light?}`.
 - `file: null` → poster renders dimmed with a "Curating" badge, and clicking it
   opens the dossier modal instead of navigating.
 - `file: "…"` → poster gets a progress bar, and clicking it navigates straight
@@ -232,7 +232,7 @@ back and needs it.
 The plate is the band across the foot of each poster. Until Aug 2026 it was one
 shared navy carrying the subject name, the "N / N logged" count and the
 progress bar. It now carries **the subject's printed logo on the subject's own
-colour**, and no text at all.
+colour, and nothing else** — no name, no count, no bar.
 
 `plate` on a `HEROES` entry is `[mid, foot]` as two **rgb triples** — the stops
 the gradient interpolates between, set as `--p1`/`--p2` on the element by
@@ -260,7 +260,7 @@ and gives the art something to sit on. Expect to do the same for any future
 subject whose logo matches its colour.
 
 The logo is `logo` on the entry, one PNG per subject at `Art/Logos/<id>.png`.
-Two things about how it is sized:
+Three things about how it is sized and placed:
 
 - **It is cropped to its alpha bounding box** by `tools/logos.py`, not used as
   supplied. Logo PNGs arrive with wildly different transparent margins — two of
@@ -272,6 +272,17 @@ Two things about how it is sized:
   against Spider-Man's and Wolverine's until `max-height` went from 46px to
   56px. Changing that number means re-checking all seven, not just the one that
   looked wrong.
+- **`logow` trims the ones that number then made too big.** Raising `max-height`
+  fixed the tall logos and left the three wide single-line ones (Spider-Man,
+  Wolverine, Hulk) reading oversized, so those carry `logow:"84%"` — a per-
+  subject width, emitted as `--lw` by `plateStyle()`, defaulting to 100%. The
+  two knobs pull against each other: `max-height` sets the tall logos, `logow`
+  brings the wide ones back to match.
+- **The logo floats, it does not sit on the foot.** `padding-bottom` on the
+  plate is 34px against 13px of side padding, which is what lifts it clear of
+  the poster edge. That number was the progress bar's space before the bar came
+  off; keeping it is deliberate, and dropping it back to 13px drops the logo
+  visibly low.
 
 **The name is gone as text but not as data.** It is still the poster's
 `aria-label`, and still the `alt` on the logo `<img>` — so a missing or broken
@@ -281,8 +292,12 @@ degrade-don't-vanish rule `cover` follows, and it is worth keeping: the poster
 is now an image-only button, so without it a failed request leaves a nameless
 tile.
 
-The progress bar stayed. With the count text gone it is the only progress
-visible from the wall.
+**The progress bar came off the plate too** (Aug 2026), so the poster now
+carries no progress at all. That is a real loss of information from the wall
+and was the user's call: the plate reads as printed trade dress, and a UI
+element in it broke that. Progress is still one click away — the Continue
+Reading panel at the top of the homescreen and each subject's dossier both
+carry it — and `.pbar` itself is still live for exactly those two.
 
 ### How the homescreen knows your progress
 
