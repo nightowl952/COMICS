@@ -336,6 +336,278 @@
   "sid": null
  },
  {
+  "hero": "moon-knight",
+  "vol": "mk-o1",
+  "id": "hulkmag-11",
+  "t": "Hulk! Magazine #11",
+  "s": "Hulk! Magazine",
+  "pfx": "hulkmag",
+  "num": "11",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1981
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "mk-o1",
+  "id": "hulkmag-12",
+  "t": "Hulk! Magazine #12",
+  "s": "Hulk! Magazine",
+  "pfx": "hulkmag",
+  "num": "12",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1981
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "mk-o1",
+  "id": "hulkmag-13",
+  "t": "Hulk! Magazine #13",
+  "s": "Hulk! Magazine",
+  "pfx": "hulkmag",
+  "num": "13",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1981
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "mk-o1",
+  "id": "hulkmag-14",
+  "t": "Hulk! Magazine #14",
+  "s": "Hulk! Magazine",
+  "pfx": "hulkmag",
+  "num": "14",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1981
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "mk-o1",
+  "id": "hulkmag-15",
+  "t": "Hulk! Magazine #15",
+  "s": "Hulk! Magazine",
+  "pfx": "hulkmag",
+  "num": "15",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1981
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "mk-o1",
+  "id": "hulkmag-17",
+  "t": "Hulk! Magazine #17",
+  "s": "Hulk! Magazine",
+  "pfx": "hulkmag",
+  "num": "17",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1981
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "mk-o1",
+  "id": "hulkmag-18",
+  "t": "Hulk! Magazine #18",
+  "s": "Hulk! Magazine",
+  "pfx": "hulkmag",
+  "num": "18",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1981
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "mk-o1",
+  "id": "hulkmag-20",
+  "t": "Hulk! Magazine #20",
+  "s": "Hulk! Magazine",
+  "pfx": "hulkmag",
+  "num": "20",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1981
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "mk-o2",
+  "id": "bshot-1",
+  "t": "Big Shots Spotlight #1",
+  "s": "Big Shots Spotlight",
+  "pfx": "bshot",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1982,
+   1990
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "spector-o2",
+  "id": "msmk-52",
+  "t": "Marc Spector: Moon Knight #52",
+  "s": "Marc Spector: Moon Knight",
+  "pfx": "msmk",
+  "num": "52",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   2000
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "spector-o2",
+  "id": "msmk-53",
+  "t": "Marc Spector: Moon Knight #53",
+  "s": "Marc Spector: Moon Knight",
+  "pfx": "msmk",
+  "num": "53",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   2000
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "spector-o2",
+  "id": "msmk-54",
+  "t": "Marc Spector: Moon Knight #54",
+  "s": "Marc Spector: Moon Knight",
+  "pfx": "msmk",
+  "num": "54",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   2000
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "spector-o2",
+  "id": "msmk-55",
+  "t": "Marc Spector: Moon Knight #55",
+  "s": "Marc Spector: Moon Knight",
+  "pfx": "msmk",
+  "num": "55",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   2000
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "spector-o2",
+  "id": "msmk-56",
+  "t": "Marc Spector: Moon Knight #56",
+  "s": "Marc Spector: Moon Knight",
+  "pfx": "msmk",
+  "num": "56",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   2000
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "spector-o2",
+  "id": "msmk-58",
+  "t": "Marc Spector: Moon Knight #58",
+  "s": "Marc Spector: Moon Knight",
+  "pfx": "msmk",
+  "num": "58",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   2000
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "spector-o2",
+  "id": "msmk-59",
+  "t": "Marc Spector: Moon Knight #59",
+  "s": "Marc Spector: Moon Knight",
+  "pfx": "msmk",
+  "num": "59",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   2000
+  ],
+  "sid": null
+ },
+ {
+  "hero": "moon-knight",
+  "vol": "spector-o2",
+  "id": "msmk-60",
+  "t": "Marc Spector: Moon Knight #60",
+  "s": "Marc Spector: Moon Knight",
+  "pfx": "msmk",
+  "num": "60",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   2000
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",

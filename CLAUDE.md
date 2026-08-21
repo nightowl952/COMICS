@@ -56,9 +56,13 @@ Keep replies short and plain. This is a hobby project, not a code review.
 - `wolverine-reading-tracker.html` — the Wolverine omnibus shelf. Same shape and
   tooling again (`--hero wolverine`); 14 volumes of Logan's own books. Its
   `OMNI` array is generated from `tools/wolverine_meta.py`.
-- `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/` —
-  cover scans, committed so GitHub Pages can serve them and the mobile build
-  can inline them.
+- `moonknight-reading-tracker.html` — the Moon Knight omnibus shelf. Same shape
+  and tooling again (`--hero moon-knight`); 7 volumes, which is *every* Moon
+  Knight omnibus in print. Its `OMNI` array is generated from
+  `tools/moonknight_meta.py`.
+- `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/`,
+  `Art/Moon-Knight/` — cover scans, committed so GitHub Pages can serve them
+  and the mobile build can inline them.
 
 No build step, no package.json, no dependencies, no server. Open either file
 directly in a browser.
@@ -73,11 +77,11 @@ There are two ways a hero's tracker can be organised. Pick per hero:
 
 - **Curated chronology** (X-Men) — one researched reading order through a single
   saga. Acts → chapters → issues, all on one page.
-- **Omnibus shelf** (Spider-Man, Hulk, Fantastic Four, Wolverine) — a poster
-  shelf of omnibus volumes, each reproducing exactly what the printed book
-  collects, in print order. Two views in one file, hash-routed (`#/omni/<id>`).
-  Four heroes use this shape; the whole pipeline behind it is hero-agnostic —
-  see "Adding an omnibus hero".
+- **Omnibus shelf** (Spider-Man, Hulk, Fantastic Four, Wolverine, Moon Knight) —
+  a poster shelf of omnibus volumes, each reproducing exactly what the printed
+  book collects, in print order. Two views in one file, hash-routed
+  (`#/omni/<id>`). Five heroes use this shape; the whole pipeline behind it is
+  hero-agnostic — see "Adding an omnibus hero".
 
 ### A shelf holds books you can actually buy
 
@@ -423,7 +427,7 @@ files, and projects the finished build size.
 `build_single_file.py` enforces is the *artifact* limit, and the artifact was
 retired in Aug 2026 — GitHub Pages serves files up to 100MB. The cap and the
 `covers.py add` re-encode to 700px wide / JPEG q82 (~150KB) both stay for now,
-because four shelves of art at one size is worth more than one shelf at a
+because five shelves of art at one size is worth more than one shelf at a
 sharper one, and because a 10MB single-file page is already slow enough on a
 phone. But a genuinely better scan can be dropped in without worrying about the
 budget. For the record of why the number was picked: base64 costs ~33% on top of
@@ -570,15 +574,16 @@ that might belong in it — so unlike `SLUG_PFX` it cannot grow silently.
 
 ### What is left, and why
 
-**2480 of 2520 issue slots across the four shelves resolve (98%), and 2412 are
-readable on Marvel Unlimited.** The 40 that do not were each checked against the
-catalog: they are not on marvel.com at all. `tools/unlinked.json` is the written
-record, refreshed by `link_issues.py --dump`.
+**2723 of 2780 unique issues across the five shelves resolve (98%), and 2650
+are readable on Marvel Unlimited.** The 57 that do not were each checked against
+the catalog: they are not on marvel.com at all. `tools/unlinked.json` is the
+written record, refreshed by `link_issues.py --dump`.
 
-The largest are Epic Illustrated (9 — a magazine, never digitised), Marvel
-Graphic Novel #49/50/65/67 (the catalog holds 17 of that line and not those),
-the 1992–93 Marvel Holiday Specials, Spectacular Spider-Man Magazine, What
-The--?! #2 and #10, and a tail of ashcans, `#-1` and `#½` oddities and
+The largest are Epic Illustrated (9 — a magazine, never digitised), Hulk!
+Magazine (8 — the same shape), Marc Spector: Moon Knight #52–56 and #58–60,
+Marvel Graphic Novel #49/50/65/67 (the catalog holds 17 of that line and not
+those), the 1992–93 Marvel Holiday Specials, Spectacular Spider-Man Magazine,
+What The--?! #2 and #10, and a tail of ashcans, `#-1` and `#½` oddities and
 promotional one-shots. Astonishing Tales (1970) is still short — the catalog
 holds 21 of its 36 issues, which confirms the older finding that the rest were
 pulled rather than merely unfound.
@@ -750,15 +755,16 @@ ambiguous or rejected; no hit means Marvel does not have it.
   id ranges and appends to `tools/marvel_ids.json`. Resumable: already-probed ids
   are skipped, so rerunning after a block costs nothing.
 - `omnibus_contents_raw.json`, `hulk_contents_raw.json`, `ff_contents_raw.json`,
-  `wolverine_contents_raw.json` — the raw ReprintOf lists pulled from the Marvel
-  Database, one entry per omnibus, one file per hero. Regenerate only if a
-  volume's contents change.
+  `wolverine_contents_raw.json`, `moonknight_contents_raw.json` — the raw
+  ReprintOf lists pulled from the Marvel Database, one entry per omnibus, one
+  file per hero. Regenerate only if a volume's contents change.
 - `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
   its tracker filename, art directory, metadata module, panel key and route.
   Every other tool takes `--hero <key>` (default `spider-man`) and reads its
   paths from here. `python3 tools/heroes.py` lists what is registered.
 - `omnibus_meta.py` (Spider-Man), `hulk_meta.py` (Hulk), `ff_meta.py` (Fantastic
-  Four), `wolverine_meta.py` (Wolverine) — the hand-written half,
+  Four), `wolverine_meta.py` (Wolverine), `moonknight_meta.py` (Moon Knight) —
+  the hand-written half,
   and **the only place shelf metadata should be edited**: `ORDER` (wiki-backed
   volumes; each key must exist in that hero's raw-contents file or `gen()`
   KeyErrors), `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF`
@@ -790,7 +796,7 @@ ambiguous or rejected; no hit means Marvel does not have it.
   issue's sibling links across a whole run, `scan` blind-probes a range of issue
   ids for the pre-2008 material the other three cannot reach, and `write` merges
   the result into `marvel_ids.json` through its `SLUG_PFX` table. See "Harvest by
-  series, not by id range" above. All three shelves feed from the same store.
+  series, not by id range" above. Every shelf feeds from the same store.
 - `series_links.json`, `series_titles.json`, `series_scanned.json` — what
   `series_harvest.py` has banked: issue slug → marvel id, series id → title, and
   which issue ids `scan` has already probed (dead ones included). Resumable
@@ -992,7 +998,7 @@ lands at 16 chapters that read as the tie-in list it is.
 
 652 of 659 unique issues (99%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
-as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
+as the other trackers. Complete: Incredible Hulk (1962) all 380, Tales to
 Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
 Incredible Hulk annuals, and the World War Hulk core minis.
 
@@ -1284,7 +1290,7 @@ unique issues.
 
 627 of 636 unique issues (99%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
-as the other three trackers. Complete or near-complete: Wolverine (1988) all 189
+as the other trackers. Complete or near-complete: Wolverine (1988) all 189
 issues, Marvel Comics Presents all 175, Wolverine (2003), Wolverine (2010),
 Wolverine: Weapon X, Uncanny X-Force, Wolverines, Wolverine (2013)/(2014)/(2020),
 X-Men: Schism and Wolverine: Infinity Watch.
@@ -1366,6 +1372,114 @@ So the id harvest is no longer a step. What is left for a new hero is the part
 that was always judgement: which books belong on the shelf, and hand-designing
 the tracker page.
 
+## The Moon Knight tracker (omnibus shelf)
+
+Same code as the other four shelf pages, same tooling, different data: 7
+volumes, 260 issue slots, 260 unique issues, all 7 with contents and cover art.
+No placeholders, and nothing unreleased. `tools/moonknight_meta.py` is the
+hand-written half; run everything with `--hero moon-knight`.
+
+It is the smallest shelf and the only one that is *complete*: the Marvel
+Database lists exactly seven Moon Knight omnibuses and all seven are on it.
+
+### Scope call — there wasn't one
+
+Every other shelf needed a judgement call the tools could not make. This one
+did not, and that is worth stating rather than leaving implicit:
+
+- **No family character to rule out.** Nothing here is the Moon Knight
+  equivalent of She-Hulk or Laura Kinney — no spin-off character has an
+  omnibus.
+- **No team book to argue about.** Nothing like Marvel Team-Up, Marvel
+  Two-In-One or Uncanny X-Force.
+- **Nothing unreleased.** The most recent volume shipped October 2024, so the
+  "a shelf holds books you can actually buy" rule excludes nothing.
+
+`SHELF` order is a reading order that here is also publication order, so
+nothing is resequenced either.
+
+**Two gaps in the shelf are Marvel's, not ours**, and unusually they are in the
+middle rather than at the end:
+
+- **Moon Knight (2011) #1–12**, Bendis and Maleev, between the Huston volume
+  and From The Dead.
+- **Moon Knight (2016) #1–14 and #188–200**, Lemire and then Bemis, between
+  From The Dead and the MacKay volume.
+
+Neither has an omnibus. The notes on `ftd-o1` and `mackay-o1` say so on the
+page. Note that Lemire's run is the one the old Moon Knight `desc` on the
+homescreen was built around when this subject was still going to be a curated
+chronology — as an omnibus shelf it cannot be here at all.
+
+### Contents
+
+Pulled the same way as the other four shelves (the `ReprintOf<N>` MediaWiki
+call above), into `tools/moonknight_contents_raw.json`. This is the cleanest
+pull on the project so far, and the three hazards the other shelves hit did not
+appear:
+
+- **ReprintOf order matched the rendered gallery order on all 7 volumes**, so
+  nothing needed reordering by hand the way `inc-o1` did.
+- **Every page writes the full form** (`Moon Knight Vol 1 1`), so no gallery
+  cross-reference was needed to disambiguate — and there are *nine* volumes of
+  a series called "Moon Knight" for it to have gone wrong on.
+- **No doubled spaces, no subtitles after the issue number, no short-form
+  entries.** Nothing had to be repaired, so unlike `ff-o6`, `wolv-o3` and
+  `rotm-o1` there is no hand fix to re-apply if a volume is re-pulled.
+
+**The audit found nothing to fix either.** Only one of the seven volumes has an
+explicit `COLLECTING` range in its solicit (MacKay's, and it matches the shelf
+exactly), so the fallback shelf-wide gap check did the rest. Four gaps, all
+correct: Amazing Spider-Man #221–352 and Marvel Age #10–28 and Marvel Fanfare
+#31–37 are ordinary guest-appearance spacing, and **Hulk! Magazine #16 and
+#19** carry no Moon Knight story at all — the backup serial skipped them, which
+the wiki's own character lists confirm.
+
+### Chaptering
+
+Six volumes take the automatic per-series chapters. Only `mk-o2` carries
+`chapterby="series"`: it is the tail of the original run (#21–38), the 1985
+Fist of Khonshu revival, and then eleven one-shot guest appearances, which
+scores 3.27 on the average-run-length test for the same reason the Hulk
+anthologies do — and reads far better as one chapter per book than as "Part N".
+
+`mackay-o1` comes out as eight chapters where four of them are all called
+"Moon Knight (2021)", which looks wrong and is not: the two annuals and the
+Devil's Reign tie-in are printed *inside* the run, so the ongoing genuinely
+appears as four separate blocks in print order.
+
+### Issue ids — no overlaps at all
+
+260 issue slots and 260 unique issues: the only shelf where those two numbers
+are equal. No volume reprints another's issues, so nothing carries the gold
+"in N omnibuses" pill. That is a property of these seven books, not something
+to preserve — a future volume that doubles back would share ids as usual.
+
+### Marvel deep links
+
+243 of 260 unique issues (93%) resolve to a real marvel.com issue page; the
+rest fall back to `marvel.com/search?query=` and a grey Read button, same
+convention as the other four trackers. Complete: Moon Knight (1980) all 38,
+Moon Knight (1985), (1999), (2006), (2014) and (2021), Vengeance of the Moon
+Knight, Shadowland: Moon Knight, and all three annuals.
+
+**The id harvest was not a step** — the catalog already held everything, so
+this was one `link_issues.py --write`. It matched 227 issues with 0 ambiguous
+on the first run, which is the "what a brand-new hero actually gets" number
+holding up on a real shelf.
+
+One `ALIAS` entry was needed, and the run's own report is what named it:
+**Power Man and Iron Fist** is marvel.com's **Power Man (1974 - 1986)** — the
+book was retitled at #50 but the catalog keeps one series under the original
+name, and the two later series that *do* carry the retitled name stop well
+short of #87.
+
+The 17 that marvel.com does not have, all verified against a fully-swept
+catalog: **Hulk! Magazine #11–20** (8 issues — a magazine, never digitised,
+the same shape as Epic Illustrated on the FF shelf), **Marc Spector: Moon
+Knight #52–56 and #58–60** (the catalog holds 52 of that series' 60 issues and
+not those), and **Big Shots Spotlight #1**, a 2011 promotional one-shot.
+
 ## The X-Men tracker
 
 ### What it does
@@ -1425,7 +1539,7 @@ file to a new machine does not carry progress.
   homescreen gear. Inside Claude the key check is skipped entirely.
 
 The same engine — `askClaude`, `tidy`, `summaryError`, the panel helpers — is
-**copied into all three trackers**, not shared through a file. That is the
+**copied into every tracker**, not shared through a file. That is the
 portability rule: every page stands alone. Change one and change the others.
 
 `tidy()` sanitizes model output — strips markdown, leading process narration
@@ -1491,7 +1605,8 @@ modified — everything below is done at build time.
 
 Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`, `#/hulk`,
 `#/hulk/omni/<id>`, `#/fantastic-four`, `#/fantastic-four/omni/<id>`,
-`#/wolverine`, `#/wolverine/omni/<id>`.
+`#/wolverine`, `#/wolverine/omni/<id>`, `#/moon-knight`,
+`#/moon-knight/omni/<id>`.
 
 **The builder is registry-driven, not hardcoded.** `_apps()` reads the shelf
 heroes out of `heroes.py`; the panel list, the cross-page link rewrites, the
@@ -1524,6 +1639,21 @@ no edit here — register it in `heroes.py` and rebuild.
   Note the asymmetry that hid it: the X-Men page writes its equivalent
   `display:none` as an inline `style=` attribute, so it was never affected and
   the bug looked page-specific rather than structural.
+- **An SVG paint reference is an id reference**, and prefixing only the
+  definition breaks it. `prefix_ids_html()` renamed `<linearGradient id="hg">`
+  to `id="wv-hg"` and left `fill="url(#hg)"` alone; an unresolvable paint
+  server renders as *no paint*, so every HUD emblem — claws, spider, fist, the
+  4 — and the homescreen's poster gradient drew as bare orbs in
+  `comics-mobile.html` while looking perfect in the standalone pages. Fixed
+  Aug 2026, and it now also rewrites `href="#id"`. `check_id_refs()` fails the
+  build if markup references an id nothing defines, which is the comparison
+  that was missing the whole time.
+
+  Exactly the same shape as the `scope_selector()` bug above: scoping one half
+  of a pair is worse than scoping neither, because it fails silently. Note that
+  only the markup half reaches `prefix_ids_html()` — `body_html()` stops at
+  `<script>` — so the glyph SVGs that mint their own ids at runtime were never
+  involved and were always fine.
 - **Top-level JS names collide wholesale** (`SC`, `MARVEL`, `store`, `refresh`,
   `flat`, `esc`…). Each script is wrapped in an IIFE, so nothing leaks.
 
@@ -1549,7 +1679,7 @@ written:
    Without this, en-dashes and middots render as mojibake. The builder asserts
    zero non-ASCII bytes before writing.
 2. **CSP blocks external requests** — every live summary call to
-   `api.anthropic.com` is impossible in the artifact, on all three trackers.
+   `api.anthropic.com` is impossible in the artifact, on every tracker.
    The builder forces the existing "no key" path on each and rewrites what it
    says, and hides the homescreen gear (an inert settings gear is worse than
    none). All 27 X-Men arc digests still work; they were always offline.
@@ -1583,17 +1713,20 @@ a server-side store and is not built.
 
 ## Open items — C.O.M.I.C.S.
 
-1. **Two of seven subjects have no reading list yet** (Moon Knight, Daredevil).
-   Their `desc` text in `HEROES` sketches the intended shape of each list but
-   nothing is researched or verified yet — treat it as a starting brief, not a
-   plan.
+1. **One of seven subjects has no reading list yet** (Daredevil). Its `desc`
+   text in `HEROES` sketches the intended shape of the list but nothing is
+   researched or verified yet — treat it as a starting brief, not a plan.
+   Moon Knight was the other one and shipped as an omnibus shelf in Aug 2026;
+   note that doing so **dropped part of its old brief on purpose**, because
+   Lemire's run has no omnibus and an omnibus shelf cannot carry it.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Twenty-two covers are low-res** (~325–450px wide) because that is all the
+3. **Twenty-four covers are low-res** (~325–450px wide) because that is all the
    Marvel Database stores — six on the Spider-Man shelf, six on the Hulk shelf,
-   eight on the Fantastic Four shelf, and two on the Wolverine shelf
-   (`aaron-o1`, `xforce-o1`); see "Cover art". Replacing them needs a scan from
+   eight on the Fantastic Four shelf, two on the Wolverine shelf (`aaron-o1`,
+   `xforce-o1`) and two on the Moon Knight shelf (`spector-o1`, `huston-o1`);
+   see "Cover art". Replacing them needs a scan from
    somewhere else; everything else is 600–700px. Now that the artifact is
    retired there is no size budget arguing against a big scan.
 4. **Three wiki omissions were found and fixed in Aug 2026** — Fantastic Four
@@ -1632,10 +1765,16 @@ a server-side store and is not built.
     make the mobile page both smaller and more capable. The ASCII-only pass and
     the `__COMICS_SAVE` download rewire are harmless and can stay. See "The
     mobile build".
-11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the four
-    shelves are at 97–99% (Spider-Man 558/564, Hulk 652/659, Fantastic Four
-    643/661, Wolverine 627/636), and 2412 of the 2480 linked issues are readable
-    on Marvel Unlimited. The remaining 40 are not on marvel.com at all;
+
+    **This has stopped being optional.** With the Moon Knight shelf on,
+    `comics-mobile.html` is 14.7MB against the 16MB ceiling the builder still
+    enforces — a sixth shelf will simply fail the build. Un-inlining is the fix
+    and takes the page to about 1.7MB; raising the cap is not, because the cap
+    is the only thing keeping anyone from shipping a 25MB page to a phone.
+11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the five
+    shelves are at 93–99% (Spider-Man 558/564, Hulk 652/659, Fantastic Four
+    643/661, Wolverine 627/636, Moon Knight 243/260). The remaining 57 are not
+    on marvel.com at all;
     `tools/unlinked.json` names every one. What closed it was sweeping
     marvel.com's open JSON catalog rather than searching per series — see
     "Linking issues" and "How the links used to be missed". The last nine came
@@ -1663,6 +1802,7 @@ python3 tools/build_omnibus_data.py --check
 python3 tools/build_omnibus_data.py --check --hero hulk
 python3 tools/build_omnibus_data.py --check --hero fantastic-four
 python3 tools/build_omnibus_data.py --check --hero wolverine
+python3 tools/build_omnibus_data.py --check --hero moon-knight
 
 # Every shelf issue that can be linked, is
 python3 tools/link_issues.py          # expect: 0 matched, 0 ambiguous
@@ -1672,6 +1812,7 @@ python3 tools/covers.py audit
 python3 tools/covers.py audit --hero hulk
 python3 tools/covers.py audit --hero fantastic-four
 python3 tools/covers.py audit --hero wolverine
+python3 tools/covers.py audit --hero moon-knight
 
 # The mobile build must stay pure ASCII
 python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"   # 0
@@ -1684,6 +1825,7 @@ The Spider-Man shelf currently reports **16 volumes / 567 issue slots / 564
 unique issues**; the Hulk shelf **17 volumes / 665 issue slots / 659 unique
 issues**; the Fantastic Four shelf **18 volumes / 686 issue slots / 661 unique
 issues**; the Wolverine shelf **14 volumes / 637 issue slots / 636 unique
+issues**; the Moon Knight shelf **7 volumes / 260 issue slots / 260 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
 
@@ -1795,7 +1937,7 @@ What retiring it changes, and what it does not:
 - **The 16MB ceiling is gone.** That was an artifact limit, never a GitHub one —
   Pages serves individual files up to 100MB and a site up to 1GB, and this repo
   is 19MB in total. Cover art no longer has to be squeezed to fit. `covers.py
-  add` still re-encodes to 700px/q82, because consistency across four shelves is
+  add` still re-encodes to 700px/q82, because consistency across five shelves is
   worth more than sharpness on one, but that is now a choice rather than a
   constraint, and a better scan can simply be dropped in.
 - **Relative image paths would now work.** `Art/…` resolves fine from Pages;
