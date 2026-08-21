@@ -433,8 +433,7 @@ def main(argv):
         json.dump(ids, open(IDS, "w", encoding="utf-8"), indent=0,
                   ensure_ascii=False)
         print("\nwrote %d new ids -> tools/marvel_ids.json" % len(added))
-        print("now run build_omnibus_data.py for each hero, then "
-              "build_single_file.py")
+        print("now run build_omnibus_data.py for each hero")
 
 
 if __name__ == "__main__":

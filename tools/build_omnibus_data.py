@@ -379,7 +379,6 @@ def main():
     else:
         open(TRACKER, "w", encoding="utf-8").write(new)
         print("wrote %s" % os.path.basename(TRACKER))
-    print("now run: python3 tools/build_single_file.py")
 
 
 if __name__ == "__main__":
