@@ -104,14 +104,19 @@ body{
     box-shadow:0 22px 44px rgba(5,25,60,.6), 0 0 0 2px var(--xyellow), inset 0 1px 0 rgba(255,255,255,.6);}
 #app-home .poster:focus-visible{outline:3px solid var(--xyellow);outline-offset:2px;}
 #app-home .art,#app-home .tex{position:absolute;inset:0;}
+#app-home .art.cover{width:100%;height:100%;object-fit:cover;object-position:50% 46%;}
+#app-home .art.cover.wide{object-position:50% 26%;}
 #app-home .gloss{position:absolute;inset:0 52% 0 0;pointer-events:none;
     background:linear-gradient(104deg, rgba(255,255,255,.34), transparent 72%);}
+#app-home .gloss.soft{opacity:.45;}
 #app-home .vig{position:absolute;inset:0;pointer-events:none;
     background:radial-gradient(ellipse 90% 70% at 50% 34%, transparent 40%, rgba(0,10,30,.42) 100%);}
 #app-home .poster .emblem{position:absolute;left:0;right:0;top:16%;display:flex;align-items:center;justify-content:center;}
 #app-home .poster .emblem svg{width:52%;max-width:118px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,15,40,.55));}
 #app-home .poster .plate{position:absolute;left:0;right:0;bottom:0;padding:34px 13px 12px;
     background:linear-gradient(180deg, transparent, rgba(4,20,48,.62) 42%, rgba(4,16,40,.9));}
+#app-home .poster.hascover .plate{padding-top:44px;
+    background:linear-gradient(180deg, transparent, rgba(4,18,44,.82) 40%, rgba(3,12,32,.97));}
 #app-home .poster .pname{font-size:clamp(14px,1.5vw,17px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.6px;line-height:1.1;
     text-shadow:0 2px 4px rgba(0,15,45,.8);}
 #app-home .poster .pmeta{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:#cfe6ff;margin-top:5px;}
@@ -182,7 +187,7 @@ body{
     background:linear-gradient(180deg, rgba(30,80,150,.94), rgba(8,30,64,.97));
     border:1px solid rgba(160,220,255,.5);
     box-shadow:0 24px 60px rgba(2,12,34,.7), inset 0 1px 0 rgba(255,255,255,.45);}
-#app-home .modal-art{position:relative;height:190px;overflow:hidden;border-radius:21px 21px 0 0;}
+#app-home .modal-art{position:relative;height:238px;overflow:hidden;border-radius:21px 21px 0 0;}
 #app-home .modal-art .fade{position:absolute;inset:0;background:linear-gradient(180deg, transparent 52%, rgba(9,32,68,.72) 84%, rgba(9,32,68,1));}
 #app-home .a-spider.wide{background:linear-gradient(104deg,#f04a44 0%,#c4151f 42%,#7d0d16 72%,#15286b 100%);}
 #app-home .a-wolverine.wide{background:linear-gradient(104deg,#ffd84d 0%,#f0a800 40%,#2a3f7a 74%,#101c3f 100%);}
@@ -2538,31 +2543,31 @@ function emblemSVG(name, dark){
    `total` is the fallback issue count used before that tracker has ever been opened \u2014
    once opened, the tracker publishes a live record and that wins. */
 const HEROES = [
-  { id:"spider-man", name:"Spider-Man", art:"a-spider", tex:"tex-web", emblem:"spider",
+  { id:"spider-man", name:"Spider-Man", art:"a-spider", tex:"tex-web", emblem:"spider", cover:"Art/Heroes/spider-man.jpg", pos:"42%",
     era:"The Omnibus Shelf \u00b7 1962\u20132011", file:"spiderman-reading-tracker.html", total:564,
     desc:"A curated Spider-Man shelf of 16 omnibus volumes \u2014 each one collecting exactly what the printed book collects, in print order. 15 volumes carry full issue lists (564 issues) across Lee/Ditko, Romita, Conway, Untold Tales, Stern, McFarlane, Larsen, the Clone Saga, Ben Reilly, Straczynski and Ultimate Spider-Man; one sits on the shelf as a placeholder until its contents are added." },
 
-  { id:"wolverine", name:"Wolverine", art:"a-wolverine", tex:"tex-claw", emblem:"claws",
+  { id:"wolverine", name:"Wolverine", art:"a-wolverine", tex:"tex-claw", emblem:"claws", cover:"Art/Heroes/wolverine.jpg", pos:"50%",
     era:"Omnibus Shelf \u00b7 1974\u20132024", file:"wolverine-reading-tracker.html", total:636,
     desc:"Fourteen omnibuses on a shelf, from Incredible Hulk #180 to the end of the Sabretooth War \u2014 635 issues reproducing exactly what each printed book holds. Six mainline volumes carry 1974\u20131997 and Not Dead Yet runs on to 2001; after that it is the creator runs and the event books \u2014 Millar's Enemy of the State and Old Man Logan, Aaron's two stretches, Remender's Uncanny X-Force, and the death and the return. One gap is Marvel's, not ours: Wolverine #159\u2013189 is not collected in omnibus until 2027. Laura Kinney's books and the X-Men team titles are a different subject and are not here." },
 
-  { id:"hulk", name:"Hulk", art:"a-hulk", tex:"tex-smash", emblem:"fist",
+  { id:"hulk", name:"Hulk", art:"a-hulk", tex:"tex-smash", emblem:"fist", cover:"Art/Heroes/hulk.jpg",
     era:"Omnibus Shelf \u00b7 1962\u20132022", file:"hulk-reading-tracker.html", total:659,
     desc:"Seventeen mainline omnibuses on a shelf, from the six-issue 1962 series through Banner of War \u2014 every Bruce Banner volume Marvel has collected, reproducing exactly what each printed book holds. Peter David's twelve-year run is the spine of it, with Planet Hulk, World War Hulk and the Immortal era around it. She-Hulk's books are a different subject and are not here." },
 
-  { id:"xmen", name:"X-Men", art:"a-xmen", tex:"tex-x", emblem:"xmark",
+  { id:"xmen", name:"X-Men", art:"a-xmen", tex:"tex-x", emblem:"xmark", cover:"Art/Heroes/xmen.jpg",
     era:"Messiah Saga \u00b7 2008\u20132010", file:"xmen-reading-tracker.html", total:174,
     desc:"The Messiah saga, read in researched chronological order rather than publication order. 174 issues across 27 arcs and 6 acts, from Divided We Stand through Second Coming \u2014 with Marvel deep links, per-arc spoiler digests, and optional arcs foldable out of the way." },
 
-  { id:"fantastic-four", name:"Fantastic Four", art:"a-ff", tex:"tex-cosmic", emblem:"four",
+  { id:"fantastic-four", name:"Fantastic Four", art:"a-ff", tex:"tex-cosmic", emblem:"four", cover:"Art/Heroes/fantastic-four.jpg", pos:"46%",
     era:"Omnibus Shelf \u00b7 1961\u20132020", file:"fantasticfour-reading-tracker.html", total:661,
     desc:"Eighteen omnibuses on a shelf, from Fantastic Four #1 to the end of the Griever arc \u2014 660 issues reproducing exactly what each printed book holds. Lee and Kirby carry six volumes, then Byrne, Waid & Wieringo, Millar & Hitch, Hickman, Fraction and Slott. The Thing's solo omnibus sits between the two Byrne books, where it was published; Doctor Doom's Book of Doom and both Ultimate volumes close the shelf. One gap is Marvel's, not ours: Fantastic Four #296\u2013488 has never been collected." },
 
-  { id:"moon-knight", name:"Moon Knight", art:"a-moon", tex:"tex-moon", emblem:"crescent", light:true,
+  { id:"moon-knight", name:"Moon Knight", art:"a-moon", tex:"tex-moon", emblem:"crescent", cover:"Art/Heroes/moon-knight.jpg", light:true,
     era:"Omnibus Shelf \u00b7 1975\u20132024", file:"moonknight-reading-tracker.html", total:260,
     desc:"Every Moon Knight omnibus Marvel has printed \u2014 seven volumes, 260 issues, reproducing exactly what each book holds. Moench and Sienkiewicz build him across the first two, the sixty-issue Marc Spector run fills the next two, then the relaunches that each decided he was something else: Huston's horror, Ellis and Shalvey's white suit, MacKay's Midnight Mission. Two gaps are Marvel's, not ours \u2014 Bendis and Maleev's 2011 series and Lemire's 2016 one have never been collected." },
 
-  { id:"daredevil", name:"Daredevil", art:"a-daredevil", tex:"tex-radar", emblem:"dd",
+  { id:"daredevil", name:"Daredevil", art:"a-daredevil", tex:"tex-radar", emblem:"dd", cover:"Art/Heroes/daredevil.jpg", pos:"62%",
     era:"Protocol pending", file:null, total:null,
     desc:"Matt Murdock's long fall and longer climb. Miller's Born Again as the hinge, with Bendis/Maleev, Brubaker, and Waid's tonal reset arranged so each run answers the one before it." }
 ];
@@ -2613,10 +2618,18 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const shelfEl = byId("shelf");
 
 function artHTML(h, banner){
-  /* The banner is short and wide \u2014 the poster vignette would crush it to near-black. */
+  /* The ramp and texture stay underneath a cover rather than being replaced by it:
+     they cost nothing behind an opaque image, and a scan that fails to load falls
+     back to the handmade art instead of to an empty box. */
   return '<div class="art ' + h.art + (banner ? " wide" : "") + '"></div>' +
          '<div class="tex ' + h.tex + '"></div>' +
-         (banner ? '' : '<div class="vig"></div>') + '<div class="gloss"></div>';
+         (h.cover ? '<img class="art cover' + (banner ? " wide" : "") + '" src="' +
+                    esc(h.cover) + '" alt="" loading="lazy"' +
+                    (banner && h.pos ? ' style="object-position:50% ' + esc(h.pos) + '"' : '') +
+                    '>' : '') +
+         /* The banner is short and wide \u2014 the poster vignette would crush it to near-black. */
+         (banner ? '' : '<div class="vig"></div>') +
+         '<div class="gloss' + (h.cover ? " soft" : "") + '"></div>';
 }
 
 function posterHTML(h){
@@ -2634,10 +2647,12 @@ function posterHTML(h){
   }
   return '<div class="cell" data-state="' + (live ? "ready" : "soon") + '">' +
     '<button class="poster ' + (live ? "" : "soon ") + (h.light ? "lightart " : "") +
+      (h.cover ? "hascover " : "") +
       '" data-hero="' + h.id + '" aria-label="' + esc(h.name) + ' \u2014 ' + esc(meta) + '">' +
       artHTML(h) +
       '<span class="badge ' + (live ? "live" : "") + '">' + (live ? "Ready" : "Curating") + '</span>' +
-      '<div class="emblem">' + emblemSVG(h.emblem, h.light) + '</div>' +
+      /* A cover carries its own logo and figure; the emblem would only crowd it. */
+      (h.cover ? '' : '<div class="emblem">' + emblemSVG(h.emblem, h.light) + '</div>') +
       '<div class="plate"><div class="pname">' + esc(h.name) + '</div>' +
         '<div class="pmeta">' + esc(meta) + '</div>' + bar +
       '</div>' +
@@ -2682,7 +2697,7 @@ function paintContinue(){
   byId("contGo").textContent = done ? "Resume" : "Begin";
 
   byId("contThumb").innerHTML = artHTML(h) +
-    '<div class="thumb-emb">' + emblemSVG(h.emblem, h.light) + '</div>';
+    (h.cover ? '' : '<div class="thumb-emb">' + emblemSVG(h.emblem, h.light) + '</div>');
   byId("contInfo").innerHTML =
     '<div class="run-name">' + esc(h.name) + ' \u00b7 ' + esc(h.era) + '</div>' +
     '<div class="issue-name">' + esc(p.next ? p.next.t : (done ? "Pick up where you left off" : "Start the protocol")) + '</div>' +
@@ -2707,7 +2722,8 @@ function openHero(id){
   const p = progress[h.id];
 
   byId("mArt").innerHTML = artHTML(h, true) +
-    '<div class="fade"></div><div class="memb">' + emblemSVG(h.emblem, h.light) + '</div>';
+    '<div class="fade"></div>' +
+    (h.cover ? '' : '<div class="memb">' + emblemSVG(h.emblem, h.light) + '</div>');
   byId("mTitle").textContent = h.name;
   byId("mEra").textContent = h.era;
   byId("mDesc").textContent = h.desc;

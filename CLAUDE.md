@@ -63,6 +63,8 @@ Keep replies short and plain. This is a hobby project, not a code review.
 - `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/`,
   `Art/Moon-Knight/` — cover scans, committed so GitHub Pages can serve them
   and the mobile build can inline them.
+- `Art/Heroes/` — one cover per homescreen subject, seven files named by hero id.
+  Served by path, not inlined; see "Artwork" below.
 
 No build step, no package.json, no dependencies, no server. Open either file
 directly in a browser.
@@ -128,11 +130,44 @@ The `HEROES` array is the whole configuration. Each entry:
 
 ### Artwork
 
-All CSS and inline SVG — no image files, so the page stays portable. Three
-layers per poster: an `.a-*` colour ramp, a `.tex-*` pattern (web / claw marks /
-impact burst / crosshatch / starfield / moonlight / radar rings), and an `EMBLEMS`
-inline SVG. `.wide` variants of each ramp re-aim the gradient for the short, wide
-modal banner, which would otherwise bottom out to black in its first 40px.
+**Every subject shows a real comic cover** (Aug 2026). One scan per subject in
+`Art/Heroes/<id>.jpg`, pointed at by `cover` in that hero's `HEROES` entry, and
+fetched by `tools/fetch_hero_art.py` from the Marvel Database — same source and
+the same 700px/q82 downscale as the omnibus shelf covers.
+
+The pick is curation, not something the tool decides: one cover that reads as
+the subject at poster size, era-appropriate to that reading list. `PICKS` in
+`fetch_hero_art.py` holds the choice and the reasoning for all seven. One is
+worth repeating here, because it is the trap: **Incredible Hulk #340 is the
+famous Hulk cover and is three quarters Wolverine**, who is the poster next to
+it. It was the first pick and came off for that; Immortal Hulk #1 is there now.
+
+The handmade art is still underneath and is still the fallback. Three layers per
+poster — an `.a-*` colour ramp, a `.tex-*` pattern (web / claw marks / impact
+burst / crosshatch / starfield / moonlight / radar rings), and an `EMBLEMS`
+inline SVG — and `artHTML()` now paints the scan **over** the first two rather
+than replacing them, so a cover that fails to load degrades to the old poster
+instead of to an empty box. (The shelf's own `artHTML(o)` returns the image
+*instead of* its ramp; this one deliberately does not.) `.wide` variants of each
+ramp re-aim the gradient for the short, wide modal banner, which would otherwise
+bottom out to black in its first 40px.
+
+What a cover changes, beyond the picture:
+- **the emblem is dropped** on that subject's poster, Continue thumbnail and
+  modal banner. A printed cover carries its own logo and figure; the SVG emblem
+  on top of it was just clutter. Subjects with no scan still get one, so
+  `emblemSVG()` and `EMBLEMS` stay live.
+- **the plate darkens** (`.poster.hascover .plate`). Covers put their own logo
+  and the barcode strip exactly where the subject name goes, so the plate has to
+  read as its own band rather than as a soft fade.
+- **the gloss halves** (`.gloss.soft`). Full strength reads as a sheen on a flat
+  ramp and as haze over printed art.
+
+The modal banner is a 2.8:1 slot cut out of a 2:3 page, so **where to crop is
+per-cover**: optional `pos` on a `HEROES` entry sets `object-position` on the
+banner only (the poster is the same aspect as the cover and crops almost
+nothing). Four of the seven set it; the default is `26%`. Retuning one means
+looking at it — screenshot `#mArt`, do not reason about it.
 
 Two non-obvious constraints, both already bitten once:
 - `emblemSVG()` mints a **fresh gradient id per call**. Reusing one id makes every
@@ -141,8 +176,19 @@ Two non-obvious constraints, both already bitten once:
   markup is reused by the Continue thumbnail and the modal banner; scoping them
   collapsed both to zero height.
 
-Moon Knight sets `light:true`, which swaps the gold emblem ramp for an ink one —
-gold on a near-white poster is invisible.
+Moon Knight sets `light:true`, which swapped the gold emblem ramp for an ink one —
+gold on a near-white poster is invisible. With a cover on that poster the emblem
+is gone and the flag now does nothing visible; it is kept because the subject is
+still the light one on the wall (the 2014 Shalvey cover is near-white) and
+because dropping `cover` would need it back.
+
+**Hero poster art is not inlined into `comics-mobile.html`**, unlike every shelf
+cover. `inline_covers()` only rewrites the `"cover": "…"` keys in a generated
+`OMNI` array, and the homescreen's `cover:"…"` is hand-written, so the mobile
+build ships these seven as relative paths. That is correct rather than an
+oversight — both surfaces that are left resolve `Art/…` — and it is the
+direction open item 10 wants for the shelf covers too. It also means these seven
+cost the 16MB build ceiling nothing.
 
 ### How the homescreen knows your progress
 
@@ -781,6 +827,11 @@ ambiguous or rejected; no hit means Marvel does not have it.
   not). It also fails loudly on an unknown field, an id in `SHELF` that nothing
   defines, a volume defined but missing from `SHELF`, and an `.o-*` ramp with no
   `SPINE_C` entry.
+- `fetch_hero_art.py` — the homescreen's poster art. Pulls one cover per subject
+  from the Marvel Database into `Art/Heroes/<hero id>.jpg` through
+  `covers.save_cover`, so it is sized identically to the shelf art. `PICKS` holds
+  which cover and why. Nothing is generated from it — the `cover` field in
+  `HEROES` is hand-written — so a new pick is an edit in both places.
 - `covers.py` — cover art pipeline. `add <volume-id> <image>` optimises a scan
   to 700px/q82 and prints the line to paste into `omnibus_meta.py`; `audit`
   reports every volume's cover and projects the finished mobile-build size
