@@ -56,6 +56,8 @@ def load(p, d=None):
 NUMWORD = {"1": "one", "2": "two", "3": "three", "4": "four", "5": "five",
            "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten",
            "11": "eleven", "12": "twelve"}
+ABBREV = {"ff": "fantastic four", "fcbd": "free comic book day",
+          "gr": "ghost rider", "asm": "amazing spider man"}
 NOISE = re.compile(r"\b(the|a|an|and|of|vs|volume|vol|one[- ]?shot|"
                    r"marvels|digital|comic)\b")
 
@@ -65,8 +67,12 @@ def norm(s):
     s = s.lower()
     s = re.sub(r"\(\s*\d{4}.*?\)", " ", s)        # drop "(1988 - 1997)"
     s = re.sub(r"[^a-z0-9]+", " ", s)
-    s = " ".join(NUMWORD.get(w, w) for w in s.split())
+    s = " ".join(ABBREV.get(w, NUMWORD.get(w, w)) for w in s.split())
     s = NOISE.sub(" ", s)
+    s = re.sub(r"\b(19|20)\d\d\b", " ", s)
+    # singularise: the two sources disagree on "Strange Encounter(s)"
+    s = " ".join(w[:-1] if len(w) > 4 and w.endswith("s") and
+                 not w.endswith("ss") else w for w in s.split())
     return re.sub(r"\s+", " ", s).strip()
 
 
@@ -81,6 +87,14 @@ ALIAS = {
 }
 
 
+# Series that only ever reprint someone else's issue. Never the thing a shelf
+# means: "Giant-Size Super-Stars Facsimile Edition (2023)" is a 2023 reprint of
+# the 1974 issue, and matching it would send the Read button to the wrong comic.
+REPRINT_LINE = re.compile(
+    r"\b(facsimile|true believers|director'?s cut|poster book|sketchbook|"
+    r"mgc|omnibus|infinity comic)\b", re.I)
+
+
 def name_keys(title):
     """Every way a catalog series title might be written on a shelf.
 
@@ -90,10 +104,11 @@ def name_keys(title):
     """
     keys = {norm(title)}
     bare = re.sub(r"\(\s*\d{4}.*?\)", "", title).strip()
-    keys.add(norm(re.sub(r"\s+\d+$", "", bare)))       # trailing " 1"
+    trail = re.sub(r"\s+(-?\d+(?:/\d+)?)$", "", bare)  # " 1", " -1", " 1/2"
+    keys.add(norm(trail))
     if ":" in bare:
         tail = bare.rsplit(":", 1)[-1]
-        keys.add(norm(re.sub(r"\s+\d+$", "", tail)))   # after the colon
+        keys.add(norm(re.sub(r"\s+(-?\d+(?:/\d+)?)$", "", tail)))
     return {k for k in keys if len(k) > 3}
 
 
@@ -158,6 +173,14 @@ def shelf_issues():
     return out
 
 
+def is_point_issue(num):
+    """#102.5 yes, #102 no. A .1/.5 issue is numbered inside its series' run."""
+    try:
+        return float(num) != int(float(num))
+    except (TypeError, ValueError):
+        return False
+
+
 def tiebreak(hit, it, sers):
     """Narrow several same-named series down to one, or leave it ambiguous.
 
@@ -214,9 +237,17 @@ def match():
     # series name -> set of series ids
     by_name = defaultdict(set)
     for sid, title in sers.items():
+        if REPRINT_LINE.search(title):
+            continue
         for k in name_keys(title):
             by_name[k].add(int(sid))
 
+    series_words = {int(sid): set(norm(t).split()) for sid, t in sers.items()
+                    if not REPRINT_LINE.search(t)}
+    series_issues = defaultdict(list)
+    for cid, rec in cat.items():
+        if rec[1] and not rec[4]:
+            series_issues[rec[1]].append(cid)
     issues = shelf_issues()
     # step 1: learn prefix -> marvel series id from issues that already resolve
     votes = defaultdict(Counter)
@@ -234,16 +265,65 @@ def match():
     # which prefix already owns each marvel series, from links that work
     claimed = {sid: p for p, sid in learned.items()}
 
-    added, unmatched, ambiguous, mistimed = {}, [], [], []
+    # which marvel series each volume is made of, and which (series, issue)
+    # slots the shelves already point at -- both read off the links that work
+    volume_series, taken_slots = defaultdict(Counter), set()
+    for it in issues:
+        if not it["link"]:
+            continue
+        rec = cat.get(it["link"].split("/", 1)[0])
+        if rec and rec[1]:
+            volume_series[it["vol"]][rec[1]] += 1
+            taken_slots.add((rec[1], numkey(rec[2])))
+
+    added, unmatched, ambiguous, mistimed, how = {}, [], [], [], {}
     for it in issues:
         if it["link"] or it["num"] is None:
             continue
         sid = learned.get(it["pfx"])
         why = "learned"
+        if sid is not None and (sid, it["num"]) not in by_ser:
+            # The prefix's usual series does not carry this number, so this
+            # issue is not from it -- "Ultimate Spider-Man #1/2" is its own
+            # series on marvel.com. Fall through rather than give up.
+            sid = None
         if sid is None:                              # step 2: name match
             al = ALIAS.get(it["s"].lower())
             cands = by_name.get(norm(al if al else it["s"]), set())
             hit = [s for s in cands if (s, it["num"]) in by_ser]
+            if not hit:
+                # Marvel often carries the shelf's name inside a longer one:
+                # "Peter Parker, The Spectacular Spider-Man Annual" for the
+                # shelf's "Spectacular Spider-Man Annual", "Incredible Hulk:
+                # Hercules Unleashed" for "Hulk: Hercules Unleashed". Accept a
+                # series whose words are a superset of the shelf's, but only
+                # when exactly one such series carries this issue number.
+                want = set(norm(it["s"]).split())
+                if len(want) > 1:
+                    hit = [sid2 for sid2, ws in series_words.items()
+                           if want <= ws and (sid2, it["num"]) in by_ser]
+            if not hit:
+                # Two exact shapes, and nothing looser -- an earlier version
+                # accepted any single-issue series for any number, which read
+                # Marvel Graphic Novel #49, #50, #65 and #67 as all being #38.
+                #
+                #  (a) a genuine one-shot the shelf calls #1, which marvel.com
+                #      filed as #0 (Ghost Rider/Wolverine/Punisher: The Dark
+                #      Design), and
+                #  (b) a series named for the very issue asked for -- "UNTOLD
+                #      TALES OF SPIDER-MAN -1" holds the #-1 issue, as #0.
+                want_num = (it["num"] or "").lower()
+                solo = []
+                for sid2 in cands:
+                    if len(series_issues[sid2]) != 1:
+                        continue
+                    title = re.sub(r"\(\s*\d{4}.*?\)", "", sers.get(str(sid2), ""))
+                    named = title.strip().lower().endswith(" " + want_num)
+                    if named or want_num in ("1", "0"):
+                        solo.append(sid2)
+                if len(solo) == 1:
+                    only = series_issues[solo[0]][0]
+                    hit, it = solo, dict(it, num=numkey(cat[only][2]))
             if not hit and re.fullmatch(r"(19|20)\d\d", it["num"] or ""):
                 # An annual numbered by year ("Wolverine Annual #1995") is a
                 # one-issue series of that year on marvel.com, not issue 1995.
@@ -260,6 +340,25 @@ def match():
                 ambiguous.append((it, sorted(hit)))
                 continue
         cid = by_ser.get((sid, it["num"])) if sid else None
+        if not cid and is_point_issue(it["num"]):
+            # Step 3, and deliberately narrow: a POINT ISSUE only.
+            #
+            # marvel.com numbers these inside the run (Wolverine (1988)
+            # #102.5); the wiki files them under a name marvel.com never used
+            # ("Wolverine Special #102.5"), so no name match can work. The
+            # volume around it is full of issues that do resolve, so the right
+            # series is sitting right there.
+            #
+            # This is restricted to a fractional number on purpose. Trying it
+            # for whole numbers reads "Epic Illustrated #26" as Fantastic Four
+            # Annual #26 and "FOOM #4" as Secret Wars #4 -- a low number exists
+            # in hundreds of series, so being in the same book proves nothing.
+            # A .5 is rare enough that it does.
+            for cand, _n in volume_series[it["vol"]].most_common():
+                c2 = by_ser.get((cand, it["num"]))
+                if c2 and (cand, it["num"]) not in taken_slots:
+                    sid, cid, why = cand, c2, "point issue"
+                    break
         if cid and why == "name" and claimed.get(sid, it["pfx"]) != it["pfx"]:
             # Two shelf series cannot be one marvel.com series. The shelf keeps
             # the wiki's volumes apart (`tta` is Tales to Astonish Vol 1, `tta3`
@@ -273,21 +372,23 @@ def match():
             unmatched.append((it, sid))
             continue
         added[it["id"]] = "%s/%s" % (cid, cat[cid][0])
-        it["why"] = why
+        how[it["id"]] = why
 
-    return added, ambiguous, unmatched, mistimed, issues
+    return added, ambiguous, unmatched, mistimed, issues, how
 
 
 def main(argv):
-    added, ambiguous, unmatched, mistimed, issues = match()
+    added, ambiguous, unmatched, mistimed, issues, how = match()
     if "--dump" in argv:
         json.dump([dict(i, sid=s) for i, s in unmatched],
                   open(os.path.join(HERE, "unlinked.json"), "w"), indent=1)
     print("%d unlinked issues on the shelves" % sum(1 for i in issues if not i["link"]))
     print("  %d matched  (%d by learned series, %d by name)"
           % (len(added),
-             sum(1 for i in issues if i.get("why") == "learned"),
-             sum(1 for i in issues if i.get("why") == "name")))
+             sum(1 for v in how.values() if v == "learned"),
+             sum(1 for v in how.values() if v == "name")),
+          "+ %d point issues placed from their volume"
+          % sum(1 for v in how.values() if v == "point issue"))
     print("  %d ambiguous (reported, never guessed)" % len(ambiguous))
     print("  %d not in the catalog" % len(unmatched))
     print("  %d rejected: that series already belongs to another shelf series"
