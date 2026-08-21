@@ -111,6 +111,29 @@ NUM_ALIAS = {
 }
 
 
+# The last resort below both of those: a shelf issue pinned straight to its
+# catalog id, because no rule can reach it from what the shelf knows.
+#
+# Every entry so far is a Marvel Graphic Novel. The wiki files that line by
+# number ("Marvel Graphic Novel Vol 1 68"); marvel.com files each volume under
+# its own story title ("Avengers Deathtrap - The Vault (1991)") as issue #1 of
+# a one-issue series. The story title is the only thing that could match, and
+# the pipeline strips it -- a raw-contents entry has to end in the issue number
+# or the <series>/<issue> split fails -- so the information is gone by the time
+# this runs. Hence a pin.
+#
+# Pin only after `catalog.py find "<story title>"` shows the issue really is
+# there: these were read as "not on marvel.com" for months, which is the
+# failure this is fixing. The id is enough -- the slug is read back out of the
+# catalog, never typed here.
+ISSUE_ALIAS = {
+    "mgn-49": "61791",   # Doctor Strange & Doctor Doom: Triumph and Torment
+    "mgn-65": "65023",   # Wolverine: Bloodlust
+    "mgn-67": "65025",   # Wolverine: The Jungle Adventure
+    "mgn-68": "67091",   # Avengers: Death Trap, The Vault
+}
+
+
 def name_keys(title):
     """Every way a catalog series title might be written on a shelf.
 
@@ -301,7 +324,17 @@ def match():
 
     added, unmatched, ambiguous, mistimed, how = {}, [], [], [], {}
     for it in issues:
-        if it["link"] or it["num"] is None:
+        if it["link"]:
+            continue
+        pin = ISSUE_ALIAS.get(it["id"])
+        if pin:
+            if pin not in cat:
+                sys.exit("ISSUE_ALIAS pins %s to catalog id %s, which the "
+                         "catalog does not hold" % (it["id"], pin))
+            added[it["id"]] = "%s/%s" % (pin, cat[pin][0])
+            how[it["id"]] = "pinned"
+            continue
+        if it["num"] is None:
             continue
         sid = learned.get(it["pfx"])
         why = "learned"
@@ -410,8 +443,9 @@ def main(argv):
           % (len(added),
              sum(1 for v in how.values() if v == "learned"),
              sum(1 for v in how.values() if v == "name")),
-          "+ %d point issues placed from their volume"
-          % sum(1 for v in how.values() if v == "point issue"))
+          "+ %d point issues placed from their volume, %d pinned"
+          % (sum(1 for v in how.values() if v == "point issue"),
+             sum(1 for v in how.values() if v == "pinned")))
     print("  %d ambiguous (reported, never guessed)" % len(ambiguous))
     print("  %d not in the catalog" % len(unmatched))
     print("  %d rejected: that series already belongs to another shelf series"

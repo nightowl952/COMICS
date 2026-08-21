@@ -336,15 +336,21 @@ stayed. Anything that reads a key should call `getKey()` — never
 
 ## The Spider-Man tracker (omnibus shelf)
 
-16 omnibus volumes on the shelf: **15 with contents** (567 issue slots, 564 unique
-issues) and **1 placeholder** (Spider-Man vs. Venom) that renders as a tile but
-carries no issue list.
+16 omnibus volumes on the shelf, **all 16 with contents** — 617 issue slots, 606
+unique issues. Spider-Man vs. Venom was the last placeholder and was filled in
+Aug 2026, so the shelf now carries no tile without an issue list.
 
 The shelf is a curated selection, not "every omnibus" — see "Scope call" below.
 Display order is `SHELF` in `tools/omnibus_meta.py`; it is a reading order, not
 publication order.
 
 ### Placeholder volumes
+
+**Nothing on this shelf is a placeholder any more** — `PLACEHOLDERS` and
+`PLACEHOLDER_PAGES` in `omnibus_meta.py` are both empty since Spider-Man vs.
+Venom was filled in. The machinery below is all still live and still correct;
+it is written down because the next shelf addition may need it, and because the
+`showOmni()` guard is a real crash if it is ever removed.
 
 A placeholder is an entry with `placeholder:true` and `chapters:[]`. It uses the
 `.o-placeholder` ramp, shows a "Contents pending" badge and "not added yet" in place
@@ -483,11 +489,22 @@ does skip ASM #204–223 and #242), which is a correction, not a regression.
 
 An issue collected in two omnibuses gets the **same** id in both, so marking
 ASM #324 read in the Michelinie & Larsen volume also marks it read in the
-Michelinie & McFarlane volume. On the current shelf 3 issues overlap this way
-(ASM #324, #327, #329); the UI flags them with a gold pill reading "in N
-omnibuses". This is deliberate — do not de-duplicate ids per volume.
+Michelinie & McFarlane volume. On the current shelf 11 issues overlap this way;
+the UI flags them with a gold pill reading "in N omnibuses". This is deliberate
+— do not de-duplicate ids per volume.
 
-Consequence: `flat.length` (567, issue *slots*) and `uniqIds.size` (564, distinct
+| Overlap | Volumes |
+|---|---|
+| ASM #324, #327, #329 | `mcf-o1` + `larsen-o1` |
+| ASM #300, #315–317 | `mcf-o1` + `vs-venom-o1` |
+| ASM #332–333, #346–347 | `larsen-o1` + `vs-venom-o1` |
+
+Eight of those eleven arrived with Spider-Man vs. Venom, which is a
+Venom-appearance chronology and therefore doubles back across both Michelinie
+volumes by design. Note it does **not** overlap ASM #361–363 despite collecting
+them — the Larsen volume stops before them.
+
+Consequence: `flat.length` (617, issue *slots*) and `uniqIds.size` (606, distinct
 issues) are different numbers. Progress math uses `uniqIds`; the shelf label uses
 slots. The overlap count was much higher (46) before the shelf was trimmed —
 it scales with how many overlapping volumes are on the shelf.
@@ -604,8 +621,8 @@ marks them `soft`. A better scan dropped in via `covers.py add` is the fix.
 
 ### Marvel deep links
 
-558 of 564 unique issues (99%) resolve to a real marvel.com issue page, and all
-558 are readable on Marvel Unlimited. The 6 that do not are not on marvel.com
+600 of 606 unique issues (99%) resolve to a real marvel.com issue page, and all
+600 are readable on Marvel Unlimited. The 6 that do not are not on marvel.com
 at all; they fall back to a `marvel.com/search?query=` URL and render a grey
 Read button — same convention as the X-Men tracker.
 
@@ -728,17 +745,33 @@ case that also turned up on the Daredevil shelf (the wiki's Daredevil (2014)
 `#1.50` against the catalog's `1.5`) was a `numkey()` fix instead, because that
 one generalises.
 
+`ISSUE_ALIAS` is the last resort below both, and pins a shelf issue id straight
+to a catalog id. Every entry so far is a **Marvel Graphic Novel**, and they are
+all one shape: the wiki files that line by number (`Marvel Graphic Novel Vol 1
+68`), where marvel.com files each volume under its own story title
+(`avengers_deathtrap_-_the_vault_1991_1`) as issue #1 of a one-issue series. The
+story title is the only thing that could match it, and **the pipeline has
+already thrown it away** — a raw-contents entry must end in the issue number or
+the `<series>`/`<issue>` split fails, so the subtitle repair strips exactly the
+information the matcher would need. No rule can recover that, hence a pin.
+
+Four are pinned (`mgn-49`, `-65`, `-67`, `-68`); only `mgn-50` is genuinely
+absent from the catalog. All four had been recorded as "not on marvel.com" for
+months, which is the same lesson as the naming pass: **re-test a "not in the
+catalog" verdict before believing it.** `catalog.py find "<story title>"` is the
+whole check. The pin stores the id only — the slug is read back out of the
+catalog — and the run exits loudly if a pinned id is not in it.
+
 ### What is left, and why
 
-**3310 of 3370 unique issues across the six shelves resolve (98%).** The 60
+**3356 of 3412 unique issues across the six shelves resolve (98%).** The 56
 that do not were each checked against the catalog: they are not on marvel.com
 at all. `tools/unlinked.json` is the written record, refreshed by
 `link_issues.py --dump`.
 
 The largest are Epic Illustrated (9 — a magazine, never digitised), Hulk!
 Magazine (8 — the same shape), Marc Spector: Moon Knight #52–56 and #58–60,
-Marvel Graphic Novel #49/50/65/67 (the catalog holds 17 of that line and not
-those), the 1992–93 Marvel Holiday Specials, Spectacular Spider-Man Magazine,
+the 1992–93 Marvel Holiday Specials, Spectacular Spider-Man Magazine,
 What The--?! #2 and #10, the 1992 Marvel Holiday Special (which the Daredevil
 shelf wants too), and a tail of ashcans, `#-1` and `#½` oddities and
 promotional one-shots. Astonishing Tales (1970) is still short — the catalog
@@ -901,8 +934,11 @@ ambiguous or rejected; no hit means Marvel does not have it.
   ones included, are recorded in `marvel_catalog_probed.json`. See "Linking
   issues" above.
 - `link_issues.py` — matches every shelf issue against that catalog and writes
-  `marvel_ids.json`. No hand-maintained table; reports ambiguity instead of
-  guessing. `--write` to commit, `--dump` to refresh `unlinked.json`.
+  `marvel_ids.json`. No table of series prefixes to maintain; reports ambiguity
+  instead of guessing. Its three last-resort tables (`ALIAS`, `NUM_ALIAS`,
+  `ISSUE_ALIAS`) hold ten entries between them and cannot grow silently,
+  because every run reports what it could not match. `--write` to commit,
+  `--dump` to refresh `unlinked.json`.
 - `marvel_catalog.json`, `marvel_series.json`, `marvel_catalog_probed.json` —
   the swept catalog (61,408 issues, 6,946 series), shared by all heroes.
 - `unlinked.json` — the written record of every shelf issue marvel.com does not
@@ -1079,8 +1115,14 @@ from 46 shared issues to 3.
 
 Added past the Clone Saga, so the era label is 1962–2011 rather than 1962–1997:
 ASM by J. Michael Straczynski, Ultimate Spider-Man and Death of Ultimate
-Spider-Man, all three now carrying full contents, plus Spider-Man vs. Venom,
-which is still a placeholder.
+Spider-Man, plus Spider-Man vs. Venom. All four carry full contents.
+
+**Spider-Man vs. Venom sits after the McFarlane volume rather than before it**
+(Aug 2026). It was placed before `mcf-o2` while it was a contents-less
+placeholder; once the contents were pulled its span turned out to be 1984–1994
+and to end on Maximum Carnage, which runs straight into the Clone Saga. Reading
+it before a 1990–91 volume meant jumping back four years, so it moved one slot
+right.
 
 The two Venomnibus volumes were on the shelf briefly as placeholders and were
 removed again (Aug 2026) — they are Venom's books, not Spider-Man's. Their cover
@@ -2042,9 +2084,9 @@ a server-side store and is not built.
     hidden homescreen gear, the ASCII pass — went with `comics-mobile.html`
     itself. See "The mobile build is retired".
 11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the six
-    shelves are at 93–99% (Spider-Man 558/564, Hulk 652/659, Fantastic Four
-    643/661, Wolverine 627/636, Moon Knight 243/260, Daredevil 587/590). The
-    remaining 60 are not on marvel.com at all;
+    shelves are at 93–99% (Spider-Man 600/606, Hulk 652/659, Fantastic Four
+    644/661, Wolverine 629/636, Moon Knight 243/260, Daredevil 587/590). The
+    remaining 56 are not on marvel.com at all;
     `tools/unlinked.json` names every one. What closed it was sweeping
     marvel.com's open JSON catalog rather than searching per series — see
     "Linking issues" and "How the links used to be missed". The last nine came
@@ -2052,7 +2094,11 @@ a server-side store and is not built.
     `--dump` list is a hypothesis, not a verdict: re-test it before believing
     marvel.com lacks something. The Daredevil shelf proved that again — two of
     its five "missing" issues were in the catalog under a different number, and
-    both fixes went into `link_issues.py` rather than into the id store.
+    both fixes went into `link_issues.py` rather than into the id store. And
+    again in Aug 2026: filling in Spider-Man vs. Venom put a fifth Marvel
+    Graphic Novel on the "missing" list, and re-testing that one found four of
+    the five in the catalog, filed under their story titles rather than the MGN
+    line — see `ISSUE_ALIAS` under "Linking issues".
 12. **The Daredevil shelf is missing Daredevil Omnibus Vol. 4 for one month.**
     It ships September 2026 and is excluded by the "a shelf holds books you can
     actually buy" rule, which leaves a #120–157 hole between `dd-o3` and
@@ -2106,7 +2152,7 @@ python3 tools/covers.py audit --hero daredevil
 # or re-derive: eval the data section and assert every chapter has a digest.
 ```
 
-The Spider-Man shelf currently reports **16 volumes / 567 issue slots / 564
+The Spider-Man shelf currently reports **16 volumes / 617 issue slots / 606
 unique issues**; the Hulk shelf **17 volumes / 665 issue slots / 659 unique
 issues**; the Fantastic Four shelf **18 volumes / 686 issue slots / 661 unique
 issues**; the Wolverine shelf **14 volumes / 637 issue slots / 636 unique

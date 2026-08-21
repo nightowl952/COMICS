@@ -87,32 +87,27 @@ ORDER = [
   spine="Death of Ultimate",
   cover="Art/Spider-Man/ult-death-o1.jpg",
   note="The end of Ultimate Peter Parker. Jumps well past the volume above — the 100-odd issues between the two are not collected in omnibus.")),
+("Spider-Man vs. Venom Omnibus Vol 1 1", dict(id="vs-venom-o1", title="Spider-Man vs. Venom Omnibus", vol="",
+  creators="David Michelinie & various", era="1984–1994", released="Sep 2018", art="o-venom", tex="tex-web",
+  spine="Spider-Man vs. Venom", cover="Art/Spider-Man/vs-venom-o1.jpg",
+  note="Every Venom appearance from the black suit's origin through Maximum Carnage, so it doubles back across the two Michelinie volumes above — ASM #300 and #315–317 are also in the McFarlane book, #332–333 and #346–347 in the Larsen one. Maximum Carnage is printed in crossover order, interleaving Amazing, Web, Spider-Man and Spectacular month by month.")),
 ]
 
-# No wiki page, no contents -- shelf tiles only. `released` is deliberately not a
-# date: these are pending in the tracker, which says nothing about whether the
-# book is in print.
-PLACEHOLDERS = [
-dict(id="vs-venom-o1", title="Spider-Man vs. Venom Omnibus", vol="",
-  creators="Various", era="1988–1994", released="Contents pending",
-  art="o-placeholder", tex="tex-halftone", placeholder=True, chapters=[],
-  spine="Spider-Man vs. Venom",
-  cover="Art/Spider-Man/vs-venom-o1.jpg",
-  note="Placeholder — the issue list for this volume has not been added to the tracker yet."),
-]
+# No wiki page, no contents -- shelf tiles only. Empty since Aug 2026, when
+# Spider-Man vs. Venom was promoted into ORDER; the machinery stays because the
+# tracker still handles placeholders and the next shelf addition may need one.
+PLACEHOLDERS = []
 
 # Display order of the shelf, by id. Curated reading order.
 SHELF = [
   "asm-o1", "asm-o2", "asm-o3", "asm-o4",
   "utsm-o1", "stern-o1", "mcf-o1", "larsen-o1",
-  "vs-venom-o1",
-  "mcf-o2", "clone-o1", "clone-o2", "ben-o1",
+  "mcf-o2", "vs-venom-o1",
+  "clone-o1", "clone-o2", "ben-o1",
   "jms-o1", "ult-o1", "ult-death-o1",
 ]
 
 # Wiki page titles for the PLACEHOLDERS. The volumes in ORDER carry theirs as
-# the ORDER key; these have no contents pulled yet, so fetch_covers.py needs
-# them named explicitly. Resolved by search and eyeballed once.
-PLACEHOLDER_PAGES = {
-  "vs-venom-o1":  "Spider-Man vs. Venom Omnibus Vol 1 1",
-}
+# the ORDER key; a placeholder has no such key, so fetch_covers.py needs it
+# named here. Empty while PLACEHOLDERS is.
+PLACEHOLDER_PAGES = {}

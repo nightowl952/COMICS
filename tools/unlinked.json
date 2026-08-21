@@ -241,38 +241,6 @@
  },
  {
   "hero": "wolverine",
-  "vol": "wolv-o2",
-  "id": "mgn-65",
-  "t": "Marvel Graphic Novel #65",
-  "s": "Marvel Graphic Novel",
-  "pfx": "mgn",
-  "num": "65",
-  "link": null,
-  "year": null,
-  "era": [
-   1988,
-   1990
-  ],
-  "sid": null
- },
- {
-  "hero": "wolverine",
-  "vol": "wolv-o3",
-  "id": "mgn-67",
-  "t": "Marvel Graphic Novel #67",
-  "s": "Marvel Graphic Novel",
-  "pfx": "mgn",
-  "num": "67",
-  "link": null,
-  "year": null,
-  "era": [
-   1990,
-   1992
-  ],
-  "sid": null
- },
- {
-  "hero": "wolverine",
   "vol": "wolv-o4",
   "id": "spsdg-1",
   "t": "Spider-Man, Punisher, Sabretooth: Designer Genes #1",
@@ -892,22 +860,6 @@
   "era": [
    2012,
    2013
-  ],
-  "sid": null
- },
- {
-  "hero": "fantastic-four",
-  "vol": "doom-o1",
-  "id": "mgn-49",
-  "t": "Marvel Graphic Novel #49",
-  "s": "Marvel Graphic Novel",
-  "pfx": "mgn",
-  "num": "49",
-  "link": null,
-  "year": null,
-  "era": [
-   1962,
-   1977
   ],
   "sid": null
  },
