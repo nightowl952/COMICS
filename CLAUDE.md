@@ -453,9 +453,10 @@ than about 1MB. Open item 10.
 
 ### Marvel deep links
 
-493 of 564 unique issues (87%) resolve to a real marvel.com issue page. The rest
-fall back to a `marvel.com/search?query=` URL and render a grey Read button —
-same convention as the X-Men tracker.
+553 of 564 unique issues (98%) resolve to a real marvel.com issue page, and all
+553 are readable on Marvel Unlimited. The 11 that do not are not on marvel.com
+at all; they fall back to a `marvel.com/search?query=` URL and render a grey
+Read button — same convention as the X-Men tracker.
 
 **`MARVEL` in the tracker is generated** from `tools/marvel_ids.json` by
 `build_omnibus_data.py`, same as `OMNI` — do not hand-edit it. It used to be
@@ -482,13 +483,109 @@ web search for the series id (**454**), a `series` pull for a seed, and a `walk`
 from **#36 at id 42508** — after several id sweeps had failed. See "Start with a
 web search, not with a probe".
 
-Unresolved, largest first: Ultimate Avengers vs. New Ultimates (6), Amazing
-Fantasy #15–18 (4), New Warriors (4), Venom: Along Came a Spider (4), The Final
-Adventure (4), and a long tail of one-shots, annuals and Super Specials at one
-to three each. **Ultimate Avengers vs. New Ultimates** has a known cause rather
-than an unfound block: variant-cover pages exist on marvel.com (38500–38504,
-38620) but no base-issue page anywhere in 38050–40200, so it looks genuinely
-absent rather than misplaced.
+The 11 that marvel.com does not have: Spectacular Spider-Man Magazine (2),
+Spectacular Spider-Man Annual (2), and one each of Untold Tales of Spider-Man
+#-1, Untold Tales: Strange Encounters, Collectors' Preview, Spider-Man Holiday
+Special, Amazing Spider-Man Annual '96, a Wizard mini-comic and Ultimate
+Spider-Man #½. Magazines, ashcans and half-numbered oddities — see "What is
+left, and why".
+
+### Linking issues: sweep the catalog once, then it is a local lookup
+
+**This is the method. Everything under it is history.** marvel.com runs an open
+JSON catalog at `bifrost.marvel.com` — no key, no scraping, ~1KB an issue
+instead of a 250KB HTML page, and each record carries the canonical issue URL,
+the series it belongs to, the issue number, and whether the issue is on Marvel
+Unlimited. A full sweep of the id space is therefore cheap, and once swept,
+linking an issue is a lookup in a local file rather than a web search.
+
+```bash
+python3 tools/catalog.py sweep      # resumable; ~20 min for all 140,000 ids
+python3 tools/catalog.py status     # how much is banked
+python3 tools/link_issues.py        # report what would link, writes nothing
+python3 tools/link_issues.py --write
+```
+
+Then regenerate each hero and rebuild the mobile page as usual. The sweep is
+already committed (`tools/marvel_catalog.json`), so a fresh session only needs
+to re-run it to pick up issues published since.
+
+The open endpoints, all unauthenticated (anything under `/v1/` needs a token
+and is not worth chasing):
+
+| Path | Gives |
+|---|---|
+| `/catalog/comics/{id}` | url, series id, issue number, `in_mu`, prev/next siblings |
+| `/catalog/series/{id}` | series title, years, issue count |
+| `/catalog/{type}/{id}/related/series` | sibling series |
+
+`prev_next_issue` walks a whole run from one seed **at any era** — id 8906
+returns Incredible Hulk (1962) #2 as its next issue, where the *HTML* page for
+the same issue links no siblings at all. That is the fact that made the old
+scraping route look impossible for pre-2008 material.
+
+### How the links used to be missed
+
+The old route was: harvest an id range off the HTML pages, then hand-add an
+entry to a `SLUG_PFX` table in `series_harvest.py` so `write` would keep what
+was harvested. Two failure modes, and **both were silent**:
+
+- **Nothing swept the range.** Nothing below id 8687 had ever been probed, so
+  the whole low regime was invisible. Books of Doom sat at 3006–4033 with all
+  six issues live on marvel.com and grey on the shelf.
+- **A missing table entry threw the result away.** `write` only promotes a slug
+  whose prefix is in `SLUG_PFX`; anything else is counted and dropped. The table
+  needed one hand-written line per series, forever.
+
+`link_issues.py` has no such table. It matches two ways and **reports anything
+it cannot decide** instead of dropping it:
+
+1. **Learn from what already works.** An issue that *is* linked tells you which
+   marvel.com series its id prefix belongs to — `wolv-118` resolving to
+   `wolverine_1988_118` means prefix `wolv` is that series, so `wolv-55` is
+   issue 55 of it. Exact, no name matching.
+2. **Name-match the rest**, after folding both sides hard (number words, `&`
+   vs `/` vs `and`, Marvel's trailing `1` on one-shot titles, and the character
+   prefix it adds to minis — "Spider-Man: Funeral For An Octopus" for a book the
+   shelf calls "Funeral for an Octopus").
+
+Two guards keep that from producing confident nonsense:
+
+- **A reused title is narrowed, never guessed.** There are seven X-Forces and
+  four Amazing Fantasys. `tiebreak()` tries, in order: a year the shelf itself
+  names, then overlap with the volume's era, then the earliest start year (a
+  revival continuing the old numbering beats a later reboot), then an exact
+  title match. First rule leaving exactly one candidate wins; if none does, the
+  issue is reported as ambiguous.
+- **Two shelf series cannot be one marvel.com series.** The shelf keeps the
+  wiki's volumes apart (`tta` is Tales to Astonish Vol 1, `tta3` is Vol 3), so a
+  name match onto a series a working prefix already owns is a different comic
+  that merely shares a title and a number. That single rule is what stops
+  "Tales to Astonish (1994) #1" landing on Tales To Astonish (1959) #1.
+
+`ALIAS` at the top of the file is the last resort, for the handful of genuine
+naming disagreements (the shelf's "Uncanny X-Men" is marvel.com's "X-Men
+(1963 - 2011)"). It is four entries, and the run's own report names anything
+that might belong in it — so unlike `SLUG_PFX` it cannot grow silently.
+
+### What is left, and why
+
+**2461 of 2520 issue slots across the four shelves resolve (98%), and 2393 are
+readable on Marvel Unlimited.** The 59 that do not resolve were each checked
+against the catalog: they are not on marvel.com at all. `tools/unlinked.json`
+is the written record, refreshed by `link_issues.py --dump`.
+
+The largest are Epic Illustrated (9 — a magazine, never digitised), Marvel
+Graphic Novel #49/50/65/67, Iron Fist: Wolverine (4), the 1992–93 Marvel Holiday
+Specials, Spectacular Spider-Man Magazine, and a tail of ashcans, `#-1` and `#½`
+oddities and Free Comic Book Day issues. Astonishing Tales (1970) is still short
+— the catalog holds 21 of its 36 issues, which confirms the older finding that
+the rest were pulled rather than merely unfound.
+
+**Everything below this line is the superseded route.** `series_harvest.py` and
+`harvest.py` still work and their id-space notes are still true, but there is no
+longer a reason to reach for them: the catalog answers the same questions in one
+local lookup. Keep the notes for the archaeology, not the workflow.
 
 ### Harvest by series, not by id range
 
@@ -610,47 +707,31 @@ The lexicographic ordering in the middle regime is the surprise: a block that
 starts at #10 has not skipped #1–9, they are at the far end. Do not stop a scan
 because the numbers look wrong.
 
-### A grey Read button has three different causes — check them in this order
+### A grey Read button now means one thing
 
-A grey button only means "no `MARVEL` entry for this issue id". That is not the
-same as "marvel.com does not have it", and on the shelves so far it usually is
-not. Books of Doom is the worked example: the user found
-`/comics/issue/3125/books_of_doom_2005_2` with one Google search while the shelf
-showed all six issues grey.
+It means the issue is **not on marvel.com**, and `tools/unlinked.json` says so
+by name. That was not true before the catalog sweep, when a grey button mostly
+meant nobody had looked — see "How the links used to be missed".
 
-1. **Nobody ever looked.** The commonest cause by far. `series_scanned.json` is
-   the record of what `scan` has probed, and **nothing below id 8687 has ever
-   been swept** — the whole low regime (~1–6400, chronological by cover date) is
-   unharvested. Books of Doom sits at 3006–4033. Check the store before
-   theorising: `grep -o '"<slug_prefix>[^"]*"' tools/series_links.json`.
-2. **It was harvested and then silently discarded.** `cmd_write` only promotes a
-   banked slug into `marvel_ids.json` if its prefix is in `SLUG_PFX`; an
-   unmapped prefix is counted and printed, not guessed at. That report is the
-   check — `python3 tools/series_harvest.py write --dry-run` lists every prefix
-   sitting in `series_links.json` with nowhere to go. It is a long list, but
-   most of it is crawl debris from other series' pages; the way to tell which
-   entries matter is to intersect it against the shelves' unresolved ids rather
-   than to read it. Doing that in Aug 2026 found only two real ones
-   (`what_if_1977`, `breaking_into_comics_the_marvel_way_2010`), so this is a
-   real failure mode but a small one.
-3. **marvel.com genuinely does not have it.** Astonishing Tales (1970) is the
-   established case — ids that search engines still index 404 live. Only
-   conclude this after 1 and 2.
-
-**A `walk` reaches much further back than this file used to claim.** The note
-under "Harvest by series" says marvel.com stops linking siblings pre-2008; that
-boundary is wrong. Fetching id 3125 returns all six Books of Doom issues in a
-single request, so a 2005 mini walks fine from one seed. What genuinely does not
-link siblings is the older material: id 14036 (Wolverine (1988) #1) and 8906
-(Incredible Hulk (1962) #1) both return only their own slug plus the current
-week's promo carousel. So for anything from roughly the 2000s on, **one seed id
-resolves the whole mini** — which makes the remaining long tail of nineties and
-2000s one-shots much cheaper than "one web search per issue". Web-search the
-seed, walk, add the `SLUG_PFX` entry, `write`, regenerate.
+So the check when one appears is: `python3 tools/catalog.py find "<title>"`. A
+hit means the matcher missed it and the run's own report will say whether it was
+ambiguous or rejected; no hit means Marvel does not have it.
 
 ### Tooling (`tools/`)
 
-- `harvest.py` — the rate-limit-aware marvel.com ID harvester.
+- `catalog.py` — **the id harvester to use.** Sweeps marvel.com's open JSON
+  catalog (`bifrost.marvel.com`) into `marvel_catalog.json` / `marvel_series.json`;
+  `status` reports coverage, `find` searches it. Resumable — probed ids, dead
+  ones included, are recorded in `marvel_catalog_probed.json`. See "Linking
+  issues" above.
+- `link_issues.py` — matches every shelf issue against that catalog and writes
+  `marvel_ids.json`. No hand-maintained table; reports ambiguity instead of
+  guessing. `--write` to commit, `--dump` to refresh `unlinked.json`.
+- `marvel_catalog.json`, `marvel_series.json`, `marvel_catalog_probed.json` —
+  the swept catalog (61,408 issues, 6,946 series), shared by all heroes.
+- `unlinked.json` — the written record of every shelf issue marvel.com does not
+  have. Regenerated by `link_issues.py --dump`.
+- `harvest.py` — **superseded by `catalog.py`.** The rate-limit-aware marvel.com ID harvester.
   `python3 tools/harvest.py 6440:6960:asm 14500:14820:spectacular` probes those
   id ranges and appends to `tools/marvel_ids.json`. Resumable: already-probed ids
   are skipped, so rerunning after a block costs nothing.
@@ -690,7 +771,7 @@ seed, walk, add the `SLUG_PFX` entry, `write`, regenerate.
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
   `PLACEHOLDER_PAGES` in the meta module.
-- `series_harvest.py` — the faster harvester: `probe` maps a range of series
+- `series_harvest.py` — **superseded by `catalog.py`.** The older HTML harvester: `probe` maps a range of series
   ids to titles, `series` pulls a series page's issue list, `walk` follows an
   issue's sibling links across a whole run, `scan` blind-probes a range of issue
   ids for the pre-2008 material the other three cannot reach, and `write` merges
@@ -767,9 +848,11 @@ harvest. Roughly in order:
      reusing one id makes every later copy inherit the first one's fill.
    - **Leave `.o-placeholder` alone** — the build checks it like any other ramp,
      and a shelf that later gains a placeholder volume needs it.
-6. **Harvest Marvel ids** with `series_harvest.py` (fall back to `harvest.py`
-   for pre-2008 runs) — the store is shared, so anything already in it lands
-   for free. Expect this to be the slow part; see the rate-limiting notes above.
+6. **Harvest Marvel ids** — usually nothing to do. The catalog
+   (`tools/marvel_catalog.json`) already holds every Marvel issue, so run
+   `python3 tools/link_issues.py --write` and read its report. Only re-sweep
+   (`python3 tools/catalog.py sweep`) if the hero's books include issues
+   published since the last sweep.
 7. **Generate and publish**: `fetch_covers.py --hero <key>`,
    `build_omnibus_data.py --hero <key>` (in that order — fetch writes the
    `cover=` lines the generator reads), `build_single_file.py`, then flip the
@@ -891,7 +974,7 @@ lands at 16 chapters that read as the tie-in list it is.
 
 ### Marvel deep links
 
-528 of 659 unique issues (80%) resolve to a real marvel.com issue page; the rest
+646 of 659 unique issues (98%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
 Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
@@ -902,11 +985,11 @@ walked from **#1 at id 17623**, which a web search turned up after the series
 page and a sibling walk had both dead-ended at #30. See "Start with a web
 search, not with a probe".
 
-Unresolved, largest first: Rampaging Hulk (6), the three Maestro minis and
-Future Imperfect (2015) (5 each), Symbiote Spider-Man: Crossroads, New Fantastic
-Four, Heroes for Hire and Gamma Flight (5 each), and a long tail of one-shots
-and tie-ins at one to four apiece. Immortal Hulk #0 is missing too — marvel.com
-has no `immortal_hulk_2018_0`.
+The 12 that marvel.com does not have: the 1992 and 1993 Marvel Holiday
+Specials, an Incredible Hulk ashcan, Incredible Hulk #-1, Incredible Hulk
+Annual '97, Hulk: Hercules Unleashed, What If? General Ross, Hulk: Last Call,
+Marvel Spotlight: World War Hulk, Incredible Hulk (2009) #600, Immortal Hulk #0
+and the 2021 Free Comic Book Day issue.
 
 ### Issue ids and the shared id store
 
@@ -1022,7 +1105,7 @@ them with the gold "in N omnibuses" pill.
 
 ### Marvel deep links
 
-576 of 661 unique issues (87%) resolve to a real marvel.com issue page, and the
+641 of 661 unique issues (97%) resolve to a real marvel.com issue page, and the
 rest fall back to
 `marvel.com/search?query=` and a grey Read button, same convention as the other
 two trackers. Complete: Fantastic Four (1961) all 416, Fantastic Four (1998),
@@ -1030,14 +1113,13 @@ FF (2011), FF (2012), Fantastic Four (2012), Fantastic Four (2018), Ultimate
 Fantastic Four, the Fantastic Four annuals, Marvel Team-Up, The Thing, and
 Super-Villain Team-Up bar one issue that 404s on marvel.com.
 
-Unresolved, largest first: Epic Illustrated (9), Marvel 1985 (6), Dark Reign:
-Fantastic Four (5), Fantastic Force (2009) (4), Giant-Size
-Fantastic Four, Marvel Graphic Novel, Uncanny X-Men and Secret Wars (3 each),
-and a long tail of 45 one-shots, annuals and guest appearances at one or two
-apiece. **Astonishing Tales (1970) is the one worth another pass**: its ids are
-not one contiguous block — three separate clusters exist — and ids that search
-engines still index for the gap now 404 live, so 15 of its 36 issues are
-missing and may simply have been pulled from marvel.com.
+The 20 that marvel.com does not have are dominated by **Epic Illustrated (9)**,
+a magazine that was never digitised. The rest: What The--?! (2), and one each of
+Giant-Size Super-Stars, Marvel Tales #198, Fantastic Four Special Edition,
+Fantastic Four (2012) #5AU, Marvel Graphic Novel #49, Astonishing Tales #7, FOOM
+#4 and the two Ultimate X-Men/Ultimate FF annuals. **Astonishing Tales (1970)
+is confirmed short at source** — the catalog holds 21 of its 36 issues, which
+settles the old open question: the rest were pulled, not missed.
 
 **One sweep of ids 12860–13340 returned all 416 issues of Fantastic Four (1961)
 with no gaps** — the single most productive harvest on the project so far, and
@@ -1184,14 +1266,20 @@ unique issues.
 
 ### Marvel deep links
 
-472 of 636 unique issues (74%) resolve to a real marvel.com issue page; the rest
+621 of 636 unique issues (98%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other three trackers. Complete or near-complete: Wolverine (1988) all 189
 issues, Marvel Comics Presents all 175, Wolverine (2003), Wolverine (2010),
 Wolverine: Weapon X, Uncanny X-Force, Wolverines, Wolverine (2013)/(2014)/(2020),
 X-Men: Schism and Wolverine: Infinity Watch.
 
-Two harvests did most of the work and are worth knowing about:
+The 15 that marvel.com does not have: Iron Fist: Wolverine (4), Marvel Graphic
+Novel #50/#65/#67, Wolverine #½ and #-1, and one each of Marvel Comic #335, Best
+of Marvel Comics, Spider-Man/Punisher/Sabretooth: Designer Genes, the 1992
+Marvel Holiday Special, Ghost Rider/Wolverine/Punisher: The Dark Design and a
+Wolverine Special.
+
+Two harvests did most of the early work and are worth knowing about:
 
 - **The two big pre-2008 blocks fell to one `scan` each**, because a
   middle-regime block is exactly issue-count long. Wolverine (1988) is 189
@@ -1207,13 +1295,8 @@ Two harvests did most of the work and are worth knowing about:
   (2018) **25582**, X-Men: Schism **13880**, Wolverine: Infinity Watch
   **26369**. That took the shelf from 56% to 74% in one pass.
 
-What is left is a long tail, not a block: the largest single gap is Death of
-Wolverine: The Logan Legacy at 7 issues, then Kitty Pryde and Wolverine (6),
-X-Men (1991) (5), The Weapon X Program (5), both Sabretooth minis (5 each), and
-**59 series at one or two issues apiece** — mostly nineties one-shots
-(Wolverine/Gambit: Victims, Inner Fury, Killing, Global Jeopardy, Doombringer)
-and the Hunt for Wolverine minis. Each needs its own lookup, so this is
-grind rather than technique.
+The long tail that used to sit here — 59 series at one or two issues apiece —
+was closed by the catalog sweep, not by 59 web searches.
 
 One thing the harvest fixed on the way past: `hulk08-30` had pointed at Hulk
 (2008) **#30.1** rather than #30. A `scan` self-identifies a page's own slug, so
@@ -1487,10 +1570,10 @@ a server-side store and is not built.
    removed yet; doing so means dropping it from `ORDER` and `SHELF` in
    `hulk_meta.py`, rewording `pad-o1`'s note about the #210–327 gap (which gets
    bigger), and updating the Hulk `total` on the homescreen.
-9. **Astonishing Tales (1970) is 15 issues short on the Fantastic Four shelf.**
-   Its marvel.com ids are not one contiguous block, and ids that search engines
-   still index for the missing range 404 live, so the material may have been
-   pulled. Everything else on that shelf is at 86%.
+9. ~~Astonishing Tales (1970) is 15 issues short on the Fantastic Four shelf.~~
+   **Settled Aug 2026** — the full catalog holds 21 of its 36 issues, so the
+   other 15 were pulled from marvel.com rather than missed by a harvest. Only
+   #7 is still on the shelf unlinked.
 10. **`build_single_file.py` still applies all four artifact workarounds to a
     page that is no longer published as an artifact.** Two of them now cost
     something on GitHub Pages: it disables the live summary lookups (which work
@@ -1501,12 +1584,13 @@ a server-side store and is not built.
     make the mobile page both smaller and more capable. The ASCII-only pass and
     the `__COMICS_SAVE` download rewire are harmless and can stay. See "The
     mobile build".
-11. **Deep links are now a long tail on every shelf, not a block.** Spider-Man
-    87%, Hulk 80%, Fantastic Four 87%, Wolverine 74%. What is left is 30–60
-    series per shelf at one or two issues each — mostly nineties one-shots,
-    annuals and tie-ins. Each needs its own web search, so this is grind rather
-    than technique. The largest single remaining item anywhere is Epic
-    Illustrated at 9 issues on the FF shelf.
+11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — all four
+    shelves are at 97–98% (Spider-Man 553/564, Hulk 646/659, Fantastic Four
+    641/661, Wolverine 621/636), and 2393 of the 2461 linked issues are readable
+    on Marvel Unlimited. The remaining 58 are not on marvel.com at all;
+    `tools/unlinked.json` names every one. What closed it was sweeping
+    marvel.com's open JSON catalog rather than searching per series — see
+    "Linking issues" and "How the links used to be missed".
 
 ## Testing
 
@@ -1528,6 +1612,9 @@ python3 tools/build_omnibus_data.py --check
 python3 tools/build_omnibus_data.py --check --hero hulk
 python3 tools/build_omnibus_data.py --check --hero fantastic-four
 python3 tools/build_omnibus_data.py --check --hero wolverine
+
+# Every shelf issue that can be linked, is
+python3 tools/link_issues.py          # expect: 0 matched, 0 ambiguous
 
 # Cover art budget
 python3 tools/covers.py audit
