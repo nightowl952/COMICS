@@ -447,8 +447,8 @@ const HEROES = [
     desc:"Every Moon Knight omnibus Marvel has printed — seven volumes, 260 issues, reproducing exactly what each book holds. Moench and Sienkiewicz build him across the first two, the sixty-issue Marc Spector run fills the next two, then the relaunches that each decided he was something else: Huston's horror, Ellis and Shalvey's white suit, MacKay's Midnight Mission. Two gaps are Marvel's, not ours — Bendis and Maleev's 2011 series and Lemire's 2016 one have never been collected." },
 
   { id:"daredevil", name:"Daredevil", art:"a-daredevil", tex:"tex-radar", emblem:"dd", cover:"Art/Heroes/daredevil.jpg", pos:"62%",
-    era:"Protocol pending", file:null, total:null,
-    desc:"Matt Murdock's long fall and longer climb. Miller's Born Again as the hinge, with Bendis/Maleev, Brubaker, and Waid's tonal reset arranged so each run answers the one before it." }
+    era:"Omnibus Shelf · 1964–2023", file:"daredevil-reading-tracker.html", total:590,
+    desc:"Seventeen omnibuses on a shelf, from Daredevil #1 to the end of Zdarsky's run — 590 issues reproducing exactly what each printed book holds. Three mainline volumes carry the Lee/Colan years, then the runs that made the character: Miller and Janson, Born Again in the Miller Companion, Nocenti and Romita Jr., Bendis and Maleev, Brubaker and Lark, Shadowland, Waid and Samnee, Soule, Zdarsky. Two gaps are Marvel's, not ours — the Denny O'Neil run and the whole 1991–2000 stretch through the Marvel Knights relaunch have never been collected. Elektra's own books are a different subject and are not here." }
 ];
 
 /* ============ STORAGE (dual-mode, same contract as the trackers) ============ */
@@ -527,7 +527,7 @@ function posterHTML(h){
   return '<div class="cell" data-state="' + (live ? "ready" : "soon") + '">' +
     '<button class="poster ' + (live ? "" : "soon ") + (h.light ? "lightart " : "") +
       (h.cover ? "hascover " : "") +
-      '" data-hero="' + h.id + '" aria-label="' + esc(h.name) + ' \u2014 ' + esc(meta) + '">' +
+      '" data-hero="' + h.id + '" aria-label="' + esc(h.name) + ' — ' + esc(meta) + '">' +
       artHTML(h) +
       '<span class="badge ' + (live ? "live" : "") + '">' + (live ? "Ready" : "Curating") + '</span>' +
       /* A cover carries its own logo and figure; the emblem would only crowd it. */
@@ -690,7 +690,7 @@ const setScrim = document.getElementById("setScrim");
     state.innerHTML = k ? "Key saved in this browser &mdash; summaries are live on every tracker."
                         : "No key set. Summaries stay unavailable until you add one.";
     box.value = "";
-    box.placeholder = k ? "\u2022\u2022\u2022\u2022 saved \u2014 paste a new key to replace" : "sk-ant-...";
+    box.placeholder = k ? "\u2022\u2022\u2022\u2022 saved — paste a new key to replace" : "sk-ant-...";
   }
   function open(){ paint(); setScrim.classList.add("show"); box.focus(); }
   function close(){ setScrim.classList.remove("show"); if(lastGearFocus) lastGearFocus.focus(); }

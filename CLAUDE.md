@@ -60,9 +60,13 @@ Keep replies short and plain. This is a hobby project, not a code review.
   and tooling again (`--hero moon-knight`); 7 volumes, which is *every* Moon
   Knight omnibus in print. Its `OMNI` array is generated from
   `tools/moonknight_meta.py`.
+- `daredevil-reading-tracker.html` — the Daredevil omnibus shelf. Same shape
+  and tooling again (`--hero daredevil`); 17 volumes covering 1964 to the end
+  of Zdarsky's run. Its `OMNI` array is generated from `tools/daredevil_meta.py`.
 - `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/`,
-  `Art/Moon-Knight/` — cover scans, committed so GitHub Pages can serve them
-  and the mobile build can inline them.
+  `Art/Moon-Knight/`, `Art/Daredevil/` — cover scans, committed so GitHub Pages
+  can serve them. The mobile build points at these paths; it no longer inlines
+  them (see "The mobile build").
 - `Art/Heroes/` — one cover per homescreen subject, seven files named by hero id.
   Served by path, not inlined; see "Artwork" below.
 
@@ -79,10 +83,11 @@ There are two ways a hero's tracker can be organised. Pick per hero:
 
 - **Curated chronology** (X-Men) — one researched reading order through a single
   saga. Acts → chapters → issues, all on one page.
-- **Omnibus shelf** (Spider-Man, Hulk, Fantastic Four, Wolverine, Moon Knight) —
+- **Omnibus shelf** (Spider-Man, Hulk, Fantastic Four, Wolverine, Moon Knight,
+  Daredevil) —
   a poster shelf of omnibus volumes, each reproducing exactly what the printed
   book collects, in print order. Two views in one file, hash-routed
-  (`#/omni/<id>`). Five heroes use this shape; the whole pipeline behind it is
+  (`#/omni/<id>`). Six heroes use this shape; the whole pipeline behind it is
   hero-agnostic — see "Adding an omnibus hero".
 
 ### A shelf holds books you can actually buy
@@ -182,13 +187,13 @@ is gone and the flag now does nothing visible; it is kept because the subject is
 still the light one on the wall (the 2014 Shalvey cover is near-white) and
 because dropping `cover` would need it back.
 
-**Hero poster art is not inlined into `comics-mobile.html`**, unlike every shelf
-cover. `inline_covers()` only rewrites the `"cover": "…"` keys in a generated
-`OMNI` array, and the homescreen's `cover:"…"` is hand-written, so the mobile
-build ships these seven as relative paths. That is correct rather than an
-oversight — both surfaces that are left resolve `Art/…` — and it is the
-direction open item 10 wants for the shelf covers too. It also means these seven
-cost the 16MB build ceiling nothing.
+**Hero poster art has always shipped as relative paths in
+`comics-mobile.html`.** The inlining only ever rewrote the `"cover": "…"` keys
+in a generated `OMNI` array, and the homescreen's `cover:"…"` is hand-written,
+so these seven were never touched by it. That was correct rather than an
+oversight — both surfaces that are left resolve `Art/…` — and as of Aug 2026
+it is what the shelf covers do too, so there is no longer any difference
+between them. See "Cover paths, not data URIs".
 
 ### How the homescreen knows your progress
 
@@ -466,19 +471,26 @@ python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
 `covers.save_cover()`, so art from either is sized identically. Neither
 regenerates — that is the follow-up command.
 
-`covers.py audit` prints what every volume has, flags oversized and low-res
-files, and projects the finished build size.
+`covers.py audit` prints what every volume has, flags low-res files, and
+reports how much art the shelf carries. It used to project the finished build
+size; since the covers are no longer inlined, a shelf's art does not move the
+page size at all — the weight it reports is what a phone downloads a tile at a
+time.
 
 **Size used to be a hard constraint and is now only a habit.** The 16MB cap
 `build_single_file.py` enforces is the *artifact* limit, and the artifact was
-retired in Aug 2026 — GitHub Pages serves files up to 100MB. The cap and the
-`covers.py add` re-encode to 700px wide / JPEG q82 (~150KB) both stay for now,
-because five shelves of art at one size is worth more than one shelf at a
-sharper one, and because a 10MB single-file page is already slow enough on a
-phone. But a genuinely better scan can be dropped in without worrying about the
-budget. For the record of why the number was picked: base64 costs ~33% on top of
-the file, the three original ASM scans average 1.1MB, and 18 of those would have
-projected to a ~26MB build against a 16MB ceiling.
+retired in Aug 2026 — GitHub Pages serves files up to 100MB. Since Aug 2026 the
+covers are not inlined either, so a scan's size no longer counts against that
+cap at all; `comics-mobile.html` is 2.2MB and the cap is only there to stop
+somebody shipping a 25MB page to a phone.
+
+The `covers.py add` re-encode to 700px wide / JPEG q82 (~150KB) stays, but as a
+choice rather than a constraint: six shelves of art at one size is worth more
+than one shelf at a sharper one, and every cover is now a separate request on a
+phone. A genuinely better scan can be dropped in without worrying about any
+budget. For the record of why the number was originally picked: base64 cost
+~33% on top of the file, the three original ASM scans average 1.1MB, and 18 of
+those would have projected to a ~26MB build against a 16MB ceiling.
 
 Everything is named `Art/Spider-Man/<volume-id>.jpg` — the original
 `The Amazing Spider-Man Vol1.png` style names are gone (git history still has
@@ -492,14 +504,15 @@ small, so refetching will not improve them. They look fine on a standard
 display and soft on a retina tile or in the detail banner. `covers.py audit`
 marks them `soft`. A better scan dropped in via `covers.py add` is the fix.
 
-**Why the mobile build inlines them, and why it no longer needs to.** A relative
-`src="Art/..."` resolves fine on GitHub Pages and over `file://`. The artifact
-was the exception — no sibling files, and a CSP that blocked the request, so the
-tile rendered empty with no CSS fallback underneath (`artHTML()` returns the
-image *instead of* the ramp). Inlining was the only form that worked everywhere
-at once. With the artifact retired both remaining surfaces resolve the path, so
-the inlining is now pure cost: it is what makes `comics-mobile.html` 10MB rather
-than about 1MB. Open item 10.
+**The mobile build no longer inlines them.** A relative `src="Art/..."`
+resolves fine on GitHub Pages and over `file://`. The artifact was the
+exception — no sibling files, and a CSP that blocked the request, so the tile
+rendered empty with no CSS fallback underneath (`artHTML()` returns the image
+*instead of* the ramp). Inlining was the only form that worked everywhere at
+once. With the artifact retired both remaining surfaces resolve the path, and
+the inlining was pure cost — it is what made `comics-mobile.html` 14.7MB rather
+than 2.2MB, and with a sixth shelf it broke the build outright. Removed
+Aug 2026; see "Cover paths, not data URIs".
 
 ### Marvel deep links
 
@@ -615,21 +628,31 @@ Two guards keep that from producing confident nonsense:
 
 `ALIAS` at the top of the file is the last resort, for the handful of genuine
 naming disagreements (the shelf's "Uncanny X-Men" is marvel.com's "X-Men
-(1963 - 2011)"). It is four entries, and the run's own report names anything
+(1963 - 2011)"). It is five entries, and the run's own report names anything
 that might belong in it — so unlike `SLUG_PFX` it cannot grow silently.
+
+`NUM_ALIAS` beside it is the same thing for an issue *number*, keyed by shelf
+issue id, and is held to the same standard. It has one entry: the Marvel
+Database files the 1989 Daredevil annual as `#4B` because its cover reprints
+the number 4, where marvel.com numbers the run straight through and calls it
+`#5`. Reach for it only when no rule can derive the answer — the trailing-zero
+case that also turned up on the Daredevil shelf (the wiki's Daredevil (2014)
+`#1.50` against the catalog's `1.5`) was a `numkey()` fix instead, because that
+one generalises.
 
 ### What is left, and why
 
-**2723 of 2780 unique issues across the five shelves resolve (98%), and 2650
-are readable on Marvel Unlimited.** The 57 that do not were each checked against
-the catalog: they are not on marvel.com at all. `tools/unlinked.json` is the
-written record, refreshed by `link_issues.py --dump`.
+**3310 of 3370 unique issues across the six shelves resolve (98%).** The 60
+that do not were each checked against the catalog: they are not on marvel.com
+at all. `tools/unlinked.json` is the written record, refreshed by
+`link_issues.py --dump`.
 
 The largest are Epic Illustrated (9 — a magazine, never digitised), Hulk!
 Magazine (8 — the same shape), Marc Spector: Moon Knight #52–56 and #58–60,
 Marvel Graphic Novel #49/50/65/67 (the catalog holds 17 of that line and not
 those), the 1992–93 Marvel Holiday Specials, Spectacular Spider-Man Magazine,
-What The--?! #2 and #10, and a tail of ashcans, `#-1` and `#½` oddities and
+What The--?! #2 and #10, the 1992 Marvel Holiday Special (which the Daredevil
+shelf wants too), and a tail of ashcans, `#-1` and `#½` oddities and
 promotional one-shots. Astonishing Tales (1970) is still short — the catalog
 holds 21 of its 36 issues, which confirms the older finding that the rest were
 pulled rather than merely unfound.
@@ -801,7 +824,8 @@ ambiguous or rejected; no hit means Marvel does not have it.
   id ranges and appends to `tools/marvel_ids.json`. Resumable: already-probed ids
   are skipped, so rerunning after a block costs nothing.
 - `omnibus_contents_raw.json`, `hulk_contents_raw.json`, `ff_contents_raw.json`,
-  `wolverine_contents_raw.json`, `moonknight_contents_raw.json` — the raw
+  `wolverine_contents_raw.json`, `moonknight_contents_raw.json`,
+  `daredevil_contents_raw.json` — the raw
   ReprintOf lists pulled from the Marvel Database, one entry per omnibus, one
   file per hero. Regenerate only if a volume's contents change.
 - `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
@@ -809,8 +833,8 @@ ambiguous or rejected; no hit means Marvel does not have it.
   Every other tool takes `--hero <key>` (default `spider-man`) and reads its
   paths from here. `python3 tools/heroes.py` lists what is registered.
 - `omnibus_meta.py` (Spider-Man), `hulk_meta.py` (Hulk), `ff_meta.py` (Fantastic
-  Four), `wolverine_meta.py` (Wolverine), `moonknight_meta.py` (Moon Knight) —
-  the hand-written half,
+  Four), `wolverine_meta.py` (Wolverine), `moonknight_meta.py` (Moon Knight),
+  `daredevil_meta.py` (Daredevil) — the hand-written half,
   and **the only place shelf metadata should be edited**: `ORDER` (wiki-backed
   volumes; each key must exist in that hero's raw-contents file or `gen()`
   KeyErrors), `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF`
@@ -834,10 +858,9 @@ ambiguous or rejected; no hit means Marvel does not have it.
   `HEROES` is hand-written — so a new pick is an edit in both places.
 - `covers.py` — cover art pipeline. `add <volume-id> <image>` optimises a scan
   to 700px/q82 and prints the line to paste into `omnibus_meta.py`; `audit`
-  reports every volume's cover and projects the finished mobile-build size
-  against the 16MB limit the builder still enforces (an artifact limit that no
-  longer binds — see "The Claude Artifact is retired"). Needs Pillow
-  (`pip install Pillow`).
+  reports every volume's cover and how much art the shelf carries. It no longer
+  projects a build size: the covers are served by path, not inlined, so a
+  shelf's art does not move the page size. Needs Pillow (`pip install Pillow`).
 - `fetch_covers.py` — pulls cover art from the Marvel Database and writes the
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
@@ -855,10 +878,9 @@ ambiguous or rejected; no hit means Marvel does not have it.
 - `marvel_ids.json` — id → marvel.com path fragment, **shared by all three heroes**.
   `build_omnibus_data.py` splices it in as `MARVEL`, so a harvest lands by
   regenerating, not by editing the HTML.
-- `build_single_file.py` — composes every page into `comics-mobile.html`,
-  inlining cover images as data URIs on the way. It reads
-  the shelf heroes out of `heroes.py`, so adding one needs no edit here. See
-  "The mobile build" below.
+- `build_single_file.py` — composes every page into `comics-mobile.html`. It
+  reads the shelf heroes out of `heroes.py`, so adding one needs no edit here.
+  Covers are checked, not inlined (Aug 2026) — see "The mobile build" below.
 
 **`OMNI` and `MARVEL` in the HTML are generated — do not hand-edit them.** Change
 `omnibus_meta.py` (or `marvel_ids.json`) and regenerate. The serialization is pinned to
@@ -874,6 +896,10 @@ python3 tools/build_omnibus_data.py --hero hulk  # hulk_meta.py    -> OMNI in th
 python3 tools/build_single_file.py               # every page -> comics-mobile.html
 python3 tools/build_omnibus_data.py --check      # confirm it round-trips
 ```
+
+Note that a harvest touches **every** hero, not one: `marvel_ids.json` is
+shared, so `link_issues.py --write` means regenerating all six trackers, not
+just the shelf you were working on.
 
 All of these take `--hero <key>`; without one they act on Spider-Man.
 `build_single_file.py` does not, because it always rebuilds every page.
@@ -921,11 +947,25 @@ harvest. Roughly in order:
      reusing one id makes every later copy inherit the first one's fill.
    - **Leave `.o-placeholder` alone** — the build checks it like any other ramp,
      and a shelf that later gains a placeholder volume needs it.
+
+   A fifth, found on the Daredevil page: **a hero's name is not the only string
+   to sweep.** Replacing every "Moon Knight" left the shelf-view subtitle
+   reading "Werewolf by Night #32 -> the Midnight Mission", because `hudSub`
+   is written twice — once in the markup and once in `showShelf()`, which
+   overwrites it on every return to the shelf. Grep for the *content* of the
+   previous hero's copy, not just its name, and then screenshot the page.
 6. **Harvest Marvel ids** — usually nothing to do. The catalog
    (`tools/marvel_catalog.json`) already holds every Marvel issue, so run
    `python3 tools/link_issues.py --write` and read its report. Only re-sweep
    (`python3 tools/catalog.py sweep`) if the hero's books include issues
    published since the last sweep.
+
+   **Run it twice**, with a regenerate in between: `link_issues.py --write`,
+   then `build_omnibus_data.py --hero <key>`, then `link_issues.py` again. The
+   matcher learns which marvel.com series a prefix owns by reading the links
+   that *already work out of the tracker HTML*, so a second pass sees what the
+   first one wrote only after a regenerate. On the Daredevil shelf that turned
+   17 reported-ambiguous issues into 17 matched, with no code change.
 7. **Generate and publish**: `fetch_covers.py --hero <key>`,
    `build_omnibus_data.py --hero <key>` (in that order — fetch writes the
    `cover=` lines the generator reads), `build_single_file.py`, then flip the
@@ -964,7 +1004,7 @@ were *not* trimmed, so the deep links come back for free.
 
 ### Summaries on a shelf
 
-Both shelf pages carry the same summary engine as the X-Men tracker, with a
+Every shelf page carries the same summary engine as the X-Men tracker, with a
 **Summary** button on every issue row and **Summarize chapter** in each
 chapter's tools. Cached per hero in `<hero>-omni-summaries-v1`; chapter digests
 are keyed `CH:<chapterId>` in the same store, so "Clear saved summaries" drops
@@ -1531,6 +1571,162 @@ the same shape as Epic Illustrated on the FF shelf), **Marc Spector: Moon
 Knight #52–56 and #58–60** (the catalog holds 52 of that series' 60 issues and
 not those), and **Big Shots Spotlight #1**, a 2011 promotional one-shot.
 
+## The Daredevil tracker (omnibus shelf)
+
+Same code as the other five shelf pages, same tooling, different data: 17
+volumes, 590 issue slots, 590 unique issues, all 17 with contents and cover art.
+No placeholders. `tools/daredevil_meta.py` is the hand-written half; run
+everything with `--hero daredevil`.
+
+### Scope call — Matt Murdock's own books
+
+The wiki lists twenty Daredevil-family omnibuses. Seventeen are on the shelf:
+Daredevil Omnibus Vol. 1–3, by Miller & Janson, the Frank Miller Omnibus
+Companion, by Nocenti & Romita Jr. Vol. 1–2, by Bendis Vol. 1–2, by Brubaker
+Vol. 1–2, Shadowland, by Waid Vol. 1–2, by Soule, and by Zdarsky Vol. 1–2.
+
+Three are off, and two of those were the user's call rather than a rule:
+
+- **Elektra by Frank Miller Omnibus** — Elektra's book, not Matt's. The same
+  reasoning that keeps She-Hulk off the Hulk shelf and Laura Kinney off
+  Wolverine's. It is Elektra: Assassin, Elektra Lives Again, Bizarre Adventures
+  #28 and What If #35; Matt is barely in any of it. Note that this is the one
+  Miller-adjacent book the Companion does *not* already collect.
+- **Devil's Reign Omnibus** — a line-wide event, with X-Men, Winter Soldier,
+  Spider-Woman, Superior Four and Villains for Hire tie-ins. Off for the same
+  reason Heroes Reborn is off the FF shelf. Nothing is lost by it: its Daredevil
+  half (Devil's Reign #1–6, Omega, Woman Without Fear #1–3) is printed inside
+  the Zdarsky Vol. 2 omnibus, which is on the shelf.
+- **Daredevil Omnibus Vol. 4** is off by the "a shelf holds books you can
+  actually buy" rule — it ships **September 2026**, which is next month. Its
+  entry stays in `daredevil_contents_raw.json`, so adding it then is an edit to
+  `ORDER`/`SHELF` in `daredevil_meta.py` plus a regenerate, not a fresh pull.
+  Adding it also means rewording the gap note on `miller-o1`, and bumping the
+  Daredevil `total` on the homescreen from 590.
+
+`SHELF` is a reading order, which on this shelf runs with publication order.
+The one placement worth stating is that it needed no resequencing: the Miller
+Companion collects material dated 1979–1993 but belongs immediately after the
+Miller run it comments on, and publication order already puts it there.
+
+**Three gaps in the shelf are Marvel's, not ours**, and unusually the largest
+is in the middle rather than at an end:
+
+- **Daredevil #120–157**, closing in September when Vol. 4 ships. The only
+  temporary one.
+- **Daredevil #192–218 and #220–225** — the Denny O'Neil run between Miller
+  and Nocenti. The Companion holds #219 and #226–233, so the hole is either
+  side of those.
+- **Daredevil #292–380 and Vol. 2 #1–15** — nine years, covering Chichester,
+  Kelly and Kesel and then the whole Marvel Knights relaunch by Kevin Smith and
+  David Mack. None of it has an omnibus, and it is why `bendis-o1` opens at
+  Vol. 2 #16 rather than #1. The notes on `miller-o1`, `nocenti-o1` and
+  `bendis-o1` say so on the page.
+
+### Contents
+
+Pulled the same way as the other five shelves (the `ReprintOf<N>` MediaWiki
+call above), into `tools/daredevil_contents_raw.json`. Nearly as clean a pull
+as Moon Knight's:
+
+- **The ReprintOf order needed no correction on any volume**, unlike `inc-o1`
+  on the Hulk shelf. It was checked against the rendered page's own issue
+  links; where the two disagreed it was the page carrying an extra link, never
+  the fields being grouped by series.
+- **Every page writes the full form** (`Daredevil Vol 1 1`), so no gallery
+  cross-reference was needed to disambiguate — and there are seven volumes of a
+  series called "Daredevil" for it to have gone wrong on.
+- **One entry needed the subtitle repair**: `Marvel Graphic Novel Vol 1 24:
+  Daredevil: Love and War`, the same shape as three on the FF shelf and three
+  on Wolverine's. Truncated at the first colon after the issue number. Re-apply
+  it if `millerc-o1` is ever re-pulled.
+
+**The audit found nothing to fix.** Not one of the seventeen volumes carries an
+explicit `COLLECTING` range in its solicit — the worst coverage of any shelf,
+so that check could not say anything at all here — and the fallback shelf-wide
+gap check did the whole job. Five gaps, all correct:
+
+| Gap | Verdict |
+|---|---|
+| Daredevil #162 | correct — a Ditko fill-in, not Miller & Janson |
+| Daredevil Vol. 2 #20–25 | correct — Bob Gale, in a "by Bendis" volume |
+| Daredevil Vol. 2 #51–55 | correct — David Mack's Echo, same reason |
+| Daredevil Annual #2–3 | correct — 1971 and 1972 all-reprint annuals |
+| Marvel Comics Presents #117–122, #131–149 | correct — an anthology; only the Daredevil backups are collected |
+
+One near-miss worth recording: **Daredevil Annual #5 looks like a sixth gap and
+is not.** The wiki has no #5 page — it is a redirect to `#4B`, which is what it
+calls the 1989 annual whose cover reprints the number 4. Chasing that is also
+what turned up the link for it (see below).
+
+A second: the rendered page for `nocenti-o2` links **Marvel Fanfare #45**,
+which the ReprintOf fields do not. That is the *cover image credit* ("Reprint
+of an image from Marvel Fanfare #45"), not a collected issue — and it is why a
+naive "every issue link on the page" cross-check reports a spurious extra on
+several volumes.
+
+### Chaptering
+
+Thirteen volumes take the automatic per-series chapters. Four carry
+`chapterby="series"` because the average-run-length heuristic would have chunked
+them into "Part N": `millerc-o1`, `nocenti-o2`, `shadow-o1` and `zdarsky-o2`.
+All four are the anthology shape rather than a month-by-month crossover —
+`shadow-o1` is the clearest, landing at 14 chapters that read as the Shadowland
+tie-in list it actually is.
+
+`millerc-o1` is worth a look for a different reason: its second chapter renders
+as `Daredevil (1964) #219, #226–233`, which is `spanlabel()` correctly refusing
+to claim fifteen issues for a non-contiguous run.
+
+### Issue ids — no overlaps at all
+
+590 issue slots and 590 unique issues, the second shelf after Moon Knight where
+those two numbers are equal, so nothing carries the gold "in N omnibuses" pill.
+That is a consequence of the scope calls rather than of the books: **Devil's
+Reign would have overlapped Zdarsky Vol. 2 by ten issues**, and Daredevil
+Omnibus Vol. 4 shares #158 with the Miller & Janson volume. Both come back as
+overlaps if either book is ever added.
+
+### Marvel deep links
+
+**587 of 590 unique issues (99%) resolve** — the joint-best coverage of any
+shelf. The rest fall back to `marvel.com/search?query=` and a grey Read button,
+same convention as the other trackers. Complete: all 219 on-shelf issues of
+Daredevil (1964), and Daredevil (1998), (2011), (2014), (2015), (2019) and (2022),
+every Shadowland and Devil's Reign tie-in, The Man Without Fear, Reborn, and
+Woman Without Fear.
+
+**The id harvest was not a step** — the catalog already held everything, so
+this was `link_issues.py --write` twice. The second pass is the interesting
+part, and worth knowing about because it is not obvious:
+
+**Daredevil (2014) #2–18 came back ambiguous on the first run and resolved on
+the second with no code change.** marvel.com has both Daredevil (2011 - 2014)
+and Daredevil (2014 - 2015); the volume's era (2013–2015) overlaps each by
+exactly two years, so `tiebreak()` genuinely could not choose and reported
+rather than guessed. What broke it was writing the run's other results first:
+once `dd3` owned the 2011 series, the "two shelf series cannot be one
+marvel.com series" rule left one candidate. So **run `--write`, regenerate the
+trackers, then run again** — the matcher reads its "what already works" input
+out of the tracker HTML, not out of `marvel_ids.json`, so a second pass with no
+regenerate in between learns nothing.
+
+Two issues were recovered by the re-test CLAUDE.md asks for rather than
+accepted as missing, and both changed the tool rather than the id store:
+
+- **Daredevil (2014) #1.50** is the catalog's `daredevil_2014_1.5`. `numkey()`
+  folded `5.0` to `5` but left `1.50` alone, so an exact string compare missed
+  a link that was sitting right there. It now normalises any decimal.
+- **Daredevil Annual #4B** is marvel.com's Daredevil Annual (1967) **#5** —
+  confirmed by its January 1989 publication date and by elimination (the wiki's
+  #4 and #6 both take marvel.com's #4 and #6). No rule can derive that, so it
+  is the one entry in the new `NUM_ALIAS` table.
+
+The 3 that marvel.com does not have: the 1992 Marvel Holiday Special (already
+missing for the Wolverine shelf), Big Shots Spotlight #1 (already missing for
+Moon Knight's) and What If Karen Page Had Lived? #1.
+
+
 ## The X-Men tracker
 
 ### What it does
@@ -1657,7 +1853,7 @@ modified — everything below is done at build time.
 Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`, `#/hulk`,
 `#/hulk/omni/<id>`, `#/fantastic-four`, `#/fantastic-four/omni/<id>`,
 `#/wolverine`, `#/wolverine/omni/<id>`, `#/moon-knight`,
-`#/moon-knight/omni/<id>`.
+`#/moon-knight/omni/<id>`, `#/daredevil`, `#/daredevil/omni/<id>`.
 
 **The builder is registry-driven, not hardcoded.** `_apps()` reads the shelf
 heroes out of `heroes.py`; the panel list, the cross-page link rewrites, the
@@ -1708,22 +1904,20 @@ no edit here — register it in `heroes.py` and rebuild.
 - **Top-level JS names collide wholesale** (`SC`, `MARVEL`, `store`, `refresh`,
   `flat`, `esc`…). Each script is wrapped in an IIFE, so nothing leaks.
 
-### Four artifact-environment constraints — now vestigial
+### Three artifact-environment constraints — now vestigial
 
 **The artifact was retired in Aug 2026** (see "The Claude Artifact is retired"
-below). All four workarounds below are still applied on every build, because
-nothing has been removed yet. Two of them are merely unnecessary now; two of
-them actively cost something on GitHub Pages, which is the only surface left:
+below). There were four workarounds; **the cover-inlining one is gone** (see
+"Cover paths, not data URIs" below). Three are still applied on every build.
+Two of them are merely unnecessary now; one of them actively costs something on
+GitHub Pages, which is the only surface left:
 
 - **#2 is the expensive one.** Live per-issue summaries work fine from Pages —
-  there is no CSP there — but the builder still forces the "no key" path on all
-  four trackers, so the mobile page ships a feature it disables for no reason.
-- **#4 is the other one.** `src="Art/…"` resolves perfectly from Pages, so
-  inlining every cover as a base64 data URI is what makes `comics-mobile.html`
-  10MB instead of about 1MB, for no benefit.
+  there is no CSP there — but the builder still forces the "no key" path on
+  every tracker, so the mobile page ships a feature it disables for no reason.
+  That is the remaining half of open item 10.
 
-Undoing both is open item 10. Until someone does, the four still read as
-written:
+Until someone undoes it, the three still read as written:
 
 1. **No `<meta charset>`** — the Artifact wrapper owns `<head>`, so the page is
    emitted as **pure ASCII** (entities in HTML, `\uXXXX` in JS, `\XXXX ` in CSS).
@@ -1750,10 +1944,26 @@ written:
    (`claude.use("downloads")` → `save({filename,data})`), falls back to the
    clipboard, and uses an ordinary blob link when running locally.
    The artifact must therefore be published with `capabilities: {downloads:true}`.
-4. **Relative image paths do not resolve** — the artifact has no sibling files
-   and its CSP blocks the request, so `src="Art/..."` renders as an empty tile.
-   The builder inlines every cover as a base64 data URI, and hard-fails if the
-   result would exceed the 16MB artifact limit. See "Cover art".
+### Cover paths, not data URIs
+
+The fourth workaround used to sit here: the artifact had no sibling files and a
+CSP that blocked the request, so `src="Art/..."` rendered as an empty tile with
+no CSS fallback underneath (`artHTML()` returns the image *instead of* its
+ramp). Every cover was therefore inlined as a base64 data URI, at ~33% on top
+of each file.
+
+**That stopped being sustainable when the Daredevil shelf landed** and is now
+removed. Six shelves of inlined art projected to **17.7MB against the 16MB
+ceiling the builder enforces**, i.e. the build simply failed — exactly what
+open item 10 predicted a sixth shelf would do. Dropping the inlining took
+`comics-mobile.html` from **14.7MB to 2.2MB**.
+
+What replaced it is `check_covers()`, which keeps the half that was always
+worth having: a `cover` path that does not resolve fails the build loudly
+instead of shipping an empty tile. **The 16MB ceiling stays** — it is the only
+thing stopping anyone shipping a 25MB page to a phone — but nothing is near it
+now. `covers.py audit` no longer projects a build size either; it reports the
+art's own weight, which is what a phone downloads a tile at a time.
 
 ### Progress does not sync
 
@@ -1764,22 +1974,28 @@ a server-side store and is not built.
 
 ## Open items — C.O.M.I.C.S.
 
-1. **One of seven subjects has no reading list yet** (Daredevil). Its `desc`
-   text in `HEROES` sketches the intended shape of the list but nothing is
-   researched or verified yet — treat it as a starting brief, not a plan.
-   Moon Knight was the other one and shipped as an omnibus shelf in Aug 2026;
-   note that doing so **dropped part of its old brief on purpose**, because
-   Lemire's run has no omnibus and an omnibus shelf cannot carry it.
+1. ~~One of seven subjects has no reading list yet.~~ **Done Aug 2026** — all
+   seven subjects now have one, Daredevil having shipped as the sixth omnibus
+   shelf. Both of the last two shipped that way rather than as curated
+   chronologies, and both **dropped part of their old `HEROES` brief on
+   purpose**: Moon Knight's because Lemire's run has no omnibus, Daredevil's
+   because "arranged so each run answers the one before it" describes a curated
+   read, and an omnibus shelf reproduces the printed books instead. A `desc`
+   written while a subject was still "Curating" is a brief, not a spec — expect
+   to rewrite it when the shape is decided.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Twenty-four covers are low-res** (~325–450px wide) because that is all the
+3. **Thirty-one covers are low-res** (~225–450px wide) because that is all the
    Marvel Database stores — six on the Spider-Man shelf, six on the Hulk shelf,
    eight on the Fantastic Four shelf, two on the Wolverine shelf (`aaron-o1`,
-   `xforce-o1`) and two on the Moon Knight shelf (`spector-o1`, `huston-o1`);
-   see "Cover art". Replacing them needs a scan from
-   somewhere else; everything else is 600–700px. Now that the artifact is
-   retired there is no size budget arguing against a big scan.
+   `xforce-o1`), two on the Moon Knight shelf (`spector-o1`, `huston-o1`) and
+   seven on the Daredevil shelf (`bendis-o1`, `bendis-o2`, `bru-o1`, `bru-o2`,
+   `shadow-o1`, `waid-o2`, `soule-o1`); see "Cover art". Replacing them needs a
+   scan from somewhere else; everything else is 600–700px. Daredevil is the
+   worst-served shelf — four of its seven are 225–334px, the smallest originals
+   on the project. Now that the artifact is retired **and the covers are no
+   longer inlined**, there is no size budget at all arguing against a big scan.
 4. **Three wiki omissions were found and fixed in Aug 2026** — Fantastic Four
    #171, Wolverine #55, and Incredible Hulk (2000) #75–76 — all restored by
    hand in their raw-contents files. **A re-pull of `ff-o6`, `wolv-o3` or
@@ -1806,32 +2022,42 @@ a server-side store and is not built.
    **Settled Aug 2026** — the full catalog holds 21 of its 36 issues, so the
    other 15 were pulled from marvel.com rather than missed by a harvest. Only
    #7 is still on the shelf unlinked.
-10. **`build_single_file.py` still applies all four artifact workarounds to a
-    page that is no longer published as an artifact.** Two of them now cost
-    something on GitHub Pages: it disables the live summary lookups (which work
-    fine there — that is patch #2 plus the `if(!IN_CLAUDE)` rewrite and the
-    hidden homescreen gear), and it inlines every cover as a base64 data URI,
-    which is what makes `comics-mobile.html` 10MB instead of about 1MB. Undoing
-    both is a contained change in `patch_app()` / `inline_art()`, and it would
-    make the mobile page both smaller and more capable. The ASCII-only pass and
-    the `__COMICS_SAVE` download rewire are harmless and can stay. See "The
-    mobile build".
+10. **Half done Aug 2026.** `build_single_file.py` applied four artifact
+    workarounds to a page no longer published as an artifact, and two of them
+    cost something on GitHub Pages.
 
-    **This has stopped being optional.** With the Moon Knight shelf on,
-    `comics-mobile.html` is 14.7MB against the 16MB ceiling the builder still
-    enforces — a sixth shelf will simply fail the build. Un-inlining is the fix
-    and takes the page to about 1.7MB; raising the cap is not, because the cap
-    is the only thing keeping anyone from shipping a 25MB page to a phone.
-11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the five
+    ~~It inlines every cover as a base64 data URI.~~ **Removed** — the
+    Daredevil shelf forced it, because six shelves of inlined art projected to
+    17.7MB against the 16MB ceiling and the build failed outright, exactly as
+    this item predicted. `inline_covers()` is now `check_covers()`, which only
+    verifies the paths resolve; `comics-mobile.html` went 14.7MB → 2.2MB. The
+    ceiling stays. See "Cover paths, not data URIs".
+
+    **Still open: it disables the live summary lookups**, which work fine from
+    Pages — that is patch #2 plus the `if(!IN_CLAUDE)` rewrite and the hidden
+    homescreen gear. Undoing it is a contained change in `patch_app()` and
+    would make the mobile page as capable as the standalone ones. Nothing
+    forces it, so it has waited. The ASCII-only pass and the `__COMICS_SAVE`
+    download rewire are harmless and can stay.
+11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the six
     shelves are at 93–99% (Spider-Man 558/564, Hulk 652/659, Fantastic Four
-    643/661, Wolverine 627/636, Moon Knight 243/260). The remaining 57 are not
-    on marvel.com at all;
+    643/661, Wolverine 627/636, Moon Knight 243/260, Daredevil 587/590). The
+    remaining 60 are not on marvel.com at all;
     `tools/unlinked.json` names every one. What closed it was sweeping
     marvel.com's open JSON catalog rather than searching per series — see
     "Linking issues" and "How the links used to be missed". The last nine came
     from a naming pass prompted by the user finding one by hand, so a fresh
     `--dump` list is a hypothesis, not a verdict: re-test it before believing
-    marvel.com lacks something.
+    marvel.com lacks something. The Daredevil shelf proved that again — two of
+    its five "missing" issues were in the catalog under a different number, and
+    both fixes went into `link_issues.py` rather than into the id store.
+12. **The Daredevil shelf is missing Daredevil Omnibus Vol. 4 for one month.**
+    It ships September 2026 and is excluded by the "a shelf holds books you can
+    actually buy" rule, which leaves a #120–157 hole between `dd-o3` and
+    `miller-o1`. Adding it is a `daredevil_meta.py` edit plus a regenerate (the
+    contents are already in the raw file), rewording `miller-o1`'s gap note,
+    and bumping the Daredevil `total` on the homescreen from 590. Note it also
+    reintroduces the shelf's first issue overlap — #158 is in both books.
 
 ## Testing
 
@@ -1843,9 +2069,12 @@ for real.
 Verify changes with:
 
 ```bash
-# JS syntax (swap in spiderman-reading-tracker.html / comics-mobile.html)
-node -e "const fs=require('fs');fs.writeFileSync('/tmp/v.js',
-  fs.readFileSync('xmen-reading-tracker.html','utf8').split('<script>')[1].split('</script>')[0])"
+# JS syntax. Note a tracker has ONE <script>, but index.html and
+# comics-mobile.html have several -- concatenating only the first checks
+# almost nothing on those two, so join them all.
+node -e "const fs=require('fs');const p=fs.readFileSync('index.html','utf8').split('<script>');
+  let js='';for(let i=1;i<p.length;i++)js+='\n;{\n'+p[i].split('<\/script>')[0]+'\n}\n';
+  fs.writeFileSync('/tmp/v.js',js)"
 node --check /tmp/v.js
 
 # Shelf data round-trips (also checks SHELF/SPINE_C consistency)
@@ -1854,16 +2083,20 @@ python3 tools/build_omnibus_data.py --check --hero hulk
 python3 tools/build_omnibus_data.py --check --hero fantastic-four
 python3 tools/build_omnibus_data.py --check --hero wolverine
 python3 tools/build_omnibus_data.py --check --hero moon-knight
+python3 tools/build_omnibus_data.py --check --hero daredevil
 
-# Every shelf issue that can be linked, is
-python3 tools/link_issues.py          # expect: 0 matched, 0 ambiguous
+# Every shelf issue that can be linked, is.
+# Expect: 0 matched, 0 ambiguous, and one standing rejection (tta3-1, which is
+# deliberate -- see "An unmapped series is derived, not dropped").
+python3 tools/link_issues.py
 
-# Cover art budget
+# Cover art (every volume has one, and how heavy it is)
 python3 tools/covers.py audit
 python3 tools/covers.py audit --hero hulk
 python3 tools/covers.py audit --hero fantastic-four
 python3 tools/covers.py audit --hero wolverine
 python3 tools/covers.py audit --hero moon-knight
+python3 tools/covers.py audit --hero daredevil
 
 # The mobile build must stay pure ASCII
 python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"   # 0
@@ -1877,8 +2110,20 @@ unique issues**; the Hulk shelf **17 volumes / 665 issue slots / 659 unique
 issues**; the Fantastic Four shelf **18 volumes / 686 issue slots / 661 unique
 issues**; the Wolverine shelf **14 volumes / 637 issue slots / 636 unique
 issues**; the Moon Knight shelf **7 volumes / 260 issue slots / 260 unique
+issues**; the Daredevil shelf **17 volumes / 590 issue slots / 590 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
+
+`comics-mobile.html` should build to about **2.2MB**. If it comes out near
+14MB, something has restored the cover inlining — see "Cover paths, not data
+URIs".
+
+For the look of a page, screenshot it rather than reasoning about it. Chromium
+is preinstalled at `/opt/pw-browsers/chromium`; `pip install playwright` and
+point `chromium.launch(executable_path=...)` at it, against a local
+`python3 -m http.server`. That is what caught the Daredevil page still carrying
+the Moon Knight subtitle in its shelf view — a string the identity sweep had
+replaced in the markup but not in the `showShelf()` line that overwrites it.
 
 For behavior, `jsdom` with `runScripts:'dangerously'` and no `window.storage`
 simulates plain-browser mode accurately — that's how the localStorage fallback
@@ -1985,18 +2230,19 @@ is looking at a frozen copy with three shelves and no Wolverine.
 
 What retiring it changes, and what it does not:
 
-- **The 16MB ceiling is gone.** That was an artifact limit, never a GitHub one —
+- **The 16MB ceiling stopped mattering.** That was an artifact limit, never a
+  GitHub one —
   Pages serves individual files up to 100MB and a site up to 1GB, and this repo
   is 19MB in total. Cover art no longer has to be squeezed to fit. `covers.py
-  add` still re-encodes to 700px/q82, because consistency across five shelves is
+  add` still re-encodes to 700px/q82, because consistency across six shelves is
   worth more than sharpness on one, but that is now a choice rather than a
   constraint, and a better scan can simply be dropped in.
-- **Relative image paths would now work.** `Art/…` resolves fine from Pages;
-  inlining covers as data URIs is what makes the mobile build 10MB, and it is
-  no longer necessary.
-- **`build_single_file.py` still applies all four artifact workarounds**, and
-  two of them now cost something rather than nothing — the live summary lookups
-  it disables would work on Pages. See "The mobile build" below. Undoing them is
-  a real improvement and has not been done; it is open item 10.
+- **Relative image paths work.** `Art/…` resolves fine from Pages, and as of
+  Aug 2026 the builder ships those paths instead of inlining the covers, which
+  took the mobile build from 14.7MB to 2.2MB.
+- **`build_single_file.py` still applies three of the four artifact
+  workarounds**, and one of them costs something rather than nothing — the live
+  summary lookups it disables would work on Pages. See "The mobile build"
+  below. Undoing that is the remaining half of open item 10.
 - **Nothing else.** `comics-mobile.html` is still generated and still committed.
   It reads well on a phone straight from Pages, which is what it was for.

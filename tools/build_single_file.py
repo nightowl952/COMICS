@@ -15,7 +15,7 @@ What it has to solve:
   * top-level JS names collide wholesale (SC, MARVEL, store, refresh, flat, ...)
     -> each script is wrapped in an IIFE, so nothing leaks.
 """
-import re, json, sys, os, base64
+import re, json, sys, os
 
 SRC  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOOLS = os.path.dirname(os.path.abspath(__file__))
@@ -310,18 +310,30 @@ def patch_app(app, js):
           "        'Open the shelf on GitHub Pages or a local copy to generate them.';",
           "%s no-key message" % key)
         js += '\nwindow.__COMICS.%s = function(){ route(); };\n' % key
-        js = inline_covers(js)
+        js = check_covers(js)
     return js
 
 
-# ------------------------------------------------------------- cover inlining
-# The shelf points `cover` at a file under Art/ -- fine over HTTP, but the
-# artifact has no sibling files and its CSP blocks the request outright, so a
-# relative src renders as a broken tile. Baking each cover in as a data URI is
-# the only thing that works on all three surfaces at once.
+# --------------------------------------------------------------- cover checks
+# The shelf points `cover` at a file under Art/. That resolves on GitHub Pages
+# and over file://, which since the Claude Artifact was retired are the only
+# surfaces left -- so the covers are NOT inlined any more.
 #
-# Cost: base64 is ~33% bigger than the file, and the artifact caps at 16MB.
-# Run `python3 tools/covers.py audit` if this trips.
+# They used to be, and only for the artifact: it had no sibling files and a CSP
+# that blocked the request, so a relative src rendered as a broken tile with no
+# fallback underneath (artHTML() returns the image *instead of* its ramp).
+# Baking each one in as a data URI was the only form that worked everywhere at
+# once, at a cost of ~33% on top of every file.
+#
+# That cost stopped being theoretical when the Daredevil shelf landed: six
+# shelves of inlined art projected to 17.7MB against the 16MB ceiling, i.e. the
+# build simply failed. Dropping the inlining takes comics-mobile.html from
+# 14.7MB to about 1.7MB and makes the page faster on the phone it was built
+# for. The ceiling stays -- it is the only thing stopping anyone shipping a
+# 25MB page to a phone -- but nothing is near it now.
+#
+# What is left here is the half that was always worth having: a missing cover
+# file fails the build loudly instead of shipping an empty tile.
 # The shared getKey() -- byte-identical in the X-Men page and both shelves, so
 # one pattern stubs all three. Kept here so a drift in the trackers fails the
 # build via must() rather than silently leaving a live API call in the artifact.
@@ -341,24 +353,21 @@ MIME = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png",
 ARTIFACT_LIMIT = 16 * 1024**2
 
 
-def inline_covers(js):
-    def repl(m):
-        rel = m.group(1)
+def check_covers(js):
+    """Verify every `cover` path resolves; leave the path itself alone."""
+    n = 0
+    for rel in re.findall(r'"cover": "((?!data:)[^"]+)"', js):
+        n += 1
         path = os.path.join(SRC, rel)
         if not os.path.exists(path):
             raise SystemExit(
                 "cover file missing: %s\n"
-                "fix the `cover` path in tools/omnibus_meta.py, regenerate with\n"
-                "  python3 tools/build_omnibus_data.py" % rel)
-        mime = MIME.get(os.path.splitext(path)[1].lower())
-        if not mime:
+                "fix the `cover` path in that hero's meta module, regenerate with\n"
+                "  python3 tools/build_omnibus_data.py --hero <key>" % rel)
+        if not MIME.get(os.path.splitext(path)[1].lower()):
             raise SystemExit("unsupported cover format: %s" % rel)
-        b64 = base64.b64encode(open(path, "rb").read()).decode("ascii")
-        return '"cover": "data:%s;base64,%s"' % (mime, b64)
-
-    js, n = re.subn(r'"cover": "((?!data:)[^"]+)"', repl, js)
     if n:
-        print("  inlined %d cover image(s)" % n)
+        print("  checked %d cover path(s)" % n)
     return js
 
 
