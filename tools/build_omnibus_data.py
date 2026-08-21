@@ -1,3 +1,4 @@
+import importlib
 import json,re,collections,os,sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -94,11 +95,84 @@ SERIES = {
  "Marvel Comics Memory Album Calendar 1977 Vol 1":     ("cal77","Marvel Memory Album Calendar 1977"),
 }
 
+# Codes derived for series no table names. Kept here so a repeated series in
+# one build always gets the same code, and so gen() can report them.
+AUTO = {}
+_KNOWN = None
+
+
+def every_heros_series():
+    """Series -> (code, display) across the shared table and every hero module.
+
+    Codes have to agree between shelves because marvel_ids.json is shared and
+    keyed by them. Reading the other modules makes that automatic instead of
+    something a human has to notice.
+    """
+    global _KNOWN
+    if _KNOWN is None:
+        import heroes
+        _KNOWN = dict(SERIES)
+        for name in {h["meta"] for h in heroes.HEROES.values()}:
+            try:
+                mod = importlib.import_module(name)
+            except Exception:
+                continue
+            _KNOWN.update(getattr(mod, "SERIES_EXTRA", {}) or {})
+    return _KNOWN
+
+
+def autocode(base):
+    """Derive a stable id prefix for a series no table maps.
+
+    The alternative used to be dropping the issue, which quietly shortened the
+    shelf -- the Wolverine build came out 597 slots instead of 636 that way. A
+    derived code is always better than a missing issue: it is deterministic, so
+    it stays the same across rebuilds, and progress saved against it keeps
+    working.
+
+    "Avengers Vol 1" -> ("avengers", "Avengers"); "Avengers Vol 3" ->
+    ("avengers3", "Avengers"). The display name drops the volume on purpose --
+    link_issues.py matches on it, and marvel.com names series by year, not by
+    the wiki's volume number, so "Avengers" plus the volume's era resolves where
+    "Avengers (Vol. 3)" would not.
+    """
+    if base in AUTO:
+        return AUTO[base]
+    known = every_heros_series()
+    if base in known:
+        # Another shelf already names this series. Reuse its code verbatim --
+        # marvel_ids.json is shared and keyed by code, so the same comic must
+        # key the same way on every shelf. This is what CLAUDE.md used to ask
+        # a human to remember when repeating an entry in a new hero's module.
+        AUTO[base] = known[base]
+        return AUTO[base]
+    m = re.match(r'^(.*?)\s+Vol\s+(\d+)$', base)
+    name, vol = (m.group(1), int(m.group(2))) if m else (base, 1)
+    words = [w for w in re.split(r'[^a-z0-9]+', name.lower()) if w]
+    # One or two words read best whole ("newavengers"); three or more become an
+    # acronym ("cwtc" for Civil War: The Confession) rather than a word chopped
+    # off mid-syllable, which is what a plain truncation gives.
+    stem = ("".join(words)[:16] if len(words) < 3
+            else "".join(w[0] for w in words))
+    stem = stem or 'series'
+    taken = {c for c, _ in SERIES.values()} | {c for c, _ in AUTO.values()}
+    code = stem + ('' if vol == 1 else str(vol))
+    if code in taken:                       # never reuse another series' code:
+        n = 2                               # the id store is shared by hero
+        while '%s%d' % (code, n) in taken:
+            n += 1
+        code = '%s%d' % (code, n)
+    AUTO[base] = (code, name)
+    return AUTO[base]
+
+
 def parse(entry):
     m = re.match(r'^(.*) (\S+)$', entry.strip())
     if not m: return None
     base, num = m.group(1), m.group(2)
-    if base not in SERIES: return ('??'+base, base, num)
+    if base not in SERIES:
+        code, disp = autocode(base)
+        return (code, disp, num)
     code, disp = SERIES[base]
     return (code, disp, num)
 
@@ -139,8 +213,8 @@ def gen(pages, meta, series_extra=None):
         parsed=[]
         for x in seen:
             p=parse(x)
-            if p is None or p[0].startswith('??'):
-                print("  !! UNMAPPED:",x); continue
+            if p is None:
+                print("  !! UNPARSEABLE:",x); continue
             parsed.append(p)
         # chapter strategy
         runs=[];cur=None
@@ -281,6 +355,15 @@ def main():
     covers = sum(1 for o in arr if o.get("cover"))
     print("%d volumes | %d issue slots | %d unique issues | %d covers wired"
           % (len(arr), slots, uniq, covers))
+    if AUTO:
+        # These are on the shelf and working; the list is here so a new hero's
+        # codes can be reviewed, and pinned in SERIES_EXTRA if a shorter or
+        # more conventional one is wanted -- do that BEFORE anyone reads with
+        # them, because an issue id is a saved-progress key.
+        print("%d series had no table entry; codes derived from their titles:"
+              % len(AUTO))
+        for base, (code, disp) in sorted(AUTO.items()):
+            print("    %-46s -> %s" % (base, code))
     ids = json.load(open(h["ids_path"], encoding="utf-8"))
     linked = len({i["id"] for o in arr for c in o["chapters"]
                   for i in c["issues"]} & set(ids))

@@ -820,9 +820,11 @@ harvest. Roughly in order:
 2. **Pull contents** for each wiki-backed volume (the `ReprintOf<N>` call under
    "Where the contents came from") into a `<hero>_contents_raw.json`.
 3. **Write `tools/<hero>_meta.py`** — `ORDER`, `PLACEHOLDERS`, `SHELF`, and
-   `PLACEHOLDER_PAGES`, modelled on `omnibus_meta.py`. If its books collect
-   series `SERIES` in `build_omnibus_data.py` does not know, add them as
-   `SERIES_EXTRA` in this module rather than editing the shared table.
+   `PLACEHOLDER_PAGES`, modelled on `omnibus_meta.py`. `SERIES_EXTRA` is
+   optional now: a series no table names gets a derived code and stays on the
+   shelf (see "An unmapped series is derived, not dropped"). Add entries only to
+   pin a nicer code, or when the build's report says a series collided with one
+   another shelf already owns.
 4. **Register it** in `tools/heroes.py`.
 5. **Build the tracker page.** Copy `spiderman-reading-tracker.html` (or
    `hulk-reading-tracker.html`) and change the title, the glyph, the `SC` series
@@ -1303,20 +1305,52 @@ One thing the harvest fixed on the way past: `hulk08-30` had pointed at Hulk
 it corrected the entry. Worth remembering that a harvest can *change* an
 existing link, not only add one — and that a point-issue is the likely reason.
 
-### A hero only sees the shared table plus its own SERIES_EXTRA
+### An unmapped series is derived, not dropped
 
-`gen()` merges `SERIES` with the hero module's own `SERIES_EXTRA` and nothing
-else, so a series that another shelf already maps is **not** available here — it
-has to be repeated in this module, with **exactly the same short code**, because
-the marvel.com id store is shared and the same series must key the same way
-everywhere. Eight entries at the foot of `wolverine_meta.py` do this
-(`Wolverine Vol 3`, `Uncanny X-Men Vol 1`, `Marvel Graphic Novel Vol 1`,
-`Marvel Fanfare Vol 1`, `Marvel Holiday Special Vol 1`, `Cable Vol 1`,
-`Hulk Vol 1`, `Avengers Vol 7`).
+`gen()` merges `SERIES` with the hero module's own `SERIES_EXTRA`. A series in
+neither used to print `!! UNMAPPED` and be **thrown away**, which silently
+shortened the shelf — the Wolverine build came out 597 slots instead of 636 that
+way, and a from-scratch Avengers shelf would have lost 98% of its issues.
 
-The failure mode is loud but easy to misread: the build prints `!! UNMAPPED` for
-every affected issue and the shelf silently comes out short — 597 slots instead
-of 636, on the first run here.
+It no longer drops anything. `autocode()` derives a stable id prefix from the
+series title and the build lists what it derived:
+
+- one or two words are kept whole (`New Avengers Vol 1` -> `newavengers`),
+  three or more become an acronym (`Civil War: The Confession Vol 1` -> `cwtc`),
+  and a later volume gets its number appended (`Avengers Vol 3` -> `avengers3`);
+- **a code another hero's table already uses is reused verbatim.** The id store
+  is shared and keyed by code, so the same comic has to key the same way on
+  every shelf. That used to be a rule a human had to remember when repeating an
+  entry (the eight at the foot of `wolverine_meta.py`); now it is automatic.
+
+Derivation is deterministic, so a rebuild always produces the same ids and saved
+progress keeps working. Pin a code in `SERIES_EXTRA` if you want a shorter or
+more conventional one — but do it **before** anyone reads with it, because an
+issue id is a saved-progress key.
+
+**One case still needs a person, and the run names it.** When two wiki keys mean
+one marvel.com series — the Avengers pages say `X-Men Vol 1` where the FF and
+Wolverine modules say `Uncanny X-Men Vol 1` — the two get different codes, and
+`link_issues.py` refuses the second with "that series already belongs to another
+shelf series" rather than linking both. The fix is one `SERIES_EXTRA` line
+giving the new key the existing code.
+
+### What a brand-new hero actually gets
+
+Measured against four real Avengers omnibuses (Vol 1-2, New Avengers Vol 1,
+Hickman Vol 1 — 156 unique issues, no `SERIES_EXTRA` written at all):
+
+| | |
+|---|---|
+| dropped at build | **0** (was 154 of 156) |
+| linked automatically | **153 (98%)** |
+| ambiguous | 0 |
+| flagged for a human | 1 (the `X-Men Vol 1` key above) |
+| genuinely not on marvel.com | 2 (an AAFES giveaway, an FCBD issue) |
+
+So the id harvest is no longer a step. What is left for a new hero is the part
+that was always judgement: which books belong on the shelf, and hand-designing
+the tracker page.
 
 ## The X-Men tracker
 
