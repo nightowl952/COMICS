@@ -84,6 +84,10 @@ ALIAS = {
     "aftersmash: damage control": "Wwh Aftersmash: Damage Control (2008)",
     "x-men spotlight": "X-Men Spotlight On Starjammers (1990)",
     "giant-size super-heroes": "Giant-Size Super-Heroes Featuring Spider-Man (1974)",
+    # The book was retitled Power Man and Iron Fist at #50; marvel.com keeps
+    # one series under the original name across the whole run, and the two
+    # later series that DO carry the retitled name stop well short of #87.
+    "power man and iron fist": "Power Man (1974 - 1986)",
 }
 
 

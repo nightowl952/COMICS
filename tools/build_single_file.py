@@ -136,7 +136,41 @@ def scope_css(css, root, pfx, seen_globals):
 
 # ------------------------------------------------------------- id namespacing
 def prefix_ids_html(html, pfx):
-    return re.sub(r'\bid="([\w-]+)"', lambda m: f'id="{pfx}-{m.group(1)}"', html)
+    """Prefix every markup id -- AND every same-document reference to one.
+
+    An SVG paint reference is an id reference like any other: the HUD emblem
+    defines `<linearGradient id="hg">` and paints with `fill="url(#hg)"`.
+    Renaming only the definition leaves the paint pointing at nothing, and an
+    unresolvable paint server renders as no paint at all -- so all five HUD
+    emblems (and the homescreen's poster gradient) drew as bare orbs in the
+    mobile build while looking perfect in the standalone pages. Same shape as
+    the `scope_selector()` bug: scoping half of a pair is worse than scoping
+    neither, because it fails silently.
+
+    Only the markup half of a page reaches this -- `body_html()` stops at
+    `<script>` -- so the glyph SVGs that mint their own ids at runtime are not
+    involved; those never leave their IIFE.
+    """
+    html = re.sub(r'\bid="([\w-]+)"', lambda m: f'id="{pfx}-{m.group(1)}"', html)
+    html = re.sub(r'url\(#([\w-]+)\)', lambda m: f'url(#{pfx}-{m.group(1)})', html)
+    html = re.sub(r'\b((?:xlink:)?href)="#([\w-]+)"',
+                  lambda m: f'{m.group(1)}="#{pfx}-{m.group(2)}"', html)
+    check_id_refs(html)
+    return html
+
+
+def check_id_refs(html):
+    """Every same-document reference must name an id the markup defines.
+
+    This is the guard that was missing: the emblems stayed broken through
+    several builds because nothing compared the two sides.
+    """
+    have = set(re.findall(r'\bid="([\w-]+)"', html))
+    want = set(re.findall(r'url\(#([\w-]+)\)', html))
+    missing = sorted(want - have)
+    if missing:
+        raise SystemExit("build_single_file.py: markup references id(s) nothing "
+                         "defines: %s" % missing)
 
 def prefix_ids_js(js, pfx):
     # DOM lookups become prefix-aware helpers defined in the IIFE preamble
