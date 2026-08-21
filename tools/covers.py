@@ -3,20 +3,19 @@
 
 Two jobs:
 
-  audit                     what every volume has, and whether the mobile
-                            build still fits inside the artifact size limit
+  audit                     what every volume has, and how much art the
+                            shelf carries
   add <volume-id> <image>   optimise a scan into the hero's art dir as
                             <id>.jpg and print the line to paste into its
                             metadata module
 
 Both take --hero <key> (default spider-man); see tools/heroes.py.
 
-Covers used to matter for build size: build_single_file.py inlined every one
-into comics-mobile.html as a base64 data URI, because the Claude Artifact had
-no sibling files and a CSP that blocked relative image requests. That is over
--- the artifact is retired, both remaining surfaces resolve Art/..., and the
-mobile page now ships the paths. So the 16MB ceiling is no longer what
-WIDTH/QUALITY defend.
+Covers used to matter for build size: the retired mobile build inlined every
+one into a single file as a base64 data URI, because the Claude Artifact had no
+sibling files and a CSP that blocked relative image requests. Both that artifact
+and that build are gone, and every surface now resolves Art/... by path, so
+WIDTH/QUALITY no longer defend a page-size ceiling.
 
 What they still defend is the phone: six shelves of art is downloaded a tile
 at a time, and consistency across all six is worth more than sharpness on one.
@@ -44,8 +43,7 @@ def _use(key=None):
 
 WIDTH   = 700          # tiles render ~196px wide; 700 covers 2x displays and the banner
 MIN_WIDTH = 500        # below this a cover looks soft on a 2x tile
-QUALITY = 82           # ~150KB/cover -- 18 of them stay comfortably inside the budget
-BUDGET  = 16 * 1024**2 # artifact hard limit
+QUALITY = 82           # ~150KB/cover
 
 
 def omni():
@@ -98,20 +96,13 @@ def audit():
               "find one: %s" % (len(soft), MIN_WIDTH, ", ".join(soft)))
 
     have = sum(1 for o in vols if o.get("cover"))
-    built = os.path.join(ROOT, "comics-mobile.html")
-    now = os.path.getsize(built) if os.path.exists(built) else 0
+    # Covers are served by path, never baked into a page, so this figure is not
+    # a build budget -- it is what a phone downloads a tile at a time.
     print("\n%d/%d volumes have a cover, %.1f MB of art on this shelf" % (
         have, len(vols), total / 1e6))
-    # Covers are served by path now, not baked in, so this shelf's art does not
-    # move the page size at all. Reported anyway because it is what a phone
-    # downloads a tile at a time.
-    print("comics-mobile.html is %.1f MB (limit %.0f MB) -- covers are served "
-          "from Art/, not inlined" % (now / 1e6, BUDGET / 1024 ** 2))
     if have:
         print("%.0f KB per cover on average; target is %dpx wide / q%d"
               % (total / have / 1e3, WIDTH, QUALITY))
-    if now > BUDGET:
-        sys.exit("\n!! the built page is over the build size limit")
 
 
 def save_cover(im, vid, quiet=False):
@@ -159,7 +150,7 @@ def add(vid, src):
     print("\nadd this to the %s entry in tools/%s.py:\n" % (vid, HERO["meta"]))
     print('  cover="%s",' % rel)
     print("\nthen:  python3 tools/build_omnibus_data.py --hero %s"
-          " && python3 tools/build_single_file.py" % HERO["key"])
+          % HERO["key"])
 
 
 if __name__ == "__main__":

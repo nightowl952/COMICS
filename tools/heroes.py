@@ -24,10 +24,6 @@ HEROES = {
         meta    = "omnibus_meta",
         raw     = "omnibus_contents_raw.json",
         ids     = "marvel_ids.json",
-        # the panel key + id prefix build_single_file.py scopes this page under
-        panel   = "spidey",
-        pfx     = "sm",
-        route   = "/spider-man",
     ),
     "hulk": dict(
         name    = "Hulk",
@@ -39,9 +35,6 @@ HEROES = {
         # issue id, several series appear on both shelves, and a shared store
         # means an overlap resolves without being harvested twice.
         ids     = "marvel_ids.json",
-        panel   = "hulk",
-        pfx     = "hk",
-        route   = "/hulk",
     ),
     "wolverine": dict(
         name    = "Wolverine",
@@ -53,9 +46,6 @@ HEROES = {
         # Marvel Comics Presents, Fantastic Four and Uncanny X-Men issues the
         # other three shelves already reach for.
         ids     = "marvel_ids.json",
-        panel   = "wolv",
-        pfx     = "wv",
-        route   = "/wolverine",
     ),
     "moon-knight": dict(
         name    = "Moon Knight",
@@ -68,9 +58,6 @@ HEROES = {
         # Marvel Comics Presents issues the other four shelves already reach
         # for, so an overlap resolves without being harvested twice.
         ids     = "marvel_ids.json",
-        panel   = "moon",
-        pfx     = "mk",
-        route   = "/moon-knight",
     ),
     "daredevil": dict(
         name    = "Daredevil",
@@ -83,9 +70,6 @@ HEROES = {
         # Four, Iron Man and Avengers issues the other five shelves already
         # reach for, so an overlap resolves without being harvested twice.
         ids     = "marvel_ids.json",
-        panel   = "dd",
-        pfx     = "dd",
-        route   = "/daredevil",
     ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
@@ -97,9 +81,6 @@ HEROES = {
         # Strange Tales and Fantastic Four issues the other two shelves already
         # reach for, so an overlap resolves without being harvested twice.
         ids     = "marvel_ids.json",
-        panel   = "ff",
-        pfx     = "f4",
-        route   = "/fantastic-four",
     ),
 }
 

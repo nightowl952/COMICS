@@ -33,12 +33,6 @@ Keep replies short and plain. This is a hobby project, not a code review.
 
 - `index.html` — the C.O.M.I.C.S. homescreen. Poster grid, Continue Reading panel,
   per-subject dossier modal, filters.
-- `comics-mobile.html` — **generated, do not hand-edit.** All five pages
-  composed into one hash-routed file. It was built for publishing as a Claude
-  Artifact (artifacts are one file per URL); that artifact is retired, and the
-  file now serves from GitHub Pages as the phone-friendly single-page view.
-  Rebuild with `python3 tools/build_single_file.py` after changing any source
-  page.
 - `xmen-reading-tracker.html` — the X-Men Messiah Saga protocol. A single curated
   chronological read, grouped into acts → chapters → issues.
 - `spiderman-reading-tracker.html` — the Spider-Man omnibus shelf. A different
@@ -65,13 +59,15 @@ Keep replies short and plain. This is a hobby project, not a code review.
   of Zdarsky's run. Its `OMNI` array is generated from `tools/daredevil_meta.py`.
 - `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/`,
   `Art/Moon-Knight/`, `Art/Daredevil/` — cover scans, committed so GitHub Pages
-  can serve them. The mobile build points at these paths; it no longer inlines
-  them (see "The mobile build").
+  can serve them. Every page references them by relative path.
 - `Art/Heroes/` — one cover per homescreen subject, seven files named by hero id.
-  Served by path, not inlined; see "Artwork" below.
+  See "Artwork" below.
+- `Art/covers/` — the original hand-supplied scans the seven `Art/Heroes/`
+  files were derived from, at full size. Nothing reads this folder; it is kept
+  so a poster can be re-cropped without re-sourcing the art.
 
-No build step, no package.json, no dependencies, no server. Open either file
-directly in a browser.
+No build step, no package.json, no dependencies, no server. Open any of these
+files directly in a browser.
 
 Every file is individually self-contained (data, styles, logic, artwork) on
 purpose. Keep it that way — portability is the point. The only thing that crosses
@@ -136,16 +132,25 @@ The `HEROES` array is the whole configuration. Each entry:
 ### Artwork
 
 **Every subject shows a real comic cover** (Aug 2026). One scan per subject in
-`Art/Heroes/<id>.jpg`, pointed at by `cover` in that hero's `HEROES` entry, and
-fetched by `tools/fetch_hero_art.py` from the Marvel Database — same source and
-the same 700px/q82 downscale as the omnibus shelf covers.
+`Art/Heroes/<id>.jpg`, pointed at by `cover` in that hero's `HEROES` entry, run
+through the same `covers.save_cover` 700px/q82 downscale as the omnibus shelf
+covers so the whole site's art is sized identically.
 
-The pick is curation, not something the tool decides: one cover that reads as
-the subject at poster size, era-appropriate to that reading list. `PICKS` in
-`fetch_hero_art.py` holds the choice and the reasoning for all seven. One is
-worth repeating here, because it is the trap: **Incredible Hulk #340 is the
-famous Hulk cover and is three quarters Wolverine**, who is the poster next to
-it. It was the first pick and came off for that; Immortal Hulk #1 is there now.
+**All seven are hand-supplied art, not wiki scans** (Aug 2026). The user
+dropped the originals into `Art/covers/` and they replaced the fetched covers
+outright. They are painted pieces rather than printed covers, and that turns
+out to matter for this particular job: no logo, no barcode strip and no trade
+dress fighting the poster plate, so the subject name sits on clean art on all
+seven. Keep that property in mind when swapping one — a scan of a printed cover
+will put a logo where the name goes.
+
+`tools/fetch_hero_art.py` is now the **fallback** route, not the live one. Its
+`PICKS` table still holds a wiki pick and the reasoning for every subject, and
+`SUPPLIED` beside it lists the seven whose art is hand-supplied; `--all` skips
+those and says so, and `--replace` is what overwrites them. One entry in `PICKS`
+is worth repeating because it is the trap it always was: **Incredible Hulk #340
+is the famous Hulk cover and is three quarters Wolverine**, who is the poster
+next to it.
 
 The handmade art is still underneath and is still the fallback. Three layers per
 poster — an `.a-*` colour ramp, a `.tex-*` pattern (web / claw marks / impact
@@ -171,8 +176,30 @@ What a cover changes, beyond the picture:
 The modal banner is a 2.8:1 slot cut out of a 2:3 page, so **where to crop is
 per-cover**: optional `pos` on a `HEROES` entry sets `object-position` on the
 banner only (the poster is the same aspect as the cover and crops almost
-nothing). Four of the seven set it; the default is `26%`. Retuning one means
-looking at it — screenshot `#mArt`, do not reason about it.
+nothing). **All seven now set it** and none of them landed on a guess: every
+value below was arrived at by rendering `#mArt` and looking, and four needed a
+second pass after the first render clipped something.
+
+| Subject | `pos` | What the band is framed on |
+|---|---|---|
+| spider-man | 14% | the mask, webline arm across the left |
+| wolverine | 13% | the mask — 19% clipped the ear tips |
+| hulk | 41% | the roaring head — 45% clipped the hair |
+| xmen | 33% | the Jean / Cyclops / Storm face row |
+| fantastic-four | 45% | Reed, the Torch, the Thing's fist |
+| moon-knight | 7% | the crescent and fist against the moon |
+| daredevil | 11% | the head, with the full moon behind it |
+
+Two of those are judgement rather than framing. The FF cover's most striking
+band is **Doom's eyes** across the top (`pos:"18%"`), and it was set there
+first; 45% is deliberate, because a banner headed by Doom reads as the wrong
+subject when the poster below it says Fantastic Four. Moon Knight's 7% drops
+the character's face entirely — the crescent held up against the moon is the
+stronger 2.8:1 strip, and the poster already shows the whole figure.
+
+Retuning one means looking at it — screenshot `#mArt`, do not reason about it.
+The geometry, if it helps you pick a starting value: the visible band is 23.8%
+of the image's height and its top edge sits at `0.762 × pos`.
 
 Two non-obvious constraints, both already bitten once:
 - `emblemSVG()` mints a **fresh gradient id per call**. Reusing one id makes every
@@ -183,17 +210,12 @@ Two non-obvious constraints, both already bitten once:
 
 Moon Knight sets `light:true`, which swapped the gold emblem ramp for an ink one —
 gold on a near-white poster is invisible. With a cover on that poster the emblem
-is gone and the flag now does nothing visible; it is kept because the subject is
-still the light one on the wall (the 2014 Shalvey cover is near-white) and
-because dropping `cover` would need it back.
-
-**Hero poster art has always shipped as relative paths in
-`comics-mobile.html`.** The inlining only ever rewrote the `"cover": "…"` keys
-in a generated `OMNI` array, and the homescreen's `cover:"…"` is hand-written,
-so these seven were never touched by it. That was correct rather than an
-oversight — both surfaces that are left resolve `Art/…` — and as of Aug 2026
-it is what the shelf covers do too, so there is no longer any difference
-between them. See "Cover paths, not data URIs".
+is gone and the flag does nothing visible. **The reason it is kept has changed**:
+it used to be that the subject was still the light one on the wall, and the new
+cover is a dark blue night piece, so that is no longer true. What is still true
+is that the flag governs the `.a-moon` fallback ramp, which is as pale as it
+ever was — dropping `cover`, or a scan that fails to load, brings the ink emblem
+back and needs it.
 
 ### How the homescreen knows your progress
 
@@ -455,7 +477,7 @@ cover image stored on each volume's page.
 python3 tools/fetch_covers.py                # every volume still missing one
 python3 tools/fetch_covers.py vs-venom-o1    # just these
 python3 tools/fetch_covers.py --all          # refetch everything, overwriting
-python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
+python3 tools/build_omnibus_data.py
 ```
 
 **Adding a scan you have locally** (better art than the wiki's, say):
@@ -463,7 +485,7 @@ python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
 ```bash
 python3 tools/covers.py add asm-o4 ~/Downloads/scan.png   # optimise + name it
 # paste the printed cover="..." line into tools/omnibus_meta.py
-python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
+python3 tools/build_omnibus_data.py
 ```
 
 `fetch_covers.py` writes the `cover=` line into `omnibus_meta.py` itself;
@@ -472,25 +494,19 @@ python3 tools/build_omnibus_data.py && python3 tools/build_single_file.py
 regenerates — that is the follow-up command.
 
 `covers.py audit` prints what every volume has, flags low-res files, and
-reports how much art the shelf carries. It used to project the finished build
-size; since the covers are no longer inlined, a shelf's art does not move the
-page size at all — the weight it reports is what a phone downloads a tile at a
-time.
+reports how much art the shelf carries. That weight is not a build budget — the
+covers are served by path — it is what a phone downloads a tile at a time.
 
-**Size used to be a hard constraint and is now only a habit.** The 16MB cap
-`build_single_file.py` enforces is the *artifact* limit, and the artifact was
-retired in Aug 2026 — GitHub Pages serves files up to 100MB. Since Aug 2026 the
-covers are not inlined either, so a scan's size no longer counts against that
-cap at all; `comics-mobile.html` is 2.2MB and the cap is only there to stop
-somebody shipping a 25MB page to a phone.
+**Size is no longer a constraint at all, only a habit.** It used to be one
+because the retired mobile build inlined every cover as base64 and enforced the
+Artifact's 16MB ceiling; both are gone, and GitHub Pages serves files up to
+100MB against a 19MB repo.
 
 The `covers.py add` re-encode to 700px wide / JPEG q82 (~150KB) stays, but as a
 choice rather than a constraint: six shelves of art at one size is worth more
-than one shelf at a sharper one, and every cover is now a separate request on a
+than one shelf at a sharper one, and every cover is a separate request on a
 phone. A genuinely better scan can be dropped in without worrying about any
-budget. For the record of why the number was originally picked: base64 cost
-~33% on top of the file, the three original ASM scans average 1.1MB, and 18 of
-those would have projected to a ~26MB build against a 16MB ceiling.
+budget.
 
 Everything is named `Art/Spider-Man/<volume-id>.jpg` — the original
 `The Amazing Spider-Man Vol1.png` style names are gone (git history still has
@@ -503,16 +519,6 @@ the Marvel Database has; `imageinfo` confirms the stored originals are that
 small, so refetching will not improve them. They look fine on a standard
 display and soft on a retina tile or in the detail banner. `covers.py audit`
 marks them `soft`. A better scan dropped in via `covers.py add` is the fix.
-
-**The mobile build no longer inlines them.** A relative `src="Art/..."`
-resolves fine on GitHub Pages and over `file://`. The artifact was the
-exception — no sibling files, and a CSP that blocked the request, so the tile
-rendered empty with no CSS fallback underneath (`artHTML()` returns the image
-*instead of* the ramp). Inlining was the only form that worked everywhere at
-once. With the artifact retired both remaining surfaces resolve the path, and
-the inlining was pure cost — it is what made `comics-mobile.html` 14.7MB rather
-than 2.2MB, and with a sixth shelf it broke the build outright. Removed
-Aug 2026; see "Cover paths, not data URIs".
 
 ### Marvel deep links
 
@@ -569,7 +575,7 @@ python3 tools/link_issues.py        # report what would link, writes nothing
 python3 tools/link_issues.py --write
 ```
 
-Then regenerate each hero and rebuild the mobile page as usual. The sweep is
+Then regenerate each hero as usual. The sweep is
 already committed (`tools/marvel_catalog.json`), so a fresh session only needs
 to re-run it to pick up issues published since.
 
@@ -851,16 +857,18 @@ ambiguous or rejected; no hit means Marvel does not have it.
   not). It also fails loudly on an unknown field, an id in `SHELF` that nothing
   defines, a volume defined but missing from `SHELF`, and an `.o-*` ramp with no
   `SPINE_C` entry.
-- `fetch_hero_art.py` — the homescreen's poster art. Pulls one cover per subject
-  from the Marvel Database into `Art/Heroes/<hero id>.jpg` through
-  `covers.save_cover`, so it is sized identically to the shelf art. `PICKS` holds
-  which cover and why. Nothing is generated from it — the `cover` field in
-  `HEROES` is hand-written — so a new pick is an edit in both places.
+- `fetch_hero_art.py` — the homescreen's poster art, and the **fallback** route
+  since all seven subjects went to hand-supplied scans. Pulls one cover per
+  subject from the Marvel Database into `Art/Heroes/<hero id>.jpg` through
+  `covers.save_cover`, so it is sized identically to the shelf art. `PICKS`
+  holds which cover and why; `SUPPLIED` lists the subjects it will not
+  overwrite without `--replace`. Nothing is generated from it — the `cover`
+  field in `HEROES` is hand-written — so a new pick is an edit in both places.
 - `covers.py` — cover art pipeline. `add <volume-id> <image>` optimises a scan
   to 700px/q82 and prints the line to paste into `omnibus_meta.py`; `audit`
-  reports every volume's cover and how much art the shelf carries. It no longer
-  projects a build size: the covers are served by path, not inlined, so a
-  shelf's art does not move the page size. Needs Pillow (`pip install Pillow`).
+  reports every volume's cover and how much art the shelf carries — a download
+  weight, not a build budget; there is no build. Needs Pillow
+  (`pip install Pillow`).
 - `fetch_covers.py` — pulls cover art from the Marvel Database and writes the
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
@@ -878,23 +886,17 @@ ambiguous or rejected; no hit means Marvel does not have it.
 - `marvel_ids.json` — id → marvel.com path fragment, **shared by all three heroes**.
   `build_omnibus_data.py` splices it in as `MARVEL`, so a harvest lands by
   regenerating, not by editing the HTML.
-- `build_single_file.py` — composes every page into `comics-mobile.html`. It
-  reads the shelf heroes out of `heroes.py`, so adding one needs no edit here.
-  Covers are checked, not inlined (Aug 2026) — see "The mobile build" below.
-
 **`OMNI` and `MARVEL` in the HTML are generated — do not hand-edit them.** Change
 `omnibus_meta.py` (or `marvel_ids.json`) and regenerate. The serialization is pinned to
 `json.dumps(arr, indent=0, ensure_ascii=False)` with a fixed key order
 (`KEY_ORDER`) precisely so a regen shows a small diff instead of reshuffling
 every entry.
 
-A full shelf change is three commands:
+A full shelf change is two commands:
 
 ```bash
-python3 tools/build_omnibus_data.py              # omnibus_meta.py -> OMNI in the tracker
-python3 tools/build_omnibus_data.py --hero hulk  # hulk_meta.py    -> OMNI in the tracker
-python3 tools/build_single_file.py               # every page -> comics-mobile.html
-python3 tools/build_omnibus_data.py --check      # confirm it round-trips
+python3 tools/build_omnibus_data.py --hero hulk  # hulk_meta.py -> OMNI in the tracker
+python3 tools/build_omnibus_data.py --check --hero hulk   # confirm it round-trips
 ```
 
 Note that a harvest touches **every** hero, not one: `marvel_ids.json` is
@@ -902,7 +904,6 @@ shared, so `link_issues.py --write` means regenerating all six trackers, not
 just the shelf you were working on.
 
 All of these take `--hero <key>`; without one they act on Spider-Man.
-`build_single_file.py` does not, because it always rebuilds every page.
 
 ### Adding an omnibus hero
 
@@ -968,9 +969,9 @@ harvest. Roughly in order:
    17 reported-ambiguous issues into 17 matched, with no code change.
 7. **Generate and publish**: `fetch_covers.py --hero <key>`,
    `build_omnibus_data.py --hero <key>` (in that order — fetch writes the
-   `cover=` lines the generator reads), `build_single_file.py`, then flip the
-   `HEROES` entry in `index.html` and set its `total` to the unique-issue count
-   the generator printed.
+   `cover=` lines the generator reads), then flip the `HEROES` entry in
+   `index.html` and set its `total` to the unique-issue count the generator
+   printed.
 8. **Ship it.** Commit, push, open the PR and merge it to `main` without
    checking in first — see "Shelf work ships itself" under "Working on this".
    The shelf is not done until Pages is serving it.
@@ -1351,8 +1352,8 @@ If any volume is ever re-pulled, re-apply all three.
 
 One entry is deliberately non-ASCII: `Wolverine Vol 2 ½`. That is the printed
 issue number, and the Spider-Man shelf already carries `Ultimate Spider-Man Vol 1
-½`. Pure ASCII is a `comics-mobile.html` build-time constraint, not a
-raw-contents one — the builder escapes it.
+½`. The pure-ASCII rule that used to constrain this was the retired mobile
+build's, not a raw-contents one, and it is gone with it.
 
 ### Chaptering
 
@@ -1845,125 +1846,48 @@ Non-obvious placements that are deliberate, not mistakes:
 - Adding a chapter: it also needs an `ARC_SUMS[chapterId]` entry, or the arc
   button falls through to a live web lookup.
 
-## The mobile build (`comics-mobile.html`)
+## The mobile build is retired (Aug 2026)
 
-`tools/build_single_file.py` composes every page into one. The sources are never
-modified — everything below is done at build time.
+`comics-mobile.html` and `tools/build_single_file.py` are **deleted**. Do not
+recreate them.
 
-Routes: `#/` home, `#/xmen`, `#/spider-man`, `#/spider-man/omni/<id>`, `#/hulk`,
-`#/hulk/omni/<id>`, `#/fantastic-four`, `#/fantastic-four/omni/<id>`,
-`#/wolverine`, `#/wolverine/omni/<id>`, `#/moon-knight`,
-`#/moon-knight/omni/<id>`, `#/daredevil`, `#/daredevil/omni/<id>`.
+The file composed all seven pages into one hash-routed document, and it existed
+for exactly one reason: a Claude Artifact is one file per URL, so publishing the
+site as an artifact meant publishing it as a single file. That artifact was
+retired earlier in Aug 2026 (see below), which left the build generating a
+second copy of a site that GitHub Pages was already serving page by page —
+another surface to keep in sync, its own `localStorage` origin, and roughly a
+thousand lines of scoping machinery to stop the composed pages colliding.
 
-**The builder is registry-driven, not hardcoded.** `_apps()` reads the shelf
-heroes out of `heroes.py`; the panel list, the cross-page link rewrites, the
-`ROUTE_OF` map the homescreen navigates by, the per-hero hash prefix and the
-shell router's panel set are all derived from it. Adding an omnibus hero needs
-no edit here — register it in `heroes.py` and rebuild.
+Pages was always the phone story anyway. `index.html` and every tracker are
+responsive with a 600px breakpoint; the homescreen renders as a two-column
+poster grid at 390px with no horizontal scroll. Nothing linked to
+`comics-mobile.html` from any page, so removing it broke no navigation.
 
-### What the build has to solve
+What went with it, so nobody reintroduces a constraint that no longer exists:
 
-- **CSS class names collide** across the source files with *different* values
-  (`.wrap` is 960px vs 1120px, `.x-emblem` is blue vs red, `.tex-web` differs).
-  Each stylesheet is scoped under its own `#app-<key>` panel. `:root`, the
-  reset, `body` and the bubbles are hoisted once. `body.hideopt` is special-cased
-  so the X-Men "hide optional arcs" toggle still works.
-- **DOM ids collide** (`statRead`, `upnext`, `shelf`, …). Every id is
-  prefixed per app in the markup, in the JS that looks it up, **and in the CSS
-  that targets it**;
-  `document.getElementById/querySelector(All)` are rewritten to prefix-aware
-  helpers scoped to the panel.
+- **The pure-ASCII rule.** The artifact wrapper owned `<head>`, so the composed
+  page carried no `<meta charset>` and had to be emitted as pure ASCII. Source
+  pages declare their own charset; en-dashes and `½` are fine.
+- **The 16MB ceiling**, and with it the last argument against a large cover
+  scan. See "Cover art".
+- **The three artifact workarounds** the builder still applied to a page nobody
+  published as an artifact: forcing every tracker onto its "no key" summary
+  path (rewriting `if(!IN_CLAUDE){` to `if(true){` in `askClaude`), hiding the
+  homescreen gear, and rewiring the Back up button to `window.__COMICS_SAVE()`
+  because `<a download>` was inert in the viewer. That was open item 10; it is
+  closed by deletion. The standalone pages never had any of it — live summaries
+  and the download link work on Pages.
+- **`panel`, `pfx` and `route` in `heroes.py`.** Only the builder read them.
 
-  The CSS half was missing until Aug 2026 and failed in the worst way. Scoping a
-  rule under its panel is not enough: `#storeWarn{display:none}` became
-  `#app-ff #storeWarn`, which matches nothing once the div is `f4-storeWarn`, so
-  the element fell back to `display:block`. Three of the four panels shipped a
-  permanent "Progress isn't saving in this browser" banner over a `localStorage`
-  that was working perfectly. `scope_selector()` now rewrites `#id` in selector
-  headers the same way `prefix_ids_html()` rewrites the markup. Nothing else in
-  the four pages uses a bare id selector, but anything that does will now work.
+Two bugs it found are worth keeping, because both are the same shape and the
+shape recurs anywhere ids get rewritten: scoping *one half* of an id pair is
+worse than scoping neither, because it fails silently. Prefixing `#storeWarn`
+in the markup but not in the CSS that hid it shipped a permanent "Progress
+isn't saving" banner over a working `localStorage`; renaming
+`<linearGradient id="hg">` but not `fill="url(#hg)"` made every HUD emblem draw
+as a bare orb, since an unresolvable paint server renders as *no paint*.
 
-  Note the asymmetry that hid it: the X-Men page writes its equivalent
-  `display:none` as an inline `style=` attribute, so it was never affected and
-  the bug looked page-specific rather than structural.
-- **An SVG paint reference is an id reference**, and prefixing only the
-  definition breaks it. `prefix_ids_html()` renamed `<linearGradient id="hg">`
-  to `id="wv-hg"` and left `fill="url(#hg)"` alone; an unresolvable paint
-  server renders as *no paint*, so every HUD emblem — claws, spider, fist, the
-  4 — and the homescreen's poster gradient drew as bare orbs in
-  `comics-mobile.html` while looking perfect in the standalone pages. Fixed
-  Aug 2026, and it now also rewrites `href="#id"`. `check_id_refs()` fails the
-  build if markup references an id nothing defines, which is the comparison
-  that was missing the whole time.
-
-  Exactly the same shape as the `scope_selector()` bug above: scoping one half
-  of a pair is worse than scoping neither, because it fails silently. Note that
-  only the markup half reaches `prefix_ids_html()` — `body_html()` stops at
-  `<script>` — so the glyph SVGs that mint their own ids at runtime were never
-  involved and were always fine.
-- **Top-level JS names collide wholesale** (`SC`, `MARVEL`, `store`, `refresh`,
-  `flat`, `esc`…). Each script is wrapped in an IIFE, so nothing leaks.
-
-### Three artifact-environment constraints — now vestigial
-
-**The artifact was retired in Aug 2026** (see "The Claude Artifact is retired"
-below). There were four workarounds; **the cover-inlining one is gone** (see
-"Cover paths, not data URIs" below). Three are still applied on every build.
-Two of them are merely unnecessary now; one of them actively costs something on
-GitHub Pages, which is the only surface left:
-
-- **#2 is the expensive one.** Live per-issue summaries work fine from Pages —
-  there is no CSP there — but the builder still forces the "no key" path on
-  every tracker, so the mobile page ships a feature it disables for no reason.
-  That is the remaining half of open item 10.
-
-Until someone undoes it, the three still read as written:
-
-1. **No `<meta charset>`** — the Artifact wrapper owns `<head>`, so the page is
-   emitted as **pure ASCII** (entities in HTML, `\uXXXX` in JS, `\XXXX ` in CSS).
-   Without this, en-dashes and middots render as mojibake. The builder asserts
-   zero non-ASCII bytes before writing.
-2. **CSP blocks external requests** — every live summary call to
-   `api.anthropic.com` is impossible in the artifact, on every tracker.
-   The builder forces the existing "no key" path on each and rewrites what it
-   says, and hides the homescreen gear (an inert settings gear is worse than
-   none). All 27 X-Men arc digests still work; they were always offline.
-
-   **Stubbing `getKey()` is not sufficient on its own.** Inside Claude
-   `window.storage` exists, so `IN_CLAUDE` is true and `askClaude` skips the key
-   check altogether — it would fetch and die at the CSP with a raw network error
-   instead of the written explanation. The builder therefore also rewrites
-   `if(!IN_CLAUDE){` to `if(true){` in `askClaude`. Both patches go through
-   `must()`, which **fails the build** rather than silently no-opping if the
-   tracker source drifts — that silent no-op is exactly how a broken artifact
-   would ship.
-3. **`<a download>` is inert in the viewer** — so the Back up button would
-   silently do nothing, which matters because export/import *is* the
-   cross-device story. Both trackers' exports are rewired to
-   `window.__COMICS_SAVE()`, which uses the `downloads` capability
-   (`claude.use("downloads")` → `save({filename,data})`), falls back to the
-   clipboard, and uses an ordinary blob link when running locally.
-   The artifact must therefore be published with `capabilities: {downloads:true}`.
-### Cover paths, not data URIs
-
-The fourth workaround used to sit here: the artifact had no sibling files and a
-CSP that blocked the request, so `src="Art/..."` rendered as an empty tile with
-no CSS fallback underneath (`artHTML()` returns the image *instead of* its
-ramp). Every cover was therefore inlined as a base64 data URI, at ~33% on top
-of each file.
-
-**That stopped being sustainable when the Daredevil shelf landed** and is now
-removed. Six shelves of inlined art projected to **17.7MB against the 16MB
-ceiling the builder enforces**, i.e. the build simply failed — exactly what
-open item 10 predicted a sixth shelf would do. Dropping the inlining took
-`comics-mobile.html` from **14.7MB to 2.2MB**.
-
-What replaced it is `check_covers()`, which keeps the half that was always
-worth having: a `cover` path that does not resolve fails the build loudly
-instead of shipping an empty tile. **The 16MB ceiling stays** — it is the only
-thing stopping anyone shipping a 25MB page to a phone — but nothing is near it
-now. `covers.py audit` no longer projects a build size either; it reports the
-art's own weight, which is what a phone downloads a tile at a time.
 
 ### Progress does not sync
 
@@ -2022,23 +1946,12 @@ a server-side store and is not built.
    **Settled Aug 2026** — the full catalog holds 21 of its 36 issues, so the
    other 15 were pulled from marvel.com rather than missed by a harvest. Only
    #7 is still on the shelf unlinked.
-10. **Half done Aug 2026.** `build_single_file.py` applied four artifact
-    workarounds to a page no longer published as an artifact, and two of them
-    cost something on GitHub Pages.
-
-    ~~It inlines every cover as a base64 data URI.~~ **Removed** — the
-    Daredevil shelf forced it, because six shelves of inlined art projected to
-    17.7MB against the 16MB ceiling and the build failed outright, exactly as
-    this item predicted. `inline_covers()` is now `check_covers()`, which only
-    verifies the paths resolve; `comics-mobile.html` went 14.7MB → 2.2MB. The
-    ceiling stays. See "Cover paths, not data URIs".
-
-    **Still open: it disables the live summary lookups**, which work fine from
-    Pages — that is patch #2 plus the `if(!IN_CLAUDE)` rewrite and the hidden
-    homescreen gear. Undoing it is a contained change in `patch_app()` and
-    would make the mobile page as capable as the standalone ones. Nothing
-    forces it, so it has waited. The ASCII-only pass and the `__COMICS_SAVE`
-    download rewire are harmless and can stay.
+10. ~~The mobile build applies artifact workarounds to a page nobody publishes
+    as an artifact.~~ **Closed Aug 2026 by deleting the build.** Both halves
+    went at once: the cover inlining came off when six shelves of it projected
+    past the 16MB ceiling, and the rest — the disabled live summaries, the
+    hidden homescreen gear, the ASCII pass — went with `comics-mobile.html`
+    itself. See "The mobile build is retired".
 11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the six
     shelves are at 93–99% (Spider-Man 558/564, Hulk 652/659, Fantastic Four
     643/661, Wolverine 627/636, Moon Knight 243/260, Daredevil 587/590). The
@@ -2069,9 +1982,8 @@ for real.
 Verify changes with:
 
 ```bash
-# JS syntax. Note a tracker has ONE <script>, but index.html and
-# comics-mobile.html have several -- concatenating only the first checks
-# almost nothing on those two, so join them all.
+# JS syntax. Note a tracker has ONE <script> but index.html has several --
+# concatenating only the first checks almost nothing there, so join them all.
 node -e "const fs=require('fs');const p=fs.readFileSync('index.html','utf8').split('<script>');
   let js='';for(let i=1;i<p.length;i++)js+='\n;{\n'+p[i].split('<\/script>')[0]+'\n}\n';
   fs.writeFileSync('/tmp/v.js',js)"
@@ -2098,9 +2010,6 @@ python3 tools/covers.py audit --hero wolverine
 python3 tools/covers.py audit --hero moon-knight
 python3 tools/covers.py audit --hero daredevil
 
-# The mobile build must stay pure ASCII
-python3 -c "print(sum(b>127 for b in open('comics-mobile.html','rb').read()))"   # 0
-
 # Data integrity (counts, duplicate ids, ARC_SUMS coverage) — see git history
 # or re-derive: eval the data section and assert every chapter has a digest.
 ```
@@ -2113,10 +2022,6 @@ issues**; the Moon Knight shelf **7 volumes / 260 issue slots / 260 unique
 issues**; the Daredevil shelf **17 volumes / 590 issue slots / 590 unique
 issues**. If a change moves those numbers without meaning to, something is
 wrong.
-
-`comics-mobile.html` should build to about **2.2MB**. If it comes out near
-14MB, something has restored the cover inlining — see "Cover paths, not data
-URIs".
 
 For the look of a page, screenshot it rather than reasoning about it. Chromium
 is preinstalled at `/opt/pw-browsers/chromium`; `pip install playwright` and
@@ -2137,7 +2042,6 @@ folder on one machine as the real project.
     git pull                              # before touching anything
     …edit…
     python3 tools/build_omnibus_data.py   # if tools/omnibus_meta.py changed
-    python3 tools/build_single_file.py    # if any page changed
     git add -A && git commit && git push
 
 Then publish — a push alone changes nothing anyone can see. See "Seeing a
@@ -2154,7 +2058,7 @@ including the person who asked for it.
 
 That covers the whole routine pipeline: standing up a new hero's shelf, adding
 or dropping a volume, re-pulling contents, refreshing covers, harvesting ids,
-and the regenerate-and-rebuild that follows any of them. Report what shipped
+and the regenerate that follows any of them. Report what shipped
 afterwards rather than asking first.
 
 Two things are still worth asking about, because they are judgement calls the
@@ -2166,10 +2070,10 @@ tools cannot make:
   or bumping a storage-key version. Those are irreversible for whoever has been
   reading.
 
-`comics-mobile.html` is generated but **is committed** — GitHub Pages serves it
-and does not run a build step. A commit that changes `index.html` or any tracker
-page without a matching rebuild ships a stale mobile page. Rebuild in the same
-commit.
+**There is no build step for a page.** GitHub Pages serves the repo root and
+runs nothing, so editing a page and committing it is the whole job. The one
+generated thing left is a shelf's `OMNI`/`MARVEL` data inside a tracker —
+regenerate that in the same commit as the `tools/<hero>_meta.py` change.
 
 ### Two published surfaces, two separate progress stores
 
@@ -2237,12 +2141,10 @@ What retiring it changes, and what it does not:
   add` still re-encodes to 700px/q82, because consistency across six shelves is
   worth more than sharpness on one, but that is now a choice rather than a
   constraint, and a better scan can simply be dropped in.
-- **Relative image paths work.** `Art/…` resolves fine from Pages, and as of
-  Aug 2026 the builder ships those paths instead of inlining the covers, which
-  took the mobile build from 14.7MB to 2.2MB.
-- **`build_single_file.py` still applies three of the four artifact
-  workarounds**, and one of them costs something rather than nothing — the live
-  summary lookups it disables would work on Pages. See "The mobile build"
-  below. Undoing that is the remaining half of open item 10.
-- **Nothing else.** `comics-mobile.html` is still generated and still committed.
-  It reads well on a phone straight from Pages, which is what it was for.
+- **Relative image paths work.** `Art/…` resolves fine from Pages, which is why
+  every cover is a path rather than a base64 data URI.
+- **It took `comics-mobile.html` down with it, eventually.** That file existed
+  only because an artifact is one file per URL. It outlived the artifact by a
+  few weeks and was deleted in the same month — see "The mobile build is
+  retired". Pages serves the seven pages directly and they are responsive, so
+  nothing replaced it.

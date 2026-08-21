@@ -9,7 +9,7 @@ Same source and the same downscale pipeline as the shelf covers
 sized identically. The difference is where it lands and how it is wired:
 
   * files go to Art/Heroes/<hero id>.jpg
-  * nothing is generated from them -- the `art` field in HEROES in index.html
+  * nothing is generated from them -- the `cover` field in HEROES in index.html
     is hand-written, so a new pick means editing PICKS here and that entry there
 
     python3 tools/fetch_hero_art.py            # everything missing
@@ -19,6 +19,13 @@ sized identically. The difference is where it lands and how it is wired:
 The pick is a curation call, not something a tool can make: one cover that says
 "this is the subject" at poster size, era-appropriate to the reading list where
 a famous cover exists in that era. Reasoning per hero is in the table below.
+
+Since Aug 2026 none of the live poster art comes from here. All seven subjects
+carry art the user supplied by hand (the painted pieces in Art/covers/), which
+is better than the wiki's scans for this job: no logo, no barcode and no trade
+dress competing with the poster plate. So PICKS below is the fallback route,
+not a description of what is on the wall -- every hero is listed in SUPPLIED
+and this tool refuses to overwrite them without --replace.
 """
 import json, os, sys, urllib.parse, urllib.request
 
@@ -56,6 +63,11 @@ PICKS = {
 }
 
 
+# Subjects whose live poster art was supplied by hand rather than fetched here.
+# --all skips these; --replace overrides, which discards the user's scan.
+SUPPLIED = set(PICKS)
+
+
 def get(url):
     return urllib.request.urlopen(
         urllib.request.Request(url, headers={"User-Agent": UA}), timeout=60).read()
@@ -87,7 +99,8 @@ def main(argv):
     import covers, io
     covers.ART = ART               # save_cover writes here instead of a shelf dir
 
-    force = "--all" in argv
+    force   = "--all" in argv
+    replace = "--replace" in argv
     want = [a for a in argv if not a.startswith("-")]
     bad = [w for w in want if w not in PICKS]
     if bad:
@@ -96,8 +109,15 @@ def main(argv):
     if not force:
         todo = [h for h in todo
                 if not os.path.exists(os.path.join(ART, h + ".jpg"))]
+    if not replace:
+        held = [h for h in todo if h in SUPPLIED]
+        if held:
+            print("hand-supplied art, left alone: %s" % ", ".join(held))
+            print("  (pass --replace to overwrite it with the wiki's pick)")
+        todo = [h for h in todo if h not in SUPPLIED]
     if not todo:
-        print("every subject already has poster art -- pass --all to refetch")
+        print("nothing to fetch -- pass --all to refetch, --replace to "
+              "overwrite hand-supplied art")
         return
 
     ok, failed = [], []
@@ -125,7 +145,9 @@ def main(argv):
         print("\nwire them into HEROES in index.html as:")
         for hid, rel in ok:
             print('  cover:"%s",' % rel)
-        print("\nthen:  python3 tools/build_single_file.py")
+        print("\nthen screenshot the dossier banner and retune `pos` -- the "
+              "banner is a 2.8:1\nslot cut out of a 2:3 page, so the crop is "
+              "per-cover.")
 
 
 if __name__ == "__main__":

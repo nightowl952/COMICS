@@ -16,7 +16,7 @@ Downloads, downscales through covers.save_cover (so art from here is the same
 size as art added by hand), and writes the cover= line into omnibus_meta.py.
 It does NOT regenerate -- finish with:
 
-    python3 tools/build_omnibus_data.py --hero <key> && python3 tools/build_single_file.py
+    python3 tools/build_omnibus_data.py --hero <key>
 """
 import json, os, re, sys, time, urllib.parse, urllib.request
 
@@ -136,7 +136,7 @@ def main(argv):
     if failed:
         print("failed: %s" % ", ".join(failed))
     print("\nnow run: python3 tools/build_omnibus_data.py --hero %s"
-          " && python3 tools/build_single_file.py" % hero["key"])
+          % hero["key"])
 
 
 if __name__ == "__main__":

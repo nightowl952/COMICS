@@ -17,7 +17,8 @@ works opened straight off disk.
 | `hulk-reading-tracker.html` | Hulk: 17 mainline Bruce Banner omnibuses, same shape. |
 | `fantasticfour-reading-tracker.html` | Fantastic Four: 18 omnibuses, plus the Thing's solo book and Doctor Doom's. |
 | `wolverine-reading-tracker.html` | Wolverine: 14 omnibuses of Logan's own books, including Uncanny X-Force. |
-| `comics-mobile.html` | Generated. All five pages composed into one hash-routed file. **Do not hand-edit.** |
+| `moonknight-reading-tracker.html` | Moon Knight: all 7 omnibuses Marvel has printed, same shape. |
+| `daredevil-reading-tracker.html` | Daredevil: 17 omnibuses of Matt Murdock's own books. |
 | `tools/` | The generators and the marvel.com ID harvester. |
 | `CLAUDE.md` | The full working notes — architecture, data provenance, every constraint already learned the hard way. Read this before changing anything. |
 
@@ -25,9 +26,10 @@ works opened straight off disk.
 
 - **Live:** <https://nightowl952.github.io/COMICS/>
 
-`comics-mobile.html` is served from there too, as a phone-friendly single-page
-version of the whole site. It was previously also published as a Claude
-Artifact; that is retired as of August 2026 and is no longer updated.
+Every page is responsive and reads fine on a phone straight from there. There
+used to be two other surfaces and both are retired: a Claude Artifact, and
+`comics-mobile.html`, a generated single-file build of the whole site that
+existed to fit the Artifact's one-file-per-URL rule. Both went in August 2026.
 
 A local copy keeps its own reading progress, separate from the live site — see
 "Progress" below.
@@ -46,12 +48,15 @@ python3 -m http.server
 
 ## Changing a page
 
-```bash
-python3 tools/build_single_file.py
-```
+Edit it and commit — there is no build step, and GitHub Pages doesn't run one.
 
-Run that after editing any of the five source pages, and commit the regenerated
-`comics-mobile.html` alongside it — GitHub Pages doesn't run a build.
+The exception is a shelf's data: the `OMNI` and `MARVEL` blocks in an omnibus
+tracker are generated, so change `tools/<hero>_meta.py` and regenerate rather
+than hand-editing the page:
+
+```bash
+python3 tools/build_omnibus_data.py --hero <key>
+```
 
 ## Progress
 
