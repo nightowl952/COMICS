@@ -72,6 +72,21 @@ HEROES = {
         pfx     = "mk",
         route   = "/moon-knight",
     ),
+    "daredevil": dict(
+        name    = "Daredevil",
+        tracker = "daredevil-reading-tracker.html",
+        art     = os.path.join("Art", "Daredevil"),
+        meta    = "daredevil_meta",
+        raw     = "daredevil_contents_raw.json",
+        # the same shared store again -- this shelf collects Amazing
+        # Spider-Man, Spectacular Spider-Man, Marvel Comics Presents, Fantastic
+        # Four, Iron Man and Avengers issues the other five shelves already
+        # reach for, so an overlap resolves without being harvested twice.
+        ids     = "marvel_ids.json",
+        panel   = "dd",
+        pfx     = "dd",
+        route   = "/daredevil",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",

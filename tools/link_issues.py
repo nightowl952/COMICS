@@ -99,6 +99,18 @@ REPRINT_LINE = re.compile(
     r"mgc|omnibus|infinity comic)\b", re.I)
 
 
+# The issue-number equivalent of ALIAS, keyed by shelf issue id. Same
+# last-resort status and the same reason: not a spelling difference, the two
+# sources genuinely numbering one comic differently. The Marvel Database files
+# the 1989 Daredevil annual as "#4B" because its cover reprints the number 4;
+# marvel.com numbers the run straight through and calls it #5. Keep this SHORT
+# -- an unmatched issue is reported by name at the end of every run, so nothing
+# lands here silently.
+NUM_ALIAS = {
+    "ddann-4B": "5",
+}
+
+
 def name_keys(title):
     """Every way a catalog series title might be written on a shelf.
 
@@ -117,13 +129,19 @@ def name_keys(title):
 
 
 def numkey(n):
-    """Issue numbers arrive as 5, '5', '5.1', '1/2'. Compare as text."""
+    """Issue numbers arrive as 5, '5', '5.1', '5.50', '1/2'. Compare as text.
+
+    Trailing zeros after the point are the trap. The wiki writes Daredevil
+    (2014) #1.50 where the catalog stores 1.5, and an exact string compare
+    misses a link that is sitting right there -- so normalise any decimal, not
+    just the ".0" case.
+    """
     if n is None:
         return None
-    s = str(n).strip()
-    if s.endswith(".0"):
-        s = s[:-2]
-    return s.replace("½", "0.5").replace("1/2", "0.5")
+    s = str(n).strip().replace("½", "0.5").replace("1/2", "0.5")
+    if re.fullmatch(r"-?\d+\.\d+", s):
+        s = s.rstrip("0").rstrip(".")
+    return s
 
 
 def era_range(era):
@@ -171,7 +189,8 @@ def shelf_issues():
                     yr = re.search(r"\((\d{4})\)", it["s"])
                     out.append(dict(hero=hero, vol=o["id"], id=it["id"],
                                     t=it["t"], s=it["s"], pfx=pfx,
-                                    num=numkey(num), link=mar.get(it["id"]),
+                                    num=NUM_ALIAS.get(it["id"]) or numkey(num),
+                                    link=mar.get(it["id"]),
                                     year=int(yr.group(1)) if yr else None,
                                     era=era_range(o.get("era"))))
     return out

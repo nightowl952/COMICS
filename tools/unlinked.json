@@ -608,6 +608,54 @@
   "sid": null
  },
  {
+  "hero": "daredevil",
+  "vol": "nocenti-o2",
+  "id": "mhs-1992",
+  "t": "Marvel Holiday Special #1992",
+  "s": "Marvel Holiday Special",
+  "pfx": "mhs",
+  "num": "1992",
+  "link": null,
+  "year": null,
+  "era": [
+   1989,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "daredevil",
+  "vol": "bendis-o2",
+  "id": "wikp-1",
+  "t": "What If Karen Page Had Lived? #1",
+  "s": "What If Karen Page Had Lived?",
+  "pfx": "wikp",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2001,
+   2006
+  ],
+  "sid": null
+ },
+ {
+  "hero": "daredevil",
+  "vol": "waid-o1",
+  "id": "bshot-1",
+  "t": "Big Shots Spotlight #1",
+  "s": "Big Shots Spotlight",
+  "pfx": "bshot",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2011,
+   2013
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",
