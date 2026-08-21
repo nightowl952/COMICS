@@ -167,11 +167,21 @@ def tiebreak(hit, it, sers):
     """
     yrs = {c: series_years(sers.get(str(c), "")) for c in hit}
     lo, hi = it["era"] or (0, 9999)
+    def overlap(c):
+        """Years the series and the volume's era share."""
+        if not yrs[c]:
+            return 0
+        return max(0, min(yrs[c][1], hi) - max(yrs[c][0], lo) + 1)
+
+    best = max((overlap(c) for c in hit), default=0)
     rules = [
         # the shelf named a year ("Spider-Man 2099 (2014)") -- trust it first
         lambda c: it["year"] and yrs[c] and yrs[c][0] <= it["year"] <= yrs[c][1],
-        # else the series has to have been running while the volume was set
-        lambda c: yrs[c] and yrs[c][0] <= hi and yrs[c][1] >= lo,
+        # else the series running for MOST of the volume's span is the one it
+        # collects. Plain overlap is not enough: Avengers (2010-2012) and
+        # Avengers (2012-2015) both touch a 2012-2014 volume, but only one of
+        # them was the book for three of those years.
+        lambda c: best and overlap(c) == best,
         # a revival continuing the old numbering beats a later reboot
         lambda c: yrs[c] and yrs[c][0] == min(
             v[0] for v in yrs.values() if v),
