@@ -32,12 +32,13 @@ CAT = os.path.join(HERE, "marvel_catalog.json")
 SER = os.path.join(HERE, "marvel_series.json")
 IDS = os.path.join(HERE, "marvel_ids.json")
 
-TRACKERS = {
-    "spider-man": "spiderman-reading-tracker.html",
-    "hulk": "hulk-reading-tracker.html",
-    "fantastic-four": "fantasticfour-reading-tracker.html",
-    "wolverine": "wolverine-reading-tracker.html",
-}
+# Read from the hero registry, not a list here -- a shelf added to heroes.py
+# has to be picked up without anyone remembering to edit this file. Silently
+# skipping a hero is the exact failure this tool exists to end.
+sys.path.insert(0, HERE)
+import heroes                                                    # noqa: E402
+
+TRACKERS = {k: h["tracker"] for k, h in heroes.HEROES.items()}
 
 
 def load(p, d=None):
