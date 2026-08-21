@@ -33,8 +33,10 @@ Keep replies short and plain. This is a hobby project, not a code review.
 
 - `index.html` — the C.O.M.I.C.S. homescreen. Poster grid, Continue Reading panel,
   per-subject dossier modal, filters.
-- `xmen-reading-tracker.html` — the X-Men Messiah Saga protocol. A single curated
-  chronological read, grouped into acts → chapters → issues.
+- `xmen-reading-tracker.html` — the X-Men Messiah Saga protocol. Same omnibus
+  shelf shape as the other six, but the four books on it were **never printed**
+  — see "The X-Men tracker". Its `OMNI` array is hand-written in the page, not
+  generated: there is no `tools/xmen_meta.py` and no wiki page to pull from.
 - `spiderman-reading-tracker.html` — the Spider-Man omnibus shelf. A different
   shape: a shelf of omnibus volumes rendered as CSS-3D hardcover books, each
   opening into its own reading list. Its `OMNI` array is **generated** from
@@ -76,18 +78,26 @@ Every file is individually self-contained (data, styles, logic, artwork) on
 purpose. Keep it that way — portability is the point. The only thing that crosses
 a file boundary is the small storage record described under "Homescreen" below.
 
-## Two tracker shapes
+## One tracker shape, two ways of filling it
 
-There are two ways a hero's tracker can be organised. Pick per hero:
+**All seven subjects are omnibus shelves** (Aug 2026): a shelf of volumes
+rendered as CSS-3D hardcover books, each opening into its own chapter list. Two
+views in one file, hash-routed (`#/omni/<id>`). What differs is where a shelf's
+data comes from:
 
-- **Curated chronology** (X-Men) — one researched reading order through a single
-  saga. Acts → chapters → issues, all on one page.
-- **Omnibus shelf** (Spider-Man, Hulk, Fantastic Four, Wolverine, Moon Knight,
-  Daredevil) —
-  a poster shelf of omnibus volumes, each reproducing exactly what the printed
-  book collects, in print order. Two views in one file, hash-routed
-  (`#/omni/<id>`). Six heroes use this shape; the whole pipeline behind it is
-  hero-agnostic — see "Adding an omnibus hero".
+- **Wiki-backed** (Spider-Man, Hulk, Fantastic Four, Wolverine, Moon Knight,
+  Daredevil) — each volume reproduces exactly what the printed book collects, in
+  print order, pulled from the Marvel Database. `OMNI` is **generated** from a
+  `tools/<hero>_meta.py`; the whole pipeline behind it is hero-agnostic — see
+  "Adding an omnibus hero".
+- **Hand-curated** (X-Men) — one researched chronological reading order, cut
+  into four books that do not exist. `OMNI` is hand-written in the page, because
+  there is no printed edition to pull. See "The X-Men tracker".
+
+The X-Men page was a single flat six-act chronology until Aug 2026. Reshaping it
+kept every chapter, note, tier and issue id exactly as it was, which is why
+progress logged against the old page still reads correctly on the new one — the
+volumes are a regrouping of the same 27 chapters, nothing more.
 
 ### A shelf holds books you can actually buy
 
@@ -109,6 +119,16 @@ pull.
 
 The omnibus shape is what to copy when the goal is "read the collections as
 published" rather than "read this story in the right order".
+
+**The X-Men shelf breaks this rule on purpose, and it is the only one allowed
+to.** All four of its volumes are mock-ups of books Marvel has never printed, so
+the rule's whole premise — that a tile stands for something a reader can go and
+buy — does not apply. What replaces it is being loud about it: an amber
+"Never printed" badge on every tile, "0 in print" in the shelf count, "never
+printed" where the other shelves print a release date, and a standing note above
+the shelf. If a future subject gets the same treatment, copy that honesty along
+with the shape. It is not a licence to slip a solicited-but-unshipped book onto
+a real shelf — that is still forbidden.
 
 ## Adding a hero
 
@@ -1859,13 +1879,39 @@ missing for the Wolverine shelf), Big Shots Spotlight #1 (already missing for
 Moon Knight's) and What If Karen Page Had Lived? #1.
 
 
-## The X-Men tracker
+## The X-Men tracker (a shelf of books that don't exist)
 
 ### What it does
 
-Tracks 174 comic issues across 27 story arcs, grouped into 6 acts, in a
-researched chronological reading order (not publication order). Per issue you
-can: mark read, mark skipped, open it on Marvel, or pull a spoiler summary.
+Tracks 174 comic issues across 27 story arcs in a researched chronological
+reading order (not publication order), shelved as **four omnibuses Marvel has
+never printed**. Per issue you can: mark read, mark skipped, open it on Marvel,
+or pull a spoiler summary.
+
+### The four volumes
+
+Marvel has collected almost none of this era and no part of it in omnibus, so
+these are mock-ups. The cut points are the only new curation — everything inside
+them is the reading order the page already had.
+
+| Vol | Book | Chapters | Issues | Covers |
+|---|---|---|---|---|
+| 1 | X-Men: Divided We Stand Omnibus | `c-leg1` → `c-unc2` | 38 | the fallout of Messiah Complex, X-Force forming, the move to San Francisco |
+| 2 | X-Men: Messiah War Omnibus | `c-cab2` → `c-cab3` | 49 | the road into the middle chapter, the crossover itself, and its aftermath |
+| 3 | X-Men: Utopia Omnibus | `c-leg4` → `c-leg5` | 42 | Osborn, the founding of Utopia, Nation X |
+| 4 | X-Men: Second Coming Omnibus | `c-nec` → `c-sc` | 45 | Necrosha, Cable and Hope's homecoming, the finale |
+
+**The volume boundaries do not follow the old act boundaries**, and that was
+deliberate. Splitting on the six acts gave 66 / 21 / 64 / 23 — two books too fat
+to bind and two too thin to call omnibuses. Cutting mid-Act-II and mid-Act-V
+instead gives four books of real omnibus size, and each still has one clean
+identity. The acts are gone as a structure; their titles survive in the volume
+names.
+
+The trilogy framing is why there are four books rather than three: Messiah
+Complex itself is *not* on this shelf. The read opens with X-Men Legacy #208,
+which resolves Xavier's head wound from Complex's last pages — so the shelf is
+the trilogy's second and third chapters plus everything between and around them.
 
 ### Architecture
 
@@ -1873,17 +1919,33 @@ All inside the single `<script>` block, in this order:
 
 1. `SC` — series → cover gradient colors
 2. `seq()` — helper that generates runs of consecutive issues
-3. `ACTS` — **the master data structure.** Array of 6 acts → `chapters` →
-   `issues`. Each chapter has `{id, title, era, tier, note, issues[]}`.
-   Each issue has `{id, t (title), s (series), arc, key?}`.
+3. `OMNI` — **the master data structure.** Array of 4 volumes → `chapters` →
+   `issues`. A volume has `{id, spine, title, vol, creators, era, art, tex,
+   note, chapters[]}` — the same shape the generated shelves use, minus
+   `released` and `cover`, neither of which means anything for an unprinted
+   book. Each chapter has `{id, title, era, tier, note, issues[]}`; each issue
+   `{id, t (title), s (series), arc, key?}`.
    `tier` 1 = core saga, 2 = main X-line, 3 = optional (hidden by the
-   "Hide optional arcs" toggle via `body.hideopt`).
+   "Hide optional arcs" toggle via `body.hideopt`, which lives in the volume
+   view's controls).
 4. `MARVEL` — map of internal issue id → `marvelID/slug` path fragment
 5. `ARC_SUMS` — 27 hand-written, pre-loaded spoiler digests keyed by chapter id
-6. Storage layer, render, interaction, summaries, refresh
+6. Storage layer, shelf render, volume render, interaction, summaries, refresh
 
-`flat[]` is the flattened `{act, ch, issue}` list driving "Up Next" and all
-progress math.
+`flat[]` is the flattened `{o, ch, issue}` list driving "Up Next" and all
+progress math. No issue is collected twice here, so slots and unique ids are the
+same 174 and there is no `dupCount` / "in N omnibuses" pill as on the real
+shelves.
+
+**This page is not in the build pipeline and must not be added to it.**
+`build_omnibus_data.py`, `heroes.py` and `fetch_covers.py` all key off a wiki
+page title, and there is no wiki page for a book that was never printed. Edit
+`OMNI` in the HTML directly — it is the only shelf where that is the right move.
+
+Three things the shelf conversion kept that no other shelf has, all worth not
+losing: the per-chapter placement `note` (rendered above the issue rows), the
+`tier` system and its toggle, and `ARC_SUMS` as an offline first tier in
+`doArcSummary`.
 
 #### Storage (dual-mode)
 
@@ -1933,7 +1995,23 @@ reliably suppress that formatting.
 Frutiger Aero / early-2000s: sky-blue gradients, glass panels, glossy orbs,
 floating bubbles, italic uppercase display type, X-Men gold accents. CSS
 variables at `:root`. Progress bars stack green (read) + grey (skipped).
-Respects `prefers-reduced-motion`. Mobile breakpoint at 600px.
+Respects `prefers-reduced-motion`. Mobile breakpoint at 600px. This is the same
+look every shelf page uses, which is why the shelf CSS dropped straight in.
+
+There are no cover scans, because there are no covers: each volume paints an
+`.o-*` ramp plus a texture, with a big inline X over it. Two things that took a
+second pass, both only visible in a screenshot:
+
+- **The ramps had to be darkened.** Copying the other shelves' near-white top
+  stop put a white X on a white cover — those shelves get away with it because
+  their tiles carry real art and the ramp is only a fallback. Here the ramp *is*
+  the cover, so every one now starts on a saturated mid-tone.
+- **The X needed more body than the other glyphs.** It is a large solid shape,
+  so the fade-to-transparent gradient the crescent and claw glyphs use made its
+  lower half disappear into the art. Its stops bottom out at .48, not .18.
+
+`artHTML()` still renders `o.cover` when one is set, exactly as on the other
+shelves — drop a path in and the ramp gives way to the image.
 
 ### Known gaps / open items
 
@@ -1941,10 +2019,19 @@ Respects `prefers-reduced-motion`. Mobile breakpoint at 600px.
    `marvel.com/search?query=` URL and render as a grey "Read" button instead of
    gold. These are one-shots and minis (Messiah War prologue, Lucas Bishop,
    Necrosha one-shots, Hellbound, Blind Science, Second Coming #1–2, New
-   Mutants, Sex and Violence, King-Size Cable). The 144 resolved IDs were
-   obtained by crawling marvel.com; the one-shots were not in the probed ID
-   ranges. Resolving them means finding each numeric Marvel issue ID.
+   Mutants, Sex and Violence, King-Size Cable, and the two Dark Avengers
+   chapters of Utopia). The 144 resolved IDs were obtained by crawling
+   marvel.com; the one-shots were not in the probed ID ranges.
    The full method — verified working — is written up in `MARVEL-IDS.md`.
+
+   **This is now much cheaper than that write-up suggests, and nobody has
+   spent it.** `tools/marvel_catalog.json` already holds every Marvel issue, and
+   the other six shelves went from a long tail to 93–99% by matching against it.
+   X-Men is the only subject `link_issues.py` cannot see, because it walks the
+   heroes registered in `heroes.py` and X-Men is deliberately not one of them —
+   it has no meta module. Closing this means either teaching `link_issues.py` to
+   read a hand-written shelf, or resolving the 30 by hand with
+   `catalog.py find "<title>"`, which would take about as long.
 2. **One disputed reading order.** X-Force #12–13 currently sits before the
    Messiah War crossover (publication order). Some guides argue Messiah War
    should be read first because X-Force returns from the future slightly earlier
@@ -1974,8 +2061,12 @@ Non-obvious placements that are deliberate, not mistakes:
   orphans that issue's saved progress.
 - Adding issues: append to the right chapter's `issues[]`, and add a `MARVEL`
   entry if a real ID is known.
-- Adding a chapter: it also needs an `ARC_SUMS[chapterId]` entry, or the arc
-  button falls through to a live web lookup.
+- Adding a chapter: it goes inside one volume's `chapters[]`, and it also needs
+  an `ARC_SUMS[chapterId]` entry, or the arc button falls through to a live web
+  lookup.
+- Moving a chapter between volumes is free — progress is keyed by issue id, not
+  by where the issue sits. Renaming a **volume** id (`xm-o1`…) only breaks
+  bookmarked `#/omni/<id>` links.
 
 ## The mobile build is retired (Aug 2026)
 
@@ -2099,7 +2190,18 @@ a server-side store and is not built.
     Graphic Novel on the "missing" list, and re-testing that one found four of
     the five in the catalog, filed under their story titles rather than the MGN
     line — see `ISSUE_ALIAS` under "Linking issues".
-12. **The Daredevil shelf is missing Daredevil Omnibus Vol. 4 for one month.**
+12. **X-Men is the one subject the catalog matcher cannot see.** Thirty of its
+    174 issues still have grey Read buttons, and the six generated shelves
+    closed exactly this kind of tail by running `link_issues.py` against
+    `marvel_catalog.json`. X-Men is not in `heroes.py` — deliberately, it has no
+    meta module and no wiki page — so the matcher walks straight past it. See
+    "Known gaps" under the X-Men tracker for the two ways out.
+13. **The X-Men shelf's four books do not exist**, which is the point, but it
+    means the "a shelf holds books you can actually buy" rule now has an
+    exception on the wall. The page is loud about it (badge, shelf count, banner
+    line, standing note) and that honesty is the thing to preserve if the shelf
+    is ever edited — see "A shelf holds books you can actually buy".
+14. **The Daredevil shelf is missing Daredevil Omnibus Vol. 4 for one month.**
     It ships September 2026 and is excluded by the "a shelf holds books you can
     actually buy" rule, which leaves a #120–157 hole between `dd-o3` and
     `miller-o1`. Adding it is a `daredevil_meta.py` edit plus a regenerate (the
@@ -2150,6 +2252,16 @@ python3 tools/covers.py audit --hero daredevil
 
 # Data integrity (counts, duplicate ids, ARC_SUMS coverage) — see git history
 # or re-derive: eval the data section and assert every chapter has a digest.
+
+# The X-Men shelf has no build step to check it, so check the data by hand:
+# 4 volumes / 174 issues / 30 unlinked / 27 chapters, all with an ARC_SUMS entry.
+node -e 'const js=require("fs").readFileSync("xmen-reading-tracker.html","utf8")
+  .split("<script>")[1].split("<\/script>")[0];
+  const R=new Function(js.slice(0,js.indexOf("function marvelURL"))+"return{OMNI,MARVEL};")();
+  const ch=R.OMNI.flatMap(o=>o.chapters), is=ch.flatMap(c=>c.issues);
+  console.log(R.OMNI.length,"volumes",is.length,"issues",
+    is.filter(i=>!R.MARVEL[i.id]).length,"unlinked",
+    new Set(is.map(i=>i.id)).size,"unique ids")'
 ```
 
 The Spider-Man shelf currently reports **16 volumes / 617 issue slots / 606
@@ -2158,8 +2270,8 @@ issues**; the Fantastic Four shelf **18 volumes / 686 issue slots / 661 unique
 issues**; the Wolverine shelf **14 volumes / 637 issue slots / 636 unique
 issues**; the Moon Knight shelf **7 volumes / 260 issue slots / 260 unique
 issues**; the Daredevil shelf **17 volumes / 590 issue slots / 590 unique
-issues**. If a change moves those numbers without meaning to, something is
-wrong.
+issues**; the X-Men shelf **4 volumes / 174 issue slots / 174 unique issues**.
+If a change moves those numbers without meaning to, something is wrong.
 
 For the look of a page, screenshot it rather than reasoning about it. Chromium
 is preinstalled at `/opt/pw-browsers/chromium`; `pip install playwright` and
