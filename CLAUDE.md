@@ -610,6 +610,44 @@ The lexicographic ordering in the middle regime is the surprise: a block that
 starts at #10 has not skipped #1–9, they are at the far end. Do not stop a scan
 because the numbers look wrong.
 
+### A grey Read button has three different causes — check them in this order
+
+A grey button only means "no `MARVEL` entry for this issue id". That is not the
+same as "marvel.com does not have it", and on the shelves so far it usually is
+not. Books of Doom is the worked example: the user found
+`/comics/issue/3125/books_of_doom_2005_2` with one Google search while the shelf
+showed all six issues grey.
+
+1. **Nobody ever looked.** The commonest cause by far. `series_scanned.json` is
+   the record of what `scan` has probed, and **nothing below id 8687 has ever
+   been swept** — the whole low regime (~1–6400, chronological by cover date) is
+   unharvested. Books of Doom sits at 3006–4033. Check the store before
+   theorising: `grep -o '"<slug_prefix>[^"]*"' tools/series_links.json`.
+2. **It was harvested and then silently discarded.** `cmd_write` only promotes a
+   banked slug into `marvel_ids.json` if its prefix is in `SLUG_PFX`; an
+   unmapped prefix is counted and printed, not guessed at. That report is the
+   check — `python3 tools/series_harvest.py write --dry-run` lists every prefix
+   sitting in `series_links.json` with nowhere to go. It is a long list, but
+   most of it is crawl debris from other series' pages; the way to tell which
+   entries matter is to intersect it against the shelves' unresolved ids rather
+   than to read it. Doing that in Aug 2026 found only two real ones
+   (`what_if_1977`, `breaking_into_comics_the_marvel_way_2010`), so this is a
+   real failure mode but a small one.
+3. **marvel.com genuinely does not have it.** Astonishing Tales (1970) is the
+   established case — ids that search engines still index 404 live. Only
+   conclude this after 1 and 2.
+
+**A `walk` reaches much further back than this file used to claim.** The note
+under "Harvest by series" says marvel.com stops linking siblings pre-2008; that
+boundary is wrong. Fetching id 3125 returns all six Books of Doom issues in a
+single request, so a 2005 mini walks fine from one seed. What genuinely does not
+link siblings is the older material: id 14036 (Wolverine (1988) #1) and 8906
+(Incredible Hulk (1962) #1) both return only their own slug plus the current
+week's promo carousel. So for anything from roughly the 2000s on, **one seed id
+resolves the whole mini** — which makes the remaining long tail of nineties and
+2000s one-shots much cheaper than "one web search per issue". Web-search the
+seed, walk, add the `SLUG_PFX` entry, `write`, regenerate.
+
 ### Tooling (`tools/`)
 
 - `harvest.py` — the rate-limit-aware marvel.com ID harvester.
@@ -853,7 +891,7 @@ lands at 16 chapters that read as the tie-in list it is.
 
 ### Marvel deep links
 
-527 of 659 unique issues (80%) resolve to a real marvel.com issue page; the rest
+528 of 659 unique issues (80%) resolve to a real marvel.com issue page; the rest
 fall back to `marvel.com/search?query=` and a grey Read button, same convention
 as the other two trackers. Complete: Incredible Hulk (1962) all 380, Tales to
 Astonish, Incredible Hulk (2000), Hulk (2021), Immortal Hulk #1–50, the
@@ -984,7 +1022,7 @@ them with the gold "in N omnibuses" pill.
 
 ### Marvel deep links
 
-569 of 661 unique issues (86%) resolve to a real marvel.com issue page, and the
+576 of 661 unique issues (87%) resolve to a real marvel.com issue page, and the
 rest fall back to
 `marvel.com/search?query=` and a grey Read button, same convention as the other
 two trackers. Complete: Fantastic Four (1961) all 416, Fantastic Four (1998),
@@ -992,8 +1030,8 @@ FF (2011), FF (2012), Fantastic Four (2012), Fantastic Four (2018), Ultimate
 Fantastic Four, the Fantastic Four annuals, Marvel Team-Up, The Thing, and
 Super-Villain Team-Up bar one issue that 404s on marvel.com.
 
-Unresolved, largest first: Epic Illustrated (9), Marvel 1985 (6), Books of Doom
-(6), Dark Reign: Fantastic Four (5), Fantastic Force (2009) (4), Giant-Size
+Unresolved, largest first: Epic Illustrated (9), Marvel 1985 (6), Dark Reign:
+Fantastic Four (5), Fantastic Force (2009) (4), Giant-Size
 Fantastic Four, Marvel Graphic Novel, Uncanny X-Men and Secret Wars (3 each),
 and a long tail of 45 one-shots, annuals and guest appearances at one or two
 apiece. **Astonishing Tales (1970) is the one worth another pass**: its ids are
@@ -1464,7 +1502,7 @@ a server-side store and is not built.
     the `__COMICS_SAVE` download rewire are harmless and can stay. See "The
     mobile build".
 11. **Deep links are now a long tail on every shelf, not a block.** Spider-Man
-    87%, Hulk 80%, Fantastic Four 86%, Wolverine 74%. What is left is 30–60
+    87%, Hulk 80%, Fantastic Four 87%, Wolverine 74%. What is left is 30–60
     series per shelf at one or two issues each — mostly nineties one-shots,
     annuals and tie-ins. Each needs its own web search, so this is grind rather
     than technique. The largest single remaining item anywhere is Epic
