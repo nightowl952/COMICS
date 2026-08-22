@@ -11,8 +11,8 @@ works opened straight off disk.
 
 | File | What it is |
 |---|---|
-| `index.html` | The homescreen. Poster wall of subjects, Continue Reading, per-subject dossiers. |
-| `xmen-reading-tracker.html` | X-Men: the Messiah Saga. 174 issues, 27 arcs, 6 acts, in researched chronological order. |
+| `index.html` | The homescreen. Banner, Keep Reading rail, poster wall of subjects, per-subject dossiers. |
+| `xmen-reading-tracker.html` | X-Men: the Messiah Saga. 174 issues, 27 arcs, shelved as four omnibuses Marvel never printed. |
 | `spiderman-reading-tracker.html` | Spider-Man: a 16-volume omnibus shelf, each volume opening into what the printed book actually collects. |
 | `hulk-reading-tracker.html` | Hulk: 17 mainline Bruce Banner omnibuses, same shape. |
 | `fantasticfour-reading-tracker.html` | Fantastic Four: 18 omnibuses, plus the Thing's solo book and Doctor Doom's. |
@@ -21,6 +21,24 @@ works opened straight off disk.
 | `daredevil-reading-tracker.html` | Daredevil: 17 omnibuses of Matt Murdock's own books. |
 | `tools/` | The generators and the marvel.com ID harvester. |
 | `CLAUDE.md` | The full working notes — architecture, data provenance, every constraint already learned the hard way. Read this before changing anything. |
+
+## The shape of a page
+
+Dark blue-black, laid out like a streaming service: a wide banner at the top,
+then a **Keep Reading** rail of one wide tile per volume you have open, then the
+shelf. Click a tile to land back where you were. There are no completion
+percentages anywhere — the tiles carry a position, not a score.
+
+Banner art lives in `Art/Banners/` and is dropped in by hand:
+
+```bash
+python3 tools/banners.py add-folder ~/Desktop   # match a folder by filename
+python3 tools/banners.py add spider-man ~/Desktop/spidey.jpg
+python3 tools/banners.py audit
+```
+
+A missing banner is not a broken page — each subject falls back to its poster
+scan, and the homescreen to all seven of them in a row.
 
 ## Where it lives
 
