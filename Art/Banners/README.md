@@ -8,7 +8,7 @@ One wide image per page that has an above-the-fold banner:
 | `spider-man.jpg`, `wolverine.jpg`, `hulk.jpg`, `xmen.jpg`, `fantastic-four.jpg`, `moon-knight.jpg`, `daredevil.jpg` | that subject's shelf view |
 
 These are hand-picked, not fetched — see `tools/banners.py`, which is the only
-thing that should write here (`add <key> <file>` or `add-folder <dir>`, 1800px
+thing that should write here (`add <key> <file>` or `add-folder <dir>`, 2400px
 wide at q82).
 
 A missing file is not a broken page. `hbFallback()` in each tracker walks

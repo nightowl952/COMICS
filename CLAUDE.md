@@ -1201,8 +1201,9 @@ ambiguous or rejected; no hit means Marvel does not have it.
   overwrite without `--replace`. Nothing is generated from it — the `cover`
   field in `HEROES` is hand-written — so a new pick is an edit in both places.
 - `banners.py` — the above-the-fold banner art. `add <key> <image>` normalises
-  one to 1800px/q82 into `Art/Banners/<key>.jpg`; `add-folder <dir>` matches a
-  whole folder against the eight keys by filename; `audit` lists what is there.
+  one to 2400px/q82 into `Art/Banners/<key>.jpg`; `add-folder <dir>` matches a
+  whole folder against the eight keys by filename; `audit` lists what is there
+  and flags anything under 90% of that width as `soft`.
   There is no fetch route — these are hand-picked wide art, like the logos.
   Needs Pillow.
 
@@ -2464,13 +2465,21 @@ a server-side store and is not built.
     the shelf count, and "never printed" in each volume's banner. That is the
     floor, and preserving it is the thing to watch if the shelf is ever edited —
     see "A shelf holds books you can actually buy".
-14. **The homescreen banner is the one image still missing.** All seven subject
-    banners are in; `Art/Banners/index.jpg` is not, so the homescreen runs on
-    its fallback — the seven posters in a row behind the scrim. That reads as a
-    deliberate collage rather than a hole, so this is a want, not a bug.
-    Two of the seven that are in are under-size and `banners.py audit` flags
-    them `soft`: `wolverine.jpg` (1199px) and `moon-knight.jpg` (1200px) against
-    1800px for the rest.
+14. **Moon Knight is the one banner still under-size.** All eight files are in,
+    and seven were replaced in Aug 2026 with the user's own upscales — 4096px
+    sources, normalised to the new 2400px target. `moon-knight.jpg` was not in
+    that batch and is still the original 1200px, which `banners.py audit` flags
+    `soft`. Note `wolverine.jpg` is 2398px and deliberately unresized: its
+    source was two pixels under the target, which is why the soft threshold is
+    90% of `WIDTH` rather than `WIDTH` itself.
+
+    The target was 1800px until that batch. The banner is the only image on the
+    site displayed edge to edge, so it is the one that shows softness first on a
+    retina display; 2400 covers a 1200pt viewport at 2x, at 300–700KB a page.
+    Every one of the seven matched its old plate's aspect ratio exactly, so no
+    `object-position` crop needed retuning — expect to re-check that if a future
+    replacement is a different piece of art rather than a bigger scan of the
+    same one.
 15. **A Keep Reading tile credits the volume, not the issue.** `creators` on an
     omnibus is usually exactly the writer and penciler of what it collects, so
     the line is right far more often than not — but on an anthology volume
