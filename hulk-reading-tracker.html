@@ -59,23 +59,24 @@
     height:clamp(330px,42vw,540px);overflow:hidden;background:var(--bg);}
   .hb-fallback{position:absolute;inset:0;}
   .hb-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%;}
-  /* Tuned against the real banner art, not guessed. The left column has to
-     hold a logo and two lines of body copy, and the foot has to reach --bg
-     exactly; everything between those is as light as it can be. The top stop
-     is only there for the fixed bar, which carries its own scrim as well. */
+  /* There is no wash over the picture any more. The art is painted work and a
+     full-frame overlay turned all seven of them to mud; the only darkening left
+     is the bottom third, which the copy sits in and which has to reach --bg at
+     the very foot so the banner dissolves into the page. Above 45% the image is
+     untouched. The type carries its own shadow instead -- that is what buys
+     legibility over a bright plate, not a scrim. */
   .hb-scrim{position:absolute;inset:0;pointer-events:none;
-    background:
-      linear-gradient(90deg, rgba(10,14,21,.8) 0%, rgba(10,14,21,.34) 36%, rgba(10,14,21,0) 70%),
-      linear-gradient(0deg, var(--bg) 0%, rgba(10,14,21,.92) 12%, rgba(10,14,21,.3) 38%,
-        rgba(10,14,21,.04) 62%, rgba(10,14,21,.36) 100%);}
+    background:linear-gradient(0deg, var(--bg) 0%, rgba(10,14,21,.94) 8%, rgba(10,14,21,.72) 18%,
+      rgba(10,14,21,.34) 31%, rgba(10,14,21,.08) 40%, transparent 48%);}
   .hb-in{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:1180px;margin:0 auto;padding:0 16px 34px;}
   .hb-logo{display:block;max-width:min(330px,58%);max-height:112px;object-fit:contain;object-position:0 100%;
     filter:drop-shadow(0 8px 22px rgba(0,0,0,.9));}
   .hb-name{font-size:clamp(26px,5.6vw,52px);font-weight:900;font-style:italic;letter-spacing:.5px;
     text-transform:uppercase;line-height:1;color:#fff;text-shadow:0 6px 24px rgba(0,0,0,.9);}
-  .hb-sub{margin-top:13px;font-size:10px;font-weight:800;letter-spacing:3.2px;text-transform:uppercase;color:var(--xyellow);}
-  .hb-blurb{margin-top:9px;max-width:640px;font-size:12.5px;line-height:1.62;color:#c3d1e1;
-    text-shadow:0 2px 10px rgba(0,0,0,.9);}
+  .hb-sub{margin-top:13px;font-size:10px;font-weight:800;letter-spacing:3.2px;text-transform:uppercase;
+    color:var(--xyellow);text-shadow:0 2px 10px rgba(0,0,0,.95),0 0 22px rgba(0,0,0,.7);}
+  .hb-blurb{margin-top:9px;max-width:640px;font-size:12.5px;line-height:1.62;color:#d3dfec;
+    text-shadow:0 2px 10px rgba(0,0,0,.95),0 0 22px rgba(0,0,0,.8);}
 
   /* ---- Keep Reading rail ----
      One wide tile per place you are partway through, newest first. The art is
@@ -90,20 +91,30 @@
   .kr-rail::-webkit-scrollbar{height:8px;}
   .kr-rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:4px;}
   .kr-rail::-webkit-scrollbar-track{background:transparent;}
-  .kr-card{position:relative;flex:0 0 clamp(310px,80vw,420px);height:158px;border-radius:12px;overflow:hidden;
-    scroll-snap-align:start;display:block;text-decoration:none;color:inherit;cursor:pointer;
+  /* --cw is the cover's own width, and everything to the right of it is placed
+     off that rather than off a percentage of the tile -- a percentage moves
+     when the tile does and the gradient stops landing on the cover's edge. */
+  .kr-card{--cw:112px;position:relative;flex:0 0 clamp(330px,82vw,440px);height:168px;border-radius:12px;
+    overflow:hidden;scroll-snap-align:start;display:block;text-decoration:none;color:inherit;cursor:pointer;
     background:var(--bg-lift);border:1px solid var(--line);
     transition:transform .18s cubic-bezier(.2,.8,.3,1),border-color .18s,box-shadow .18s;}
   .kr-card:hover,.kr-card:focus-visible{transform:translateY(-3px);border-color:var(--line-hi);
     box-shadow:0 16px 34px rgba(0,0,0,.6);outline:none;}
-  /* A 2:3 cover in a 420x158 box shows a band about a quarter of it tall; 16%
-     lands that band on the logo and the top of the figure, which is the part
-     of a comic cover you recognise. */
-  .kr-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 8%;}
+  /* The cover is shown WHOLE, at 2:3 against the left edge -- it used to be
+     stretched across the tile by object-fit:cover, which meant a 2:3 scan was
+     cropped to a quarter of itself and read as an abstract band. What keeps the
+     tile from looking like a thumbnail in a box is .kr-blur: the same image
+     again, scaled up, blurred and dimmed behind everything, so the tile carries
+     the cover's own colour and the two dissolve together at its edge. */
+  .kr-art{position:absolute;inset:0;overflow:hidden;}
+  .kr-blur{position:absolute;left:-12%;top:-12%;width:124%;height:124%;object-fit:cover;
+    filter:blur(20px) saturate(1.2) brightness(.42);}
+  .kr-face{position:absolute;left:0;top:0;width:var(--cw);height:100%;object-fit:cover;object-position:50% 50%;}
   .kr-card::after{content:"";position:absolute;inset:0;
-    background:linear-gradient(90deg, rgba(14,21,33,0) 0%, rgba(14,21,33,.18) 16%,
-      rgba(14,21,33,.85) 34%, var(--bg-lift) 48%, var(--bg-lift) 100%);}
-  .kr-body{position:absolute;inset:0 0 0 36%;z-index:2;padding:15px 16px;display:flex;flex-direction:column;justify-content:center;}
+    background:linear-gradient(90deg, transparent 0, transparent calc(var(--cw) - 8px),
+      rgba(14,21,33,.62) calc(var(--cw) + 22px), var(--bg-lift) calc(var(--cw) + 58px), var(--bg-lift) 100%);}
+  .kr-body{position:absolute;top:0;right:0;bottom:0;left:calc(var(--cw) + 66px);z-index:2;
+    padding:15px 16px 15px 0;display:flex;flex-direction:column;justify-content:center;}
   .kr-run{font-size:7.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--xyellow);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .kr-title{font-size:15.5px;font-weight:800;line-height:1.2;margin:6px 0 5px;color:#fff;
@@ -337,9 +348,10 @@
     .hb-logo{max-width:72%;max-height:78px;}
     .hb-name{font-size:30px;}
     .hb-blurb{display:none;}
-    .kr-card{flex:0 0 clamp(268px,86vw,340px);height:136px;}
-    .kr-body{inset:0 0 0 38%;padding:12px 13px;}
+    .kr-card{--cw:88px;flex:0 0 clamp(278px,88vw,350px);height:132px;}
+    .kr-body{left:calc(var(--cw) + 46px);padding:12px 13px 12px 0;}
     .kr-title{font-size:14px;}
+    .kr-cred{margin-bottom:8px;}
   }
 
   @media (max-width:600px){
@@ -10423,8 +10435,12 @@ function spots(){
 function krCard(s){
   const o=s.o, iss=s.next.issue;
   const pct=s.st.t?Math.round(s.st.done/s.st.t*100):0;
-  const art=o.cover?'<img class="kr-art" src="'+esc(o.cover)+'" alt="" loading="lazy">'
-                   :'<span class="kr-art '+esc(o.art||"")+'"></span>';
+  const src=o.cover||"", ramp=esc(o.art||"");
+  const art='<span class="kr-art">'+
+    (src?'<img class="kr-blur" src="'+esc(src)+'" alt="" aria-hidden="true">'+
+         '<img class="kr-face" src="'+esc(src)+'" alt="" loading="lazy">'
+        :'<span class="kr-blur '+ramp+'"></span><span class="kr-face '+ramp+'"></span>')+
+    '</span>';
   return '<a class="kr-card" href="#/omni/'+esc(o.id)+'" data-kro="'+esc(o.id)+'" data-kri="'+esc(iss.id)+'">'+
     art+
     '<span class="kr-body">'+

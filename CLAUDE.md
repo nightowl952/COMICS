@@ -197,6 +197,30 @@ gradient body would show a seam where the banner stops. Keep it flat.
 which is exact for a centred max-width box with padding; `body{overflow-x:hidden}`
 is what keeps the `100vw` from adding a scrollbar.
 
+**There is no wash over the picture, and putting one back is the wrong instinct.**
+The first version darkened the whole frame to buy text contrast and turned all
+seven painted plates to mud — the user's word for it was "so dark". `.hb-scrim`
+is now only the bottom third: `.94` at 8% up from the foot, clear by 48%, and
+`var(--bg)` at 0% because the foot has to *be* the page colour. Everything above
+45% of the banner is the untouched image. What buys legibility instead is the
+type's own shadow (`.hb-sub` and `.hb-blurb` both carry a double drop-shadow,
+and `.hb-logo` a 22px one) — so a brighter plate costs contrast on the copy, not
+on the art.
+
+**Where to crop is per-subject, and it is set on the `<img>` inline**, the same
+convention as `pos` on a `HEROES` entry, and arrived at the same way — render it
+and look. Two of the seven set one: Spider-Man at `72%` (Alex Ross's figure runs
+48–90% down the plate, and the default band cut him off at the waist) and
+Daredevil at `0%` (the cowl is hard against the top edge). The other five take
+the `50% 28%` default.
+
+**X-Men cannot take one, and it is worth knowing why before trying.** That plate
+is 2.58:1 against a banner box of about 2.38:1, so `object-fit:cover` fits it by
+*height* and crops the width instead — the whole image is already visible top to
+bottom at every width, and the `Y` half of `object-position` is inert. When the
+bottom of a banner looks cut off, check the aspect before reaching for the crop:
+on that one it was the scrim, not the framing.
+
 **The fallback chain matters, because seven of the eight banner files are
 supplied by hand and may not be there.** `hbFallback()` in each tracker walks
 `Art/Banners/<id>.jpg` → `Art/Heroes/<id>.jpg` (the subject's poster scan, at
@@ -220,14 +244,26 @@ touched ones newest-first, and `krCard()` draws the tile. Nothing started
 anywhere returns the first volume on the shelf instead, so a fresh browser gets
 a "Start Reading" tile rather than an empty band.
 
-The tile is a wide `<a>` where the cover **fills the whole tile** and
-`.kr-card::after` dissolves it into the panel colour about a third of the way
-across. It is not a thumbnail with text beside it — that was the explicit ask,
-and it is why `.kr-art` is `position:absolute;inset:0` rather than a fixed-width
-box. `object-position:50% 8%` lands the visible band on the logo and the top of
-the figure; a 2:3 cover in a 420x158 box only shows about a quarter of itself,
-so that number is the difference between a recognisable tile and a crop of
-someone's elbow.
+**The cover is shown whole, and the tile is still one piece of art.** Those two
+pull against each other and the layering is what resolves them, so do not
+collapse it back:
+
+- `.kr-face` is the cover at 2:3 against the left edge, width `var(--cw)`, so
+  the entire scan is visible. It used to be `object-fit:cover` across the whole
+  tile, which cropped a 2:3 scan to about a quarter of itself — the tile read as
+  an abstract band and you could not tell one book from another.
+- `.kr-blur` is the *same image again*, scaled 124%, blurred and dimmed behind
+  everything. That is what keeps it from looking like a thumbnail bolted to a
+  panel: the tile carries the cover's own colour edge to edge. Same `src`, so
+  it is one request.
+- `.kr-card::after` dissolves the two together starting 8px before the cover's
+  right edge and solid 58px past it.
+
+**Everything right of the cover is placed off `--cw`, not off a percentage of
+the tile.** The tile width is a `clamp()`, so a percentage stop drifts off the
+cover's edge at some widths and the gradient starts cutting into the art. One
+variable, redeclared in the 600px media query along with the tile height, keeps
+the geometry right at both sizes.
 
 **Two things on the tile are approximations, and both are deliberate:**
 
@@ -2399,11 +2435,13 @@ a server-side store and is not built.
     the shelf count, and "never printed" in each volume's banner. That is the
     floor, and preserving it is the thing to watch if the shelf is ever edited —
     see "A shelf holds books you can actually buy".
-14. **Seven of the eight banner images are not in the repo yet.** Only the
-    homescreen has a fallback worth looking at (the seven posters in a row);
-    each subject falls back to its own poster scan, which is a portrait crop
-    stretched across a 3.4:1 band and reads soft. Dropping the real art in is
-    `python3 tools/banners.py add-folder <dir>` and a commit — see "The banner".
+14. **The homescreen banner is the one image still missing.** All seven subject
+    banners are in; `Art/Banners/index.jpg` is not, so the homescreen runs on
+    its fallback — the seven posters in a row behind the scrim. That reads as a
+    deliberate collage rather than a hole, so this is a want, not a bug.
+    Two of the seven that are in are under-size and `banners.py audit` flags
+    them `soft`: `wolverine.jpg` (1199px) and `moon-knight.jpg` (1200px) against
+    1800px for the rest.
 15. **A Keep Reading tile credits the volume, not the issue.** `creators` on an
     omnibus is usually exactly the writer and penciler of what it collects, so
     the line is right far more often than not — but on an anthology volume
