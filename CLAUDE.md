@@ -1181,9 +1181,17 @@ ambiguous or rejected; no hit means Marvel does not have it.
   field in `HEROES` is hand-written — so a new pick is an edit in both places.
 - `banners.py` — the above-the-fold banner art. `add <key> <image>` normalises
   one to 1800px/q82 into `Art/Banners/<key>.jpg`; `add-folder <dir>` matches a
-  whole folder against the eight keys by filename and **reports** anything
-  ambiguous rather than guessing; `audit` lists what is there. There is no fetch
-  route — these are hand-picked wide art, like the logos. Needs Pillow.
+  whole folder against the eight keys by filename; `audit` lists what is there.
+  There is no fetch route — these are hand-picked wide art, like the logos.
+  Needs Pillow.
+
+  Two things `add-folder` learned the hard way, both because the homescreen
+  banner sat unplaced for two rounds while the file was sitting in the folder:
+  it **names every file it did not place**, including ones it cannot even open
+  (a `.heic` off a phone used to vanish silently, which reads as the tool
+  ignoring an image that is plainly there); and `match()` splits camelCase
+  before testing, then falls back to a substring test, because `IndexPage.png`
+  is a single token to a whole-word matcher.
 - `logos.py` — the homescreen logo pipeline. `add <hero-id> <image>` crops a
   logo to its alpha bounding box, downscales to 500px and writes
   `Art/Logos/<hero-id>.png`; `audit` lists what every subject has and flags any
