@@ -289,7 +289,13 @@ under a comment naming the two rules that make it work: the page background is
 flat `--bg` (see "The banner"), and panels are a low-alpha white wash over it
 rather than their own colour, so retinting the site is one variable.
 
-    --bg #0a0e15   --line rgba(255,255,255,.10)   --txt #e9eff7   --dim #9db0c6
+    --bg #141b29   --line rgba(255,255,255,.10)   --txt #e9eff7   --dim #9db0c6
+
+**`--bg` has a floor, and it is set by the books rather than by taste.** It was
+`#0a0e15` for a week and the shelf lost: a book spine is real Marvel trade
+dress, which means it is black, and against a near-black page the spines simply
+disappeared. The page has to read as lighter than the objects standing on it.
+Anything darker than roughly `#0f1420` puts that back.
 
 What survived from the old look, because it is artwork rather than chrome: the
 CSS-3D book tiles and their spines, the `.o-*` cover ramps, the `.tex-*`
@@ -749,10 +755,19 @@ Three things to know, all cheap to avoid:
   the spine colour, but `artHTML()` falls back to the `.o-*` ramp whenever `cover`
   is missing or fails to load.
 - **The spine text is vertical and clipped, not wrapped.** The length gates in
-  `buildShelf()` are tuned to the 196px desktop tile; the 600px breakpoint hides
-  `.screds` outright because a 142px tile leaves only ~207px of spine, which fits
-  the title but not a credit line under it. Lengthening a `spine` label past ~22
-  characters means re-checking both breakpoints.
+  `buildShelf()` were tuned to a 196px desktop tile and are now running on a
+  ~249px one (four books to a row, not five — see below), so they have slack;
+  the 600px breakpoint still hides `.screds` outright, because a 142px tile
+  leaves only ~207px of spine, which fits the title but not a credit line under
+  it. Lengthening a `spine` label past ~22 characters means re-checking both
+  breakpoints.
+
+**Four books to a row, not five** (Aug 2026, the user's call — bigger and
+further apart). `.shelf` is `minmax(238px,1fr)` with a `56px 40px` gap: 238 is
+chosen so a fifth column cannot fit inside the 1180px wrap, and `1fr` then
+spends the leftover on the books rather than on the gutters, which is what
+takes the tile from 196px to about 249px. Changing either number means
+re-checking that arithmetic, not just looking at one width.
 
 ### Cover art
 
