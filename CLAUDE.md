@@ -2060,23 +2060,26 @@ cover, and are worth keeping if it ever is again:
 
 ### Known gaps / open items
 
-1. **30 of 174 issues lack Marvel deep links.** They fall back to a
-   `marvel.com/search?query=` URL and render as a grey "Read" button instead of
-   gold. These are one-shots and minis (Messiah War prologue, Lucas Bishop,
-   Necrosha one-shots, Hellbound, Blind Science, Second Coming #1–2, New
-   Mutants, Sex and Violence, King-Size Cable, and the two Dark Avengers
-   chapters of Utopia). The 144 resolved IDs were obtained by crawling
-   marvel.com; the one-shots were not in the probed ID ranges.
-   The full method — verified working — is written up in `MARVEL-IDS.md`.
+1. ~~30 of 174 issues lack Marvel deep links.~~ **Done Aug 2026 — all 174
+   resolve**, the only shelf on the project at 100%. It cost one pass over
+   `tools/marvel_catalog.json`, which is the point worth keeping: the long tail
+   here was never hard, it was just never looked at with the catalog in hand.
 
-   **This is now much cheaper than that write-up suggests, and nobody has
-   spent it.** `tools/marvel_catalog.json` already holds every Marvel issue, and
-   the other six shelves went from a long tail to 93–99% by matching against it.
-   X-Men is the only subject `link_issues.py` cannot see, because it walks the
-   heroes registered in `heroes.py` and X-Men is deliberately not one of them —
-   it has no meta module. Closing this means either teaching `link_issues.py` to
-   read a hand-written shelf, or resolving the 30 by hand with
-   `catalog.py find "<title>"`, which would take about as long.
+   The 30 were the one-shots and minis the old marvel.com id crawl never probed
+   — Lucas Bishop, the Messiah War and Utopia one-shots, Necrosha, Hellbound,
+   Blind Science, Second Coming #1–2, New Mutants, Sex and Violence, King-Size
+   Cable and the two Dark Avengers chapters. Twenty-nine fell out of a single
+   regex sweep of the catalog's slugs; only the Utopia one-shot needed a second
+   look, and only because marvel.com strips the slash out of a co-titled book
+   (`dark_avengersuncanny_x-men_utopia_1_2009_1`).
+
+   Every id was checked against the catalog before it was written, so the
+   entries are Marvel's own id↔slug pairs rather than guesses. Note a live
+   `curl` of those URLs answers 403 from this environment — that is marvel.com
+   rate-limiting a bot, not a bad link, and it is not evidence either way.
+
+   `MARVEL-IDS.md` still describes the old crawl. It is history now; the catalog
+   is the route.
 2. **One disputed reading order.** X-Force #12–13 currently sits before the
    Messiah War crossover (publication order). Some guides argue Messiah War
    should be read first because X-Force returns from the future slightly earlier
@@ -2234,13 +2237,20 @@ a server-side store and is not built.
     again in Aug 2026: filling in Spider-Man vs. Venom put a fifth Marvel
     Graphic Novel on the "missing" list, and re-testing that one found four of
     the five in the catalog, filed under their story titles rather than the MGN
-    line — see `ISSUE_ALIAS` under "Linking issues".
-12. **X-Men is the one subject the catalog matcher cannot see.** Thirty of its
-    174 issues still have grey Read buttons, and the six generated shelves
-    closed exactly this kind of tail by running `link_issues.py` against
-    `marvel_catalog.json`. X-Men is not in `heroes.py` — deliberately, it has no
-    meta module and no wiki page — so the matcher walks straight past it. See
-    "Known gaps" under the X-Men tracker for the two ways out.
+    line — see `ISSUE_ALIAS` under "Linking issues". The X-Men shelf closed its
+    own 30 the same way in Aug 2026 and sits at 174/174, the only shelf at 100%
+    — see item 12 for why no tool did it.
+12. **X-Men is still the one subject `link_issues.py` cannot see** — it walks
+    the heroes registered in `heroes.py`, and X-Men is deliberately not one of
+    them. That no longer costs anything: its 30 missing links were closed by
+    hand against `marvel_catalog.json` in Aug 2026 and the shelf is at 174/174.
+    But the next issue added to that page will not be linked by any tool, and
+    `link_issues.py`'s report will not mention it. The fix, if it ever matters,
+    is teaching the matcher to read a hand-written shelf.
+
+    Note the X-Men page's `MARVEL` map is **its own**, not `tools/marvel_ids.json`.
+    Nothing was added to the shared store, deliberately: its keys are issue ids,
+    and short ones like `nm-6` would collide with another shelf's.
 13. **The X-Men shelf's four books do not exist**, which is the point, but it
     means the "a shelf holds books you can actually buy" rule now has an
     exception on the wall — and since the tiles gained real cover art and lost
@@ -2302,7 +2312,7 @@ python3 tools/covers.py audit --hero daredevil
 # or re-derive: eval the data section and assert every chapter has a digest.
 
 # The X-Men shelf has no build step to check it, so check the data by hand:
-# 4 volumes / 174 issues / 30 unlinked / 27 chapters, all with an ARC_SUMS entry.
+# 4 volumes / 174 issues / 0 unlinked / 27 chapters, all with an ARC_SUMS entry.
 node -e 'const js=require("fs").readFileSync("xmen-reading-tracker.html","utf8")
   .split("<script>")[1].split("<\/script>")[0];
   const R=new Function(js.slice(0,js.indexOf("function marvelURL"))+"return{OMNI,MARVEL};")();
