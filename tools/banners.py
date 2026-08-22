@@ -22,9 +22,15 @@ rest, so a .heic straight off a phone vanished without a word -- which looks
 from the outside like the tool ignoring an image that is plainly sitting there.
 It also does not recurse; a nested folder is named in the report, not walked.
 
-Sizing: 1800px wide at q82. Wider than a cover because this is displayed at up
+Sizing: 2400px wide at q82. Wider than a cover because this is displayed at up
 to the full viewport width, and the .hb box is about 3.4:1 -- a portrait image
 still works but object-fit:cover will take a band out of the middle of it.
+
+It was 1800 until Aug 2026, which is a device pixel short on any retina laptop
+-- the banner is the one image on the site displayed edge to edge, so it is the
+one that shows softness first. 2400 covers a 1200pt viewport at 2x and costs
+roughly 300-700KB a page. Do not raise it further without a reason: this is a
+single request every visitor makes before anything else renders.
 
 A missing banner is not a broken page. `hbFallback()` in each tracker walks
 Art/Banners/<id>.jpg -> Art/Heroes/<id>.jpg -> the .hb-fallback ramp, so a
@@ -39,7 +45,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT  = os.path.join(ROOT, "Art", "Banners")
 
-WIDTH   = 1800
+WIDTH   = 2400
 QUALITY = 82
 
 # key -> the words a filename can carry to mean it. Order matters only for the
@@ -173,7 +179,10 @@ def audit():
             from PIL import Image
             w, h = Image.open(p).size
             dim = "%dx%d" % (w, h)
-            flag = "  soft" if w < 1200 else ""
+            # Tied to WIDTH rather than a fixed number, so raising the target
+            # re-flags everything the new one leaves behind. The 10% slack is
+            # for a source that was a hair under it and so was never resized.
+            flag = "  soft" if w < WIDTH * 0.9 else ""
         except Exception:
             dim, flag = "?", ""
         print("%-15s %-11s %5dKB%s" % (key, dim, os.path.getsize(p) // 1024, flag))
