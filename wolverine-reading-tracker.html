@@ -96,8 +96,14 @@
   .kr-rail::-webkit-scrollbar-track{background:transparent;}
   /* --cw is the cover's own width, and everything to the right of it is placed
      off that rather than off a percentage of the tile -- a percentage moves
-     when the tile does and the gradient stops landing on the cover's edge. */
-  .kr-card{--cw:112px;position:relative;flex:0 0 clamp(330px,82vw,440px);height:168px;border-radius:12px;
+     when the tile does and the gradient stops landing on the cover's edge.
+     It is 2:3 of the tile height, so the two move together: change one and the
+     cover stops being shown whole.
+     The 274px cap is arithmetic, not taste. The rail is 1144px inside a 1180px
+     wrap, so four tiles and three 14px gaps need 274 each -- the tile was 440
+     and showed two and a half. Five would need 217, which leaves ~60px of text
+     beside the cover, so four is the floor. */
+  .kr-card{--cw:98px;position:relative;flex:0 0 clamp(244px,30vw,274px);height:147px;border-radius:12px;
     overflow:hidden;scroll-snap-align:start;display:block;text-decoration:none;color:inherit;cursor:pointer;
     background:var(--bg-lift);border:1px solid var(--line);
     transition:transform .18s cubic-bezier(.2,.8,.3,1),border-color .18s,box-shadow .18s;}
@@ -115,18 +121,18 @@
   .kr-face{position:absolute;left:0;top:0;width:var(--cw);height:100%;object-fit:cover;object-position:50% 50%;}
   .kr-card::after{content:"";position:absolute;inset:0;
     background:linear-gradient(90deg, transparent 0, transparent calc(var(--cw) - 8px),
-      rgba(29,38,55,.62) calc(var(--cw) + 22px), var(--bg-lift) calc(var(--cw) + 58px), var(--bg-lift) 100%);}
-  .kr-body{position:absolute;top:0;right:0;bottom:0;left:calc(var(--cw) + 66px);z-index:2;
-    padding:15px 16px 15px 0;display:flex;flex-direction:column;justify-content:center;}
+      rgba(29,38,55,.62) calc(var(--cw) + 14px), var(--bg-lift) calc(var(--cw) + 34px), var(--bg-lift) 100%);}
+  .kr-body{position:absolute;top:0;right:0;bottom:0;left:calc(var(--cw) + 38px);z-index:2;
+    padding:13px 14px 13px 0;display:flex;flex-direction:column;justify-content:center;}
   .kr-run{font-size:7.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--xyellow);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .kr-title{font-size:15.5px;font-weight:800;line-height:1.2;margin:6px 0 5px;color:#fff;
+  .kr-title{font-size:14px;font-weight:800;line-height:1.2;margin:5px 0 4px;color:#fff;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .kr-cred{font-size:10.5px;line-height:1.35;color:var(--dim);margin-bottom:10px;
+  .kr-cred{font-size:10px;line-height:1.35;color:var(--dim);margin-bottom:9px;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .kr-bar{display:block;height:4px;border-radius:3px;background:rgba(255,255,255,.15);overflow:hidden;}
   .kr-bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--xyellow-deep),var(--xyellow));}
-  .kr-pos{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--dim2);margin-top:7px;
+  .kr-pos{font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim2);margin-top:6px;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .kr-empty{font-size:12.5px;line-height:1.6;color:var(--dim);padding:20px 18px;border-radius:12px;
     background:rgba(255,255,255,.035);border:1px solid var(--line);margin-bottom:12px;}

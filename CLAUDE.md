@@ -263,13 +263,24 @@ collapse it back:
   panel: the tile carries the cover's own colour edge to edge. Same `src`, so
   it is one request.
 - `.kr-card::after` dissolves the two together starting 8px before the cover's
-  right edge and solid 58px past it.
+  right edge and solid 34px past it.
 
 **Everything right of the cover is placed off `--cw`, not off a percentage of
 the tile.** The tile width is a `clamp()`, so a percentage stop drifts off the
 cover's edge at some widths and the gradient starts cutting into the art. One
 variable, redeclared in the 600px media query along with the tile height, keeps
 the geometry right at both sizes.
+
+**Four tiles to a screen, and the cap is arithmetic** (Aug 2026, the user's
+call — the rail was showing two and a half tiles and everything else meant
+scrolling). The rail is 1144px inside the 1180px wrap, so four tiles and three
+14px gaps put the cap at 274px, down from 440. `--cw` and the tile height moved
+with it: the cover is 2:3 of the height, so 147px tall gives 98px wide, and
+changing either alone stops the scan being shown whole. Five to a row would
+need a 217px tile, which leaves about 60px of text beside the cover — four is
+the floor, not a starting point. The type came down with the tile (title 14px,
+credits 10px) and the cover-to-text gap from 66px to 38px; the run line above
+the title ellipsises at this width, which is what it is there for.
 
 **Two things on the tile are approximations, and both are deliberate:**
 
