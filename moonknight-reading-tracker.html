@@ -59,11 +59,15 @@
     height:clamp(330px,42vw,540px);overflow:hidden;background:var(--bg);}
   .hb-fallback{position:absolute;inset:0;}
   .hb-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%;}
+  /* Tuned against the real banner art, not guessed. The left column has to
+     hold a logo and two lines of body copy, and the foot has to reach --bg
+     exactly; everything between those is as light as it can be. The top stop
+     is only there for the fixed bar, which carries its own scrim as well. */
   .hb-scrim{position:absolute;inset:0;pointer-events:none;
     background:
-      linear-gradient(90deg, rgba(10,14,21,.9) 0%, rgba(10,14,21,.5) 38%, rgba(10,14,21,0) 74%),
-      linear-gradient(0deg, var(--bg) 0%, rgba(10,14,21,.94) 13%, rgba(10,14,21,.4) 40%,
-        rgba(10,14,21,.1) 60%, rgba(10,14,21,.55) 100%);}
+      linear-gradient(90deg, rgba(10,14,21,.8) 0%, rgba(10,14,21,.34) 36%, rgba(10,14,21,0) 70%),
+      linear-gradient(0deg, var(--bg) 0%, rgba(10,14,21,.92) 12%, rgba(10,14,21,.3) 38%,
+        rgba(10,14,21,.04) 62%, rgba(10,14,21,.36) 100%);}
   .hb-in{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:1180px;margin:0 auto;padding:0 16px 34px;}
   .hb-logo{display:block;max-width:min(330px,58%);max-height:112px;object-fit:contain;object-position:0 100%;
     filter:drop-shadow(0 8px 22px rgba(0,0,0,.9));}
