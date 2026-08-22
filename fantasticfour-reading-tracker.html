@@ -18,8 +18,11 @@
           colour, so one variable retints the whole site.
      ====================================================================== */
   :root{
-    --bg:#0a0e15;              /* near-black, blue-leaning. The banner fades to it. */
-    --bg-lift:#0e1521;         /* the tile ground under a Keep Reading card */
+    /* Dark blue-grey, not near-black. It was #0a0e15 and the book spines --
+       which are real Marvel trade dress, and therefore black -- disappeared
+       into it; the shelf needs the page to be lighter than the books on it. */
+    --bg:#141b29;
+    --bg-lift:#1d2637;         /* the tile ground under a Keep Reading card */
     --line:rgba(255,255,255,.10);
     --line-hi:rgba(255,255,255,.22);
     --txt:#e9eff7;
@@ -28,7 +31,7 @@
     --xyellow:#ffd23f; --xyellow-deep:#e0a300;
     --read-green:#57c878; --read-green-deep:#2c8f47;
     --skip-grey:#8a9bb0; --skip-grey-deep:#56657a;
-    --ink:#0a0e15;
+    --ink:#0b0f16;
   }
   body{font-family:"Trebuchet MS","Segoe UI",Tahoma,Verdana,sans-serif;color:var(--txt);
     background:var(--bg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
@@ -39,7 +42,7 @@
          which is what lets the artwork start at the very top of the page. ---- */
   .topbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:10px;
     padding:13px 18px 30px;pointer-events:none;
-    background:linear-gradient(180deg, rgba(5,8,13,.94) 0%, rgba(5,8,13,.6) 52%, rgba(5,8,13,0) 100%);}
+    background:linear-gradient(180deg, rgba(9,13,20,.94) 0%, rgba(9,13,20,.6) 52%, rgba(9,13,20,0) 100%);}
   .topbar>*{pointer-events:auto;}
   .topbar .spacer{flex:1;pointer-events:none;}
   .backlink{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-family:inherit;cursor:pointer;
@@ -66,8 +69,8 @@
      untouched. The type carries its own shadow instead -- that is what buys
      legibility over a bright plate, not a scrim. */
   .hb-scrim{position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(0deg, var(--bg) 0%, rgba(10,14,21,.94) 8%, rgba(10,14,21,.72) 18%,
-      rgba(10,14,21,.34) 31%, rgba(10,14,21,.08) 40%, transparent 48%);}
+    background:linear-gradient(0deg, var(--bg) 0%, rgba(20,27,41,.94) 8%, rgba(20,27,41,.72) 18%,
+      rgba(20,27,41,.34) 31%, rgba(20,27,41,.08) 40%, transparent 48%);}
   .hb-in{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:1180px;margin:0 auto;padding:0 16px 34px;}
   .hb-logo{display:block;max-width:min(330px,58%);max-height:112px;object-fit:contain;object-position:0 100%;
     filter:drop-shadow(0 8px 22px rgba(0,0,0,.9));}
@@ -112,7 +115,7 @@
   .kr-face{position:absolute;left:0;top:0;width:var(--cw);height:100%;object-fit:cover;object-position:50% 50%;}
   .kr-card::after{content:"";position:absolute;inset:0;
     background:linear-gradient(90deg, transparent 0, transparent calc(var(--cw) - 8px),
-      rgba(14,21,33,.62) calc(var(--cw) + 22px), var(--bg-lift) calc(var(--cw) + 58px), var(--bg-lift) 100%);}
+      rgba(29,38,55,.62) calc(var(--cw) + 22px), var(--bg-lift) calc(var(--cw) + 58px), var(--bg-lift) 100%);}
   .kr-body{position:absolute;top:0;right:0;bottom:0;left:calc(var(--cw) + 66px);z-index:2;
     padding:15px 16px 15px 0;display:flex;flex-direction:column;justify-content:center;}
   .kr-run{font-size:7.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--xyellow);
@@ -256,7 +259,10 @@
      thickness comes from --t (set inline per tile from issue count). */
   /* books lean left, so the tilted spine sticks out past the grid's left edge --
      the inset keeps the first column off the page edge at every width */
-  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:44px 30px;padding-left:30px;}
+  /* Four to a row at full width, not five: 238px is wide enough that a fifth
+     cannot fit inside the 1180px wrap, and 1fr then spends the slack on the
+     books rather than on the gaps. */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:56px 40px;padding-left:34px;}
   .cell{position:relative;z-index:1;perspective:1500px;perspective-origin:50% 40%;}
   .cell:hover,.cell:focus-within{z-index:9;}
   .book{position:relative;transform-style:preserve-3d;}

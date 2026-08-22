@@ -18,8 +18,11 @@
           colour, so one variable retints the whole site.
      ====================================================================== */
   :root{
-    --bg:#0a0e15;              /* near-black, blue-leaning. The banner fades to it. */
-    --bg-lift:#0e1521;         /* the tile ground under a Keep Reading card */
+    /* Dark blue-grey, not near-black. It was #0a0e15 and the book spines --
+       which are real Marvel trade dress, and therefore black -- disappeared
+       into it; the shelf needs the page to be lighter than the books on it. */
+    --bg:#141b29;
+    --bg-lift:#1d2637;         /* the tile ground under a Keep Reading card */
     --line:rgba(255,255,255,.10);
     --line-hi:rgba(255,255,255,.22);
     --txt:#e9eff7;
@@ -28,7 +31,7 @@
     --xyellow:#ffd23f; --xyellow-deep:#e0a300;
     --read-green:#57c878; --read-green-deep:#2c8f47;
     --skip-grey:#8a9bb0; --skip-grey-deep:#56657a;
-    --ink:#0a0e15;
+    --ink:#0b0f16;
   }
   body{font-family:"Trebuchet MS","Segoe UI",Tahoma,Verdana,sans-serif;color:var(--txt);
     background:var(--bg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
@@ -39,7 +42,7 @@
          which is what lets the artwork start at the very top of the page. ---- */
   .topbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:10px;
     padding:13px 18px 30px;pointer-events:none;
-    background:linear-gradient(180deg, rgba(5,8,13,.94) 0%, rgba(5,8,13,.6) 52%, rgba(5,8,13,0) 100%);}
+    background:linear-gradient(180deg, rgba(9,13,20,.94) 0%, rgba(9,13,20,.6) 52%, rgba(9,13,20,0) 100%);}
   .topbar>*{pointer-events:auto;}
   .topbar .spacer{flex:1;pointer-events:none;}
   .backlink{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-family:inherit;cursor:pointer;
@@ -66,8 +69,8 @@
      untouched. The type carries its own shadow instead -- that is what buys
      legibility over a bright plate, not a scrim. */
   .hb-scrim{position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(0deg, var(--bg) 0%, rgba(10,14,21,.94) 8%, rgba(10,14,21,.72) 18%,
-      rgba(10,14,21,.34) 31%, rgba(10,14,21,.08) 40%, transparent 48%);}
+    background:linear-gradient(0deg, var(--bg) 0%, rgba(20,27,41,.94) 8%, rgba(20,27,41,.72) 18%,
+      rgba(20,27,41,.34) 31%, rgba(20,27,41,.08) 40%, transparent 48%);}
   .hb-in{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:1180px;margin:0 auto;padding:0 16px 34px;}
   .hb-logo{display:block;max-width:min(330px,58%);max-height:112px;object-fit:contain;object-position:0 100%;
     filter:drop-shadow(0 8px 22px rgba(0,0,0,.9));}
@@ -112,7 +115,7 @@
   .kr-face{position:absolute;left:0;top:0;width:var(--cw);height:100%;object-fit:cover;object-position:50% 50%;}
   .kr-card::after{content:"";position:absolute;inset:0;
     background:linear-gradient(90deg, transparent 0, transparent calc(var(--cw) - 8px),
-      rgba(14,21,33,.62) calc(var(--cw) + 22px), var(--bg-lift) calc(var(--cw) + 58px), var(--bg-lift) 100%);}
+      rgba(29,38,55,.62) calc(var(--cw) + 22px), var(--bg-lift) calc(var(--cw) + 58px), var(--bg-lift) 100%);}
   .kr-body{position:absolute;top:0;right:0;bottom:0;left:calc(var(--cw) + 66px);z-index:2;
     padding:15px 16px 15px 0;display:flex;flex-direction:column;justify-content:center;}
   .kr-run{font-size:7.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--xyellow);
@@ -185,7 +188,7 @@
   .info-dot{position:absolute;top:9px;left:9px;z-index:3;width:25px;height:25px;border-radius:50%;cursor:pointer;
     display:flex;align-items:center;justify-content:center;font-family:inherit;font-size:12px;font-weight:900;font-style:italic;
     color:var(--txt);opacity:0;transition:opacity .18s, transform .12s;
-    background:rgba(10,14,21,.8);border:1px solid var(--line-hi);}
+    background:rgba(20,27,41,.8);border:1px solid var(--line-hi);}
   .cell:hover .info-dot,.cell:focus-within .info-dot{opacity:1;}
   .info-dot:hover{transform:scale(1.12);background:rgba(20,28,40,.95);}
   .info-dot:focus-visible{opacity:1;outline:2px solid var(--xyellow);outline-offset:2px;}
@@ -197,10 +200,10 @@
     background:rgba(3,6,11,.78);backdrop-filter:blur(6px);}
   .scrim.show{display:flex;}
   .modal{position:relative;width:min(660px,100%);max-height:92vh;overflow:auto;border-radius:16px;
-    background:#0e1521;border:1px solid var(--line-hi);box-shadow:0 30px 70px rgba(0,0,0,.8);}
+    background:#1d2637;border:1px solid var(--line-hi);box-shadow:0 30px 70px rgba(0,0,0,.8);}
   .modal-art{position:relative;height:238px;overflow:hidden;border-radius:15px 15px 0 0;}
   .modal-art .fade{position:absolute;inset:0;
-    background:linear-gradient(180deg, transparent 44%, rgba(14,21,33,.8) 80%, #0e1521 100%);}
+    background:linear-gradient(180deg, transparent 44%, rgba(29,38,55,.8) 80%, #1d2637 100%);}
   .modal-art .memb{position:absolute;left:20px;bottom:14px;width:70px;height:70px;
     display:flex;align-items:center;justify-content:center;}
   .modal-art .memb svg{width:100%;height:100%;filter:drop-shadow(0 3px 8px rgba(0,0,0,.75));}
