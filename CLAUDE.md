@@ -31,7 +31,8 @@ Keep replies short and plain. This is a hobby project, not a code review.
 
 ## Files
 
-- `index.html` — the C.O.M.I.C.S. homescreen. Poster grid, Continue Reading panel,
+- `index.html` — the C.O.M.I.C.S. homescreen. Above-the-fold banner, Keep Reading
+  rail, poster grid,
   per-subject dossier modal, filters.
 - `xmen-reading-tracker.html` — the X-Men Messiah Saga protocol. Same omnibus
   shelf shape as the other six, but the four books on it were **never printed**
@@ -67,6 +68,10 @@ Keep replies short and plain. This is a hobby project, not a code review.
   with no covers".
 - `Art/Heroes/` — one cover per homescreen subject, seven files named by hero id.
   See "Artwork" below.
+- `Art/Banners/` — the wide above-the-fold art, eight files: `index.jpg` for the
+  homescreen and `<hero id>.jpg` for each subject's shelf. Hand-picked, never
+  fetched; `tools/banners.py` normalises them. A missing one is not a broken
+  page — see "The banner" below.
 - `Art/covers/` — the original hand-supplied scans the seven `Art/Heroes/`
   files were derived from, at full size. Nothing reads this folder; it is kept
   so a poster can be re-cropped without re-sourcing the art.
@@ -146,12 +151,121 @@ shelf — that is still forbidden.
    whichever of the two shapes fits.
 2. In `index.html`, flip that hero's `HEROES` entry: set `file` to the new
    filename and `total` to its issue count. That alone makes the poster live.
-3. In the new tracker, add a `.topnav` back link and a `publishIndex()` call at
+3. In the new tracker, add a `.topbar` back link and a `publishIndex()` call at
    the end of `refresh()` (copy both from the X-Men file, changing the storage
-   key to `comics-hero-<id>`).
+   key to `comics-hero-<id>`), and drop a banner in at `Art/Banners/<id>.jpg`.
 
 Steps 1 and 2 are independent — a hero can sit on the shelf as "Curating"
 indefinitely with no tracker file, and nothing breaks.
+
+## The three levels, and what sits at the top of each (Aug 2026)
+
+Every page is one of three levels, and they now share the same top:
+
+| Level | Page | Banner shows | Keep Reading shows |
+|---|---|---|---|
+| 1 | `index.html` | `Art/Banners/index.jpg` + the C.O.M.I.C.S. wordmark | every volume open across all seven subjects |
+| 2 | a tracker's shelf view | `Art/Banners/<hero>.jpg` + that subject's printed logo | every volume open on that shelf |
+| 3 | a tracker's volume view | that volume's own cover | one tile — the next issue in the volume |
+
+Three things went at once, and all three were the user's call:
+
+- **The HUD bar is gone from every page.** It was the rounded panel carrying the
+  page title, the emblem and a row of read / skipped / remaining / cleared
+  figures. The title moved into the banner; the figures were not replaced,
+  because of the rule below.
+- **Completion is not reported anywhere.** No overall percentage, no per-volume
+  `done/total`, no per-chapter `N / M` pill, no progress bar on a book tile or a
+  chapter header. `.pbar` is deleted from every page. The reading is long enough
+  that "8% cleared" is discouraging rather than informative, and the user does
+  not read for completion. The one bar left on the site is on a Keep Reading
+  tile, and it is a position marker for a single volume, not a score.
+  **Do not reintroduce a completion figure** without being asked for one.
+- **The Frutiger Aero sky is gone.** See "The dark chrome" below.
+
+What is deliberately *kept* despite touching progress: the shelf's In progress /
+Not started / Finished filter chips, the "Finished" badge on a cleared book, and
+the read/skipped state on an issue row. Those are states, not scores.
+
+### The banner
+
+One full-bleed image at the top of every page, fading into the page background
+at its foot. The fade only works because `--bg` is a **flat** colour — a
+gradient body would show a seam where the banner stops. Keep it flat.
+
+`.hb` breaks out of `.wrap` with `width:100vw; margin-left:calc(50% - 50vw)`,
+which is exact for a centred max-width box with padding; `body{overflow-x:hidden}`
+is what keeps the `100vw` from adding a scrollbar.
+
+**The fallback chain matters, because seven of the eight banner files are
+supplied by hand and may not be there.** `hbFallback()` in each tracker walks
+`Art/Banners/<id>.jpg` → `Art/Heroes/<id>.jpg` (the subject's poster scan, at
+the same `pos` crop the dossier banner uses) → the `.hb-fallback` ramp. The
+homescreen has no poster of its own, so its fallback is all seven posters in a
+row behind the scrim (`#hbTiles`) — they are already downloaded for the wall
+below, so it costs no request.
+
+The title treatment over the banner is the subject's printed logo from
+`Art/Logos/`, with the name as text if the logo fails. Same
+degrade-don't-vanish rule the plate follows.
+
+### Keep Reading
+
+The old single "Up Next" / "Continue Reading" bar named one issue. This names
+one per place you have something open, because the reading is not linear.
+
+A **spot** is one omnibus volume with at least one issue left in it — the
+streaming metaphor's show. `spotFor()` builds one, `spots()` returns the
+touched ones newest-first, and `krCard()` draws the tile. Nothing started
+anywhere returns the first volume on the shelf instead, so a fresh browser gets
+a "Start Reading" tile rather than an empty band.
+
+The tile is a wide `<a>` where the cover **fills the whole tile** and
+`.kr-card::after` dissolves it into the panel colour about a third of the way
+across. It is not a thumbnail with text beside it — that was the explicit ask,
+and it is why `.kr-art` is `position:absolute;inset:0` rather than a fixed-width
+box. `object-position:50% 8%` lands the visible band on the logo and the top of
+the figure; a 2:3 cover in a 420x158 box only shows about a quarter of itself,
+so that number is the difference between a recognisable tile and a crop of
+someone's elbow.
+
+**Two things on the tile are approximations, and both are deliberate:**
+
+- **The bar is progress through the volume, not through the issue.** There is no
+  such thing as being halfway through one issue in this data — an issue is read,
+  skipped or neither. The position line reads "Issue 12 of 43" for the same
+  reason: it is an episode number, not a score.
+- **The credits are the volume's `creators`, not the issue's.** For most
+  omnibuses that is exactly the writer and penciler, because the book is named
+  for them. Per-issue credits are not in the shelf data at all; getting them
+  means a wiki pull per issue across 3,400 issues. See open item 15.
+
+A tile is an `<a href="#/omni/<id>">`. Inside that volume already, the hash does
+not change and no route fires, so the click handler does the jump itself —
+`pendingJump` → `jumpToIssue()`, which opens the chapter, scrolls the row into
+view and flashes it. Crossing from the homescreen loses `pendingJump` (different
+document); the volume view opens the right chapter anyway.
+
+### The dark chrome
+
+The palette is one block of variables at the top of every page's `<style>`,
+under a comment naming the two rules that make it work: the page background is
+flat `--bg` (see "The banner"), and panels are a low-alpha white wash over it
+rather than their own colour, so retinting the site is one variable.
+
+    --bg #0a0e15   --line rgba(255,255,255,.10)   --txt #e9eff7   --dim #9db0c6
+
+What survived from the old look, because it is artwork rather than chrome: the
+CSS-3D book tiles and their spines, the `.o-*` cover ramps, the `.tex-*`
+textures, the `.a-*` poster ramps, the poster plates and printed logos, and the
+gold `--xyellow` accent.
+
+What went: the sky gradient, the four floating `.bubble`s, every glass panel
+with a white inner highlight, the glossy orb buttons, and the gradient-clipped
+italic headings.
+
+The chrome is duplicated in all eight files on purpose — same portability rule
+as the summary engine. Change one, change the others.
 
 ## Homescreen (`index.html`)
 
@@ -159,8 +273,8 @@ The `HEROES` array is the whole configuration. Each entry:
 `{id, name, art, tex, emblem, cover, pos, plate, logo, logow?, era, file, total, desc, light?}`.
 - `file: null` → poster renders dimmed with a "Curating" badge, and clicking it
   opens the dossier modal instead of navigating.
-- `file: "…"` → poster gets a progress bar, and clicking it navigates straight
-  to the tracker. The small "i" button opens the dossier.
+- `file: "…"` → clicking the poster navigates straight to the tracker. The small
+  "i" button opens the dossier.
 
 **There is no "Ready" badge** (Aug 2026). It was a gold pill on every live
 poster, and once all seven subjects were live it labelled nothing — seven
@@ -325,15 +439,31 @@ tile.
 **The progress bar came off the plate too** (Aug 2026), so the poster now
 carries no progress at all. That is a real loss of information from the wall
 and was the user's call: the plate reads as printed trade dress, and a UI
-element in it broke that. Progress is still one click away — the Continue
-Reading panel at the top of the homescreen and each subject's dossier both
-carry it — and `.pbar` itself is still live for exactly those two.
+element in it broke that. It was the first of the progress removals; the rest
+followed in the same month and `.pbar` is now deleted from every page — see
+"The three levels" above.
 
 ### How the homescreen knows your progress
 
 Trackers publish a summary record on every `refresh()`:
 
-    comics-hero-<id> → {total, read, skip, next:{t, arc, ch}}
+    comics-hero-<id> → {total, read, skip, next:{t, arc, ch}, spots:[…]}
+
+`spots` is what the homescreen's Keep Reading rail is built from — one entry per
+volume that subject has open, capped at 10, each carrying everything a tile
+needs and nothing else:
+
+    {o, vol, cover, cred, t, iss, ch, i, n, done, ts}
+
+`ts` is when something in that volume was last marked, so merging every
+subject's `spots` and sorting on it gives one cross-subject rail. It comes from
+a `touch` map the tracker keeps **inside its own progress record** —
+`{read, skip, touch:{<omniId>:<timestamp>}}`. That field is additive: a backup
+written before it existed loads fine and simply sorts everything at 0.
+
+`total`, `read`, `skip` and `next` are still written. Nothing on the homescreen
+draws a percentage from them any more, but they are the back-compatible half of
+the record and the dossier still reports `total` as inventory.
 
 The homescreen reads those records; it never carries a copy of any tracker's data.
 If no record exists yet (that tracker has never been opened since this feature
@@ -552,7 +682,8 @@ markup `buildShelf()` emits, outermost first:
           .spine  Marvel trade dress -- red MARVEL/OMNIBUS band, vertical title,
                   optional credit line, volume number at the foot
           .pages  the paper block along the top edge
-          .face   the cover itself -- art layers, badge, plate, progress bar
+          .face   the cover itself -- art layers, badge, plate (no progress bar
+                  since Aug 2026 -- see "The three levels")
 
 The spine is the **shared Marvel trade dress** — black field, red
 `MARVEL` / `OMNIBUS` band at the top, white title down the spine, `VOL n` at the
@@ -1012,6 +1143,11 @@ ambiguous or rejected; no hit means Marvel does not have it.
   holds which cover and why; `SUPPLIED` lists the subjects it will not
   overwrite without `--replace`. Nothing is generated from it — the `cover`
   field in `HEROES` is hand-written — so a new pick is an edit in both places.
+- `banners.py` — the above-the-fold banner art. `add <key> <image>` normalises
+  one to 1800px/q82 into `Art/Banners/<key>.jpg`; `add-folder <dir>` matches a
+  whole folder against the eight keys by filename and **reports** anything
+  ambiguous rather than guessing; `audit` lists what is there. There is no fetch
+  route — these are hand-picked wide art, like the logos. Needs Pillow.
 - `logos.py` — the homescreen logo pipeline. `add <hero-id> <image>` crops a
   logo to its alpha bounding box, downscales to 500px and writes
   `Art/Logos/<hero-id>.png`; `audit` lists what every subject has and flags any
@@ -1948,7 +2084,7 @@ All inside the single `<script>` block, in this order:
 5. `ARC_SUMS` — 27 hand-written, pre-loaded spoiler digests keyed by chapter id
 6. Storage layer, shelf render, volume render, interaction, summaries, refresh
 
-`flat[]` is the flattened `{o, ch, issue}` list driving "Up Next" and all
+`flat[]` is the flattened `{o, ch, issue}` list driving Keep Reading and all
 progress math. No issue is collected twice here, so slots and unique ids are the
 same 174 and there is no `dupCount` / "in N omnibuses" pill as on the real
 shelves.
@@ -2008,11 +2144,15 @@ reliably suppress that formatting.
 
 ### Design
 
-Frutiger Aero / early-2000s: sky-blue gradients, glass panels, glossy orbs,
-floating bubbles, italic uppercase display type, X-Men gold accents. CSS
-variables at `:root`. Progress bars stack green (read) + grey (skipped).
-Respects `prefers-reduced-motion`. Mobile breakpoint at 600px. This is the same
-look every shelf page uses, which is why the shelf CSS dropped straight in.
+Dark blue-black, streaming-service shaped: a flat near-black page, a full-bleed
+banner fading into it, a Keep Reading rail of wide tiles, then the shelf. CSS
+variables at `:root`. Respects `prefers-reduced-motion`. Mobile breakpoint at
+600px. This is the same look every page uses — see "The dark chrome" near the
+top of this file.
+
+It was Frutiger Aero until Aug 2026 — sky-blue gradients, glass panels, glossy
+orbs, floating bubbles — and the book tiles, the cover ramps and the gold accent
+are what is left of it.
 
 ### Cover art for books with no covers
 
@@ -2259,7 +2399,27 @@ a server-side store and is not built.
     the shelf count, and "never printed" in each volume's banner. That is the
     floor, and preserving it is the thing to watch if the shelf is ever edited —
     see "A shelf holds books you can actually buy".
-14. **The Daredevil shelf is missing Daredevil Omnibus Vol. 4 for one month.**
+14. **Seven of the eight banner images are not in the repo yet.** Only the
+    homescreen has a fallback worth looking at (the seven posters in a row);
+    each subject falls back to its own poster scan, which is a portrait crop
+    stretched across a 3.4:1 band and reads soft. Dropping the real art in is
+    `python3 tools/banners.py add-folder <dir>` and a commit — see "The banner".
+15. **A Keep Reading tile credits the volume, not the issue.** `creators` on an
+    omnibus is usually exactly the writer and penciler of what it collects, so
+    the line is right far more often than not — but on an anthology volume
+    ("David Michelinie & various") it is vague, and on a mainline numbered
+    volume it names the run's headline team rather than whoever drew that
+    issue. The fix is per-issue credits in the raw-contents pull, which is a
+    wiki request per issue across 3,412 issues and a real size increase in every
+    tracker. Not attempted; the tile says what the data can support.
+16. **The tile's bar measures the volume, not the issue.** The user asked for a
+    per-issue progress bar, in the streaming sense of "you are 40% through this
+    episode". Nothing in this project knows that — an issue is read, skipped or
+    neither — so the bar is progress through the volume the next issue sits in
+    and the caption is a position ("Issue 12 of 43"). Making it literal would
+    mean tracking a page or a percentage per issue, which is a new interaction,
+    not a new field.
+17. **The Daredevil shelf is missing Daredevil Omnibus Vol. 4 for one month.**
     It ships September 2026 and is excluded by the "a shelf holds books you can
     actually buy" rule, which leaves a #120–157 hole between `dd-o3` and
     `miller-o1`. Adding it is a `daredevil_meta.py` edit plus a regenerate (the
@@ -2300,6 +2460,13 @@ python3 tools/link_issues.py
 # Homescreen logos (every subject has one, and every one has an alpha channel)
 python3 tools/logos.py audit
 
+# Banner art (which of the eight are in, and how big)
+python3 tools/banners.py audit
+
+# Nothing on any page still draws a completion figure. Expect no matches:
+# the HUD, the Up Next bar, the bubbles and .pbar were all deleted in Aug 2026.
+grep -l 'class="hud"\|class="upnext"\|class="pbar"\|class="bubble"' *.html
+
 # Cover art (every volume has one, and how heavy it is)
 python3 tools/covers.py audit
 python3 tools/covers.py audit --hero hulk
@@ -2337,6 +2504,14 @@ point `chromium.launch(executable_path=...)` at it, against a local
 `python3 -m http.server`. That is what caught the Daredevil page still carrying
 the Moon Knight subtitle in its shelf view — a string the identity sweep had
 replaced in the markup but not in the `showShelf()` line that overwrites it.
+
+The Keep Reading rail is worth driving rather than looking at, because most of
+it only exists once something is marked: open a volume, tick three issues, go
+back to the shelf and click the tile, and check that it opens the chapter and
+flashes the row. Then load `index.html` and check the same volume is the first
+tile there. A `pageerror` listener on the page catches the rest — the whole
+rail is built in one `innerHTML`, so a bad field is a silent empty band, not a
+stack trace in the console.
 
 For behavior, `jsdom` with `runScripts:'dangerously'` and no `window.storage`
 simulates plain-browser mode accurately — that's how the localStorage fallback

@@ -5,189 +5,237 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C.O.M.I.C.S. // Messiah Saga Protocol</title>
 <style>
-  :root{
-    --sky-top:#8fd0f5; --sky-mid:#4a9fd8; --sky-deep:#1b5fa8; --navy:#0d2f5e;
-    --xyellow:#ffd23f; --xyellow-deep:#f0a500;
-    --read-green:#7ed957; --read-green-deep:#3fa32e;
-    --skip-grey:#b9c7d6; --skip-grey-deep:#7d8fa3;
-    --ink:#0a2440;
-  }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{
-    font-family:"Trebuchet MS","Segoe UI",Tahoma,Verdana,sans-serif; color:#fff; min-height:100vh;
-    background:
-      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(255,255,255,.55), transparent 60%),
-      radial-gradient(ellipse 60% 40% at 85% 8%, rgba(255,255,255,.28), transparent 55%),
-      radial-gradient(circle 320px at 92% 88%, rgba(126,217,255,.32), transparent 70%),
-      linear-gradient(178deg, var(--sky-top) 0%, var(--sky-mid) 32%, var(--sky-deep) 72%, var(--navy) 100%);
-    background-attachment:fixed;
+
+  /* ======================================================================
+     C.O.M.I.C.S. dark chrome (Aug 2026) -- what replaced the Frutiger Aero
+     sky. Two rules make the rest of the page work:
+
+       1. the page background is a FLAT colour, --bg. It has to be, because
+          every hero banner ends by fading into exactly that value; a gradient
+          under it would show a seam wherever the banner stops.
+       2. panels are a low-alpha white wash over --bg rather than their own
+          colour, so one variable retints the whole site.
+     ====================================================================== */
+  :root{
+    --bg:#0a0e15;              /* near-black, blue-leaning. The banner fades to it. */
+    --bg-lift:#0e1521;         /* the tile ground under a Keep Reading card */
+    --line:rgba(255,255,255,.10);
+    --line-hi:rgba(255,255,255,.22);
+    --txt:#e9eff7;
+    --dim:#9db0c6;
+    --dim2:#6f8098;
+    --xyellow:#ffd23f; --xyellow-deep:#e0a300;
+    --read-green:#57c878; --read-green-deep:#2c8f47;
+    --skip-grey:#8a9bb0; --skip-grey-deep:#56657a;
+    --ink:#0a0e15;
   }
-  .bubble{position:fixed;border-radius:50%;pointer-events:none;z-index:0;
-    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.8), rgba(255,255,255,.1) 45%, rgba(120,200,255,.07) 70%, transparent 75%);
-    border:1px solid rgba(255,255,255,.22);}
-  .b1{width:190px;height:190px;top:6%;left:-50px;}
-  .b2{width:85px;height:85px;top:34%;right:4%;}
-  .b3{width:280px;height:280px;bottom:-100px;left:10%;opacity:.5;}
-  .b4{width:55px;height:55px;top:66%;left:3%;}
-  .wrap{max-width:960px;margin:0 auto;padding:20px 14px 90px;position:relative;z-index:1;}
+  body{font-family:"Trebuchet MS","Segoe UI",Tahoma,Verdana,sans-serif;color:var(--txt);
+    background:var(--bg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 16px 90px;position:relative;}
+  ::selection{background:rgba(255,210,63,.28);}
 
-  header.hud{border-radius:22px;padding:22px 24px 20px;margin-bottom:16px;position:relative;overflow:hidden;
-    background:linear-gradient(180deg, rgba(30,80,150,.86), rgba(10,36,74,.94));
-    border:1px solid rgba(160,220,255,.5);
-    box-shadow:0 10px 30px rgba(5,25,60,.45), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -14px 24px rgba(0,20,60,.5);}
-  header.hud::before{content:"";position:absolute;inset:0 0 55% 0;pointer-events:none;
-    background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,.03));
-    border-radius:22px 22px 50% 50%/22px 22px 30px 30px;}
-  .hud-top{display:flex;align-items:center;gap:16px;}
-  .x-emblem{width:62px;height:62px;flex:0 0 62px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-    background:radial-gradient(circle at 30% 25%, #fff, #cfe6ff 30%, #4a9fd8 60%, #123c78 100%);
-    border:2px solid rgba(255,255,255,.75);box-shadow:0 4px 12px rgba(0,20,60,.5), inset 0 -6px 10px rgba(0,30,80,.4);}
-  .x-emblem span{font-size:36px;font-weight:900;font-style:italic;line-height:1;transform:translateY(-1px);
-    background:linear-gradient(180deg,#fff 20%, var(--xyellow) 55%, var(--xyellow-deep) 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 2px rgba(0,20,60,.6));}
-  .hud-title h1{font-size:clamp(20px,4.2vw,30px);font-style:italic;font-weight:900;letter-spacing:.5px;text-transform:uppercase;
-    background:linear-gradient(180deg,#fff 30%, #bfe3ff 55%, #6db6ea 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 3px rgba(0,20,60,.6));}
-  .hud-title .sub{font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--xyellow);font-weight:700;margin-top:3px;text-shadow:0 1px 2px rgba(0,0,0,.5);}
-  .hud-stats{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;align-items:center;position:relative;}
-  .stat{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#cfe6ff;}
-  .stat b{color:#fff;font-size:16px;margin-right:4px;}
-  .stat.sk b{color:var(--skip-grey);}
-  .master-bar{flex:1 1 200px;min-width:170px;}
-  .pbar{height:15px;border-radius:9px;overflow:hidden;position:relative;display:flex;
-    background:linear-gradient(180deg, rgba(0,20,50,.75), rgba(10,45,90,.6));
-    border:1px solid rgba(160,220,255,.4);box-shadow:inset 0 2px 5px rgba(0,0,0,.5);}
-  .pbar .fill{height:100%;width:0%;transition:width .45s cubic-bezier(.2,.8,.3,1);position:relative;}
-  .pbar .fill.rd{background:linear-gradient(180deg,#c9f7a8 0%, var(--read-green) 45%, var(--read-green-deep) 60%, #a2e87f 100%);}
-  .pbar .fill.sk{background:linear-gradient(180deg,#e8eff6 0%, var(--skip-grey) 45%, var(--skip-grey-deep) 60%, #cdd9e5 100%);}
-  .pbar .fill::after{content:"";position:absolute;inset:1px 0 50% 0;background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.04));}
+  /* ---- fixed top bar. It floats over the banner rather than sitting above it,
+         which is what lets the artwork start at the very top of the page. ---- */
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;gap:10px;
+    padding:13px 18px 30px;pointer-events:none;
+    background:linear-gradient(180deg, rgba(5,8,13,.94) 0%, rgba(5,8,13,.6) 52%, rgba(5,8,13,0) 100%);}
+  .topbar>*{pointer-events:auto;}
+  .topbar .spacer{flex:1;pointer-events:none;}
+  .backlink{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-family:inherit;cursor:pointer;
+    font-size:9.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--txt);
+    padding:7px 14px 7px 11px;border-radius:20px;background:rgba(255,255,255,.07);
+    border:1px solid var(--line);transition:background .15s,border-color .15s;}
+  .backlink:hover{background:rgba(255,255,255,.15);border-color:var(--line-hi);}
+  .backlink .caret{font-size:11px;line-height:1;color:var(--xyellow);}
+  .topbar .crumb{font-size:9px;letter-spacing:2.4px;text-transform:uppercase;color:var(--dim2);}
 
-  .upnext{position:relative;display:flex;gap:14px;align-items:center;margin-bottom:18px;padding:16px;border-radius:18px;flex-wrap:wrap;
-    background:linear-gradient(180deg, rgba(255,255,255,.3), rgba(190,230,255,.13));
-    border:1px solid rgba(255,255,255,.55);
-    box-shadow:0 8px 24px rgba(5,30,70,.35), inset 0 1px 0 rgba(255,255,255,.7);backdrop-filter:blur(6px);}
-  .upnext .tag{position:absolute;top:-9px;left:18px;font-size:9.5px;font-weight:900;letter-spacing:2.5px;padding:3px 12px;border-radius:20px;
-    text-transform:uppercase;color:var(--ink);background:linear-gradient(180deg,#fff 0%, var(--xyellow) 60%, var(--xyellow-deep) 100%);
-    border:1px solid rgba(255,255,255,.8);box-shadow:0 2px 6px rgba(0,20,60,.4);}
-  .upnext-info{flex:1 1 240px;min-width:0;}
-  .upnext-info .run-name{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#eaf6ff;opacity:.85;font-weight:700;}
-  .upnext-info .issue-name{font-size:clamp(16px,3.4vw,21px);font-weight:900;font-style:italic;margin:3px 0 2px;text-shadow:0 2px 4px rgba(0,20,60,.5);}
-  .upnext-info .arc{font-size:12px;color:#d7ecff;}
-  .upnext-actions{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;}
-  .btn{cursor:pointer;font-family:inherit;font-weight:900;font-size:12px;letter-spacing:1px;text-transform:uppercase;
-    padding:10px 18px;border-radius:22px;border:1px solid rgba(255,255,255,.7);transition:filter .12s, transform .12s;}
-  .btn:hover{filter:brightness(1.08);transform:translateY(-1px);} .btn:active{transform:translateY(1px);}
-  .btn-read{color:#0b3a12;background:linear-gradient(180deg,#e6ffd2 0%, var(--read-green) 48%, var(--read-green-deep) 56%, #8fe066 100%);
-    box-shadow:0 4px 12px rgba(20,70,20,.4), inset 0 1px 0 rgba(255,255,255,.9);}
-  .btn-skip{color:#22354a;background:linear-gradient(180deg,#f4f8fc 0%, var(--skip-grey) 48%, var(--skip-grey-deep) 56%, #d5e0ea 100%);
-    box-shadow:0 4px 12px rgba(20,45,80,.35), inset 0 1px 0 rgba(255,255,255,.9);}
-  .alldone{font-size:15px;font-weight:900;font-style:italic;}
+  /* ---- the above-the-fold banner ----
+     Full-bleed out of .wrap, and its bottom edge is --bg exactly, so the art
+     dissolves into the page instead of ending on a line. Fallback order is
+     Art/Banners/<id>.jpg -> the subject's poster scan -> the .hb-fallback ramp;
+     hbFallback() walks it, so a missing banner file is never an empty box. */
+  .hb{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-bottom:24px;
+    height:clamp(330px,42vw,540px);overflow:hidden;background:var(--bg);}
+  .hb-fallback{position:absolute;inset:0;}
+  .hb-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%;}
+  .hb-scrim{position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(10,14,21,.9) 0%, rgba(10,14,21,.5) 38%, rgba(10,14,21,0) 74%),
+      linear-gradient(0deg, var(--bg) 0%, rgba(10,14,21,.94) 13%, rgba(10,14,21,.4) 40%,
+        rgba(10,14,21,.1) 60%, rgba(10,14,21,.55) 100%);}
+  .hb-in{position:absolute;left:0;right:0;bottom:0;z-index:2;max-width:1180px;margin:0 auto;padding:0 16px 34px;}
+  .hb-logo{display:block;max-width:min(330px,58%);max-height:112px;object-fit:contain;object-position:0 100%;
+    filter:drop-shadow(0 8px 22px rgba(0,0,0,.9));}
+  .hb-name{font-size:clamp(26px,5.6vw,52px);font-weight:900;font-style:italic;letter-spacing:.5px;
+    text-transform:uppercase;line-height:1;color:#fff;text-shadow:0 6px 24px rgba(0,0,0,.9);}
+  .hb-sub{margin-top:13px;font-size:10px;font-weight:800;letter-spacing:3.2px;text-transform:uppercase;color:var(--xyellow);}
+  .hb-blurb{margin-top:9px;max-width:640px;font-size:12.5px;line-height:1.62;color:#c3d1e1;
+    text-shadow:0 2px 10px rgba(0,0,0,.9);}
 
-  .controls{display:flex;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
-  .chip-btn{cursor:pointer;font-family:inherit;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#eaf6ff;
-    padding:6px 13px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.05));
-    border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);}
-  .chip-btn:hover{background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,.12));}
-  .chip-btn.on{color:var(--ink);background:linear-gradient(180deg,#fff, var(--xyellow) 60%, var(--xyellow-deep));border-color:rgba(255,255,255,.85);}
+  /* ---- Keep Reading rail ----
+     One wide tile per place you are partway through, newest first. The art is
+     not a thumbnail bolted to the left: the image covers the whole tile and a
+     90deg gradient dissolves it into the panel where the text sits. */
+  .kr{margin:0 0 8px;}
+  .kr-head{display:flex;align-items:baseline;gap:12px;margin:0 0 12px;padding:0 2px;}
+  .kr-head h2{font-size:13px;font-weight:800;letter-spacing:2.6px;text-transform:uppercase;color:var(--txt);}
+  .kr-head .n{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim2);}
+  .kr-rail{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 16px;
+    scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;}
+  .kr-rail::-webkit-scrollbar{height:8px;}
+  .kr-rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:4px;}
+  .kr-rail::-webkit-scrollbar-track{background:transparent;}
+  .kr-card{position:relative;flex:0 0 clamp(310px,80vw,420px);height:158px;border-radius:12px;overflow:hidden;
+    scroll-snap-align:start;display:block;text-decoration:none;color:inherit;cursor:pointer;
+    background:var(--bg-lift);border:1px solid var(--line);
+    transition:transform .18s cubic-bezier(.2,.8,.3,1),border-color .18s,box-shadow .18s;}
+  .kr-card:hover,.kr-card:focus-visible{transform:translateY(-3px);border-color:var(--line-hi);
+    box-shadow:0 16px 34px rgba(0,0,0,.6);outline:none;}
+  /* A 2:3 cover in a 420x158 box shows a band about a quarter of it tall; 16%
+     lands that band on the logo and the top of the figure, which is the part
+     of a comic cover you recognise. */
+  .kr-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 8%;}
+  .kr-card::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg, rgba(14,21,33,0) 0%, rgba(14,21,33,.18) 16%,
+      rgba(14,21,33,.85) 34%, var(--bg-lift) 48%, var(--bg-lift) 100%);}
+  .kr-body{position:absolute;inset:0 0 0 36%;z-index:2;padding:15px 16px;display:flex;flex-direction:column;justify-content:center;}
+  .kr-run{font-size:7.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--xyellow);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .kr-title{font-size:15.5px;font-weight:800;line-height:1.2;margin:6px 0 5px;color:#fff;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .kr-cred{font-size:10.5px;line-height:1.35;color:var(--dim);margin-bottom:10px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .kr-bar{display:block;height:4px;border-radius:3px;background:rgba(255,255,255,.15);overflow:hidden;}
+  .kr-bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--xyellow-deep),var(--xyellow));}
+  .kr-pos{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--dim2);margin-top:7px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .kr-empty{font-size:12.5px;line-height:1.6;color:var(--dim);padding:20px 18px;border-radius:12px;
+    background:rgba(255,255,255,.035);border:1px solid var(--line);margin-bottom:12px;}
 
-  .act-head{margin:26px 0 12px;padding:0 4px;display:flex;align-items:center;gap:12px;}
-  .act-head .line{flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg, rgba(255,255,255,.6), rgba(255,255,255,0));}
-  .act-head h2{font-size:clamp(13px,2.6vw,16px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:2px;white-space:nowrap;
-    background:linear-gradient(180deg,#fff 25%, var(--xyellow) 75%);-webkit-background-clip:text;background-clip:text;color:transparent;
-    filter:drop-shadow(0 2px 3px rgba(0,20,60,.6));}
-  .act-head .yr{font-size:10px;letter-spacing:2px;color:#d7ecff;text-transform:uppercase;white-space:nowrap;}
+  /* ---- section heads and chips ---- */
+  .act-head{margin:30px 0 14px;padding:0 2px;display:flex;align-items:center;gap:12px;}
+  .act-head .line{flex:1;height:1px;background:linear-gradient(90deg, var(--line-hi), transparent);}
+  .act-head h2{font-size:clamp(12px,2.4vw,14px);font-weight:800;text-transform:uppercase;letter-spacing:2.6px;
+    white-space:nowrap;color:var(--txt);}
+  .act-head .yr{font-size:9.5px;letter-spacing:2px;color:var(--dim2);text-transform:uppercase;white-space:nowrap;}
+  .controls{display:flex;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
+  .chip-btn{cursor:pointer;font-family:inherit;font-size:10px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
+    color:var(--dim);padding:7px 14px;border-radius:18px;background:rgba(255,255,255,.05);
+    border:1px solid var(--line);transition:background .15s,color .15s,border-color .15s;}
+  .chip-btn:hover{background:rgba(255,255,255,.12);color:var(--txt);border-color:var(--line-hi);}
+  .chip-btn.on{color:var(--ink);background:var(--xyellow);border-color:var(--xyellow);}
 
-  .ch{border-radius:18px;margin-bottom:12px;overflow:hidden;
-    background:linear-gradient(180deg, rgba(255,255,255,.2), rgba(160,210,250,.09));
-    border:1px solid rgba(255,255,255,.48);
-    box-shadow:0 8px 22px rgba(5,30,70,.28), inset 0 1px 0 rgba(255,255,255,.55);backdrop-filter:blur(5px);}
-  .ch-head{display:flex;align-items:center;gap:12px;padding:13px 15px;cursor:pointer;user-select:none;width:100%;text-align:left;
-    font-family:inherit;color:#fff;border:none;background:linear-gradient(180deg, rgba(255,255,255,.26), rgba(255,255,255,.02));}
-  .ch-head:focus-visible{outline:3px solid var(--xyellow);outline-offset:-3px;}
-  .ch-badge{width:38px;height:38px;flex:0 0 38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-    font-weight:900;font-size:15px;font-style:italic;color:var(--ink);
-    background:linear-gradient(180deg,#fff, var(--xyellow) 55%, var(--xyellow-deep));
-    border:1px solid rgba(255,255,255,.8);box-shadow:0 3px 8px rgba(0,20,60,.4), inset 0 -4px 6px rgba(200,120,0,.35);}
-  .ch.tier3 .ch-badge{background:linear-gradient(180deg,#fff, #a8bece 55%, #708499);color:#1b2c3d;box-shadow:0 3px 8px rgba(0,20,60,.35), inset 0 -4px 6px rgba(60,90,120,.3);}
-  .ch-meta{flex:1;min-width:0;}
-  .ch-meta h3{font-size:clamp(14px,3vw,17px);font-weight:900;font-style:italic;text-shadow:0 2px 3px rgba(0,20,60,.55);}
-  .ch-meta .era{font-size:10.5px;letter-spacing:1.3px;color:#d7ecff;text-transform:uppercase;margin-top:2px;}
-  .ch-side{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto;}
-  .ch-count{font-size:10.5px;font-weight:700;letter-spacing:1px;color:#eaf6ff;padding:2px 9px;border-radius:12px;
-    background:rgba(0,25,60,.45);border:1px solid rgba(160,220,255,.35);white-space:nowrap;}
-  .ch-count.done{color:#0b3a12;background:linear-gradient(180deg,#e6ffd2, var(--read-green));border-color:rgba(255,255,255,.7);}
-  .ch-side .pbar{width:100px;height:9px;}
-  .chev{flex:0 0 auto;width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:var(--ink);
-    background:radial-gradient(circle at 32% 28%, #fff, #cfe6ff 40%, #5aa5dd);border:1px solid rgba(255,255,255,.8);
-    box-shadow:0 2px 5px rgba(0,20,60,.4);transition:transform .25s ease;}
-  .ch.open .chev{transform:rotate(180deg);}
-  .ch-body{display:none;padding:4px 11px 12px;}
-  .ch.open .ch-body{display:block;}
-  .ch-note{font-size:11.5px;line-height:1.5;color:#e2f1ff;background:rgba(0,25,60,.3);border:1px solid rgba(160,220,255,.28);
-    border-radius:12px;padding:9px 12px;margin:4px 2px 10px;}
-  .ch-note b{color:var(--xyellow);}
-  .ch-tools{display:flex;gap:7px;margin:0 2px 10px;flex-wrap:wrap;}
-
-  .issue{display:flex;align-items:center;gap:11px;padding:7px 9px;border-radius:13px;border:1px solid transparent;transition:background .15s;}
-  .issue:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);}
-  .cover{width:40px;height:58px;flex:0 0 40px;border-radius:4px;position:relative;overflow:hidden;cursor:pointer;
-    border:1px solid rgba(255,255,255,.6);box-shadow:0 4px 9px rgba(0,20,60,.42), inset 0 1px 0 rgba(255,255,255,.45);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;}
-  .cover::before{content:"";position:absolute;inset:0 55% 0 0;background:linear-gradient(105deg, rgba(255,255,255,.38), transparent 70%);}
-  .cover .strip{position:absolute;top:0;left:0;right:0;height:8px;background:rgba(0,0,0,.35);}
-  .cover .cnum{font-weight:900;font-style:italic;font-size:15px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);line-height:1;position:relative;}
-  .cover .cser{font-size:6px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:rgba(255,255,255,.9);text-align:center;
-    padding:0 2px;margin-top:3px;text-shadow:0 1px 1px rgba(0,0,0,.5);position:relative;line-height:1.15;}
-  .issue-info{flex:1;min-width:0;cursor:pointer;}
-  .issue-info .t{font-size:13.5px;font-weight:700;text-shadow:0 1px 2px rgba(0,20,60,.5);}
-  .issue-info .a{font-size:11px;color:#cfe6ff;margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-  .arcpill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:1px 7px;border-radius:10px;
-    background:rgba(0,25,60,.4);border:1px solid rgba(160,220,255,.3);color:#bfe3ff;}
-  .arcpill.key{background:linear-gradient(180deg, rgba(255,210,63,.9), rgba(240,165,0,.85));color:var(--ink);border-color:rgba(255,255,255,.6);}
-  .issue-acts{display:flex;gap:6px;align-items:center;flex:0 0 auto;}
-  .mini{cursor:pointer;font-family:inherit;font-size:9px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;
-    padding:5px 9px;border-radius:12px;color:#eaf6ff;background:linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.05));
-    border:1px solid rgba(255,255,255,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.45);white-space:nowrap;}
-  .mini:hover{background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,.12));}
-
-  a.read-link{text-decoration:none;display:inline-flex;align-items:center;color:var(--ink);
-    background:linear-gradient(180deg,#fff 0%, var(--xyellow) 55%, var(--xyellow-deep) 100%);
-    border-color:rgba(255,255,255,.8);box-shadow:0 2px 6px rgba(0,20,60,.35), inset 0 1px 0 rgba(255,255,255,.85);}
-  a.read-link:hover{filter:brightness(1.07);background:linear-gradient(180deg,#fff 0%, var(--xyellow) 45%, var(--xyellow-deep) 100%);}
-  a.read-link.approx{color:#20344a;background:linear-gradient(180deg,#f6faff 0%, #c3d4e4 55%, #91a7bd 100%);}
-  .issue.read a.read-link, .issue.skipped a.read-link{opacity:.6;}
-
-  .setup{margin-bottom:14px;padding:13px 15px;border-radius:16px;display:flex;gap:18px;flex-wrap:wrap;
-    background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(160,210,250,.07));
-    border:1px solid rgba(255,255,255,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);}
+  /* ---- shared panels ---- */
+  .onote{font-size:12px;line-height:1.65;color:var(--dim);background:rgba(255,255,255,.04);
+    border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:16px;}
+  .onote b{color:var(--xyellow);}
+  .emptyvol{font-size:12.5px;line-height:1.6;color:var(--dim);text-align:center;padding:26px 16px;border-radius:12px;
+    background:rgba(255,255,255,.035);border:1px dashed var(--line-hi);}
+  .setup{margin:28px 0 0;padding:13px 15px;border-radius:12px;display:flex;gap:18px;flex-wrap:wrap;
+    background:rgba(255,255,255,.035);border:1px solid var(--line);}
   .setup-row{flex:1 1 300px;min-width:250px;}
-  .setup label{display:block;font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#eaf6ff;margin-bottom:7px;}
-  .setup .hint{font-weight:400;letter-spacing:.4px;text-transform:none;color:#c3dcf2;font-size:10.5px;}
+  .setup label{display:block;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+  .setup .hint{font-weight:400;letter-spacing:.3px;text-transform:none;color:var(--dim2);font-size:10.5px;}
   .setup-inputs{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
-  .orb{width:28px;height:28px;flex:0 0 28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
-    font-size:14px;font-weight:900;color:transparent;transition:all .18s;
-    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), rgba(200,230,255,.32) 40%, rgba(30,80,150,.42));
-    border:1px solid rgba(255,255,255,.65);box-shadow:inset 0 -4px 6px rgba(0,30,80,.35), 0 2px 5px rgba(0,20,60,.35);}
-  .issue.read .orb{color:#fff;text-shadow:0 1px 2px rgba(0,60,0,.6);
-    background:radial-gradient(circle at 32% 28%, #f2ffe6, var(--read-green) 55%, var(--read-green-deep));
-    box-shadow:0 0 12px rgba(126,217,87,.6), inset 0 -4px 6px rgba(0,80,0,.35);}
-  .issue.skipped .orb{color:#33465a;font-size:12px;
-    background:radial-gradient(circle at 32% 28%, #fff, var(--skip-grey) 55%, var(--skip-grey-deep));
-    box-shadow:0 0 8px rgba(185,199,214,.4), inset 0 -4px 6px rgba(40,70,100,.3);}
-  .issue.read .cover, .issue.skipped .cover{opacity:.5;filter:saturate(.55);}
-  .issue.read .issue-info .t{color:#cfe6d8;opacity:.78;}
-  .issue.skipped .issue-info .t{color:#d3dde7;opacity:.62;text-decoration:line-through;text-decoration-thickness:1px;}
+  #storeWarn{display:none;margin:74px 0 16px;padding:11px 14px;border-radius:12px;font-size:12px;line-height:1.5;
+    color:#ffd9d9;background:rgba(120,25,25,.4);border:1px solid rgba(255,120,120,.35);}
+  footer{margin-top:38px;text-align:center;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim2);}
+  .hidden{display:none!important;}
 
-  .sum{display:none;margin:2px 9px 10px 60px;padding:12px 14px;border-radius:13px;font-size:12.5px;line-height:1.62;color:#eef7ff;
-    background:linear-gradient(180deg, rgba(10,40,85,.72), rgba(6,26,58,.8));
-    border:1px solid rgba(160,220,255,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 4px 12px rgba(0,20,50,.35);}
+  /* ---- book tile: plate and badges. No progress figures and no bar -- the
+         shelf reports what a book IS, never how much of it is cleared. ---- */
+  .omni .plate{position:absolute;left:0;right:0;bottom:0;padding:46px 12px 13px;
+    background:linear-gradient(180deg, transparent, rgba(4,7,12,.74) 42%, rgba(3,5,9,.97));}
+  .omni .oname{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;line-height:1.16;
+    text-shadow:0 2px 5px rgba(0,0,0,.9);}
+  .omni .ovol{color:var(--xyellow);}
+  .omni .ocre{font-size:9.5px;letter-spacing:.6px;color:#bccbdd;margin-top:4px;line-height:1.3;}
+  .omni .ometa{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--dim2);margin-top:5px;}
+  .obadge{position:absolute;top:10px;right:10px;font-size:8px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+    padding:3px 9px;border-radius:11px;color:#d7e3f1;background:rgba(6,10,16,.8);border:1px solid rgba(255,255,255,.2);}
+  .obadge.done{color:#06240f;background:var(--read-green);border-color:var(--read-green);}
+  .obadge.soon{color:#2a2410;background:var(--xyellow);border-color:var(--xyellow);}
+  .onum{position:absolute;top:9px;left:10px;font-size:10px;font-weight:900;font-style:italic;color:rgba(255,255,255,.6);
+    text-shadow:0 1px 3px rgba(0,0,0,.85);letter-spacing:1px;}
+
+  /* ---- chapter list ---- */
+  .ch{border-radius:14px;margin-bottom:10px;overflow:hidden;background:rgba(255,255,255,.04);border:1px solid var(--line);}
+  .ch-head{display:flex;align-items:center;gap:12px;padding:13px 15px;cursor:pointer;user-select:none;width:100%;
+    text-align:left;font-family:inherit;color:var(--txt);border:none;background:transparent;transition:background .15s;}
+  .ch-head:hover{background:rgba(255,255,255,.045);}
+  .ch-head:focus-visible{outline:2px solid var(--xyellow);outline-offset:-2px;}
+  .ch-badge{width:34px;height:34px;flex:0 0 34px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:14px;color:var(--xyellow);background:rgba(255,210,63,.11);border:1px solid rgba(255,210,63,.3);}
+  .ch-meta{flex:1;min-width:0;}
+  .ch-meta h3{font-size:clamp(13px,2.8vw,16px);font-weight:800;}
+  .ch-meta .era{font-size:10px;letter-spacing:1.3px;color:var(--dim2);text-transform:uppercase;margin-top:3px;}
+  .ch-side{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
+  .chev{flex:0 0 auto;width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:9px;color:var(--dim);background:rgba(255,255,255,.07);border:1px solid var(--line);transition:transform .25s ease;}
+  .ch.open .chev{transform:rotate(180deg);}
+  .ch-body{display:none;padding:2px 11px 12px;}
+  .ch.open .ch-body{display:block;}
+  .ch-tools{display:flex;gap:7px;margin:4px 2px 10px;flex-wrap:wrap;}
+  .ch-note{font-size:11.5px;line-height:1.6;color:var(--dim);background:rgba(255,255,255,.04);
+    border-left:2px solid rgba(255,210,63,.5);border-radius:0 8px 8px 0;padding:9px 12px;margin:2px 2px 10px;}
+
+  /* ---- issue rows ---- */
+  .issue{display:flex;align-items:center;gap:11px;padding:7px 9px;border-radius:10px;border:1px solid transparent;
+    transition:background .15s,border-color .15s;}
+  .issue:hover{background:rgba(255,255,255,.05);border-color:var(--line);}
+  /* the Keep Reading tile lands you on a row -- this is what marks it */
+  .issue.flash{animation:krflash 1.9s ease-out 1;}
+  @keyframes krflash{0%,42%{background:rgba(255,210,63,.2);border-color:rgba(255,210,63,.55);}100%{background:transparent;border-color:transparent;}}
+  .cover{width:38px;height:56px;flex:0 0 38px;border-radius:3px;position:relative;overflow:hidden;cursor:pointer;
+    border:1px solid rgba(255,255,255,.16);box-shadow:0 3px 9px rgba(0,0,0,.55);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .cover::before{content:"";position:absolute;inset:0;background:linear-gradient(158deg,rgba(255,255,255,.16),transparent 62%);}
+  .cover .strip{position:absolute;top:0;left:0;right:0;height:7px;background:rgba(0,0,0,.42);}
+  .cover .cnum{font-weight:900;font-style:italic;font-size:14px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.7);
+    line-height:1;position:relative;}
+  .cover .cser{font-size:5.5px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:rgba(255,255,255,.88);
+    text-align:center;padding:0 2px;margin-top:3px;position:relative;line-height:1.15;}
+  .issue-info{flex:1;min-width:0;}
+  .issue-info .t{font-size:13px;font-weight:600;color:var(--txt);}
+  .issue-info .a{font-size:10.5px;color:var(--dim2);margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .arcpill{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+    padding:2px 7px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--dim);}
+  .arcpill.dup,.arcpill.key{background:rgba(255,210,63,.14);border-color:rgba(255,210,63,.42);color:var(--xyellow);}
+  .issue-acts{display:flex;gap:6px;align-items:center;flex:0 0 auto;}
+  .mini{cursor:pointer;font-family:inherit;font-size:8.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
+    padding:6px 9px;border-radius:10px;color:var(--dim);background:rgba(255,255,255,.055);
+    border:1px solid var(--line);white-space:nowrap;transition:background .15s,color .15s;}
+  .mini:hover{background:rgba(255,255,255,.13);color:var(--txt);}
+  a.read-link{text-decoration:none;display:inline-flex;align-items:center;font-weight:900;
+    color:var(--ink);background:var(--xyellow);border-color:var(--xyellow);}
+  a.read-link:hover{background:#ffdf74;color:var(--ink);}
+  a.read-link.approx{color:var(--dim);background:rgba(255,255,255,.055);border-color:var(--line);}
+  .issue.read a.read-link,.issue.skipped a.read-link{opacity:.5;}
+  .orb{width:26px;height:26px;flex:0 0 26px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:900;color:transparent;transition:all .18s;border:1px solid var(--line-hi);
+    background:rgba(255,255,255,.05);}
+  .orb:hover{border-color:var(--read-green);}
+  .issue.read .orb{color:#06240f;background:var(--read-green);border-color:var(--read-green);}
+  .issue.skipped .orb{color:#141a22;font-size:11px;background:var(--skip-grey);border-color:var(--skip-grey);}
+  .issue.read .cover,.issue.skipped .cover{opacity:.42;filter:saturate(.4);}
+  .issue.read .issue-info .t{color:var(--dim2);}
+  .issue.skipped .issue-info .t{color:var(--dim2);text-decoration:line-through;text-decoration-thickness:1px;}
+
+  /* ---- summary panels ---- */
+  .sum{display:none;margin:2px 9px 10px 58px;padding:12px 14px;border-radius:11px;font-size:12.5px;line-height:1.62;
+    color:#dfe8f3;background:rgba(255,255,255,.05);border:1px solid var(--line);}
   .sum.show{display:block;}
-  .sum .sum-hd{font-size:9px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--xyellow);margin-bottom:6px;}
-  .sum .sum-err{color:#ffd0d0;}
-  .sum .spin{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
-    border-top-color:var(--xyellow);animation:sp .7s linear infinite;vertical-align:-1px;margin-right:7px;}
-  @keyframes sp{to{transform:rotate(360deg);}}
-  footer{margin-top:32px;text-align:center;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(230,245,255,.65);}
+  .sum.chsum{margin:0 2px 10px;}
+  .sum .sum-hd{font-size:8.5px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:var(--xyellow);margin-bottom:6px;}
+  .sum .sum-err{color:#ffb3b3;}
+  .sum .spin{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid rgba(255,255,255,.2);
+    border-top-color:var(--xyellow);margin-right:8px;vertical-align:-1px;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .ch.tier3 .ch-badge{background:linear-gradient(180deg,#fff, #a8bece 55%, #708499);color:#1b2c3d;box-shadow:0 3px 8px rgba(0,20,60,.35), inset 0 -4px 6px rgba(60,90,120,.3);}
+  .ch-note b{color:var(--xyellow);}
 
   body.hideopt .ch.tier3{display:none;}
 
@@ -249,19 +297,6 @@
     background:radial-gradient(ellipse 92% 72% at 50% 32%, transparent 42%, rgba(0,8,26,.5) 100%);}
   .omni .glyph{position:absolute;left:0;right:0;top:13%;display:flex;align-items:center;justify-content:center;}
   .omni .glyph svg{width:44%;max-width:98px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,10,35,.6));}
-  .omni .plate{position:absolute;left:0;right:0;bottom:0;padding:38px 12px 11px;
-    background:linear-gradient(180deg, transparent, rgba(4,18,44,.66) 40%, rgba(3,13,34,.94));}
-  .omni .oname{font-size:13.5px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.4px;line-height:1.14;
-    text-shadow:0 2px 4px rgba(0,12,40,.85);}
-  .omni .ovol{color:var(--xyellow);}
-  .omni .ocre{font-size:9.5px;letter-spacing:.7px;color:#d3e7fb;margin-top:4px;line-height:1.3;}
-  .omni .ometa{font-size:9.5px;letter-spacing:1.3px;text-transform:uppercase;color:#a9c8e6;margin-top:4px;}
-  .omni .plate .pbar{height:7px;margin-top:7px;}
-  .obadge{position:absolute;top:10px;right:10px;font-size:8.5px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;
-    padding:3px 9px;border-radius:12px;color:#eaf6ff;background:rgba(4,20,48,.75);border:1px solid rgba(160,220,255,.45);}
-  .obadge.done{color:#0b3a12;background:linear-gradient(180deg,#e6ffd2, var(--read-green));border-color:rgba(255,255,255,.7);}
-  .onum{position:absolute;top:9px;left:10px;font-size:10px;font-weight:900;font-style:italic;color:rgba(255,255,255,.62);
-    text-shadow:0 1px 3px rgba(0,10,30,.8);letter-spacing:1px;}
 
   /* ---- cover ramps: the fallback behind Art/X-Men/<id>.jpg, not the cover.
          artHTML() paints one only when a scan is missing or fails to load. ---- */
@@ -283,100 +318,61 @@
   .tex-flare{background:
     repeating-conic-gradient(from 0deg at 50% 34%, rgba(255,255,255,.10) 0deg 4deg, transparent 4deg 13deg);}
 
-  /* ---- detail banner ---- */
-  .obanner{position:relative;height:190px;border-radius:20px;overflow:hidden;margin-bottom:16px;
-    border:1px solid rgba(255,255,255,.5);box-shadow:0 12px 30px rgba(5,25,60,.5);}
-  .obanner .fade{position:absolute;inset:0;background:linear-gradient(180deg, transparent 40%, rgba(7,26,58,.8) 82%, rgba(7,26,58,.97));}
-  .obanner .binfo{position:absolute;left:20px;right:20px;bottom:14px;}
-  .obanner h2{font-size:clamp(17px,3.6vw,25px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.5px;
-    text-shadow:0 3px 6px rgba(0,10,35,.9);}
-  .obanner .bmeta{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--xyellow);font-weight:700;margin-top:4px;}
-  .onote{font-size:12px;line-height:1.6;color:#e2f1ff;background:rgba(0,25,60,.34);border:1px solid rgba(160,220,255,.28);
-    border-radius:13px;padding:11px 14px;margin-bottom:14px;}
-  .onote b{color:var(--xyellow);}
-  .sum.chsum{margin:0 2px 10px;}
-  .hidden{display:none!important;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+
   @media (max-width:600px){
-    .act-head{flex-wrap:wrap;}
-    .act-head h2,.act-head .yr{white-space:normal;}
+    .hb{height:clamp(250px,58vw,340px);margin-bottom:18px;}
+    .hb-in{padding-bottom:24px;}
+    .hb-logo{max-width:72%;max-height:78px;}
+    .hb-name{font-size:30px;}
+    .hb-blurb{display:none;}
+    .kr-card{flex:0 0 clamp(268px,86vw,340px);height:136px;}
+    .kr-body{inset:0 0 0 38%;padding:12px 13px;}
+    .kr-title{font-size:14px;}
+  }
+
+  @media (max-width:600px){
     .shelf{grid-template-columns:repeat(auto-fill,minmax(142px,1fr));gap:26px 30px;}
     /* a 142px tile leaves ~207px of spine; the title fits, the credit line does not */
     .spine .screds{display:none;}
-    .omni .plate{padding:30px 9px 9px;} .omni .oname{font-size:11.5px;} .omni .ocre{display:none;}
-    .obanner{height:150px;}
-    .ch-side .pbar{width:62px;}
-    .issue-acts .mini{padding:5px 7px;}
+    .omni .plate{padding:32px 9px 10px;} .omni .oname{font-size:11.5px;} .omni .ocre{display:none;}
     .sum{margin-left:14px;}
-    .upnext-actions{width:100%;} .upnext-actions .btn{flex:1;}
+    .issue-acts .mini{padding:5px 7px;}
+    .act-head{flex-wrap:wrap;}
+    .act-head h2,.act-head .yr{white-space:normal;}
   }
-  .topnav{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
-  .backlink{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:inherit;
-    font-size:10.5px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;color:#eaf6ff;
-    padding:7px 15px 7px 11px;border-radius:18px;
-    background:linear-gradient(180deg, rgba(255,255,255,.25), rgba(255,255,255,.05));
-    border:1px solid rgba(255,255,255,.45);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
-    transition:filter .12s, transform .12s;}
-  .backlink:hover{background:linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,.12));transform:translateY(-1px);}
-  .backlink:active{transform:translateY(1px);}
-  .backlink .caret{font-size:13px;line-height:1;color:var(--xyellow);}
-  .topnav .crumb{font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:rgba(230,245,255,.72);}
 
-  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
 </head>
 <body>
-<div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div><div class="bubble b4"></div>
+<nav class="topbar">
+  <a class="backlink" href="index.html"><span class="caret">&#9664;</span> C.O.M.I.C.S.</a>
+  <button class="backlink hidden" id="backShelf"><span class="caret">&#9664;</span> All four volumes</button>
+  <span class="crumb" id="crumb">Subject &middot; X-Men</span>
+</nav>
 
 <div class="wrap">
-  <nav class="topnav">
-    <a class="backlink" href="index.html"><span class="caret">&#9664;</span> C.O.M.I.C.S.</a>
-    <button class="backlink hidden" id="backShelf"><span class="caret">&#9664;</span> All four volumes</button>
-    <span class="crumb" id="crumb">Subject &middot; X-Men</span>
-  </nav>
 
-  <header class="hud">
-    <div class="hud-top">
-      <div class="x-emblem"><span>X</span></div>
-      <div class="hud-title">
-        <h1 id="hudTitle">Messiah Saga Protocol</h1>
-        <div class="sub" id="hudSub">Divided We Stand &rarr; Second Coming &middot; 2008&ndash;2010</div>
-      </div>
-    </div>
-    <div class="hud-stats">
-      <div class="stat"><b id="statRead">0</b>read</div>
-      <div class="stat sk"><b id="statSkip">0</b>skipped</div>
-      <div class="stat"><b id="statLeft">0</b>remaining</div>
-      <div class="stat"><b id="statPct">0%</b>cleared</div>
-      <div class="master-bar"><div class="pbar"><div class="fill rd" id="mFillRead"></div><div class="fill sk" id="mFillSkip"></div></div></div>
-    </div>
-  </header>
-
-  <div class="upnext" id="upnext">
-    <span class="tag" id="unTag">Up Next</span>
-    <div class="upnext-info" id="upnextInfo"></div>
-    <div class="upnext-actions" id="upnextActions">
-      <button class="btn btn-read" id="unRead">Mark read</button>
-      <button class="btn btn-skip" id="unSkip">Skip</button>
-    </div>
-  </div>
-
-  <div id="storeWarn" style="display:none;margin-bottom:14px;padding:11px 14px;border-radius:14px;font-size:12px;line-height:1.5;
-    background:linear-gradient(180deg,rgba(150,40,40,.75),rgba(90,15,15,.85));border:1px solid rgba(255,160,160,.5);">
+  <div id="storeWarn">
     <b>Progress isn't saving in this browser.</b> Private/incognito windows block local storage. Use the Back up button below to keep your progress in a file.
   </div>
 
   <!-- ============ SHELF VIEW ============ -->
   <section id="viewShelf">
-    <div class="setup" id="setupBar">
-      <div class="setup-row">
-        <label>Backup <span class="hint">&mdash; progress lives in this browser only</span></label>
-        <div class="setup-inputs">
-          <button class="chip-btn" id="exportBtn">Back up to file</button>
-          <button class="chip-btn" id="importBtn">Restore from file</button>
-          <input id="importFile" type="file" accept="application/json,.json" style="display:none">
-        </div>
+    <div class="hb" id="heroBanner">
+      <div class="hb-fallback" style="background:linear-gradient(122deg,#123f26 0%,#123a6b 34%,#0e1728 72%,#080b13 100%)"></div>
+      <img class="hb-art" src="Art/Banners/xmen.jpg" alt="" onerror="hbFallback(this)">
+      <div class="hb-scrim"></div>
+      <div class="hb-in">
+        <img class="hb-logo" src="Art/Logos/xmen.png" alt="X-Men"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <div class="hb-name" style="display:none">X-Men</div>
+        <div class="hb-sub">Omnibus Shelf &middot; 2008&ndash;2010 &middot; Never printed</div>
+        <div class="hb-blurb">Four omnibuses Marvel never printed. The Messiah trilogy has no collected edition, so this shelf is a mock-up of the four hardcovers the read would take.</div>
       </div>
     </div>
+    <div class="kr" id="krShelf"></div>
+
 
     <div class="act-head">
       <h2>The Shelf That Doesn't Exist</h2>
@@ -401,12 +397,23 @@
     </div>
 
     <div class="shelf" id="shelf"></div>
+
+    <div class="setup" id="setupBar">
+      <div class="setup-row">
+        <label>Backup <span class="hint">&mdash; progress lives in this browser only</span></label>
+        <div class="setup-inputs">
+          <button class="chip-btn" id="exportBtn">Back up to file</button>
+          <button class="chip-btn" id="importBtn">Restore from file</button>
+          <input id="importFile" type="file" accept="application/json,.json" style="display:none">
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============ VOLUME VIEW ============ -->
   <section id="viewOmni" class="hidden">
-    <div class="obanner" id="obanner"></div>
-    <div class="onote" id="onote"></div>
+    <div class="hb" id="obanner"></div>
+    <div class="kr" id="krOmni"></div>
     <div class="controls">
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="chip-btn" id="toggleOpt">Hide optional arcs</button>
@@ -667,6 +674,10 @@ const ARC_SUMS = {
    logged before the shelf existed is still the progress shown here. */
 const KEY_P="xmen-saga-progress-v2", KEY_S="xmen-saga-summaries-v3";
 let readSet=new Set(), skipSet=new Set(), sums={};
+/* Volume id -> when something in it was last marked. This is what orders
+   the Keep Reading rail. Additive in the saved record: a backup written
+   before this existed simply sorts everything at 0. */
+let touch={};
 /* `flat` drives Up Next and every progress figure. No issue is collected twice
    on this shelf, so slots and unique ids are the same 174. */
 const flat=[]; OMNI.forEach(o=>o.chapters.forEach(c=>c.issues.forEach(i=>flat.push({o:o,ch:c,issue:i}))));
@@ -687,12 +698,12 @@ const store = {
 
 async function loadState(){
   try{ const v=await store.get(KEY_P);
-    if(v){const d=JSON.parse(v); readSet=new Set(d.read||[]); skipSet=new Set(d.skip||[]);}
+    if(v){const d=JSON.parse(v); readSet=new Set(d.read||[]); skipSet=new Set(d.skip||[]); touch=d.touch||{};}
   }catch(e){}
   try{ const v=await store.get(KEY_S); if(v) sums=JSON.parse(v)||{}; }catch(e){}
 }
 async function saveState(){
-  try{ await store.set(KEY_P, JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet)})); flagStorage(true); }
+  try{ await store.set(KEY_P, JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet),touch:touch})); flagStorage(true); }
   catch(e){ flagStorage(false); }
 }
 async function saveSums(){ try{ await store.set(KEY_S, JSON.stringify(sums)); }catch(e){} }
@@ -706,7 +717,7 @@ function flagStorage(ok){
 
 /* ---- export / import so progress is never trapped ---- */
 function exportProgress(){
-  const blob=new Blob([JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet),sums:sums},null,1)],{type:"application/json"});
+  const blob=new Blob([JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet),touch:touch,sums:sums},null,1)],{type:"application/json"});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
   a.download="xmen-reading-progress.json";
@@ -720,6 +731,7 @@ function importProgress(file){
       const d=JSON.parse(fr.result);
       if(d.read) readSet=new Set(d.read);
       if(d.skip) skipSet=new Set(d.skip);
+      if(d.touch) touch=d.touch;
       if(d.sums) sums=Object.assign(sums,d.sums);
       await saveState(); await saveSums(); route();
     }catch(e){ alert("That file didn't parse as a progress backup."); }
@@ -769,7 +781,6 @@ function bookThickness(issueCount){ return Math.round(Math.min(82, Math.max(42, 
 function buildShelf(){
   shelfEl.innerHTML = OMNI.map((o,idx)=>{
     const st=omniStats(o);
-    const pct=st.t?Math.round(st.done/st.t*100):0;
     const state = st.done===0 ? "unread" : (st.done===st.t ? "done" : "started");
     const badge = state==="done" ? '<span class="obadge done">Finished</span>'
                                  : '<span class="obadge">'+st.t+' issues</span>';
@@ -780,7 +791,7 @@ function buildShelf(){
     const vm=/(\d+)/.exec(o.vol||'');
     return '<div class="cell" data-state="'+state+'">'+
       '<div class="book"><div class="shade"></div>'+
-      '<button class="omni" style="--t:'+bookThickness(st.t)+'px" data-omni="'+o.id+'" aria-label="'+esc(o.title+' '+o.vol)+' — '+st.done+' of '+st.t+' logged">'+
+      '<button class="omni" style="--t:'+bookThickness(st.t)+'px" data-omni="'+o.id+'" aria-label="'+esc(o.title+(o.vol?' '+o.vol:''))+'">'+
         '<div class="spine">'+
           '<div class="sband"><span class="smark">MARVEL</span><span class="srule"></span><span class="sline">OMNIBUS</span></div>'+
           '<div class="sbody"><span class="stitle'+sz+'">'+esc(label)+'</span>'+creds+'</div>'+
@@ -794,9 +805,7 @@ function buildShelf(){
           '<div class="plate">'+
             '<div class="oname">'+esc(o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'')+'</div>'+
             '<div class="ocre">'+esc(o.creators)+'</div>'+
-            '<div class="ometa">'+esc(o.era)+' &middot; '+st.done+'/'+st.t+' &middot; '+pct+'%</div>'+
-            '<div class="pbar"><div class="fill rd" style="width:'+(st.t?st.r/st.t*100:0)+'%"></div>'+
-              '<div class="fill sk" style="width:'+(st.t?st.s/st.t*100:0)+'%"></div></div>'+
+            '<div class="ometa">'+esc(o.era)+'</div>'+
           '</div>'+
         '</div>'+
       '</button></div></div>';
@@ -815,9 +824,12 @@ function coverHTML(iss){
 }
 function buildOmni(o){
   document.getElementById("obanner").innerHTML =
-    artHTML(o,true)+'<div class="fade"></div><div class="binfo"><h2>'+esc(o.title)+(o.vol?' '+esc(o.vol):'')+
-    '</h2><div class="bmeta">'+esc(o.creators)+' &middot; '+esc(o.era)+' &middot; never printed</div></div>';
-  document.getElementById("onote").textContent=o.note;
+    (o.cover?'<img class="hb-art" src="'+esc(o.cover)+'"'+(o.pos?' style="object-position:50% '+esc(o.pos)+'"':'')+' alt="">'
+            :'<span class="hb-fallback '+esc(o.art||"")+'"></span>')+
+    '<div class="hb-scrim"></div>'+
+    '<div class="hb-in"><div class="hb-name">'+esc(o.title)+(o.vol?' '+esc(o.vol):'')+'</div>'+
+    '<div class="hb-sub">'+esc(o.creators)+' &middot; '+esc(o.era)+' &middot; '+'never printed'+'</div>'+
+    (o.note?'<div class="hb-blurb">'+esc(o.note)+'</div>':'')+'</div>';
   let n=0;
   chaptersEl.innerHTML = o.chapters.map(ch=>{
     n++;
@@ -825,8 +837,6 @@ function buildOmni(o){
       '<button class="ch-head" aria-expanded="false" data-ch="'+ch.id+'">'+
         '<div class="ch-badge">'+n+'</div>'+
         '<div class="ch-meta"><h3>'+esc(ch.title)+'</h3><div class="era">'+esc(ch.era)+' &middot; '+ch.issues.length+' issues</div></div>'+
-        '<div class="ch-side"><div class="ch-count" data-count="'+ch.id+'">0 / '+ch.issues.length+'</div>'+
-          '<div class="pbar"><div class="fill rd" data-fr="'+ch.id+'"></div><div class="fill sk" data-fs="'+ch.id+'"></div></div></div>'+
         '<div class="chev">&#9660;</div></button>'+
       '<div class="ch-body">'+
         (ch.note?'<div class="ch-note">'+ch.note+'</div>':'')+
@@ -857,83 +867,161 @@ let currentOmni=null;
 function refresh(){
   if(currentOmni){
     currentOmni.chapters.forEach(ch=>{
-      let r=0,s=0;
       ch.issues.forEach(iss=>{
         const row=chaptersEl.querySelector('[data-row="'+iss.id+'"]');
         if(!row) return;
         const isR=readSet.has(iss.id), isS=skipSet.has(iss.id);
-        if(isR)r++; if(isS)s++;
         row.classList.toggle("read",isR); row.classList.toggle("skipped",isS);
         row.querySelector(".orb").setAttribute("aria-checked",isR);
         row.querySelector("[data-skip]").textContent=isS?"Unskip":"Skip";
       });
-      const tot=ch.issues.length;
-      const cEl=chaptersEl.querySelector('[data-count="'+ch.id+'"]');
-      if(cEl){ cEl.textContent=(r+s)+" / "+tot+(s?" · "+s+" skipped":""); cEl.classList.toggle("done",r+s===tot); }
-      const fr=chaptersEl.querySelector('[data-fr="'+ch.id+'"]'), fs=chaptersEl.querySelector('[data-fs="'+ch.id+'"]');
-      if(fr) fr.style.width=(r/tot*100)+"%";
-      if(fs) fs.style.width=(s/tot*100)+"%";
     });
   }
-  /* the HUD reports the open volume when there is one, the whole saga otherwise */
-  let tr=0,ts=0,tot;
-  if(currentOmni){ const st=omniStats(currentOmni); tr=st.r; ts=st.s; tot=st.t; }
-  else{
-    tot=flat.length;
-    flat.forEach(f=>{ if(readSet.has(f.issue.id))tr++; else if(skipSet.has(f.issue.id))ts++; });
-  }
-  document.getElementById("statRead").textContent=tr;
-  document.getElementById("statSkip").textContent=ts;
-  document.getElementById("statLeft").textContent=tot-tr-ts;
-  document.getElementById("statPct").textContent=tot?Math.round((tr+ts)/tot*100)+"%":"0%";
-  document.getElementById("mFillRead").style.width=tot?(tr/tot*100)+"%":"0%";
-  document.getElementById("mFillSkip").style.width=tot?(ts/tot*100)+"%":"0%";
-  upNext();
+  paintKR();
   publishIndex();
 }
 
 /* Hand the C.O.M.I.C.S. index a small summary so the homescreen can show real
    progress without carrying a copy of OMNI. Fire-and-forget. */
+/* Summary record for the C.O.M.I.C.S. homescreen. `spots` is the whole point
+   of it now: the homescreen rail is built from every subject's spots merged and
+   sorted by `ts`, so it can drop you back into any volume you have open without
+   carrying a copy of this shelf's data. Fire-and-forget. */
 function publishIndex(){
   try{
-    let r=0,s=0;
-    flat.forEach(f=>{ if(readSet.has(f.issue.id))r++; else if(skipSet.has(f.issue.id))s++; });
+    let r=0,s=0; flat.forEach(f=>{ if(readSet.has(f.issue.id))r++; else if(skipSet.has(f.issue.id))s++; });
     const n=flat.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
     store.set("comics-hero-xmen", JSON.stringify({
       total:flat.length, read:r, skip:s,
-      next: n ? {t:n.issue.t, arc:n.issue.arc||n.ch.era, ch:n.ch.title} : null
+      next: n ? {t:n.issue.t, arc:n.o.title+(n.o.vol?" "+n.o.vol:""), ch:n.ch.title} : null,
+      spots: spots().slice(0,10).map(sp=>({
+        o:sp.o.id,
+        vol:(sp.o.spine||sp.o.title)+(sp.o.vol?" "+sp.o.vol:""),
+        cover:sp.o.cover||"", cred:sp.o.creators||"",
+        t:sp.next.issue.t, iss:sp.next.issue.id, ch:sp.next.ch.title,
+        i:sp.idx+1, n:sp.st.t, done:sp.st.done, ts:sp.ts
+      }))
     })).catch(()=>{});
   }catch(e){}
 }
 
-function upNext(){
-  const info=document.getElementById("upnextInfo");
-  const acts=document.getElementById("upnextActions");
-  const tag=document.getElementById("unTag");
-  const pool = currentOmni ? flat.filter(f=>f.o.id===currentOmni.id) : flat;
-  const next=pool.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
-  tag.textContent = currentOmni ? "Up Next in this volume" : "Up Next";
-  if(!next){
-    info.innerHTML='<div class="alldone">'+(currentOmni?"Volume cleared. &#9733;":"Saga cleared. Every issue read or skipped. &#9733;")+'</div>';
-    acts.style.display="none"; return;
+/* ============ KEEP READING ============
+   A "spot" is one omnibus you are partway through -- the streaming metaphor's
+   show, and the unit this rail is built on. It replaced the single "Up Next"
+   bar because the reading is not linear: several volumes are open at once and
+   the rail has to hold a place in each of them, newest touch first.
+
+   Two things the data cannot give and the tile approximates on purpose:
+
+   - There is no such thing as being halfway through one issue here. An issue
+     is read, skipped, or neither. So the tile's bar is progress through the
+     VOLUME the next issue sits in, and the position line reads like an
+     episode number rather than a completion figure.
+   - The credit line is the volume's `creators`. For most omnibuses that is
+     exactly the writer and penciler, because the book is named for them, but
+     it is per-volume: the shelf data carries no per-issue credits. */
+function spotFor(o){
+  const st=omniStats(o);
+  if(!st.t) return null;
+  let idx=-1, next=null, n=0;
+  for(const c of o.chapters){
+    for(const i of c.issues){
+      if(!next && !readSet.has(i.id) && !skipSet.has(i.id)){ next={ch:c,issue:i}; idx=n; }
+      n++;
+    }
   }
-  acts.style.display="";
-  info.innerHTML='<div class="run-name">'+esc(next.o.spine)+' &middot; '+esc(next.ch.title)+'</div>'+
-    '<div class="issue-name">'+esc(next.issue.t)+'</div>'+
-    '<div class="arc">'+esc(next.issue.arc||next.ch.era)+'</div>';
-  document.getElementById("unRead").onclick=async()=>{ await setState(next.issue.id,"read"); jumpTo(next); };
-  document.getElementById("unSkip").onclick=async()=>{ await setState(next.issue.id,"skip"); jumpTo(next); };
+  return {o:o, st:st, next:next, idx:idx, ts:touch[o.id]||0};
 }
-/* Marking from the shelf must not silently expand a chapter that isn't rendered. */
-function jumpTo(next){
-  if(currentOmni && currentOmni.id===next.o.id) toggleCh(document.getElementById("ch-"+next.ch.id),true);
+/* Every volume with something left in it, the ones actually touched first and
+   most recent first. Nothing started anywhere -> the first volume on the shelf,
+   so a fresh browser gets a "start here" tile instead of an empty band. */
+function spots(){
+  const all=OMNI.map(spotFor).filter(s=>s&&s.next);
+  const started=all.filter(s=>s.st.done>0);
+  const list=started.length?started.slice():all.slice(0,1);
+  list.sort((a,b)=>b.ts-a.ts);
+  return list;
 }
+/* The art is not a thumbnail beside the text: the cover fills the whole tile
+   and .kr-card::after dissolves it into the panel colour partway across. */
+function krCard(s){
+  const o=s.o, iss=s.next.issue;
+  const pct=s.st.t?Math.round(s.st.done/s.st.t*100):0;
+  const art=o.cover?'<img class="kr-art" src="'+esc(o.cover)+'" alt="" loading="lazy">'
+                   :'<span class="kr-art '+esc(o.art||"")+'"></span>';
+  return '<a class="kr-card" href="#/omni/'+esc(o.id)+'" data-kro="'+esc(o.id)+'" data-kri="'+esc(iss.id)+'">'+
+    art+
+    '<span class="kr-body">'+
+      '<span class="kr-run">'+esc((o.spine||o.title)+(o.vol?" "+o.vol:""))+'</span>'+
+      '<span class="kr-title">'+esc(iss.t)+'</span>'+
+      '<span class="kr-cred">'+esc(o.creators)+'</span>'+
+      '<span class="kr-bar"><i style="width:'+pct+'%"></i></span>'+
+      '<span class="kr-pos">'+(s.st.done?'Issue '+(s.idx+1)+' of '+s.st.t:'Start of the volume')+'</span>'+
+    '</span></a>';
+}
+function paintKR(){
+  const box=document.getElementById(currentOmni?"krOmni":"krShelf");
+  if(!box) return;
+  if(currentOmni){
+    const s=spotFor(currentOmni);
+    box.innerHTML = (s&&s.next)
+      ? '<div class="kr-head"><h2>Keep Reading</h2><span class="n">in this volume</span></div>'+
+        '<div class="kr-rail">'+krCard(s)+'</div>'
+      : '<div class="kr-head"><h2>Keep Reading</h2></div>'+
+        '<div class="kr-empty">Nothing left in this volume. &#9733;</div>';
+    return;
+  }
+  const list=spots();
+  const live=list.some(s=>s.st.done>0);
+  box.innerHTML = list.length
+    ? '<div class="kr-head"><h2>'+(live?"Keep Reading":"Start Reading")+'</h2>'+
+      '<span class="n">'+list.length+(list.length===1?" volume":" volumes")+'</span></div>'+
+      '<div class="kr-rail">'+list.map(krCard).join("")+'</div>'
+    : '<div class="kr-head"><h2>Keep Reading</h2></div>'+
+      '<div class="kr-empty">Every volume on the shelf is cleared. &#9733;</div>';
+}
+/* A tile is an <a> to #/omni/<id>. When you are already inside that volume the
+   hash does not change and no route fires, so the click does the jump itself. */
+let pendingJump=null;
+document.addEventListener("click",e=>{
+  const c=e.target.closest(".kr-card");
+  if(!c) return;
+  e.preventDefault();
+  pendingJump=c.dataset.kri;
+  if(currentOmni && currentOmni.id===c.dataset.kro) jumpToIssue();
+  else location.hash="#/omni/"+c.dataset.kro;
+});
+function jumpToIssue(){
+  const id=pendingJump; pendingJump=null;
+  if(!id||!currentOmni) return;
+  const f=flat.find(x=>x.o.id===currentOmni.id&&x.issue.id===id);
+  if(!f) return;
+  toggleCh(document.getElementById("ch-"+f.ch.id),true);
+  const row=chaptersEl.querySelector('[data-row="'+id+'"]');
+  if(!row) return;
+  row.scrollIntoView({block:"center",behavior:"smooth"});
+  row.classList.remove("flash"); void row.offsetWidth; row.classList.add("flash");
+}
+/* An issue collected in two omnibuses touches both, so both keep their place. */
+function touchIssue(id){
+  const now=Date.now();
+  OMNI.forEach(o=>{ if(o.chapters.some(c=>c.issues.some(i=>i.id===id))) touch[o.id]=now; });
+}
+/* Art/Banners/<id>.jpg -> the subject's poster scan -> the .hb-fallback ramp.
+   The banner file is dropped in by hand (tools/banners.py), so the page has to
+   look right before one exists. */
+function hbFallback(img){
+  if(!img.dataset.fb){ img.dataset.fb="1"; img.src="Art/Heroes/xmen.jpg"; img.style.objectPosition="50% 33%"; }
+  else img.style.display="none";
+}
+
 
 /* ============ INTERACTION ============ */
 async function setState(id,state){
   readSet.delete(id); skipSet.delete(id);
   if(state==="read") readSet.add(id);
   if(state==="skip") skipSet.add(id);
+  touchIssue(id);
   refresh(); if(!currentOmni) buildShelf();
   await saveState();
 }
@@ -941,6 +1029,7 @@ async function bulk(chId,state){
   const ch=chById(chId);
   ch.issues.forEach(i=>{readSet.delete(i.id);skipSet.delete(i.id);
     if(state==="read")readSet.add(i.id); if(state==="skip")skipSet.add(i.id);});
+  if(ch.issues.length) touchIssue(ch.issues[0].id);
   refresh(); await saveState();
 }
 function toggleCh(el,force){
@@ -1097,8 +1186,6 @@ function showShelf(){
   document.getElementById("viewOmni").classList.add("hidden");
   document.getElementById("backShelf").classList.add("hidden");
   document.getElementById("crumb").textContent="Subject · X-Men";
-  document.getElementById("hudTitle").textContent="Messiah Saga Protocol";
-  document.getElementById("hudSub").innerHTML="Divided We Stand &rarr; Second Coming &middot; 2008&ndash;2010";
   buildShelf(); refresh();
   window.scrollTo(0,0);
 }
@@ -1110,13 +1197,14 @@ function showOmni(id){
   document.getElementById("viewOmni").classList.remove("hidden");
   document.getElementById("backShelf").classList.remove("hidden");
   document.getElementById("crumb").textContent="X-Men · "+o.spine;
-  document.getElementById("hudTitle").textContent=o.title+(o.vol?" "+o.vol:"");
-  document.getElementById("hudSub").textContent=o.creators+" · "+o.era;
-  buildOmni(o); refresh();
-  const next=flat.find(f=>f.o.id===o.id&&!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
-  const openCh = next ? next.ch : o.chapters[0];
-  if(openCh) toggleCh(document.getElementById("ch-"+openCh.id),true);
   window.scrollTo(0,0);
+  buildOmni(o); refresh();
+  if(pendingJump) jumpToIssue();
+  else{
+    const next=flat.find(f=>f.o.id===o.id&&!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
+    const openCh = next ? next.ch : o.chapters[0];
+    if(openCh) toggleCh(document.getElementById("ch-"+openCh.id),true);
+  }
 }
 function route(){
   const h=location.hash.replace(/^#\/?/,"");
@@ -1153,6 +1241,7 @@ document.getElementById("collapseAll").onclick=()=>document.querySelectorAll(".c
 document.getElementById("markAll").onclick=async()=>{
   if(!currentOmni) return;
   currentOmni.chapters.forEach(c=>c.issues.forEach(i=>{skipSet.delete(i.id);readSet.add(i.id);}));
+  touch[currentOmni.id]=Date.now();
   refresh(); await saveState();
 };
 document.getElementById("toggleOpt").onclick=e=>{
