@@ -242,6 +242,7 @@
   @keyframes bob{0%,100%{transform:translateY(0) rotateZ(0deg);}50%{transform:translateY(-9px) rotateZ(-.6deg);}}
   /* art layers are reused by the shelf tile and the detail banner - do not scope to .omni */
   .art,.tex{position:absolute;inset:0;}
+  .artimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
   .gloss{position:absolute;inset:0 52% 0 0;pointer-events:none;
     background:linear-gradient(104deg, rgba(255,255,255,.30), transparent 72%);}
   .vig{position:absolute;inset:0;pointer-events:none;
@@ -259,11 +260,11 @@
   .obadge{position:absolute;top:10px;right:10px;font-size:8.5px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;
     padding:3px 9px;border-radius:12px;color:#eaf6ff;background:rgba(4,20,48,.75);border:1px solid rgba(160,220,255,.45);}
   .obadge.done{color:#0b3a12;background:linear-gradient(180deg,#e6ffd2, var(--read-green));border-color:rgba(255,255,255,.7);}
-  .obadge.mock{color:#2a2410;background:linear-gradient(180deg,#fff2c4, #e0b64a);border-color:rgba(255,255,255,.7);}
   .onum{position:absolute;top:9px;left:10px;font-size:10px;font-weight:900;font-style:italic;color:rgba(255,255,255,.62);
     text-shadow:0 1px 3px rgba(0,10,30,.8);letter-spacing:1px;}
 
-  /* ---- cover ramps. No real art exists: these books were never printed. ---- */
+  /* ---- cover ramps: the fallback behind Art/X-Men/<id>.jpg, not the cover.
+         artHTML() paints one only when a scan is missing or fails to load. ---- */
   .o-divided{background:linear-gradient(163deg,#9cc4ea 0%,#3f6d9e 30%,#1b3554 66%,#060b14 100%);}
   .o-warpath{background:linear-gradient(163deg,#e0a355 0%,#a8521f 32%,#3d1a0c 68%,#0d0603 100%);}
   .o-utopia{background:linear-gradient(163deg,#f0c85a 0%,#b07f22 30%,#1e3a6b 66%,#050a16 100%);}
@@ -452,8 +453,8 @@ function seq(series, from, to, idp, arc, keyMap){
    Unlike the other six shelves this data is hand-written, not generated --
    there is no tools/xmen_meta.py, because there is no wiki page to pull. */
 const OMNI = [
-{ id:"xm-o1", spine:"Divided We Stand", title:"X-Men: Divided We Stand Omnibus", vol:"Vol. 1",
-  creators:"Carey, David, Kyle & Yost, Brubaker", era:"2008", art:"o-divided", tex:"tex-cerebro",
+{ id:"xm-o1", spine:"Divided We Stand", cover:"Art/X-Men/xm-o1.jpg", title:"X-Men: Divided We Stand Omnibus", vol:"Vol. 1",
+  creators:"Carey, David, Kyle & Yost, Brubaker", era:"2008", art:"o-divided", tex:"tex-cerebro", pos:"18%",
   note:"What Messiah Complex left on the floor. The mansion is rubble, the team is formally disbanded, Xavier's body is missing and Cable has jumped into the future with the first mutant born in a decade. Four books pick the pieces up at once — Carey rebuilding Xavier inside his own fractured head, Peter David watching Mutant Town drain out, Kyle & Yost standing up the black-ops X-Force that Cyclops will not admit exists, and Brubaker walking everyone west. Closes with the X-Men housed in San Francisco, which is the status quo for the next three books.",
   chapters:[
   { id:"c-leg1", title:"X-Men Legacy #208\u2013212", era:"Divided He Stands \u00b7 Mike Carey", tier:2,
@@ -484,7 +485,7 @@ const OMNI = [
     issues:seq("Uncanny X-Men",500,503,"unc","Manifest Destiny",{500:"Move to San Francisco"}) }
 ]},
 
-{ id:"xm-o2", spine:"Messiah War", title:"X-Men: Messiah War Omnibus", vol:"Vol. 2",
+{ id:"xm-o2", spine:"Messiah War", cover:"Art/X-Men/xm-o2.jpg", title:"X-Men: Messiah War Omnibus", vol:"Vol. 2",
   creators:"Swierczynski, Kyle & Yost, Fraction", era:"2008–2009", art:"o-warpath", tex:"tex-crosshatch",
   note:"The middle chapter of the trilogy, with the year that walks into it. Cable is still running through time with Hope; Cyclops sends X-Force after him, and the two books trade chapters across eighty years of ruin with Stryfe and Apocalypse waiting at the end of it. Around that core: the Sisterhood, Lovelorn, X-Factor's Secret Invasion detour, and Old Ghosts — which is where Selene first starts pulling the thread that becomes Necrosha. Nobody comes back from the future the same.",
   chapters:[
@@ -529,7 +530,7 @@ const OMNI = [
     issues:seq("Cable",16,20,"cab","Stranded") }
 ]},
 
-{ id:"xm-o3", spine:"Utopia", title:"X-Men: Utopia Omnibus", vol:"Vol. 3",
+{ id:"xm-o3", spine:"Utopia", cover:"Art/X-Men/xm-o3.jpg", title:"X-Men: Utopia Omnibus", vol:"Vol. 3",
   creators:"Fraction, Carey & Peter David", era:"2009", art:"o-utopia", tex:"tex-halftone",
   note:"Norman Osborn's Dark Reign reaches San Francisco, and the X-Men answer it by raising Asteroid M out of the bay and declaring it a country. Utopia is the crossover; Nation X is life on the island afterwards — Magneto walks in, Namor brings Atlantis, and the cast that matters in Second Coming is assembled here. Rogue's Salvage arc opens the book and X-Factor renumbers to #200 alongside it. Two of the eight Utopia chapters are Dark Avengers issues, printed here because the crossover does not parse without them.",
   chapters:[
@@ -562,7 +563,7 @@ const OMNI = [
     issues:seq("X-Men Legacy",228,230,"leg","Emplate") }
 ]},
 
-{ id:"xm-o4", spine:"Second Coming", title:"X-Men: Second Coming Omnibus", vol:"Vol. 4",
+{ id:"xm-o4", spine:"Second Coming", cover:"Art/X-Men/xm-o4.jpg", title:"X-Men: Second Coming Omnibus", vol:"Vol. 4",
   creators:"Kyle & Yost, Carey, Fraction & Swierczynski", era:"2009–2010", art:"o-secondcoming", tex:"tex-flare",
   note:"Necrosha first — Selene raising every dead mutant on Genosha while X-Force is still holding a line nobody knows about — then Cable and Hope finally walking home, and then fourteen chapters of the finale. Bastion's Nimrods, the dome over San Francisco, and the deaths the saga has been driving at since Messiah Complex. X-Force #28 is both a chapter of the event and the last issue of that series, which is the neatest thing this book does.",
   chapters:[
@@ -735,11 +736,18 @@ function omniStats(o){
   o.chapters.forEach(c=>c.issues.forEach(i=>{t++; if(readSet.has(i.id))r++; else if(skipSet.has(i.id))s++;}));
   return {r:r,s:s,t:t,done:r+s};
 }
-/* No cover scans exist for books that were never printed, so every volume paints
-   its .o-* ramp. Kept in artHTML's shape anyway: drop a `cover` on a volume and
-   it renders the image instead, exactly as on the other six shelves. */
+/* Same as every other shelf: a real cover replaces the ramp, the texture, the
+   gloss and the X glyph outright. These four books were never printed and have
+   no jacket of their own, so each takes the cover of the issue it is named
+   after -- see tools/fetch_xmen_covers.py for which and why. */
 function artHTML(o,banner){
-  if(o.cover) return '<img class="artimg" src="'+esc(o.cover)+'" alt="">'+(banner?'':'<div class="vig"></div>');
+  /* `pos` re-aims the banner crop only. The tile is the same 2:3 as the cover
+     and crops almost nothing; the banner is a thin band cut out of it, and where
+     that band should land is per-cover. Same knob as the homescreen's, and the
+     same rule: screenshot #obanner and look, do not reason about it. */
+  if(o.cover) return '<img class="artimg" src="'+esc(o.cover)+'"'+
+    (banner&&o.pos?' style="object-position:50% '+esc(o.pos)+'"':'')+' alt="">'+
+    (banner?'':'<div class="vig"></div>');
   return '<div class="art '+o.art+'"></div><div class="tex '+o.tex+'"></div>'+
          (banner?'':'<div class="vig"></div>')+'<div class="gloss"></div>';
 }
@@ -763,10 +771,8 @@ function buildShelf(){
     const st=omniStats(o);
     const pct=st.t?Math.round(st.done/st.t*100):0;
     const state = st.done===0 ? "unread" : (st.done===st.t ? "done" : "started");
-    /* "Never printed" is the standing truth about every book here, so it is the
-       badge unless the volume is finished, and the issue count moves to .ometa. */
     const badge = state==="done" ? '<span class="obadge done">Finished</span>'
-                                 : '<span class="obadge mock">Never printed</span>';
+                                 : '<span class="obadge">'+st.t+' issues</span>';
     const num=String(idx+1).padStart(2,"0");
     const label=o.spine||o.title;
     const sz = label.length>20 ? ' long' : (label.length>16 ? ' mid' : '');
@@ -788,7 +794,7 @@ function buildShelf(){
           '<div class="plate">'+
             '<div class="oname">'+esc(o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'')+'</div>'+
             '<div class="ocre">'+esc(o.creators)+'</div>'+
-            '<div class="ometa">'+esc(o.era)+' &middot; '+st.t+' issues &middot; '+pct+'%</div>'+
+            '<div class="ometa">'+esc(o.era)+' &middot; '+st.done+'/'+st.t+' &middot; '+pct+'%</div>'+
             '<div class="pbar"><div class="fill rd" style="width:'+(st.t?st.r/st.t*100:0)+'%"></div>'+
               '<div class="fill sk" style="width:'+(st.t?st.s/st.t*100:0)+'%"></div></div>'+
           '</div>'+

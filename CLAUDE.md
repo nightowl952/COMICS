@@ -60,8 +60,11 @@ Keep replies short and plain. This is a hobby project, not a code review.
   and tooling again (`--hero daredevil`); 17 volumes covering 1964 to the end
   of Zdarsky's run. Its `OMNI` array is generated from `tools/daredevil_meta.py`.
 - `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/`,
-  `Art/Moon-Knight/`, `Art/Daredevil/` — cover scans, committed so GitHub Pages
-  can serve them. Every page references them by relative path.
+  `Art/Moon-Knight/`, `Art/Daredevil/`, `Art/X-Men/` — cover scans, committed so
+  GitHub Pages can serve them. Every page references them by relative path.
+  `Art/X-Men/` is the odd one: its four books were never printed, so each file is
+  the cover of the issue that volume is named after — see "Cover art for books
+  with no covers".
 - `Art/Heroes/` — one cover per homescreen subject, seven files named by hero id.
   See "Artwork" below.
 - `Art/covers/` — the original hand-supplied scans the seven `Art/Heroes/`
@@ -123,12 +126,19 @@ published" rather than "read this story in the right order".
 **The X-Men shelf breaks this rule on purpose, and it is the only one allowed
 to.** All four of its volumes are mock-ups of books Marvel has never printed, so
 the rule's whole premise — that a tile stands for something a reader can go and
-buy — does not apply. What replaces it is being loud about it: an amber
-"Never printed" badge on every tile, "0 in print" in the shelf count, "never
-printed" where the other shelves print a release date, and a standing note above
-the shelf. If a future subject gets the same treatment, copy that honesty along
-with the shape. It is not a licence to slip a solicited-but-unshipped book onto
-a real shelf — that is still forbidden.
+buy — does not apply. What replaces it is saying so: a standing note in bold
+directly above the shelf, "0 in print" in the shelf count, and "never printed"
+where the other shelves show a release date.
+
+An amber "Never printed" badge on every tile was the fourth signal and **came
+off at the user's request** once the volumes had cover art — four identical
+warning pills over four convincing book jackets read as nagging rather than as
+information, and the tile badge went back to the issue count every other shelf
+shows. The three remaining signals are the floor, not a starting point: the note
+above the shelf in particular is the one that has to survive any future edit.
+
+None of this is a licence to slip a solicited-but-unshipped book onto a real
+shelf — that is still forbidden.
 
 ## Adding a hero
 
@@ -1018,6 +1028,12 @@ ambiguous or rejected; no hit means Marvel does not have it.
   `cover=` line into `omnibus_meta.py`. Wiki page titles come from the `ORDER`
   keys; the placeholders have no such key, so their pages are listed in
   `PLACEHOLDER_PAGES` in the meta module.
+- `fetch_xmen_covers.py` — the same job for the X-Men shelf, which
+  `fetch_covers.py` cannot do: those four books were never printed, so they have
+  no wiki page to map to and X-Men is not in `heroes.py`. A hand-written `PICKS`
+  table names the image and the reason for each volume, and the `cover:` line is
+  written straight into the `OMNI` array in the HTML — there is no meta module
+  and nothing to regenerate. See "Cover art for books with no covers".
 - `series_harvest.py` — **superseded by `catalog.py`.** The older HTML harvester: `probe` maps a range of series
   ids to titles, `series` pulls a series page's issue list, `walk` follows an
   issue's sibling links across a whole run, `scan` blind-probes a range of issue
@@ -1998,20 +2014,49 @@ variables at `:root`. Progress bars stack green (read) + grey (skipped).
 Respects `prefers-reduced-motion`. Mobile breakpoint at 600px. This is the same
 look every shelf page uses, which is why the shelf CSS dropped straight in.
 
-There are no cover scans, because there are no covers: each volume paints an
-`.o-*` ramp plus a texture, with a big inline X over it. Two things that took a
-second pass, both only visible in a screenshot:
+### Cover art for books with no covers
 
-- **The ramps had to be darkened.** Copying the other shelves' near-white top
-  stop put a white X on a white cover — those shelves get away with it because
-  their tiles carry real art and the ramp is only a fallback. Here the ramp *is*
-  the cover, so every one now starts on a saturated mid-tone.
-- **The X needed more body than the other glyphs.** It is a large solid shape,
-  so the fade-to-transparent gradient the crescent and claw glyphs use made its
-  lower half disappear into the art. Its stops bottom out at .48, not .18.
+All four volumes carry real art in `Art/X-Men/<id>.jpg`, sized through the same
+`covers.save_cover` 700px/q82 pipeline as every other shelf. Since the books
+were never printed there is no jacket to scan, so **each volume takes the cover
+of the issue it is named after** — which is chapter 1 of that book's centrepiece
+in three cases out of four.
 
-`artHTML()` still renders `o.cover` when one is set, exactly as on the other
-shelves — drop a path in and the ramp gives way to the image.
+`fetch_covers.py` cannot do this: it maps a volume id to a wiki page through the
+hero's `ORDER` keys, and there is no page for an unprinted book. `tools/fetch_xmen_covers.py`
+is the replacement, and its `PICKS` table holds the choice and the reasoning for
+each, the way `PICKS` in `fetch_hero_art.py` does for the homescreen posters.
+
+Two things that table records and that are worth not relearning:
+
+- **Take whichever variant the wiki stores larger, and check what the scan
+  actually is.** Three of the four picks are printed covers rather than textless
+  variants, purely because the textless files are 400–550px where the printed
+  ones are 1280px+. But Utopia's *main* cover is only on the wiki as a 2063px
+  scan of the whole printed page — white border, copyright line, marvel.com
+  footer — which reads as a photocopy on a book jacket. Bianchi's variant at
+  853px is art and nothing else, and is the pick.
+- **This is the opposite of the homescreen's rule** (see "Artwork"), where trade
+  dress fights the poster plate. These tiles are supposed to read as real books,
+  and every other shelf on the site shows a printed cover with its logo on it.
+
+`pos` on a volume sets `object-position` on the **banner only**, exactly as on
+the homescreen — the tile is the same 2:3 as the cover and crops almost nothing,
+but the banner is a thin band cut out of it. Only `xm-o1` needs one (`18%`,
+which lands the band on two faces instead of the abstract shards at the centre).
+Retuning one means screenshotting `#obanner` and looking, not reasoning about it.
+
+Behind the scans, each volume still declares an `.o-*` ramp, a texture and the
+inline X glyph, which `artHTML()` paints when a cover is missing or fails to
+load. Two things about that fallback took a second pass when it *was* the
+cover, and are worth keeping if it ever is again:
+
+- **The ramps are darker than the other shelves'.** Copying their near-white top
+  stop put a white X on a white cover. Those shelves get away with it because
+  the ramp is only ever a fallback there.
+- **The X has more body than the other glyphs.** It is a large solid shape, so
+  the fade-to-transparent gradient the crescent and claw glyphs use made its
+  lower half vanish. Its stops bottom out at .48, not .18.
 
 ### Known gaps / open items
 
@@ -2198,9 +2243,12 @@ a server-side store and is not built.
     "Known gaps" under the X-Men tracker for the two ways out.
 13. **The X-Men shelf's four books do not exist**, which is the point, but it
     means the "a shelf holds books you can actually buy" rule now has an
-    exception on the wall. The page is loud about it (badge, shelf count, banner
-    line, standing note) and that honesty is the thing to preserve if the shelf
-    is ever edited — see "A shelf holds books you can actually buy".
+    exception on the wall — and since the tiles gained real cover art and lost
+    the "Never printed" badge, they look entirely like books you could buy.
+    Three signals carry it now: the bold note above the shelf, "0 in print" in
+    the shelf count, and "never printed" in each volume's banner. That is the
+    floor, and preserving it is the thing to watch if the shelf is ever edited —
+    see "A shelf holds books you can actually buy".
 14. **The Daredevil shelf is missing Daredevil Omnibus Vol. 4 for one month.**
     It ships September 2026 and is excluded by the "a shelf holds books you can
     actually buy" rule, which leaves a #120–157 hole between `dd-o3` and
