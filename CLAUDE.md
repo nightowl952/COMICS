@@ -209,10 +209,16 @@ on the art.
 
 **Where to crop is per-subject, and it is set on the `<img>` inline**, the same
 convention as `pos` on a `HEROES` entry, and arrived at the same way — render it
-and look. Two of the seven set one: Spider-Man at `72%` (Alex Ross's figure runs
-48–90% down the plate, and the default band cut him off at the waist) and
-Daredevil at `0%` (the cowl is hard against the top edge). The other five take
-the `50% 28%` default.
+and look. Three of the seven set one: Spider-Man at `72%` (Alex Ross's figure
+runs 48–90% down the plate, and the default band cut him off at the waist),
+Daredevil at `0%` (the cowl is hard against the top edge) and Wolverine at
+`16%`. The other four take the `50% 28%` default.
+
+Wolverine took two passes and is the useful one to remember: that plate is
+1.33:1, the most portrait of the eight, so it is cropped hard and a few points
+of `object-position` move a lot of picture. `28%` cut his ears off, `4%`
+overcorrected and left him sitting low under a band of empty jungle, and `16%`
+is the middle. Render three values and compare them — do not solve for it.
 
 **X-Men cannot take one, and it is worth knowing why before trying.** That plate
 is 2.58:1 against a banner box of about 2.38:1, so `object-fit:cover` fits it by
