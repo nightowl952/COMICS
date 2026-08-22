@@ -16,6 +16,12 @@ which is the cheap path when the files are already named after their subject.
 It prints what it matched and what it could not, and never guesses twice for
 one key -- an ambiguous name is reported, not resolved.
 
+It reports EVERY file in the folder, including ones it cannot open. That is not
+tidiness: it used to filter on a fixed extension list and say nothing about the
+rest, so a .heic straight off a phone vanished without a word -- which looks
+from the outside like the tool ignoring an image that is plainly sitting there.
+It also does not recurse; a nested folder is named in the report, not walked.
+
 Sizing: 1800px wide at q82. Wider than a cover because this is displayed at up
 to the full viewport width, and the .hb box is about 3.4:1 -- a portrait image
 still works but object-fit:cover will take a band out of the middle of it.
@@ -50,12 +56,20 @@ KEYS = {
     "moon-knight":    ["moon-knight", "moonknight", "moon knight", "moon"],
     "daredevil":      ["daredevil", "dare devil", "matt murdock"],
 }
-EXT = (".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".bmp")
+# No extension whitelist. Anything Pillow can open is an image; anything it
+# cannot is reported by name rather than dropped. See add_folder().
+SKIP = (".ds_store",)
 
 
 def save(src, key):
     from PIL import Image
-    im = Image.open(src)
+    try:
+        im = Image.open(src)
+    except Exception:
+        if src.lower().endswith((".heic", ".heif")):
+            raise SystemExit("Cannot read %s -- HEIC needs `pip3 install pillow-heif`, "
+                             "or export it as JPEG first." % os.path.basename(src))
+        raise
     w, h = im.size
     im = im.convert("RGB")
     if w > WIDTH:
@@ -72,40 +86,78 @@ def save(src, key):
 
 
 def match(name):
-    """Which keys a filename names. Matching is on whole words, so "ff" does not
-    hit "stuff" and "moon" does not hit "moonrise"; a name that hits two keys is
-    reported rather than resolved."""
-    stem = re.sub(r"[^a-z0-9]+", "-", os.path.splitext(name)[0].lower())
-    hits = []
-    for k, words in KEYS.items():
-        for w in words:
-            w = re.sub(r"[^a-z0-9]+", "-", w)
-            if re.search(r"(^|-)" + re.escape(w) + r"($|-)", stem):
-                hits.append(k); break
-    return hits
+    """Which keys a filename names.
+
+    Two passes, because filenames arrive in every shape. `IndexPage.png` is one
+    lowercase token once you strip the capitals, so a whole-word test alone
+    misses it -- which is exactly how the homescreen banner sat unplaced through
+    two rounds of this. So: split camelCase first, try whole words, and only if
+    nothing hits fall back to a substring test, restricted to words of four
+    characters or more so "ff" cannot match "stuff".
+
+    A name that hits two keys is still reported rather than resolved.
+    """
+    stem = os.path.splitext(name)[0]
+    stem = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "-", stem)      # IndexPage -> Index-Page
+    stem = re.sub(r"[^a-z0-9]+", "-", stem.lower()).strip("-")
+
+    def hits(test):
+        out = []
+        for k, words in KEYS.items():
+            for w in words:
+                if test(re.sub(r"[^a-z0-9]+", "-", w)):
+                    out.append(k); break
+        return out
+
+    whole = hits(lambda w: re.search(r"(^|-)" + re.escape(w) + r"($|-)", stem))
+    if whole:
+        return whole
+    return hits(lambda w: len(w) >= 4 and w.replace("-", "") in stem.replace("-", ""))
 
 
 def add_folder(folder):
+    from PIL import Image
     folder = os.path.expanduser(folder)
-    files = sorted(f for f in os.listdir(folder) if f.lower().endswith(EXT))
-    if not files:
-        print("no images in " + folder)
+    entries = sorted(e for e in os.listdir(folder) if not e.startswith("."))
+    if not entries:
+        print("nothing in " + folder)
         return
-    taken, unclear = {}, []
-    for f in files:
+
+    images, notes = [], []
+    for e in entries:
+        full = os.path.join(folder, e)
+        if os.path.isdir(full):
+            notes.append((e, "is a folder -- point add-folder at it directly"))
+            continue
+        if e.lower().endswith(SKIP):
+            continue
+        try:
+            Image.open(full).verify()
+        except Exception as err:
+            notes.append((e, "HEIC needs `pip3 install pillow-heif`, or export it as JPEG"
+                             if e.lower().endswith((".heic", ".heif"))
+                             else "not an image Pillow can read (%s)" % type(err).__name__))
+            continue
+        images.append(e)
+
+    taken = {}
+    for f in images:
         hits = match(f)
         if len(hits) == 1:
             taken.setdefault(hits[0], []).append(f)
         else:
-            unclear.append((f, hits))
+            notes.append((f, ("matches " + "/".join(hits)) if hits else "matches no subject"))
     for key, names in sorted(taken.items()):
         if len(names) > 1:
-            unclear.append((", ".join(names), [key]))
+            notes.append((", ".join(names), "all match %s -- pick one" % key))
             continue
         save(os.path.join(folder, names[0]), key)
-    for name, hits in unclear:
-        print("?? %-40s %s -- name it after one subject, or use `add <key> <file>`"
-              % (name, ("matches " + "/".join(hits)) if hits else "matches nothing"))
+
+    for name, why in notes:
+        print("?? %-42s %s" % (name[:42], why))
+    if notes:
+        print("   place any of those by hand: python3 tools/banners.py add <key> <file>")
+        print("   keys: " + ", ".join(KEYS))
     missing = [k for k in KEYS if not os.path.exists(os.path.join(OUT, k + ".jpg"))]
     if missing:
         print("still missing: " + ", ".join(missing))
