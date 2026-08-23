@@ -317,6 +317,118 @@
   .issue.read .issue-info .t{color:var(--dim2);}
   .issue.skipped .issue-info .t{color:var(--dim2);text-decoration:line-through;text-decoration-thickness:1px;}
 
+
+  /* ================= GUIDED TOUR =================
+     A history lesson that slides in over the shelf instead of replacing it,
+     because the whole point is to read it WITH the books in view -- every
+     "on your shelf" chip in here jumps to a volume and leaves the panel open.
+     Two levels share one panel: the shelf view opens the character's whole
+     arc, a volume view opens that book's own chapter of it. */
+  .tourbtn{cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:8px;
+    font-size:9.5px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;color:#1a1206;
+    padding:8px 15px 8px 12px;border-radius:20px;border:1px solid rgba(255,226,140,.85);
+    background:linear-gradient(135deg,#ffe07a,var(--xyellow) 46%,#e8a91f);
+    box-shadow:0 3px 16px rgba(255,199,44,.34),inset 0 1px 0 rgba(255,255,255,.6);
+    transition:transform .16s,box-shadow .16s,filter .16s;}
+  .tourbtn:hover{transform:translateY(-1px);filter:brightness(1.07);
+    box-shadow:0 5px 22px rgba(255,199,44,.5),inset 0 1px 0 rgba(255,255,255,.65);}
+  .tourbtn .ticon{font-size:12px;line-height:1;}
+  .tourbtn.hidden{display:none;}
+  @media(max-width:600px){.tourbtn .tlabel{display:none;} .tourbtn{padding:8px 11px;}}
+
+  #tourScrim{position:fixed;inset:0;z-index:70;background:rgba(4,8,16,.62);
+    backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .3s;}
+  body.tour-open #tourScrim{opacity:1;pointer-events:auto;}
+  #tourPanel{position:fixed;top:0;right:0;bottom:0;z-index:71;width:min(560px,94vw);
+    display:flex;flex-direction:column;background:#101724;
+    border-left:1px solid var(--line-hi);box-shadow:-24px 0 60px rgba(0,0,0,.6);
+    transform:translateX(101%);transition:transform .38s cubic-bezier(.22,.8,.28,1);}
+  body.tour-open #tourPanel{transform:translateX(0);}
+  @media(prefers-reduced-motion:reduce){#tourPanel{transition:none;}}
+  .tr-head{flex:0 0 auto;position:relative;padding:20px 54px 16px 22px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(255,255,255,.05),transparent);}
+  .tr-kicker{font-size:9px;font-weight:900;letter-spacing:2.6px;text-transform:uppercase;color:var(--xyellow);}
+  .tr-title{margin-top:7px;font-size:21px;font-weight:900;line-height:1.2;color:#fff;}
+  .tr-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:15px;font-family:inherit;
+    color:var(--dim);background:rgba(255,255,255,.07);border:1px solid var(--line);}
+  .tr-close:hover{background:rgba(255,255,255,.16);color:#fff;}
+  .tr-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:20px 22px 60px;}
+  .tr-body p{font-size:13.5px;line-height:1.72;color:#d5e0ee;margin:0 0 12px;}
+  .tr-body p:last-child{margin-bottom:0;}
+  .tr-lede{font-size:15px!important;line-height:1.68!important;color:#eef4fb!important;
+    padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:20px!important;}
+  .tr-lede b{color:var(--xyellow);font-weight:800;}
+  .tr-body b{color:#fff;font-weight:800;}
+  .tr-body i{color:#c2d2e5;}
+
+  /* Each section is one age, and the rail down its left is that age's colour.
+     Reading the panel top to bottom you are reading the palette top to bottom. */
+  .tr-sec{position:relative;padding:0 0 4px 18px;margin:0 0 26px;border-left:2px solid var(--e1,#8fa4bd);}
+  .tr-sec::before{content:"";position:absolute;left:-6px;top:2px;width:10px;height:10px;border-radius:50%;
+    background:var(--e1,#8fa4bd);box-shadow:0 0 10px var(--e1,#8fa4bd);}
+  .tr-era{font-size:8.5px;font-weight:900;letter-spacing:2px;text-transform:uppercase;
+    color:var(--e1,#8fa4bd);margin-bottom:5px;}
+  .tr-sec h4{margin:0 0 10px;font-size:16px;font-weight:900;line-height:1.28;color:#fff;letter-spacing:.2px;}
+
+  .tr-fig{margin:14px 0;}
+  .tr-fig img{display:block;width:100%;border-radius:8px;border:1px solid var(--line-hi);
+    box-shadow:0 8px 24px rgba(0,0,0,.5);background:rgba(255,255,255,.04);}
+  .tr-fig.duo{display:grid;grid-template-columns:1fr 1fr;gap:9px;align-items:start;}
+  .tr-fig.duo figcaption{grid-column:1/-1;}
+  .tr-fig figcaption{margin-top:7px;font-size:11px;line-height:1.55;color:var(--dim);}
+  .tr-fig figcaption b{color:#cddaea;font-weight:700;}
+
+  /* A maker card names one person and one thing to look at -- the McFarlane
+     shape ("Gil Kane, when he hit somebody it felt like a cannon"), not a
+     biography. If it does not tell you where to point your eyes, cut it. */
+  .tr-makers{display:flex;flex-direction:column;gap:8px;margin:14px 0;}
+  .tr-maker{padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.045);
+    border:1px solid var(--line);border-left:3px solid var(--e1,#8fa4bd);}
+  .tr-maker .mn{font-size:12.5px;font-weight:900;color:#fff;}
+  .tr-maker .mr{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--e1,#8fa4bd);margin-top:2px;}
+  .tr-maker .mb{margin-top:6px;font-size:12.5px;line-height:1.62;color:#cbd8e8;}
+  .tr-maker .mb b{color:#fff;}
+
+  .tr-quote{margin:16px 0;padding:13px 15px;border-radius:10px;
+    background:rgba(255,210,63,.07);border:1px solid rgba(255,210,63,.28);}
+  .tr-quote .qt{font-size:13.5px;line-height:1.65;color:#f2e6c6;font-style:italic;}
+  .tr-quote .qb{margin-top:8px;font-size:9.5px;font-weight:800;letter-spacing:1.4px;
+    text-transform:uppercase;color:var(--xyellow);}
+
+  /* "On your shelf" -- the chips that make this a tour rather than an essay. */
+  .tr-shelf{margin:14px 0 2px;}
+  .tr-shelf .sl{font-size:8.5px;font-weight:900;letter-spacing:2px;text-transform:uppercase;
+    color:var(--dim2);margin-bottom:7px;}
+  .tr-chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .tr-chip{cursor:pointer;font-family:inherit;text-align:left;display:inline-flex;align-items:center;gap:7px;
+    font-size:11px;font-weight:700;color:#e6eefa;padding:7px 12px 7px 8px;border-radius:20px;
+    background:rgba(255,255,255,.06);border:1px solid var(--line-hi);transition:background .15s,border-color .15s;}
+  .tr-chip:hover{background:rgba(255,210,63,.16);border-color:var(--xyellow);color:#fff;}
+  .tr-chip img{width:20px;height:30px;object-fit:cover;border-radius:3px;flex:0 0 auto;
+    box-shadow:0 1px 4px rgba(0,0,0,.6);}
+  .tr-chip .cg{width:20px;height:30px;border-radius:3px;flex:0 0 auto;background:rgba(255,255,255,.12);}
+
+  /* The reception block on a volume tour. `standing` is the community's
+     verdict in two words; the body says who says so and why. */
+  .tr-verdict{margin:22px 0 6px;padding:15px 16px;border-radius:12px;
+    background:rgba(255,255,255,.05);border:1px solid var(--line-hi);}
+  .tr-verdict .vh{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px;}
+  .tr-verdict .vl{font-size:8.5px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--dim2);}
+  .tr-verdict .vs{font-size:10px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;
+    padding:4px 10px;border-radius:20px;color:var(--ink);background:var(--xyellow);}
+  .tr-verdict .vs.mixed{background:#8fa4bd;} .tr-verdict .vs.low{background:#d95c46;color:#fff;}
+  .tr-verdict .vs.cult{background:#9d7bf0;color:#fff;}
+
+  /* The tone map: the answer to "which one is the Jekyll-and-Hyde one". */
+  .tr-tone{margin:26px 0 6px;padding-top:20px;border-top:1px solid var(--line);}
+  .tr-tone h4{margin:0 0 4px;font-size:16px;font-weight:900;color:#fff;}
+  .tr-tone .tsub{font-size:12px;line-height:1.6;color:var(--dim);margin-bottom:14px;}
+  .tr-mode{padding:12px 0;border-top:1px solid var(--line);}
+  .tr-mode .ml{font-size:12.5px;font-weight:900;color:var(--xyellow);}
+  .tr-mode .mn2{margin:4px 0 8px;font-size:12.5px;line-height:1.6;color:#cbd8e8;}
+
   /* ---- summary panels ---- */
   .sum{display:none;margin:2px 9px 10px 58px;padding:12px 14px;border-radius:11px;font-size:12.5px;line-height:1.62;
     color:#dfe8f3;background:rgba(255,255,255,.05);border:1px solid var(--line);}
@@ -460,6 +572,8 @@
   <a class="backlink" href="index.html"><span class="caret">&#9664;</span> C.O.M.I.C.S.</a>
   <button class="backlink hidden" id="backShelf"><span class="caret">&#9664;</span> All omnibuses</button>
   <span class="crumb" id="crumb">Subject &middot; Daredevil</span>
+  <span class="spacer"></span>
+  <button class="tourbtn hidden" id="tourBtn" aria-haspopup="dialog"><span class="ticon">&#9670;</span><span class="tlabel">Guided tour</span></button>
 </nav>
 
 <div class="wrap">
@@ -534,6 +648,17 @@
   <footer>Works offline &middot; progress saved in this browser &middot; back it up from the shelf</footer>
 </div>
 
+
+<div id="tourScrim"></div>
+<aside id="tourPanel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="tourTitle">
+  <div class="tr-head">
+    <div class="tr-kicker" id="tourKicker">Guided tour</div>
+    <div class="tr-title" id="tourTitle"></div>
+    <button class="tr-close" id="tourClose" aria-label="Close the guided tour">&#10005;</button>
+  </div>
+  <div class="tr-body" id="tourBody"></div>
+</aside>
+
 <script>const SC = {
 "Daredevil (1964)": ["#ffd23f", "#a8161a"],
 "Daredevil (1998)": ["#c8b898", "#2e2820"],
@@ -594,6 +719,12 @@
    CSS placeholder art is replaced automatically.
    Generated from tools/daredevil_meta.py by tools/build_omnibus_data.py --
    do not hand-edit. */
+/* The guided tour's content lives here, hand-written and researched -- see
+   "The Guided Tour" in CLAUDE.md. Empty is a valid state: the button hides
+   itself, so a hero whose history has not been written yet shows no dead
+   control. */
+const TOUR = {overview:null, volumes:{}};
+
 const OMNI = [
 {
 "id": "dd-o1",
@@ -17471,6 +17602,129 @@ async function doChapterSummary(chId){
   }catch(err){ summaryError(el,err); }
 }
 
+/* ============ GUIDED TOUR ============
+   A researched history of the character as a *publishing* object -- who made
+   it, what the decade did to it, what the art is actually doing -- rather than
+   a plot recap. TOUR.overview is the whole arc; TOUR.volumes[id] is one book's
+   chapter of it, plus what the community makes of that book.
+
+   It is a panel, not a page, because the point is to read it with the shelf
+   still behind you: every "on your shelf" chip closes the panel onto the
+   volume it names, so the tour and the reading are the same motion.
+
+   Written by hand, sourced, and deliberately NOT wired to the summary engine:
+   an issue summary is a live model call, and this is supposed to be the layer
+   you can trust with no key and no network. */
+const trPanel=document.getElementById("tourPanel");
+const trBody=document.getElementById("tourBody");
+const trBtn=document.getElementById("tourBtn");
+let trScroll={}, trWhat=null, trLast=null;
+
+function trHas(v){ return !!(v==null ? (TOUR&&TOUR.overview) : (TOUR&&TOUR.volumes&&TOUR.volumes[v])); }
+
+/* The button is contextual: on the shelf it offers the character, inside a
+   volume it offers that book. It hides itself where nothing is written yet,
+   so a hero whose tour has not been researched shows no dead control. */
+function trSyncBtn(){
+  const v = currentOmni ? currentOmni.id : null;
+  const ok = trHas(v);
+  trBtn.classList.toggle("hidden", !ok);
+  if(!ok) return;
+  trBtn.querySelector(".tlabel").textContent = v ? "Tour this volume" : "Guided tour";
+}
+
+function trFig(f){
+  const imgs=(f.src||[]).map(s=>'<img src="'+esc(s)+'" alt="" loading="lazy" '+
+    'onerror="this.closest(\'.tr-fig\').style.display=\'none\'">').join("");
+  return '<figure class="tr-fig'+((f.src||[]).length>1?' duo':'')+'">'+imgs+
+    (f.cap?'<figcaption>'+f.cap+'</figcaption>':'')+'</figure>';
+}
+function trMakers(list){
+  return '<div class="tr-makers">'+list.map(m=>
+    '<div class="tr-maker"><div class="mn">'+esc(m.n)+'</div>'+
+    (m.r?'<div class="mr">'+esc(m.r)+'</div>':'')+
+    '<div class="mb">'+m.b+'</div></div>').join("")+'</div>';
+}
+function trQuote(q){
+  return '<div class="tr-quote"><div class="qt">&ldquo;'+q.t+'&rdquo;</div>'+
+    (q.by?'<div class="qb">'+esc(q.by)+'</div>':'')+'</div>';
+}
+/* A chip carries the book's own cover, so the pointer is visual -- you
+   recognise the jacket on the shelf behind the panel. */
+function trChips(ids,label){
+  const chips=ids.map(id=>{
+    const o=OMNI.find(x=>x.id===id); if(!o) return "";
+    const art=o.cover?'<img src="'+esc(o.cover)+'" alt="">':'<span class="cg"></span>';
+    return '<button class="tr-chip" data-trgo="'+esc(id)+'">'+art+
+      '<span>'+esc(o.title)+(o.vol?' '+esc(o.vol):'')+'</span></button>';
+  }).join("");
+  if(!chips) return "";
+  return '<div class="tr-shelf"><div class="sl">'+esc(label||"On your shelf")+
+    '</div><div class="tr-chips">'+chips+'</div></div>';
+}
+function trSection(s){
+  const e = s.era ? ERAS.find(x=>x[0]===s.era) : null;
+  return '<section class="tr-sec"'+(e?' style="--e1:'+e[3]+'"':'')+'>'+
+    (s.era?'<div class="tr-era">'+esc(s.era)+' Age'+(s.years?' &middot; '+esc(s.years):'')+'</div>':'')+
+    (s.h?'<h4>'+s.h+'</h4>':'')+
+    (s.body||[]).map(p=>'<p>'+p+'</p>').join("")+
+    (s.fig?trFig(s.fig):"")+
+    (s.makers?trMakers(s.makers):"")+
+    (s.quote?trQuote(s.quote):"")+
+    (s.shelf?trChips(s.shelf,s.shelfLabel):"")+
+  '</section>';
+}
+function trVerdict(v){
+  return '<div class="tr-verdict"><div class="vh"><span class="vl">What the room says</span>'+
+    '<span class="vs '+esc(v.cls||"")+'">'+esc(v.standing)+'</span></div>'+
+    v.body.map(p=>'<p>'+p+'</p>').join("")+'</div>';
+}
+function trTone(t){
+  return '<div class="tr-tone"><h4>'+esc(t.h||"The tone map")+'</h4>'+
+    (t.sub?'<div class="tsub">'+t.sub+'</div>':'')+
+    t.modes.map(m=>'<div class="tr-mode"><div class="ml">'+esc(m.l)+'</div>'+
+      '<div class="mn2">'+m.b+'</div>'+trChips(m.vols,"Go to")+'</div>').join("")+'</div>';
+}
+
+function trRender(t){
+  document.getElementById("tourKicker").textContent=t.kicker||"Guided tour";
+  document.getElementById("tourTitle").innerHTML=t.title||"";
+  trBody.innerHTML =
+    (t.lede?'<p class="tr-lede">'+t.lede+'</p>':"")+
+    (t.sections||[]).map(trSection).join("")+
+    (t.verdict?trVerdict(t.verdict):"")+
+    (t.tone?trTone(t.tone):"");
+}
+
+function openTour(){
+  const v = currentOmni ? currentOmni.id : null;
+  if(!trHas(v)) return;
+  trWhat = v || "__overview";
+  trRender(v ? TOUR.volumes[v] : TOUR.overview);
+  trLast = document.activeElement;
+  document.body.classList.add("tour-open");
+  trPanel.setAttribute("aria-hidden","false");
+  trBody.scrollTop = trScroll[trWhat] || 0;
+  document.getElementById("tourClose").focus();
+}
+function closeTour(){
+  if(!document.body.classList.contains("tour-open")) return;
+  if(trWhat) trScroll[trWhat]=trBody.scrollTop;
+  document.body.classList.remove("tour-open");
+  trPanel.setAttribute("aria-hidden","true");
+  if(trLast&&trLast.focus) trLast.focus();
+}
+trBtn.addEventListener("click",openTour);
+document.getElementById("tourClose").addEventListener("click",closeTour);
+document.getElementById("tourScrim").addEventListener("click",closeTour);
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeTour(); });
+/* A chip is the tour pointing at a book, so it closes onto that book rather
+   than opening it behind a panel you would then have to dismiss. */
+trBody.addEventListener("click",e=>{
+  const c=e.target.closest("[data-trgo]"); if(!c) return;
+  closeTour(); location.hash="#/omni/"+c.getAttribute("data-trgo");
+});
+
 /* ============ ROUTING ============ */
 function showShelf(){
   currentOmni=null;
@@ -17502,6 +17756,7 @@ function route(){
   const h=location.hash.replace(/^#\/?/,"");
   if(h.startsWith("omni/")) showOmni(h.slice(5));
   else showShelf();
+  trSyncBtn();
 }
 window.addEventListener("hashchange",route);
 

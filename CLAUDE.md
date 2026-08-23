@@ -318,6 +318,73 @@ The title treatment over the banner is the subject's printed logo from
 `Art/Logos/`, with the name as text if the logo fails. Same
 degrade-don't-vanish rule the plate follows.
 
+### The Guided Tour
+
+A researched history of the character **as a publishing object** — who made the
+book, what the decade did to it, what the art is actually doing — that slides
+in over the shelf rather than replacing it. Added Aug 2026 at the user's
+request, and the brief is worth restating because it is easy to drift off:
+
+> The goal is to be able to *appreciate* a 1968 page and a 1994 page as two
+> different crafts. Not the character's in-universe history — the influence of
+> the times, the writers, the artists, and what makes each era's craft its own
+> thing. The model is Todd McFarlane naming Gil Kane and saying *when he hit
+> somebody it felt like you were getting shot out of a cannon*: name the
+> person, name the specific thing, point at where to look.
+
+Two levels, one panel. The button is contextual — the shelf view offers the
+character's whole arc, a volume view offers that book's chapter of it — and it
+**hides itself where nothing is written**, so a hero whose history has not been
+researched shows no dead control.
+
+- **`TOUR.overview`** — the character tour. A run of sections, one per era,
+  each with an era-coloured rail, maker cards, cover figures and *on your
+  shelf* chips. It ends with a **tone map**: which volume is the
+  Jekyll-and-Hyde one, which is the cosmic one, which is the funny one. That
+  map is the thing the feature is actually for.
+- **`TOUR.volumes[<id>]`** — one book, narrowed, and ending in a **reception
+  block**: is this a classic, a low point, divisive, and *why do fans say so*.
+
+**Rules that keep it worth reading:**
+
+- **It is hand-written and researched, and it is deliberately not wired to the
+  summary engine.** An issue summary is a live model call needing an API key;
+  this is the layer that has to be trustworthy with no key and no network.
+- **A maker card names one person and one thing to look at.** If it does not
+  tell you where to point your eyes, cut it — a biography is not a maker card.
+- **A community verdict is reported as a verdict, not as fact.** "Widely held
+  to be", "the recurring criticism is", "readers split on". Where a book has a
+  real stain on it — the *Immortal Hulk* #43 imagery — say so plainly rather
+  than leaving the reader to find out later.
+- **A chip closes the panel onto the book it names.** The tour points, you go
+  look; that is what makes it a tour rather than an essay. Scroll position is
+  kept per tour, so reopening returns you where you were.
+
+**Content is a source module, not HTML.** `tools/tours/<hero>.py` holds the
+`TOUR` dict and `tools/build_tours.py` splices it in — same shape as
+`build_omnibus_data.py`, and for the same reason: ten thousand words of prose
+hand-edited inside an HTML file would make every change an unreviewable diff.
+The build **fails loudly** on a chip naming a volume that is not on the shelf
+and on a figure whose file is not on disk, because both fail silently in the
+browser: a bad chip renders as nothing, and a missing image hides its own
+figure through the `onerror` hook. A tour that has quietly dropped half its
+pictures still looks finished.
+
+`build_tours.py` knows about X-Men even though `heroes.py` deliberately does
+not — an `EXTRA` table names it, because that shelf has a tour like any other.
+
+**Tour artwork is per-issue, and `tools/tour_art.py` fetches it.** The omnibus
+jackets cannot illustrate "look at what Trimpe does with a figure here" — there
+are 17 of them for 665 issues. The same bifrost record that carries
+`published_date` also carries `image_url`, so a tour figure resolves the same
+way a deep link does (shelf issue id → marvel id → asset) and nothing is
+hand-sourced. Art lands in `Art/Tours/<hero>/<issue id>.jpg` at the usual
+700px/q82.
+
+Hulk is the first shelf with one: **17 volume tours plus the character tour,
+about 9,700 words, 19 issue covers**. It was built first on purpose, so the
+voice could be checked before the other nine were written.
+
 ### Keep Reading
 
 The old single "Up Next" / "Continue Reading" bar named one issue. This names
@@ -1570,6 +1637,19 @@ ambiguous or rejected; no hit means Marvel does not have it.
   route — a printed logo is not on the Marvel Database as a clean transparent
   asset, so these are supplied by hand and the tool only normalises them.
   Needs Pillow.
+- `build_tours.py` — splices `tools/tours/<hero>.py` into a tracker as the
+  `TOUR` object. `--hero <key>`, `--all`, `--check`. Fails on a tour chip
+  naming a volume that is not on the shelf and on a figure file that is not on
+  disk; both are silent failures in the browser. Knows about X-Men through its
+  own `EXTRA` table, since `heroes.py` deliberately does not.
+- `tours/<hero>.py` — the guided tour content, hand-written and researched.
+  See "The Guided Tour" above for what belongs in one.
+- `tour_art.py` — fetches the individual issue covers a tour points at, from
+  the catalog's `image_url`, into `Art/Tours/<hero>/`. `--list` shows what a
+  hero already has.
+- `years.py` — harvests `published_date` for every linked issue into
+  `marvel_years.json`. Resumable; `status` reports coverage. See "The eight
+  ages" above.
 - `covers.py` — cover art pipeline. `add <volume-id> <image>` optimises a scan
   to 700px/q82 and prints the line to paste into `omnibus_meta.py`; `audit`
   reports every volume's cover and how much art the shelf carries — a download
@@ -3469,6 +3549,9 @@ python3 tools/build_omnibus_data.py --check --hero iron-man
 # Expect: 0 matched, 0 ambiguous, and one standing rejection (tta3-1, which is
 # deliberate -- see "An unmapped series is derived, not dropped").
 python3 tools/link_issues.py
+
+# Guided tour content round-trips, and every chip/figure it names exists
+python3 tools/build_tours.py --all --check
 
 # Homescreen logos (every subject has one, and every one has an alpha channel)
 python3 tools/logos.py audit
