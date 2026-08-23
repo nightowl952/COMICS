@@ -1,0 +1,408 @@
+# -*- coding: utf-8 -*-
+"""The Moon Knight guided tour.  See tools/tours/hulk.py for the field list."""
+
+A = "Art/Tours/moon-knight/"
+
+OVERVIEW = {
+    "kicker": "Guided tour",
+    "title": "Moon Knight, decade by decade",
+    "lede": (
+        "Moon Knight was created in 1975 as a <b>one-off antagonist for a werewolf comic</b> "
+        "&mdash; a mercenary in silver hired to catch a monster &mdash; and the character has "
+        "spent fifty years being rebuilt by people who each saw something different in him: a "
+        "pulp adventurer, a psychiatric case, a 90s action lead, a horror protagonist, a "
+        "priest. This is the smallest shelf on the site and the one where the versions "
+        "disagree most violently."),
+    "sections": [
+        {
+            "era": "Bronze", "years": "1975–1980",
+            "h": "A hired man in a werewolf comic",
+            "body": [
+                "<b>Werewolf by Night</b> #32, by <b>Doug Moench</b> and <b>Don Perlin</b>. He "
+                "is a mercenary paid to capture Jack Russell, he wears white so his victims can "
+                "see him coming, and he was not meant to come back.",
+                "He kept coming back, mostly because the costume is one of the best designs "
+                "Marvel produced in the 1970s: <b>white in the dark</b>, which is the exact "
+                "inverse of every other night-operating hero and reads instantly.",
+                "The multiple identities &mdash; Marc Spector the mercenary, Steven Grant the "
+                "millionaire, Jake Lockley the cab driver &mdash; start as a pulp device "
+                "borrowed from <i>The Shadow</i>, not as a diagnosis. That reading arrives "
+                "decades later."],
+            "shelf": ["mk-o1"],
+        },
+        {
+            "era": "Bronze", "years": "1980–1984",
+            "h": "Bill Sienkiewicz becomes Bill Sienkiewicz",
+            "body": [
+                "The solo book launches in 1980 with Moench writing and a nineteen-year-old "
+                "<b>Bill Sienkiewicz</b> drawing, and he arrives as a close, obvious "
+                "<b>Neal Adams imitator</b> &mdash; slick, anatomical, photo-real.",
+                "Then over about three years, in public, on a monthly deadline, he turns into "
+                "one of the most radical stylists American comics has produced. The line breaks "
+                "up. Figures become gestural and distorted. Backgrounds become abstract fields "
+                "of ink. By the mid-run he is doing <b>collage, scratchboard and paint</b> in a "
+                "mainstream Marvel monthly.",
+                "<b>This is the single best reason to read this shelf</b>, and it is one of the "
+                "clearest artist evolutions available anywhere in comics. Put issue #1 next to "
+                "#25 and it is hard to believe it is the same person.",
+                "The book also has a genuinely unusual publishing position: it was one of the "
+                "first Marvel titles sold <b>direct-market only</b>, which is why it could look "
+                "like this at all."],
+            "fig": {"src": [A + "mk1-1.jpg", A + "mk1-25.jpg"],
+                    "cap": "<b>Left:</b> #1, 1980 &mdash; competent Neal Adams pastiche. "
+                           "<b>Right:</b> #25, four years later. Same artist."},
+            "makers": [
+                {"n": "Bill Sienkiewicz", "r": "Pencils, 1980–84",
+                 "b": "Watch the <b>backgrounds</b> first &mdash; that is where he starts "
+                      "experimenting, because editorial notices figures. Blacks stop being "
+                      "shadow and become texture; then the figures follow. By the end he is "
+                      "abandoning outline altogether in places."}],
+            "shelf": ["mk-o1", "mk-o2"],
+        },
+        {
+            "era": "Copper", "years": "1985–1994",
+            "h": "Fist of Khonshu, and the 90s action hero",
+            "body": [
+                "The 1985 <i>Fist of Khonshu</i> revival pushes the Egyptian material to the "
+                "front for the first time &mdash; before this, Khonshu is mostly set dressing.",
+                "Then <b>Marc Spector: Moon Knight</b> runs sixty issues from 1989, and it is a "
+                "different genre entirely: <b>Chuck Dixon</b> writes him as a straight-ahead "
+                "action lead with a supporting cast and a mission, in the register Dixon was "
+                "using on <i>Punisher</i> and later <i>Robin</i>.",
+                "The back half is the decade at full volume, and it is where <b>Stephen Platt</b> "
+                "arrives &mdash; an artist hyped enormously at the time on the strength of "
+                "extremely dense, extremely angular rendering, and who is now the shelf's "
+                "clearest example of a 90s art fashion that did not last."],
+            "fig": {"src": [A + "mk2-1.jpg", A + "msmk-51.jpg"],
+                    "cap": "<b>Left:</b> <i>Fist of Khonshu</i>, 1985. <b>Right:</b> the Platt "
+                           "era &mdash; every surface rendered, nothing at rest."},
+            "shelf": ["mk-o2", "spector-o1", "spector-o2"],
+        },
+        {
+            "era": "Plastic", "years": "2006–2010",
+            "h": "Huston and Finch: the violent one",
+            "body": [
+                "<b>Charlie Huston</b> is a crime novelist, and his Moon Knight is the most "
+                "brutal version there has been &mdash; a man who is genuinely unwell, "
+                "hallucinating Khonshu as a rotting corpse that talks to him, and who "
+                "mutilates people.",
+                "<b>David Finch</b> draws it in a heavy, dark, hyper-rendered style that suits "
+                "the material and is a long way from Sienkiewicz's invention.",
+                "It is the version that most explicitly frames the identities as <b>illness "
+                "rather than tactic</b>, and every later run is arguing with it."],
+            "fig": {"src": [A + "mk5-1.jpg"],
+                    "cap": "Finch's #1 &mdash; the figure in shadow, and the moon behind."},
+            "shelf": ["huston-o1"],
+        },
+        {
+            "era": "Modern", "years": "2014",
+            "h": "Ellis and Shalvey: six issues, six genres",
+            "body": [
+                "<b>Warren Ellis and Declan Shalvey</b> get six issues and use them for six "
+                "completely self-contained stories &mdash; a police procedural, a ghost story, "
+                "a heist, a stalking, a rescue, a corridor fight &mdash; each in a different "
+                "formal register.",
+                "The design decision everyone remembers is the <b>white suit</b>: Shalvey and "
+                "colourist Jordie Bellaire put him in a crisp white three-piece with a mask, "
+                "which is somehow more unsettling than any amount of armour, and is now the "
+                "look most readers picture.",
+                "It also solves the character's oldest structural problem. Moon Knight has "
+                "never sustained a long run well; Ellis's answer is to stop trying, and write "
+                "single issues.",
+                "This is the most-recommended entry point on the shelf and takes about an hour "
+                "to read."],
+            "fig": {"src": [A + "mk7-1.jpg"],
+                    "cap": "The Ellis/Shalvey #1 &mdash; a white field, a crescent, and two "
+                           "eyes. Almost nothing on it."},
+            "shelf": ["ftd-o1"],
+        },
+        {
+            "era": "Contemporary", "years": "2021–2024",
+            "h": "MacKay: a priest with a clinic",
+            "body": [
+                "<b>Jed MacKay</b>'s move is to stop treating the illness as a mystery and give "
+                "the character a <b>job</b>: he opens the Midnight Mission, a walk-in clinic in "
+                "Manhattan for people the supernatural has hurt, and works as Khonshu's priest "
+                "rather than his weapon.",
+                "It is the first version that is meaningfully about <i>service</i>, and it is "
+                "also the funniest and most humane run on the shelf without losing the horror.",
+                "<b>Alessandro Cappuccio</b> draws it with an angular, high-contrast, almost "
+                "woodcut clarity that owes something to Shalvey and nothing to Finch."],
+            "fig": {"src": [A + "mk9-1.jpg"],
+                    "cap": "MacKay and Cappuccio. <i>His mission: justice</i>."},
+            "shelf": ["mackay-o1"],
+        },
+        {
+            "era": "Modern", "years": "2011–2020",
+            "h": "The two runs this shelf cannot show you",
+            "body": [
+                "Two acclaimed modern runs have <b>no omnibus</b> and so are missing entirely:",
+                "<b>Bendis and Maleev (2011)</b>, in which Marc's identities manifest as Captain "
+                "America, Wolverine and Spider-Man &mdash; a genuinely strange twelve issues.",
+                "And more painfully, <b>Jeff Lemire and Greg Smallwood (2016)</b>, which opens "
+                "with Marc committed to a psychiatric hospital and is very widely regarded as "
+                "the best Moon Knight run ever published. Smallwood's formal work in it &mdash; "
+                "page layouts that fracture and reassemble as reality does &mdash; is "
+                "extraordinary. It is the single biggest hole on any shelf on this site "
+                "relative to the size of the shelf.",
+                "The notes on <i>From The Dead</i> and the MacKay volume say so on the page."],
+            "shelf": ["ftd-o1", "mackay-o1"], "shelfLabel": "Either side of the gap",
+        },
+    ],
+    "tone": {
+        "h": "The tone map",
+        "sub": "Seven books and no two of them agree about what this character is.",
+        "modes": [
+            {"l": "Most pulp",
+             "b": "The 1970s and the early solo run &mdash; multiple identities as a tactic "
+                  "borrowed from <i>The Shadow</i>, not as a diagnosis. Adventure, not horror.",
+             "vols": ["mk-o1"]},
+            {"l": "Best art on the shelf",
+             "b": "Sienkiewicz turning into himself in public, monthly, over three years. If "
+                  "you read this shelf for one reason, make it this.",
+             "vols": ["mk-o1", "mk-o2"]},
+            {"l": "Most 1990s",
+             "b": "Sixty issues of straight-ahead action, and then Stephen Platt rendering "
+                  "every surface in the book. A period document.",
+             "vols": ["spector-o1", "spector-o2"]},
+            {"l": "Most violent",
+             "b": "Huston and Finch. A man who is genuinely unwell, a god who looks like a "
+                  "corpse, and consequences that stay on the page.",
+             "vols": ["huston-o1"]},
+            {"l": "Best written",
+             "b": "Ellis and Shalvey: six standalone issues in six registers, and the white "
+                  "suit. An hour to read and the best hour on the shelf.",
+             "vols": ["ftd-o1"]},
+            {"l": "Warmest",
+             "b": "MacKay's Midnight Mission &mdash; a clinic, a congregation, and a character "
+                  "with something to do other than suffer. Funny without losing the horror.",
+             "vols": ["mackay-o1"]},
+        ],
+    },
+}
+
+
+def _v(k, t, l, s, v):
+    return {"kicker": k, "title": t, "lede": l, "sections": s, "verdict": v}
+
+
+VOLUMES = {
+
+"mk-o1": _v("Volume 01 · 1975–1981", "Moon Knight Omnibus Vol. 1",
+    "From a werewolf comic to his own title, and a nineteen-year-old artist starting a "
+    "transformation you can watch happen page by page.",
+    [{"era": "Bronze", "years": "1975–1980",
+      "h": "The mercenary",
+      "body": [
+          "<b>Werewolf by Night</b> #32 introduces him as a hired man in silver, sent to catch "
+          "a monster. Doug Moench and Don Perlin built him to be used once.",
+          "The costume is why he survived. <b>White, at night</b> &mdash; the opposite of every "
+          "other character operating in the dark &mdash; and Moench's stated logic was that he "
+          "<i>wants</i> to be seen coming."],
+      "fig": {"src": [A + "wbn-32.jpg"],
+              "cap": "Werewolf by Night #32, 1975."}},
+     {"era": "Bronze", "years": "1980–1981",
+      "h": "The solo book begins",
+      "body": [
+          "<b>Bill Sienkiewicz</b> starts on the ongoing at nineteen and starts as an obvious "
+          "Neal Adams imitator &mdash; slick, anatomical, entirely competent and entirely "
+          "derivative. Marvel hired him partly <i>because</i> he could do that.",
+          "Watch the backgrounds. That is where the experimentation begins, and by the end of "
+          "this volume the shift is already visible.",
+          "The identities are still a pulp device at this point &mdash; Spector, Grant, Lockley "
+          "as a way to work three levels of the city. Nobody is calling it an illness yet."],
+      "makers": [{"n": "Bill Sienkiewicz", "r": "Pencils",
+                  "b": "Compare a figure from #1 with one from #15. The <b>line weight starts "
+                       "varying</b> &mdash; thick where it needs energy, nearly absent "
+                       "elsewhere &mdash; which is the first sign of the artist he becomes. "
+                       "Adams never did that."}],
+      "fig": {"src": [A + "mk1-1.jpg"],
+              "cap": "#1, 1980. Textbook Adams."}}],
+    {"standing": "Foundational", "cls": "",
+     "body": ["Well regarded, and the near-universal reason given is <b>Sienkiewicz</b>. The "
+              "Moench scripts are solid 1970s Marvel &mdash; competent, a bit wordy, "
+              "unremarkable &mdash; and the art is the event.",
+              "Readers who come for the modern psychological version report being surprised "
+              "how <b>light</b> this is: it is an adventure comic with a good costume, not a "
+              "horror book. That is worth knowing going in rather than being disappointed by."]}),
+
+"mk-o2": _v("Volume 02 · 1982–1990", "Moon Knight Omnibus Vol. 2",
+    "The end of the original run at Sienkiewicz's peak, the Fist of Khonshu revival, and a "
+    "long tail of guest appearances.",
+    [{"era": "Copper", "years": "1982–1984",
+      "h": "The peak",
+      "body": [
+          "This is where Sienkiewicz arrives. The line has fully broken up, the figures are "
+          "gestural and sometimes distorted past anatomy, and whole panels are given over to "
+          "abstract fields of black. He is doing <b>collage and scratchboard in a monthly "
+          "Marvel comic</b>, and Marvel is letting him because the book is direct-market only "
+          "and nobody is watching too closely.",
+          "He left for <i>New Mutants</i> and then <i>Elektra: Assassin</i>, where the "
+          "experiment went further still. This volume is the last of him here."]},
+     {"era": "Copper", "years": "1985–1990",
+      "h": "Fist of Khonshu, and eleven one-shots",
+      "body": [
+          "The 1985 revival pushes the <b>Egyptian material to the front</b> for the first "
+          "time, which is where the modern version of the character starts.",
+          "The tail of the volume is eleven guest appearances in other people's books, which "
+          "is why it is chaptered one-per-title rather than as numbered parts. It reads as the "
+          "period between two eras, because that is what it is."],
+      "fig": {"src": [A + "mk1-21.jpg", A + "mk2-1.jpg"],
+              "cap": "<b>Left:</b> Sienkiewicz at full stretch. <b>Right:</b> "
+                     "<i>Fist of Khonshu</i>, 1985."}}],
+    {"standing": "Great art, uneven book", "cls": "mixed",
+     "body": ["The Sienkiewicz issues are <b>the best-regarded material on this shelf</b> and "
+              "are frequently cited well outside Moon Knight discussion as a landmark of "
+              "American comics art.",
+              "The rest of the volume is much more variable &mdash; <i>Fist of Khonshu</i> is "
+              "short and slight, and eleven guest appearances is a lot of other people's "
+              "comics. Buy it for the first third."]}),
+
+"spector-o1": _v("Volume 03 · 1989–1992", "Moon Knight: Marc Spector Omnibus Vol. 1",
+    "Sixty issues of straight-ahead action begin. Chuck Dixon writes him as a competent "
+    "professional with a supporting cast &mdash; no illness, no ambiguity.",
+    [{"era": "Copper", "years": "1989–1992",
+      "h": "The Dixon approach",
+      "body": [
+          "<b>Chuck Dixon</b> was one of the most reliable action writers of the era, and his "
+          "Moon Knight is exactly that: a mission, a plan, a supporting cast, and a lead who "
+          "is <b>good at his job</b>.",
+          "It is the least psychological version of the character there has been, and it is "
+          "worth reading precisely for that &mdash; it demonstrates that the modern "
+          "illness-centred reading is a choice rather than an inevitability.",
+          "The setting shifts to a base in the Rockies with a support team, which is much "
+          "closer to a Punisher or Batman structure than to anything in the Moench run."],
+      "fig": {"src": [A + "msmk-1.jpg"],
+              "cap": "Marc Spector: Moon Knight #1, 1989."}}],
+    {"standing": "Solid, unfashionable", "cls": "",
+     "body": ["Liked by the readers who have got to it and rarely discussed. The consistent "
+              "assessment is <b>well-made, unpretentious action comics</b> &mdash; Dixon at "
+              "his most dependable.",
+              "The criticism is that it is generic: strip the costume off and this could be "
+              "several other Marvel books of the period. Readers who came to Moon Knight for "
+              "the strangeness find it plain. Note the cover scan on this tile is one of the "
+              "shelf's low-resolution ones."]}),
+
+"spector-o2": _v("Volume 04 · 1992–2000", "Moon Knight: Marc Spector Omnibus Vol. 2",
+    "The back half, and the decade catches up hard &mdash; including the shelf's clearest "
+    "artefact of a 1990s art fashion.",
+    [{"era": "Chromium", "years": "1992–2000",
+      "h": "Platt, and the crossovers",
+      "body": [
+          "<b>Stephen Platt</b> arrives late in the run and was, briefly, one of the most hyped "
+          "artists in the industry &mdash; extremely dense rendering, extreme angularity, "
+          "every surface textured and nothing at rest. He was signed away to Image almost "
+          "immediately.",
+          "Whether it reads as spectacular or exhausting is entirely a matter of taste, and it "
+          "is a genuinely useful thing to have on the shelf: this is what the market wanted in "
+          "1994, at full strength.",
+          "The run is also pulled hard into line-wide crossovers, which is what happened to "
+          "every Marvel title in this period.",
+          "Two four-issue minis follow: <b>Resurrection War</b> (1998) and <b>High "
+          "Strangeness</b> (1999). The first is the one comic on this shelf marvel.com does "
+          "not carry at all, so its Read buttons are grey."],
+      "fig": {"src": [A + "msmk-51.jpg"],
+              "cap": "The Platt era."}}],
+    {"standing": "Period piece", "cls": "mixed",
+     "body": ["The most divided volume on this small shelf. Readers with affection for early-90s "
+              "art rate the Platt issues highly; readers without it find them close to "
+              "unreadable, and the crossover material has few defenders anywhere.",
+              "What it does well is complete the story &mdash; sixty issues of Marc Spector "
+              "have an ending here. Its value is as a document of what the decade did to a "
+              "mid-tier title."]}),
+
+"huston-o1": _v("Volume 05 · 2006–2010", "Moon Knight by Huston, Benson & Hurwitz Omnibus",
+    "A crime novelist takes the book and makes it the most violent version there has been "
+    "&mdash; and the first to treat the identities as illness rather than tactic.",
+    [{"era": "Plastic", "years": "2006–2010",
+      "h": "Khonshu as a rotting corpse",
+      "body": [
+          "<b>Charlie Huston</b> came from hardboiled crime fiction and writes Marc Spector as "
+          "a man in genuine psychiatric collapse: he sees Khonshu as a <b>decomposing corpse "
+          "that follows him and demands blood</b>, and the book never resolves whether the god "
+          "is real.",
+          "It is also extremely violent &mdash; the run opens with a mutilation and does not "
+          "soften &mdash; and it is the version that most directly frames the multiple "
+          "identities as a diagnosis.",
+          "<b>David Finch</b>'s art is heavy, dark and hyper-rendered, and it is the correct "
+          "register for this even if it is a long way from Sienkiewicz.",
+          "<b>Mike Benson</b> and then <b>Gregg Hurwitz</b> continue it, and the Hurwitz "
+          "issues in particular are better than their obscurity suggests."],
+      "fig": {"src": [A + "mk5-1.jpg"],
+              "cap": "Finch's #1."}}],
+    {"standing": "Influential, and grim", "cls": "",
+     "body": ["Well regarded and genuinely consequential: <b>this is where the modern reading "
+              "of the character starts</b>, and everything since &mdash; Ellis, Lemire, MacKay "
+              "&mdash; is in conversation with it.",
+              "The recurring criticism is <b>tone</b>. Several readers find the violence "
+              "gratuitous and the relentlessness wearing over forty-five issues, and the "
+              "'dark and gritty' register of 2006 has dated more than the 1980s material has.",
+              "Read the Huston issues at minimum. The cover scan here is another of the shelf's "
+              "soft ones."]}),
+
+"ftd-o1": _v("Volume 06 · 2014–2015", "Moon Knight: From The Dead Omnibus",
+    "Six issues, six self-contained stories, six different registers, and the white suit. The "
+    "best hour on this shelf.",
+    [{"era": "Modern", "years": "2014",
+      "h": "Solving the structural problem",
+      "body": [
+          "Moon Knight had never sustained a long run well, and <b>Warren Ellis</b>'s answer "
+          "was to stop trying: six issues, each a complete story, each a different genre "
+          "exercise. A police procedural. A ghost story. A heist. A one-room fight. Nothing "
+          "carries over except the character.",
+          "The <b>white three-piece suit</b> with a featureless mask is the design everyone now "
+          "pictures, and it is a Shalvey and Bellaire invention. It is more unsettling than "
+          "armour because it is <i>calm</i>.",
+          "<b>Declan Shalvey</b>'s formal work is the other half &mdash; issue #5 is a "
+          "near-wordless corridor fight staged as a single descending sequence, and it is one "
+          "of the most-reprinted single issues of the decade.",
+          "<b>Brian Wood</b> writes the second half of the volume, which is much less "
+          "discussed and is decent."],
+      "makers": [{"n": "Declan Shalvey", "r": "Pencils",
+                  "b": "Look at how he uses <b>white as a value, not as blank paper</b>. The "
+                       "suit is the brightest thing on every page, so the eye goes to it "
+                       "first regardless of composition, and Shalvey then stages the violence "
+                       "around where he wants you already looking."}],
+      "fig": {"src": [A + "mk7-1.jpg"],
+              "cap": "#1. A white field, a crescent, two eyes."}}],
+    {"standing": "Modern classic", "cls": "",
+     "body": ["The <b>Ellis and Shalvey six issues are the most recommended Moon Knight comics "
+              "there are</b>, and readers describe them as a substantial improvement on "
+              "everything immediately around them. The white-suit design has been kept by "
+              "nearly every version since, including on screen.",
+              "The reservation is length: six issues is the whole event, and the Brian Wood "
+              "material that fills out the volume is not at the same level.",
+              "If you have never read Moon Knight, start here. It takes about an hour."]}),
+
+"mackay-o1": _v("Volume 07 · 2021–2024", "Moon Knight by Jed MacKay Omnibus",
+    "He opens a walk-in clinic. The first version of this character that is about service "
+    "rather than suffering, and the funniest book on the shelf.",
+    [{"era": "Contemporary", "years": "2021–2024",
+      "h": "The Midnight Mission",
+      "body": [
+          "<b>Jed MacKay</b>'s premise is disarmingly practical: rather than solve the illness "
+          "or dramatise it, give the man a <b>job</b>. The Midnight Mission is a walk-in clinic "
+          "for people the supernatural has hurt, Moon Knight is Khonshu's priest rather than "
+          "his weapon, and there is a congregation.",
+          "It reframes everything. The multiple identities stop being the plot and become "
+          "context; the therapy sessions that open many issues are played straight; and the "
+          "book is <b>funny</b> in a way no previous version risked.",
+          "<b>Alessandro Cappuccio</b> draws it with hard, angular, high-contrast clarity "
+          "&mdash; closer to a woodcut than to Finch's rendering &mdash; and it is a large part "
+          "of why a book about a clinic still reads as horror.",
+          "Getting here means jumping the Bendis and, more painfully, the <b>Lemire and "
+          "Smallwood run</b>, neither of which has an omnibus."],
+      "fig": {"src": [A + "mk9-1.jpg"],
+              "cap": "MacKay and Cappuccio's #1."}}],
+    {"standing": "Very well received", "cls": "",
+     "body": ["Strong reception throughout its run and treated as one of the better recent "
+              "Marvel books. The specific praise is for the <b>Midnight Mission premise</b> "
+              "&mdash; giving the character a function instead of a condition &mdash; and for "
+              "the balance of horror and humour.",
+              "The criticism is that it is less formally daring than Ellis's or Lemire's runs, "
+              "and that the later stretch loses some focus. Cappuccio's art is widely praised.",
+              "Read it second, after <i>From The Dead</i>."]}),
+
+}
+
+TOUR = {"overview": OVERVIEW, "volumes": VOLUMES}

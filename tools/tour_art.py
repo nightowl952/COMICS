@@ -18,7 +18,7 @@ asset -- and nothing is hand-sourced.
 Writes Art/Tours/<hero>/<shelf issue id>.jpg through covers.save_cover, so the
 art is the same 700px/q82 as every jacket on the site.
 """
-import io, json, os, sys
+import io, json, os, re, sys
 
 import requests
 
@@ -35,12 +35,49 @@ def out_dir(hero):
     return os.path.join(ROOT, "Art", "Tours", hero)
 
 
+def resolve(iid):
+    """shelf issue id -> marvel comic id.
+
+    Two escapes from the shared id store, both needed by real tours:
+
+      name:slug      an issue that is not on any shelf at all. A character tour
+                     often wants a cover from outside its own shelf -- the
+                     X-Men tour needs 1963, 1975 and 1991 and that shelf starts
+                     in 2008 -- so a catalog slug or id can be named directly.
+      <id>           anything in tools/marvel_ids.json, as before.
+
+    The X-Men page keeps its own MARVEL map rather than the shared store (its
+    keys are short enough to collide), so that file is consulted too.
+    """
+    if ":" in iid:
+        name, ref = iid.split(":", 1)
+        cat = json.load(open(os.path.join(HERE, "marvel_catalog.json"),
+                             encoding="utf-8"))
+        if ref.isdigit() and ref in cat:
+            return name, ref
+        hit = [k for k, v in cat.items() if v[0] == ref]
+        if len(hit) == 1:
+            return name, hit[0]
+        return name, None
+    ids = json.load(open(IDS, encoding="utf-8"))
+    if iid in ids:
+        return iid, ids[iid].split("/", 1)[0]
+    # the X-Men tracker's own map
+    xm = os.path.join(ROOT, "xmen-reading-tracker.html")
+    if os.path.exists(xm):
+        html = open(xm, encoding="utf-8").read()
+        m = re.search(r'"%s"\s*:\s*"(\d+)/' % re.escape(iid), html)
+        if m:
+            return iid, m.group(1)
+    return iid, None
+
+
 def fetch(hero, iid):
     from PIL import Image
-    ids = json.load(open(IDS, encoding="utf-8"))
-    if iid not in ids:
+    name, cid = resolve(iid)
+    iid = name
+    if not cid:
         return iid, "not linked -- no marvel id for this issue"
-    cid = ids[iid].split("/", 1)[0]
     r = requests.get(API % cid, headers={"User-Agent": UA}, timeout=25)
     if r.status_code != 200:
         return iid, "catalog HTTP %d" % r.status_code

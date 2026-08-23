@@ -389,9 +389,36 @@ way a deep link does (shelf issue id → marvel id → asset) and nothing is
 hand-sourced. Art lands in `Art/Tours/<hero>/<issue id>.jpg` at the usual
 700px/q82.
 
-Hulk is the first shelf with one: **17 volume tours plus the character tour,
-about 9,700 words, 19 issue covers**. It was built first on purpose, so the
-voice could be checked before the other nine were written.
+**All ten shelves have one** (Aug 2026) — 131 volume tours plus ten character
+tours, about **56,000 words and 150 issue covers**. Hulk was written first on
+purpose so the voice could be checked before the rest.
+
+| Hero | Volume tours | Words |
+|---|---:|---:|
+| Hulk | 17 | 9,700 |
+| Captain America | 22 | 8,000 |
+| Spider-Man | 16 | 7,900 |
+| Daredevil | 18 | 7,600 |
+| Fantastic Four | 19 | 7,500 |
+| Wolverine | 15 | 6,100 |
+| Iron Man | 9 | 4,400 |
+| Moon Knight | 7 | 3,500 |
+| Silver Surfer | 4 | 3,100 |
+| X-Men | 4 | 2,800 |
+
+**X-Men's tour is shaped differently and has to be.** That shelf covers only
+2008–2010, so a straight decade-by-decade walk would describe books that are
+not on it. Its character tour does the franchise's sixty-year publishing
+history — the 1963 failure, the 1975 relaunch, Claremont's sixteen years, the
+8.1-million-copy 1991 #1, Morrison, House of M — and then explains why the
+shelf stops where it does. Every one of its four volume tours also carries a
+paragraph saying the book does not exist, which is the fourth signal alongside
+the three CLAUDE.md already requires.
+
+`tour_art.py` grew a `name:slug` form for exactly that tour: a character tour
+often wants a cover from outside its own shelf, and the X-Men one needs 1963,
+1975 and 1991. It also reads the X-Men page's own `MARVEL` map, since that
+shelf is deliberately outside the shared id store.
 
 ### Keep Reading
 
@@ -1722,7 +1749,9 @@ rule on any future run, so the bad links cannot come back.
   See "The Guided Tour" above for what belongs in one.
 - `tour_art.py` — fetches the individual issue covers a tour points at, from
   the catalog's `image_url`, into `Art/Tours/<hero>/`. `--list` shows what a
-  hero already has.
+  hero already has. Takes a shelf issue id, or `name:slug` / `name:<catalog id>`
+  for an issue that is on no shelf at all — which a character tour needs
+  constantly. Falls back to the X-Men page's own `MARVEL` map.
 - `years.py` — harvests `published_date` for every linked issue into
   `marvel_years.json`. Resumable; `status` reports coverage. See "The eight
   ages" above.
@@ -3622,7 +3651,7 @@ python3 tools/build_omnibus_data.py --check --hero captain-america
 python3 tools/build_omnibus_data.py --check --hero iron-man
 
 # Every shelf issue that can be linked, is.
-# Expect: 0 matched, 0 ambiguous, five standing rejections (tta3-1, cap8-25 and
+# Expect: 0 matched, 0 ambiguous, six standing rejections (tta3-1, cap8-25 and
 # mk3-1..4 -- all deliberate, see "An unmapped series is derived, not dropped"
 # and "Two shelf issues on one marvel.com comic"), exactly ONE collision
 # (Marvel Graphic Novel #67 / Wolverine: The Jungle Adventure #1, which really
