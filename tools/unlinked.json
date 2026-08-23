@@ -624,6 +624,22 @@
   "sid": null
  },
  {
+  "hero": "silver-surfer",
+  "vol": "spaceways-o1",
+  "id": "epic-1",
+  "t": "Epic Illustrated #1",
+  "s": "Epic Illustrated",
+  "pfx": "epic",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1980,
+   1990
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",

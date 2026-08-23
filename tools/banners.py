@@ -61,6 +61,7 @@ KEYS = {
     "fantastic-four": ["fantastic-four", "fantasticfour", "fantastic four", "fantastic", "ff"],
     "moon-knight":    ["moon-knight", "moonknight", "moon knight", "moon"],
     "daredevil":      ["daredevil", "dare devil", "matt murdock"],
+    "silver-surfer":  ["silver-surfer", "silversurfer", "silver surfer", "surfer", "norrin"],
 }
 # No extension whitelist. Anything Pillow can open is an image; anything it
 # cannot is reported by name rather than dropped. See add_folder().

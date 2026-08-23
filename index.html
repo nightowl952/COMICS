@@ -63,7 +63,7 @@
   .hb-fallback{position:absolute;inset:0;}
   .hb-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%;}
   /* There is no wash over the picture any more. The art is painted work and a
-     full-frame overlay turned all seven of them to mud; the only darkening left
+     full-frame overlay turned all eight of them to mud; the only darkening left
      is the bottom third, which the copy sits in and which has to reach --bg at
      the very foot so the banner dissolves into the page. Above 45% the image is
      untouched. The type carries its own shadow instead -- that is what buys
@@ -232,7 +232,7 @@
 
   /* ---- the homescreen banner's fallback ----
      Every other page falls back to its subject's poster scan; the homescreen
-     has no poster of its own, so it falls back to all seven of them in a row.
+     has no poster of its own, so it falls back to all eight of them in a row.
      They are already downloaded for the wall below, so this costs no request. */
   .hb-tiles{position:absolute;inset:0;display:flex;opacity:.5;filter:saturate(.82);}
   .hb-tiles img{flex:1 1 0;min-width:0;height:100%;object-fit:cover;object-position:50% 20%;}
@@ -336,7 +336,7 @@
   /* Shown only when that subject has no logo file -- see posterHTML(). */
   .poster .pname{font-size:clamp(14px,1.5vw,17px);font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.6px;line-height:1.1;
     text-shadow:0 2px 4px rgba(0,15,45,.8);}
-  /* `--lw` is set per subject by plateStyle() -- three of the seven are wide
+  /* `--lw` is set per subject by plateStyle() -- three of the eight are wide
      single-line logos that read oversized next to the two-line ones at 100%. */
   .poster .plogo{display:block;width:var(--lw,100%);margin:0 auto;max-height:56px;
     object-fit:contain;object-position:50% 100%;
@@ -352,6 +352,7 @@
   .a-ff{background:linear-gradient(163deg,#a9d8ff 0%,#3f86d8 34%,#123f8c 64%,#060f2e 100%);}
   .a-moon{background:linear-gradient(163deg,#fdfeff 0%,#d4dfec 26%,#8494ab 56%,#1b2432 100%);}
   .a-daredevil{background:linear-gradient(163deg,#e8353a 0%,#9d0f16 38%,#4a060c 68%,#120306 100%);}
+  .a-surfer{background:linear-gradient(163deg,#eef4fb 0%,#9fb3cc 30%,#3b4a6b 62%,#0a0a12 100%);}
 
   /* ---------- hero textures ---------- */
   .tex-web{background:
@@ -386,6 +387,15 @@
     radial-gradient(circle at 63% 76%, rgba(255,255,255,.55) 0 1.1px, transparent 1.6px),
     radial-gradient(circle at 33% 88%, rgba(255,255,255,.45) 0 1px, transparent 1.5px),
     linear-gradient(180deg, transparent 52%, rgba(18,24,38,.55));}
+  .tex-wake{background:
+    linear-gradient(97deg, transparent 40%, rgba(255,255,255,.24) 41%, rgba(255,255,255,.03) 45%, transparent 46%),
+    linear-gradient(97deg, transparent 56%, rgba(255,255,255,.18) 57%, rgba(255,255,255,.02) 61%, transparent 62%),
+    radial-gradient(circle at 22% 12%, rgba(255,255,255,.9) 0 1.2px, transparent 1.7px),
+    radial-gradient(circle at 68% 8%, rgba(255,255,255,.75) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 86% 27%, rgba(255,255,255,.65) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 12% 44%, rgba(255,255,255,.7) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 79% 62%, rgba(255,255,255,.6) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 37% 84%, rgba(255,255,255,.55) 0 1px, transparent 1.5px);}
   .tex-radar{background:
     radial-gradient(circle at 50% 33%, transparent 0 9%, rgba(255,255,255,.16) 9% 9.9%, transparent 9.9% 19%,
       rgba(255,255,255,.14) 19% 19.9%, transparent 19.9% 31%, rgba(255,255,255,.11) 31% 31.9%, transparent 31.9% 45%,
@@ -398,6 +408,7 @@
   .a-ff.wide{background:linear-gradient(104deg,#a9d8ff 0%,#3f86d8 40%,#123f8c 72%,#060f2e 100%);}
   .a-moon.wide{background:linear-gradient(104deg,#fdfeff 0%,#d4dfec 34%,#8494ab 66%,#1b2432 100%);}
   .a-daredevil.wide{background:linear-gradient(104deg,#e8353a 0%,#9d0f16 44%,#4a060c 74%,#120306 100%);}
+  .a-surfer.wide{background:linear-gradient(104deg,#eef4fb 0%,#9fb3cc 36%,#3b4a6b 70%,#0a0a12 100%);}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
   @media (max-width:600px){
@@ -450,7 +461,7 @@
     <div class="hb-in">
       <div class="hb-name">C.O.M.I.C.S.</div>
       <div class="hb-sub">Caleb&rsquo;s Online Marvel Intractable Comic Shelf</div>
-      <div class="hb-blurb">Seven subjects, every one of them a shelf of omnibus volumes with the issue list
+      <div class="hb-blurb">Eight subjects, every one of them a shelf of omnibus volumes with the issue list
         each printed book actually holds. Pick up wherever you left off &mdash; or start something new.</div>
     </div>
   </div>
@@ -553,6 +564,15 @@ const EMBLEMS = {
     '<g fill="url(#g$)" opacity=".9"><path d="M82,22 l2.6,6.4 6.4,2.6 -6.4,2.6 -2.6,6.4 -2.6,-6.4 -6.4,-2.6 6.4,-2.6 z"/>' +
     '<path d="M86,62 l2,5 5,2 -5,2 -2,5 -2,-5 -5,-2 5,-2 z"/></g>',
 
+  board: '<g fill="url(#g$)" opacity=".5">' +
+    '<path d="M2,72 C24,66 46,62 76,60 l0,5 C46,67 24,71 4,78 z"/>' +
+    '<path d="M12,85 C32,80 50,77 72,75 l0,4 C50,81 32,84 14,90 z"/></g>' +
+    '<g stroke="url(#g$)" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
+    '<path d="M52,32 L52,49"/><path d="M36,40 L52,35 L68,30"/>' +
+    '<path d="M52,49 L43,61"/><path d="M52,49 L62,60"/></g>' +
+    '<circle cx="52" cy="22" r="6.6" fill="url(#g$)"/>' +
+    '<ellipse cx="52" cy="65" rx="33" ry="7" transform="rotate(-13 52 65)" fill="url(#g$)"/>',
+
   dd: '<g fill="none" stroke="url(#g$)" stroke-width="6"><circle cx="50" cy="50" r="39"/></g>' +
     '<text x="50" y="52" text-anchor="middle" dominant-baseline="central" fill="url(#g$)"' +
     ' font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="44" font-weight="900" font-style="italic"' +
@@ -596,6 +616,10 @@ const HEROES = [
   { id:"moon-knight", name:"Moon Knight", art:"a-moon", tex:"tex-moon", emblem:"crescent", cover:"Art/Heroes/moon-knight.jpg", pos:"7%", plate:["26,28,34","3,3,7"], logo:"Art/Logos/moon-knight.png", light:true,
     era:"Omnibus Shelf · 1975–2024", file:"moonknight-reading-tracker.html", total:260,
     desc:"Every Moon Knight omnibus Marvel has printed — seven volumes, 260 issues, reproducing exactly what each book holds. Moench and Sienkiewicz build him across the first two, the sixty-issue Marc Spector run fills the next two, then the relaunches that each decided he was something else: Huston's horror, Ellis and Shalvey's white suit, MacKay's Midnight Mission. Two gaps are Marvel's, not ours — Bendis and Maleev's 2011 series and Lemire's 2016 one have never been collected." },
+
+  { id:"silver-surfer", name:"Silver Surfer", art:"a-surfer", tex:"tex-wake", emblem:"board", cover:"Art/Heroes/silver-surfer.jpg", pos:"39%", plate:["16,17,22","2,2,4"], logo:"Art/Logos/silver-surfer.png",
+    era:"Omnibus Shelf · 1967–2017", file:"silversurfer-reading-tracker.html", total:95,
+    desc:"Every Silver Surfer omnibus Marvel has printed — three volumes, 95 issues, reproducing exactly what each printed book holds. Lee and Buscema's eighteen double-sized issues under Galactus's barrier; Return to the Spaceways for the 1980s, when Englehart and Rogers finally let him off Earth, with Stan Lee's two graphic novels and Moebius's Parable in the tail of it; then Slott and Allred's thirty issues of him and Dawn Greenwood loose in time. The gap between the second and third is Marvel's, not ours — Silver Surfer (1987) #34–146, the 2003 series and the 2011 one have no omnibus, and the Infinity Gauntlet volume that takes #34–66 does not ship until November 2026." },
 
   { id:"daredevil", name:"Daredevil", art:"a-daredevil", tex:"tex-radar", emblem:"dd", cover:"Art/Heroes/daredevil.jpg", pos:"11%", plate:["124,14,20","30,2,5"], logo:"Art/Logos/daredevil.png",
     era:"Omnibus Shelf · 1964–2023", file:"daredevil-reading-tracker.html", total:590,
@@ -648,6 +672,7 @@ const PROGRESS_KEYS = {
   "wolverine":      "wolverine-omni-progress-v1",
   "moon-knight":    "moonknight-omni-progress-v1",
   "daredevil":      "daredevil-omni-progress-v1",
+  "silver-surfer":  "silversurfer-omni-progress-v1",
   "xmen":           "xmen-saga-progress-v2"
 };
 /* Read straight from the X-Men tracker's own progress key as a fallback, so the
@@ -1000,7 +1025,7 @@ const setScrim = document.getElementById("setScrim");
 
 /* ============ INIT ============ */
 (async function init(){
-  /* The banner's fallback: the seven posters in a row behind the scrim, shown
+  /* The banner's fallback: the eight posters in a row behind the scrim, shown
      whenever Art/Banners/index.jpg is missing or fails. */
   document.getElementById("hbTiles").innerHTML =
     HEROES.filter(h => h.cover).map(h => '<img src="' + esc(h.cover) + '" alt="">').join("");
