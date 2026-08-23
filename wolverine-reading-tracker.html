@@ -89,7 +89,15 @@
   .kr-head{display:flex;align-items:baseline;gap:12px;margin:0 0 12px;padding:0 2px;}
   .kr-head h2{font-size:13px;font-weight:800;letter-spacing:2.6px;text-transform:uppercase;color:var(--txt);}
   .kr-head .n{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim2);}
-  .kr-rail{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 16px;
+  /* The rail clips vertically and cannot not do: overflow-x:auto forces the
+     other axis to stay hidden, so a visible overflow-y would only become a
+     second scrollbar. A hovered tile therefore only shows its 3px lift and its
+     0/16/34 drop shadow if the padding box already holds them -- 8px above,
+     32px below (16px offset plus half the blur, less the lift). The negative
+     margins hand that room straight back, so the rail still occupies exactly
+     the space it did. Retune the two together if the hover transform or the
+     shadow changes. */
+  .kr-rail{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:8px 2px 32px;margin:-6px 0 -16px;
     scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;}
   .kr-rail::-webkit-scrollbar{height:8px;}
   .kr-rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:4px;}
