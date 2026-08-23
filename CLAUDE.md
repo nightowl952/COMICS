@@ -477,9 +477,23 @@ match on the name rather than expecting `<id>`.
 
 | Element | The user drops it in | You normalise it to |
 |---|---|---|
-| poster scan | `Art/covers/` | `Art/Heroes/<id>.jpg` |
+| poster scan | `Art/covers/` **or** `Art/Heroes/` | `Art/Heroes/<id>.jpg` |
 | banner | `Art/Banners/` | `Art/Banners/<id>.jpg` |
 | printed logo | `Art/Logos/` | `Art/Logos/<id>.png` |
+
+**Check both folders for the poster scan.** Silver Surfer's arrived in
+`Art/covers/`; Captain America's arrived in `Art/Heroes/`, beside the normalised
+files rather than in the archive. Either is fine and neither is worth correcting
+— just look in both before concluding a subject's art is missing. The quickest
+sweep is `ls Art/*/ | grep -i "<subject>"`, which finds all three at once
+whichever folder each landed in.
+
+A source-named file sitting in `Art/Heroes/` is **not** a normalised poster: the
+page reads `Art/Heroes/<id>.jpg`, so `Captain America.jpg` there is still raw
+input. Run `adopt` on it exactly as if it were in `Art/covers/`, and in that
+case delete the source-named copy afterwards — `Art/Heroes/` holds one file per
+subject named by id, the same as the other two folders. Only `Art/covers/`
+keeps its originals.
 
 Three one-line commands, one per element, all of which only resize and rename —
 none of them fetches anything:
