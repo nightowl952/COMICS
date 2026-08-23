@@ -282,6 +282,41 @@ the floor, not a starting point. The type came down with the tile (title 14px,
 credits 10px) and the cover-to-text gap from 66px to 38px; the run line above
 the title ellipsises at this width, which is what it is there for.
 
+**Every tile carries a dismiss X**, top right, which clears that volume out of
+the rail (Aug 2026). Three things about it:
+
+- **The X is a sibling of the tile's `<a>`, not a child of it.** A `<button>`
+  nested in an anchor is invalid markup and its click fights the link's own
+  handler, so the tile is now a `.kr-cell` wrapper holding the `<a>` and the
+  button side by side. The cell took the flex sizing, the snap point and the
+  hover lift off `.kr-card` — without that last move the card lifts on hover and
+  the X stays put. The two click handlers cannot collide, because the button
+  never matches `closest(".kr-card")`.
+- **A dismissal is a timestamp, not a flag**, and that is what makes it
+  temporary. `comics-kr-hidden` maps `"<hero>|<volume>"` to when it was
+  dismissed; a volume is hidden only while that stamp is *newer* than its
+  `touch`. So marking anything in the volume brings the tile straight back, and
+  nothing is ever hidden for good. That behaviour is stated on the page in both
+  empty states — do not turn it into a permanent hide.
+- **One key, shared by all eight pages**, read and written through each page's
+  own `store` — the same origin-wide pattern as `comics-anthropic-key`. It has
+  to be shared: the homescreen rail is cross-subject and a tracker's is not, so
+  an X in one place has to mean what an X means in the other. The trackers
+  filter in `spots()`, which is what `publishIndex()` serializes, so a dismissal
+  on a tracker also removes the tile from the homescreen; the homescreen filters
+  its own overlay on read and never edits the record a tracker published.
+
+The X is hover-revealed on a pointer device and pinned visible under
+`@media (hover:none)` — without that it is unreachable on a phone. `.kr-run`
+gives up 20px of padding permanently rather than reflowing when the X fades in;
+that line already ellipsises at this tile width, so the cost is a couple of
+characters.
+
+An empty rail now means one of two different things — everything finished, or
+everything dismissed — so `paintKR()` asks the *unfiltered* spot list which it
+is before choosing the message. Saying the wrong one is worse than saying
+nothing.
+
 **Two things on the tile are approximations, and both are deliberate:**
 
 - **The bar is progress through the volume, not through the issue.** There is no
@@ -334,6 +369,14 @@ The `HEROES` array is the whole configuration. Each entry:
   opens the dossier modal instead of navigating.
 - `file: "…"` → clicking the poster navigates straight to the tracker. The small
   "i" button opens the dossier.
+
+**The three filter chips are gone** (Aug 2026, the user's call). They were
+All / Protocol ready / In curation above the poster grid. Seven posters do not
+need filtering, and with every subject live the two states they sorted on were
+six-to-one — the chips were a control that could only ever hide one poster.
+`.filters` and its handler went with them; `.chip-btn` stays, because the
+settings modal is built out of it, and `data-state` stays on each cell as the
+hook a future filter would want.
 
 **There is no "Ready" badge** (Aug 2026). It was a gold pill on every live
 poster, and once all seven subjects were live it labelled nothing — seven
@@ -552,6 +595,28 @@ that fallback until you are willing to make people re-paste.
 The X-Men page's own key row is gone; its Backup row in the same `.setup` block
 stayed. Anything that reads a key should call `getKey()` — never
 `localStorage.getItem` directly.
+
+### Start over — the one destructive control on the site
+
+The same modal carries **Reset all progress** (Aug 2026). It clears every
+subject's marks on that device and nothing else: the API key and every cached
+summary survive, because neither is progress and both cost something to replace.
+
+Two things about it are load-bearing:
+
+- **It clears both halves, and the order matters less than the completeness.**
+  `PROGRESS_KEYS` names each tracker's own progress key and `RECORD_KEY` /
+  `OLD_RECORD_KEY` the homescreen's cache of it. Wiping only the cache looks
+  right until the next tracker visit republishes the progress that was never
+  actually erased. A regex sweep of `localStorage` follows the explicit list as
+  belt and braces, for a subject added without updating `PROGRESS_KEYS`.
+- **It arms on the first click and fires on the second**, rather than calling
+  `confirm()` — some browsers suppress a confirm inside a modal, and it would
+  be the only thing between a stray click and every mark on the site. The
+  armed state expires after six seconds.
+
+`store` on the homescreen grew `set` and `remove` for this and for the Keep
+Reading dismissals; it was read-only until the rail became editable.
 
 ## The Spider-Man tracker (omnibus shelf)
 
@@ -2383,6 +2448,13 @@ as a bare orb, since an unresolvable paint server renders as *no paint*.
 laptop. Export/import JSON is the manual bridge. Real sync would need
 a server-side store and is not built.
 
+The practical consequence, since it comes up: **a second computer is a second,
+completely independent read.** Opening the site there starts empty, and
+everything logged on it stays on it — neither device ever sees the other's
+marks, and Start over on one leaves the other untouched. Two parallel
+progressions is the default behaviour, not something to arrange. What you
+cannot currently do is the opposite: make two devices agree.
+
 ## Open items — C.O.M.I.C.S.
 
 1. ~~One of seven subjects has no reading list yet.~~ **Done Aug 2026** — all
@@ -2596,7 +2668,12 @@ The Keep Reading rail is worth driving rather than looking at, because most of
 it only exists once something is marked: open a volume, tick three issues, go
 back to the shelf and click the tile, and check that it opens the chapter and
 flashes the row. Then load `index.html` and check the same volume is the first
-tile there. A `pageerror` listener on the page catches the rest — the whole
+tile there. Drive the dismiss X in the same pass — click it on a tracker and
+confirm the tile also leaves the homescreen rail, then mark something in that
+volume and confirm it comes back. The touch half needs a real device profile:
+`p.devices["iPhone 13"]`, because a desktop Chromium at a 390px viewport still
+reports `hover:hover` and the X stays invisible under emulation that looks
+mobile. A `pageerror` listener on the page catches the rest — the whole
 rail is built in one `innerHTML`, so a bad field is a silent empty band, not a
 stack trace in the console.
 

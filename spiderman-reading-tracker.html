@@ -124,12 +124,31 @@
      wrap, so four tiles and three 14px gaps need 274 each -- the tile was 440
      and showed two and a half. Five would need 217, which leaves ~60px of text
      beside the cover, so four is the floor. */
-  .kr-card{--cw:98px;position:relative;flex:0 0 clamp(244px,30vw,274px);height:147px;border-radius:12px;
-    overflow:hidden;scroll-snap-align:start;display:block;text-decoration:none;color:inherit;cursor:pointer;
+  /* A tile is a cell, not just the link. The dismiss X sits BESIDE the <a>
+     rather than inside it -- a button nested in an anchor is invalid markup and
+     its click would fight the link's own handler -- so the cell owns the flex
+     sizing, the snap point and the hover lift, and the X rides up with the card
+     instead of staying put while it moves. */
+  .kr-cell{position:relative;display:block;flex:0 0 clamp(244px,30vw,274px);scroll-snap-align:start;
+    transition:transform .18s cubic-bezier(.2,.8,.3,1);}
+  .kr-cell:hover,.kr-cell:focus-within{transform:translateY(-3px);}
+  .kr-card{--cw:98px;position:relative;display:block;width:100%;height:147px;border-radius:12px;
+    overflow:hidden;text-decoration:none;color:inherit;cursor:pointer;
     background:var(--bg-lift);border:1px solid var(--line);
-    transition:transform .18s cubic-bezier(.2,.8,.3,1),border-color .18s,box-shadow .18s;}
-  .kr-card:hover,.kr-card:focus-visible{transform:translateY(-3px);border-color:var(--line-hi);
+    transition:border-color .18s,box-shadow .18s;}
+  .kr-cell:hover .kr-card,.kr-card:focus-visible{border-color:var(--line-hi);
     box-shadow:0 16px 34px rgba(0,0,0,.6);outline:none;}
+  /* Clear this volume out of the rail. Revealed on hover so it does not sit on
+     the art all the time, and pinned visible where there is no hover at all --
+     without that media query it is unreachable on a phone. */
+  .kr-x{position:absolute;top:8px;right:8px;z-index:4;width:22px;height:22px;padding:0;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;
+    font-family:inherit;font-size:10px;line-height:1;color:var(--dim);
+    background:rgba(6,10,17,.72);border:1px solid var(--line-hi);opacity:0;
+    transition:opacity .15s,background .15s,color .15s;}
+  .kr-cell:hover .kr-x,.kr-x:focus-visible{opacity:1;outline:none;}
+  .kr-x:hover,.kr-x:focus-visible{background:rgba(6,10,17,.94);color:#fff;}
+  @media (hover:none){ .kr-x{opacity:1;} }
   /* The cover is shown WHOLE, at 2:3 against the left edge -- it used to be
      stretched across the tile by object-fit:cover, which meant a 2:3 scan was
      cropped to a quarter of itself and read as an abstract band. What keeps the
@@ -145,8 +164,12 @@
       rgba(29,38,55,.62) calc(var(--cw) + 14px), var(--bg-lift) calc(var(--cw) + 34px), var(--bg-lift) 100%);}
   .kr-body{position:absolute;top:0;right:0;bottom:0;left:calc(var(--cw) + 38px);z-index:2;
     padding:13px 14px 13px 0;display:flex;flex-direction:column;justify-content:center;}
+  /* The run line is the only one the dismiss X can reach, so it gives up 20px
+     permanently rather than reflowing when the X fades in. It already
+     ellipsises at this tile width -- see the 274px note above -- so the cost is
+     a couple of characters, not a truncation that was not happening anyway. */
   .kr-run{font-size:7.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--xyellow);
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:20px;}
   .kr-title{font-size:14px;font-weight:800;line-height:1.2;margin:5px 0 4px;color:#fff;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .kr-cred{font-size:10px;line-height:1.35;color:var(--dim);margin-bottom:9px;
@@ -390,7 +413,8 @@
        past it and being clipped by body{overflow-x:hidden} anyway. */
     .kr-rail{padding-left:18px;padding-right:18px;margin-left:-16px;margin-right:-16px;
       scroll-padding-inline:18px;}
-    .kr-card{--cw:88px;flex:0 0 clamp(278px,88vw,350px);height:132px;}
+    .kr-cell{flex:0 0 clamp(278px,88vw,350px);}
+    .kr-card{--cw:88px;height:132px;}
     .kr-body{left:calc(var(--cw) + 46px);padding:12px 13px 12px 0;}
     .kr-title{font-size:14px;}
     .kr-cred{margin-bottom:8px;}
@@ -9572,6 +9596,20 @@ let readSet=new Set(), skipSet=new Set();
    before this existed simply sorts everything at 0. */
 let touch={};
 
+/* ---- Keep Reading dismissals ----
+   The X on a tile clears that volume out of the rail. The store is one
+   origin-wide key shared with the homescreen and every other tracker, keyed
+   "<hero>|<volume>" -> when it was dismissed, because the homescreen's rail is
+   cross-subject and an X there has to mean what an X here means.
+   Nothing is dismissed permanently: the stamp is compared against `touch`, so
+   marking anything in the volume stamps a newer touch and the tile comes back.
+   That is also why a dismissal is a timestamp rather than a flag. */
+const HERO_ID="spider-man", KEY_HIDE="comics-kr-hidden";
+let hidden={};
+function isHidden(o){ const h=hidden[HERO_ID+"|"+o.id]||0; return h>0 && h>(touch[o.id]||0); }
+async function saveHidden(){ try{ await store.set(KEY_HIDE, JSON.stringify(hidden)); }catch(e){} }
+function hideSpot(id){ hidden[HERO_ID+"|"+id]=Date.now(); saveHidden(); paintKR(); publishIndex(); }
+
 /* Flatten once. `flat` drives Up Next and every progress figure.
    An issue collected in two omnibuses appears twice here but shares one id,
    so marking it read in one book marks it read in the other. That is deliberate. */
@@ -9598,6 +9636,7 @@ async function loadState(){
   try{ const v=await store.get(KEY_P);
     if(v){const d=JSON.parse(v); readSet=new Set(d.read||[]); skipSet=new Set(d.skip||[]); touch=d.touch||{};}
   }catch(e){}
+  try{ const v=await store.get(KEY_HIDE); if(v) hidden=JSON.parse(v)||{}; }catch(e){}
 }
 async function saveState(){
   try{ await store.set(KEY_P, JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet),touch:touch})); flagStorage(true); }
@@ -9824,7 +9863,7 @@ function spotFor(o){
    most recent first. Nothing started anywhere -> the first volume on the shelf,
    so a fresh browser gets a "start here" tile instead of an empty band. */
 function spots(){
-  const all=OMNI.map(spotFor).filter(s=>s&&s.next);
+  const all=OMNI.map(spotFor).filter(s=>s&&s.next&&!isHidden(s.o));
   const started=all.filter(s=>s.st.done>0);
   const list=started.length?started.slice():all.slice(0,1);
   list.sort((a,b)=>b.ts-a.ts);
@@ -9841,7 +9880,7 @@ function krCard(s){
          '<img class="kr-face" src="'+esc(src)+'" alt="" loading="lazy">'
         :'<span class="kr-blur '+ramp+'"></span><span class="kr-face '+ramp+'"></span>')+
     '</span>';
-  return '<a class="kr-card" href="#/omni/'+esc(o.id)+'" data-kro="'+esc(o.id)+'" data-kri="'+esc(iss.id)+'">'+
+  return '<span class="kr-cell"><a class="kr-card" href="#/omni/'+esc(o.id)+'" data-kro="'+esc(o.id)+'" data-kri="'+esc(iss.id)+'">'+
     art+
     '<span class="kr-body">'+
       '<span class="kr-run">'+esc((o.spine||o.title)+(o.vol?" "+o.vol:""))+'</span>'+
@@ -9849,32 +9888,51 @@ function krCard(s){
       '<span class="kr-cred">'+esc(o.creators)+'</span>'+
       '<span class="kr-bar"><i style="width:'+pct+'%"></i></span>'+
       '<span class="kr-pos">'+(s.st.done?'Issue '+(s.idx+1)+' of '+s.st.t:'Start of the volume')+'</span>'+
-    '</span></a>';
+    '</span></a>'+
+    '<button class="kr-x" type="button" data-krx="'+esc(o.id)+'" title="Clear from Keep Reading"'+
+      ' aria-label="Stop holding my place in '+esc((o.spine||o.title)+(o.vol?" "+o.vol:""))+'">&#10005;</button>'+
+    '</span>';
 }
 function paintKR(){
   const box=document.getElementById(currentOmni?"krOmni":"krShelf");
   if(!box) return;
   if(currentOmni){
-    const s=spotFor(currentOmni);
-    box.innerHTML = (s&&s.next)
+    const s=spotFor(currentOmni), off=isHidden(currentOmni);
+    box.innerHTML = (s&&s.next&&!off)
       ? '<div class="kr-head"><h2>Keep Reading</h2><span class="n">in this volume</span></div>'+
         '<div class="kr-rail">'+krCard(s)+'</div>'
       : '<div class="kr-head"><h2>Keep Reading</h2></div>'+
-        '<div class="kr-empty">Nothing left in this volume. &#9733;</div>';
+        '<div class="kr-empty">'+(off
+          ? 'Cleared from Keep Reading. Mark anything below and this volume holds your place again.'
+          : 'Nothing left in this volume. &#9733;')+'</div>';
     return;
   }
   const list=spots();
   const live=list.some(s=>s.st.done>0);
+  /* An empty rail means one of two different things -- every volume finished,
+     or every volume dismissed -- and saying the wrong one is worse than saying
+     nothing, so ask the unfiltered list which it is. */
+  const anyLeft=OMNI.map(spotFor).some(s=>s&&s.next);
   box.innerHTML = list.length
     ? '<div class="kr-head"><h2>'+(live?"Keep Reading":"Start Reading")+'</h2>'+
       '<span class="n">'+list.length+(list.length===1?" volume":" volumes")+'</span></div>'+
       '<div class="kr-rail">'+list.map(krCard).join("")+'</div>'
     : '<div class="kr-head"><h2>Keep Reading</h2></div>'+
-      '<div class="kr-empty">Every volume on the shelf is cleared. &#9733;</div>';
+      '<div class="kr-empty">'+(anyLeft
+        ? 'Nothing held here right now. Mark anything in a volume and it comes back.'
+        : 'Every volume on the shelf is cleared. &#9733;')+'</div>';
 }
 /* A tile is an <a> to #/omni/<id>. When you are already inside that volume the
    hash does not change and no route fires, so the click does the jump itself. */
 let pendingJump=null;
+/* The X is a sibling of the <a>, so it never matches .kr-card and the two
+   handlers cannot fire on the same click. */
+document.addEventListener("click",e=>{
+  const x=e.target.closest(".kr-x");
+  if(!x) return;
+  e.preventDefault();
+  hideSpot(x.dataset.krx);
+});
 document.addEventListener("click",e=>{
   const c=e.target.closest(".kr-card");
   if(!c) return;
