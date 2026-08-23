@@ -73,6 +73,27 @@ PICKS = {
                        "Buscema, 1969 -- the Surfer against Thor, and the only "
                        "cover of that run people can picture. Inside the shelf's "
                        "1967-2017 span and inside its first volume."),
+    "avengers":       ("Avengers Vol 1 4",
+                       "Kirby, 1964 -- the team pulling Captain America out of "
+                       "the ice, the issue that made the Avengers matter. A "
+                       "fallback only; the poster on the wall is the user's own "
+                       "art."),
+    "black-panther":  ("Black Panther Vol 3 1",
+                       "Texeira, 1998 -- the opening of Priest's run, the book "
+                       "most people mean by a Black Panther comic. A fallback "
+                       "only; the poster on the wall is the user's own art."),
+    "ghost-rider":    ("Ghost Rider Vol 3 1",
+                       "Texeira, 1990 -- Danny Ketch on the bike, the relaunch "
+                       "that made Ghost Rider a 90s fixture. A fallback only; the "
+                       "poster on the wall is the user's own art."),
+    "venom":          ("Venom Lethal Protector Vol 1 1",
+                       "Bagley, 1993 -- the first Venom solo cover, the maw wide "
+                       "open. A fallback only; the poster on the wall is the "
+                       "user's own art."),
+    "doctor-strange": ("Doctor Strange Vol 2 55",
+                       "Ditko-descended cover from Stern's run, 1982 -- the "
+                       "Sanctum and the Eye. A fallback only; the poster on the "
+                       "wall is the user's own art."),
 }
 
 

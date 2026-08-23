@@ -34,7 +34,11 @@ MIN_TIGHT = 220        # below this the source was too small to look clean
 
 HERO_IDS = ["spider-man", "wolverine", "hulk", "xmen",
             "fantastic-four", "moon-knight", "daredevil", "silver-surfer",
-            "captain-america", "iron-man"]
+            "captain-america", "iron-man",
+            # Placeholder subjects -- poster art only so far, no logo supplied.
+            # `audit` reports these as missing until one arrives.
+            "avengers", "black-panther", "ghost-rider", "venom",
+            "doctor-strange"]
 
 
 def save_logo(im, hid):
