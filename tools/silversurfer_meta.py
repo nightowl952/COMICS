@@ -11,13 +11,19 @@
 # no family character to rule out and no team book to argue about, so the only
 # question was the release rule.
 #
-# The fourth, Silver Surfer: The Infinity Gauntlet Omnibus, is solicited for
-# NOVEMBER 2026 and is deliberately off the shelf by "a shelf holds books you
-# can actually buy". Its contents stay in silversurfer_contents_raw.json, so
-# adding it when it ships is an edit to ORDER/SHELF here plus a regenerate
-# rather than a fresh wiki pull. Doing that also means rewording slott-o1's gap
-# note (the hole shrinks to #67-146) and bumping the Silver Surfer `total` on
-# the homescreen from 95.
+# All four are on the shelf, including Silver Surfer: The Infinity Gauntlet
+# Omnibus, which does not ship until 3 NOVEMBER 2026. That is allowed under the
+# amended rule -- see "A shelf holds books whose tile is finished" in CLAUDE.md
+# -- because all three things a tile needs are real: the wiki carries its full
+# ReprintOf contents, all 46 issues resolve to marvel.com, and the jacket exists
+# as flat cover art. Its tile carries a "Ships Nov 2026" badge that retires
+# itself in November without an edit.
+#
+# The one thing the wiki does NOT have is that jacket: the page declares
+# Image1/Image2 and both are redlinks, so fetch_covers.py picks up Infinity
+# Gauntlet #2's cover out of the reprint gallery instead. The cover here was
+# added by hand with `covers.py add`. When refetching this shelf do NOT pass
+# --all, or it will overwrite gauntlet-o1 with that wrong image.
 #
 # No volume needs `chapterby`: all three score well over the 3.5 average-run-
 # length threshold, so the automatic per-series chaptering is right on each.
@@ -37,18 +43,23 @@ ORDER = [
   creators="Dan Slott & Michael Allred", era="2014–2017", released="Dec 2018",
   art="o-dawn", tex="tex-popdot", spine="By Slott & Allred",
  cover="Art/Silver-Surfer/slott-o1.jpg",
-  note="Doctor Who with a surfboard, and it works. Dawn Greenwood gets in the way of the most humourless character Marvel has and Allred draws the result in pop primaries. Both series here, #1–15 and #1–14, plus the Point One prologue. Mind the jump: Silver Surfer (1987) #34–146, the 2003 Straczynski series and the 2011 mini all sit in front of this book. The Infinity Gauntlet Omnibus takes #34–66 in November 2026; the rest has no omnibus at all.")),
+  note="Doctor Who with a surfboard, and it works. Dawn Greenwood gets in the way of the most humourless character Marvel has and Allred draws the result in pop primaries. Both series here, #1–15 and #1–14, plus the Point One prologue. Mind the jump: Silver Surfer (1987) #67–146, the 2003 Straczynski series and the 2011 mini sit in front of this book and none of them has an omnibus. The book before this one closes the first third of that hole.")),
+("Silver Surfer: The Infinity Gauntlet Omnibus Vol 1 1", dict(id="gauntlet-o1", title="Silver Surfer: The Infinity Gauntlet Omnibus", vol="",
+  creators="Jim Starlin, Ron Marz & Ron Lim", era="1990–1992", released="Nov 2026",
+  art="o-gauntlet", tex="tex-cosmic", spine="Infinity Gauntlet",
+ cover="Art/Silver-Surfer/gauntlet-o1.jpg",
+  note="Ships 3 November 2026 \u2014 it is on the shelf ahead of that because its contents, its links and its jacket are all real, which is the bar a tile has to clear. Starlin takes the book over at #34 and it stops being a story about the Surfer's conscience and becomes a story about Thanos. The Thanos Quest collects the six stones, Infinity Gauntlet spends them, and the Surfer's own title runs alongside the whole thing to #66 \u2014 which is the argument for reading the crossover here, in his book, rather than on its own. Note this is not the 2014 Infinity Gauntlet Omnibus: that one is the event edition, with the Hulk, Doctor Strange and Quasar tie-ins and no annuals.")),
 ]
 
 # Nothing pending on this shelf.
 PLACEHOLDERS = []
 
 # Display order of the shelf, by id. A reading order, which on this shelf is
-# also publication order -- three books at the three moments the character had
-# one, with the uncollected runs between them (see the notes on spaceways-o1
-# and slott-o1). Nothing to resequence.
+# also publication order -- four books running 1967 to 2017, with the
+# uncollected 1990s and 2000s sitting between the last two (see slott-o1's
+# note). Nothing to resequence.
 SHELF = [
-  "ss-o1", "spaceways-o1", "slott-o1",
+  "ss-o1", "spaceways-o1", "gauntlet-o1", "slott-o1",
 ]
 
 PLACEHOLDER_PAGES = {}
@@ -76,6 +87,8 @@ SERIES_EXTRA = {
  "Silver Surfer Annual Vol 1":                         ("ssfann", "Silver Surfer Annual (1988)"),
  "Super-Villain Classics Vol 1":                       ("svc",    "Super-Villain Classics"),
  "All-New Marvel NOW! Point One Vol 1":                ("anmpo",  "All-New Marvel NOW! Point One"),
+ "Infinity Gauntlet Vol 1":                            ("infg",   "Infinity Gauntlet (1991)"),
+ "Thanos Quest Vol 1":                                 ("tquest", "Thanos Quest"),
 }
 
 # Reused verbatim from the other shelves' own SERIES_EXTRA. A hero only ever

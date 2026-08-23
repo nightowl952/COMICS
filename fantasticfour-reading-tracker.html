@@ -10032,7 +10032,46 @@ const MARVEL = {
 "ssf8-11": "55668/silver_surfer_2016_11",
 "ssf8-12": "55669/silver_surfer_2016_12",
 "ssf8-13": "55670/silver_surfer_2016_13",
-"ssf8-14": "55671/silver_surfer_2016_14"
+"ssf8-14": "55671/silver_surfer_2016_14",
+"infg-1": "9286/infinity_gauntlet_1991_1",
+"infg-2": "9287/infinity_gauntlet_1991_2",
+"infg-3": "9288/infinity_gauntlet_1991_3",
+"infg-4": "9289/infinity_gauntlet_1991_4",
+"infg-5": "9290/infinity_gauntlet_1991_5",
+"infg-6": "9291/infinity_gauntlet_1991_6",
+"ssf3-34": "15169/silver_surfer_1987_34",
+"ssf3-35": "15170/silver_surfer_1987_35",
+"ssf3-36": "15171/silver_surfer_1987_36",
+"ssf3-37": "15172/silver_surfer_1987_37",
+"ssf3-38": "15173/silver_surfer_1987_38",
+"ssf3-40": "15176/silver_surfer_1987_40",
+"ssf3-44": "15180/silver_surfer_1987_44",
+"ssf3-45": "15181/silver_surfer_1987_45",
+"ssf3-46": "15182/silver_surfer_1987_46",
+"ssf3-47": "15183/silver_surfer_1987_47",
+"ssf3-48": "15184/silver_surfer_1987_48",
+"ssf3-49": "15185/silver_surfer_1987_49",
+"ssf3-50": "15187/silver_surfer_1987_50",
+"ssf3-51": "15188/silver_surfer_1987_51",
+"ssf3-52": "15189/silver_surfer_1987_52",
+"ssf3-53": "15190/silver_surfer_1987_53",
+"ssf3-54": "15191/silver_surfer_1987_54",
+"ssf3-55": "15192/silver_surfer_1987_55",
+"ssf3-56": "15193/silver_surfer_1987_56",
+"ssf3-57": "15194/silver_surfer_1987_57",
+"ssf3-58": "15195/silver_surfer_1987_58",
+"ssf3-59": "15196/silver_surfer_1987_59",
+"ssf3-60": "15198/silver_surfer_1987_60",
+"ssf3-61": "15199/silver_surfer_1987_61",
+"ssf3-62": "15200/silver_surfer_1987_62",
+"ssf3-63": "15201/silver_surfer_1987_63",
+"ssf3-64": "15202/silver_surfer_1987_64",
+"ssf3-65": "15203/silver_surfer_1987_65",
+"ssf3-66": "15204/silver_surfer_1987_66",
+"ssfann-3": "70420/silver_surfer_annual_1988_3",
+"ssfann-4": "50825/silver_surfer_annual_1988_4",
+"tquest-1": "11448/thanos_quest_1990_1",
+"tquest-2": "11449/thanos_quest_1990_2"
 };
 
 /* ============ STATE ============ */
@@ -10148,6 +10187,22 @@ const shelfEl=document.getElementById("shelf");
 /* Retained, but no longer paints the spine -- every book now uses the shared
    black/red Marvel trade dress. build_omnibus_data.py still checks that each
    .o-* ramp has an entry here, and it is one line to revert to coloured spines. */
+/* A volume can sit on the shelf before it ships, as long as its contents,
+   links and cover are all real -- see "A shelf holds books whose tile is
+   finished" in CLAUDE.md. `released` is either the literal "Announced" or a
+   "Mon YYYY" date, and this reads the date so the badge retires itself the
+   month the book lands instead of needing an edit to remove it. */
+const RMON={jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+function shipsLater(o){
+  const r=(o.released||"").trim();
+  if(r==="Announced") return true;
+  const m=/^([A-Za-z]{3})[a-z]*\.?\s+(\d{4})$/.exec(r);
+  if(!m) return false;
+  const mo=RMON[m[1].toLowerCase()];
+  if(mo===undefined) return false;
+  return new Date(+m[2], mo, 1) > new Date();
+}
+
 const SPINE_C={
   'o-kirby':['#2f6fc9','#5a2a92'],'o-bronze':['#d67a1f','#1e3f7a'],'o-perez':['#1f9c8f','#a82fa0'],
   'o-byrne':['#7fc2f5','#2f6fc9'],'o-waid':['#ffb92f','#2f6fc9'],'o-millar':['#7d8fa3','#a8232f'],
@@ -10168,7 +10223,8 @@ function buildShelf(){
     let badge;
     /* these volumes have cover art now; what they lack is the issue list */
     if(o.placeholder) badge='<span class="obadge soon">Contents pending</span>';
-    else if(o.released==="Announced") badge='<span class="obadge soon">Announced</span>';
+    else if(shipsLater(o)) badge='<span class="obadge soon">'+
+      (o.released==="Announced" ? "Announced" : "Ships "+esc(o.released))+'</span>';
     else if(state==="done") badge='<span class="obadge done">Finished</span>';
     else badge='<span class="obadge">'+st.t+' issues</span>';
     const num=String(idx+1).padStart(2,"0");
