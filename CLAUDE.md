@@ -1595,16 +1595,27 @@ old entries from the superseded `series_harvest.py` route, and they survived
 every catalog-era run because **`link_issues.py` only ever adds a link and never
 re-examines one it wrote earlier**.
 
-The invariant that catches it is cheap and now runs on every pass:
+**Two checks now run on every pass**, because one of them alone was not enough:
 
-> The shelf shares an **issue id** when two omnibuses collect the same comic —
-> one id, one link. So two *different* shelf ids resolving to one catalog record
-> means one of them is wrong.
+- `audit_collisions()` — the shelf shares an **issue id** when two omnibuses
+  collect the same comic, so one id means one link. Two *different* shelf ids
+  resolving to one catalog record means one of them is wrong.
+- `audit_strays()` — an issue whose link sits in a **different marvel.com
+  series from the rest of its own prefix**. This is the same bug seen from the
+  other side, and it catches more: `cap7-1` pointed at *What If: Captain
+  America* while its other 24 siblings pointed at Captain America (2012), and
+  nothing else claimed that id, so no collision was reported. It was found by
+  fetching a cover, again, after the first sweep had already run.
 
-`audit_collisions()` reports them; it deliberately does not auto-fix, because
-the exception is real: **Marvel Graphic Novel #67 and Wolverine: The Jungle
-Adventure #1 are the same comic published under two names**, and that is the one
-standing collision on the shelves.
+A shelf issue id prefix **is** a series — that is what it means — so a lone
+dissenter against a clear majority is a mislink.
+
+Both report and neither auto-fixes, because the exceptions are real. One
+standing collision: **Marvel Graphic Novel #67 and Wolverine: The Jungle
+Adventure #1 are the same comic published under two names.** Seven standing
+strays, all legitimate — year-titled annuals (`caan1-2000`, `caan1-2001`,
+`hkann-1997`) and half-, zero- and infinite-comic issues (`usm-½`, `imm-0`,
+`ddp7c-7`, `ddp7c-8`) that marvel.com files as their own one-issue series.
 
 Two of the repairs were to *unlink* rather than repoint, and both are worth
 recording because the tempting fix was wrong:
@@ -3613,9 +3624,10 @@ python3 tools/build_omnibus_data.py --check --hero iron-man
 # Every shelf issue that can be linked, is.
 # Expect: 0 matched, 0 ambiguous, five standing rejections (tta3-1, cap8-25 and
 # mk3-1..4 -- all deliberate, see "An unmapped series is derived, not dropped"
-# and "Two shelf issues on one marvel.com comic"), and exactly ONE collision:
-# Marvel Graphic Novel #67 / Wolverine: The Jungle Adventure #1, which really
-# are the same comic under two names. A second collision is a bug.
+# and "Two shelf issues on one marvel.com comic"), exactly ONE collision
+# (Marvel Graphic Novel #67 / Wolverine: The Jungle Adventure #1, which really
+# are the same comic under two names) and SEVEN strays, all annuals and
+# half/zero issues marvel.com files as their own series. More of either is a bug.
 python3 tools/link_issues.py
 
 # Guided tour content round-trips, and every chip/figure it names exists

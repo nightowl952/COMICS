@@ -452,6 +452,48 @@ def match():
     return added, ambiguous, unmatched, mistimed, issues, how
 
 
+def audit_strays(issues):
+    """An issue whose link sits in a different marvel.com series from the rest
+    of its own prefix.
+
+    This is the same bug audit_collisions() finds, seen from the other side and
+    caught more often: `cap7-1` pointed at What If: Captain America while the
+    other 24 `cap7-` issues all pointed at Captain America (2012), and nothing
+    else claimed that id, so no collision was reported. A shelf issue id prefix
+    IS a series -- that is what it means -- so a lone dissenter is a mislink.
+
+    Reported, never auto-fixed: a prefix can legitimately hold a couple of
+    stragglers (a year-titled annual filed as its own one-issue series, a
+    #1/2, a #0), which is why only a clear minority against a clear majority
+    is flagged.
+    """
+    cat, sers = load(CAT), load(SER)
+    link, series = {}, {}
+    for it in issues:
+        if it["link"]:
+            link[it["id"]] = it["link"]
+    for iid, l in link.items():
+        rec = cat.get(l.split("/", 1)[0])
+        if rec:
+            series[iid] = rec[1]
+    byp = {}
+    for iid, sid in series.items():
+        byp.setdefault(iid.rsplit("-", 1)[0], []).append((iid, sid))
+    out = []
+    for pfx, rows in byp.items():
+        counts = Counter(sid for _, sid in rows)
+        if len(counts) < 2:
+            continue
+        main, n = counts.most_common(1)[0]
+        if n < 5:                       # too small a prefix to call a majority
+            continue
+        for iid, sid in rows:
+            if sid != main and counts[sid] <= 2:
+                out.append((iid, link[iid], sers.get(str(sid), "?"),
+                            sers.get(str(main), "?"), n))
+    return sorted(out)
+
+
 def audit_collisions(issues):
     """Two shelf issues pointing at the same marvel.com comic is nearly always
     a mislink, and it is invisible any other way.
@@ -497,6 +539,15 @@ def main(argv):
              sum(1 for v in how.values() if v == "pinned")))
     print("  %d ambiguous (reported, never guessed)" % len(ambiguous))
     print("  %d not in the catalog" % len(unmatched))
+    strays = audit_strays(issues)
+    if strays:
+        print("  !! %d issue(s) linked into a different series from the rest of "
+              "their own prefix" % len(strays))
+        for iid, l, got, expect, n in strays:
+            print("     stray:     %-14s -> %-42s %s" % (iid, l, got))
+            print("                %s  (its prefix's other %d are %s)"
+                  % (" " * 14, n, expect))
+
     coll, _cat = audit_collisions(issues)
     if coll:
         print("  !! %d marvel.com issues are claimed by more than one shelf issue"
