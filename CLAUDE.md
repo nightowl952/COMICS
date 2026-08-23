@@ -337,6 +337,14 @@ character's whole arc, a volume view offers that book's chapter of it — and it
 **hides itself where nothing is written**, so a hero whose history has not been
 researched shows no dead control.
 
+**The button sits under the banner copy, left-aligned, immediately above Keep
+Reading** (the user's placement — it was top-right in the topbar for a day and
+read as page chrome rather than as part of the subject's introduction). It is
+**one element moved**, not two kept in sync: `trSyncBtn()` appends it into
+whichever `.hb-in` is showing. That has to run *after* `buildOmni()`, which
+replaces `#obanner`'s innerHTML wholesale — `route()` calling `showOmni()`
+first is what makes it safe, so do not reorder those two.
+
 - **`TOUR.overview`** — the character tour. A run of sections, one per era,
   each with an era-coloured rail, maker cards, cover figures and *on your
   shelf* chips. It ends with a **tone map**: which volume is the
@@ -626,6 +634,13 @@ the fix is to put the array back.
 through the same `covers.save_cover` 700px/q82 downscale as the omnibus shelf
 covers so the whole site's art is sized identically.
 
+**Daredevil's is an Alex Ross piece as of Aug 2026** — the whole figure
+mid-shout in a burst of light, replacing the earlier head-against-the-moon
+cover. That is a *different picture*, not a bigger scan of the same one, so its
+`pos` had to be re-derived from scratch and went from 11% to 27%; the old value
+put a band of empty black across the modal banner. Expect the same whenever a
+poster is genuinely replaced rather than upscaled.
+
 **All ten are hand-supplied art, not wiki scans** (Aug 2026). The user
 dropped the originals into `Art/covers/` and they replaced the fetched covers
 outright. They are painted pieces rather than printed covers, and that turns
@@ -661,7 +676,17 @@ whichever folder each landed in.
 
 A source-named file sitting in `Art/Heroes/` is **not** a normalised poster: the
 page reads `Art/Heroes/<id>.jpg`, so `Captain America.jpg` there is still raw
-input. Run `adopt` on it exactly as if it were in `Art/covers/`, and in that
+input. **This has now bitten twice**, and the second time was worse: in
+Aug 2026 the user replaced the Daredevil poster by uploading
+`Art/Heroes/Daredevil.jpg` and deleting `Art/Heroes/daredevil.jpg`, which left
+`HEROES` pointing at a file that no longer existed. Pages is case-sensitive, so
+it 404s and the poster silently falls back to the handmade `.a-daredevil` ramp
+— it looks like the new art "isn't populating" rather than like a broken path.
+
+**So when a poster does not show the art the user just uploaded, check the
+filename case before anything else**, with `ls Art/Heroes/`. A capitalised
+twin beside a missing lowercase one is the whole bug, and `adopt` is the whole
+fix. Run `adopt` on it exactly as if it were in `Art/covers/`, and in that
 case delete the source-named copy afterwards — `Art/Heroes/` holds one file per
 subject named by id, the same as the other two folders. Only `Art/covers/`
 keeps its originals.
@@ -744,7 +769,7 @@ second pass after the first render clipped something.
 | xmen | 33% | the Jean / Cyclops / Storm face row |
 | fantastic-four | 45% | Reed, the Torch, the Thing's fist |
 | moon-knight | 7% | the crescent and fist against the moon |
-| daredevil | 11% | the head, with the full moon behind it |
+| daredevil | 27% | the shouting head, horns and the light burst |
 | silver-surfer | 39% | the brow, eyes and nose bridge, star field either side |
 | captain-america | 26% | the mask, the A and the shield edge — 32% clipped the head |
 | iron-man | 11% | the gold faceplate, the shoulders and the chest repulsor |

@@ -334,7 +334,17 @@
     box-shadow:0 5px 22px rgba(255,199,44,.5),inset 0 1px 0 rgba(255,255,255,.65);}
   .tourbtn .ticon{font-size:12px;line-height:1;}
   .tourbtn.hidden{display:none;}
-  @media(max-width:600px){.tourbtn .tlabel{display:none;} .tourbtn{padding:8px 11px;}}
+  /* It sits under the banner copy, left-aligned, immediately above Keep
+     Reading -- so it reads as part of the subject's introduction rather than
+     as page chrome. One element, moved into whichever banner is showing by
+     trSyncBtn(); two kept in sync would drift, and buildOmni() rewrites the
+     volume banner wholesale anyway. */
+  .hb-in .tourbtn{margin-top:16px;
+    box-shadow:0 4px 20px rgba(0,0,0,.55),0 3px 16px rgba(255,199,44,.3),
+      inset 0 1px 0 rgba(255,255,255,.6);}
+  .hb-in .tourbtn:hover{box-shadow:0 5px 24px rgba(0,0,0,.55),
+    0 5px 22px rgba(255,199,44,.46),inset 0 1px 0 rgba(255,255,255,.65);}
+  @media(max-width:600px){.hb-in .tourbtn{margin-top:12px;}}
 
   #tourScrim{position:fixed;inset:0;z-index:70;background:rgba(4,8,16,.62);
     backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .3s;}
@@ -579,8 +589,6 @@
   <a class="backlink" href="index.html"><span class="caret">&#9664;</span> C.O.M.I.C.S.</a>
   <button class="backlink hidden" id="backShelf"><span class="caret">&#9664;</span> All omnibuses</button>
   <span class="crumb" id="crumb">Subject &middot; Fantastic Four</span>
-  <span class="spacer"></span>
-  <button class="tourbtn hidden" id="tourBtn" aria-haspopup="dialog"><span class="ticon">&#9670;</span><span class="tlabel">Guided tour</span></button>
 </nav>
 
 <div class="wrap">
@@ -656,6 +664,7 @@
 </div>
 
 
+<button class="tourbtn hidden" id="tourBtn" aria-haspopup="dialog"><span class="ticon">&#9670;</span><span class="tlabel">Guided tour</span></button>
 <div id="tourScrim"></div>
 <aside id="tourPanel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="tourTitle">
   <div class="tr-head">
@@ -18304,6 +18313,12 @@ function trSyncBtn(){
   trBtn.classList.toggle("hidden", !ok);
   if(!ok) return;
   trBtn.querySelector(".tlabel").textContent = v ? "Tour this volume" : "Guided tour";
+  /* Rehome it under the banner copy of whichever view is showing. This has to
+     run AFTER buildOmni(), which replaces #obanner's innerHTML wholesale --
+     route() calls showOmni() first, which is what makes that safe. */
+  const host = document.querySelector(
+    (v ? "#obanner" : "#heroBanner") + " .hb-in");
+  if(host && trBtn.parentNode !== host) host.appendChild(trBtn);
 }
 
 function trFig(f){
