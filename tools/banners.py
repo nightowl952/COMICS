@@ -64,6 +64,13 @@ KEYS = {
     "silver-surfer":  ["silver-surfer", "silversurfer", "silver surfer", "surfer", "norrin"],
     "captain-america": ["captain-america", "captainamerica", "captain america", "cap", "steve rogers"],
     "iron-man":       ["iron-man", "ironman", "iron man", "tony stark", "shellhead"],
+    "avengers":       ["avengers", "avenger", "earths mightiest"],
+    "black-panther":  ["black-panther", "blackpanther", "black panther", "panther", "tchalla", "wakanda"],
+    "ghost-rider":    ["ghost-rider", "ghostrider", "ghost rider", "ghost", "johnny blaze"],
+    # NB: not "venom" alone as a loose token elsewhere -- the Spider-Man shelf
+    # has a Spider-Man vs. Venom volume, so a stray file can match both.
+    "venom":          ["venom", "eddie brock", "symbiote"],
+    "doctor-strange": ["doctor-strange", "doctorstrange", "doctor strange", "dr strange", "strange", "sorcerer supreme"],
 }
 # No extension whitelist. Anything Pillow can open is an image; anything it
 # cannot is reported by name rather than dropped. See add_folder().

@@ -78,19 +78,21 @@ Keep replies short and plain. This is a hobby project, not a code review.
   `Art/X-Men/` is the odd one: its four books were never printed, so each file is
   the cover of the issue that volume is named after — see "Cover art for books
   with no covers".
-- `Art/Heroes/` — one cover per homescreen subject, ten files named by hero id.
+- `Art/Heroes/` — one cover per homescreen subject, fifteen files named by hero
+  id (the last five are the row-three placeholders).
   See "Artwork" below.
 - `Art/Banners/` — the wide above-the-fold art, eleven files: `index.jpg` for the
-  homescreen and `<hero id>.jpg` for each subject's shelf. Hand-picked, never
+  homescreen and `<hero id>.jpg` for each subject that has a shelf. The five
+  placeholders have none and do not need one until they get a tracker page. Hand-picked, never
   fetched; `tools/banners.py` normalises them. A missing one is not a broken
   page — see "The banner" below.
-- `Art/covers/` — the original hand-supplied scans the ten `Art/Heroes/`
+- `Art/covers/` — the original hand-supplied scans the `Art/Heroes/`
   files were derived from, at full size. Nothing reads this folder; it is kept
   so a poster can be re-cropped without re-sourcing the art, and since Aug 2026
   it is also the **drop box the user delivers new poster art into** — see
   "Artwork the user supplies" below.
-- `Art/Logos/` — one printed logo per homescreen subject, ten of them,
-  `<hero id>.png`,
+- `Art/Logos/` — one printed logo per homescreen subject, ten of them against
+  fifteen subjects — the row-three placeholders have none yet. `<hero id>.png`,
   cropped to its artwork and alpha-backed. See "The plate" below. The
   source-named originals the user supplied are not kept; git history has them.
 
@@ -638,6 +640,12 @@ Aug 2026 it is:
 |---|---|
 | 1 | Spider-Man, Wolverine, Hulk, X-Men, Fantastic Four |
 | 2 | Moon Knight, Daredevil, Captain America, Iron Man, Silver Surfer |
+| 3 | The Avengers, Black Panther, Ghost Rider, Venom, Doctor Strange |
+
+Row three is **five placeholders** (Aug 2026), added in the order the user named
+them. Each has real poster art and a plate colour the user picked, `file:null`
+and `total:0` — no reading list, no tracker file, no `logo`, no banner. See
+"The placeholder row" below.
 
 **Do not reorder it, and do not insert a new subject into the middle of it.**
 This is not a style preference to re-derive each time: the user asked for it
@@ -737,6 +745,55 @@ full-size originals, which is what lets a poster be re-cropped later.
 Two lists are hardcoded and will reject a new subject until it is added to them:
 `KEYS` in `banners.py` and `HERO_IDS` in `logos.py`. Neither derives from
 `heroes.py`, so adding a hero means one line in each.
+
+All five row-three placeholders are already in both lists, and in `PICKS` in
+`fetch_hero_art.py` (`adopt` validates against it and refuses an id it does not
+know). So the only thing missing for those subjects is the art itself.
+
+#### The placeholder row
+
+Five subjects with poster art and nothing else (Aug 2026), added at the user's
+request to see them on the wall before any of them is curated:
+
+| Subject | id | Plate | Ramp / texture / emblem |
+|---|---|---|---|
+| The Avengers | `avengers` | blue `22,92,186` | `a-avengers` / `tex-assemble` / `avengers` |
+| Black Panther | `black-panther` | purple `74,34,146` | `a-panther` / `tex-weave` / `panther` |
+| Ghost Rider | `ghost-rider` | orange `176,66,10` | `a-ghost` / `tex-flame` / `skull` |
+| Venom | `venom` | black `34,44,36` | `a-venom` / `tex-symbiote` / `fangs` |
+| Doctor Strange | `doctor-strange` | green `18,114,86` | `a-strange` / `tex-mandala` / `eye` |
+
+Four things about them worth not relearning:
+
+- **The plate colours are the user's, not derived.** Two needed the deepening
+  the Wolverine and Daredevil plates needed, for the usual reason — Ghost
+  Rider's orange has to carry white text, so it is `176,66,10` rather than a
+  bright orange. **Venom's is the interesting one**: asked for black, and
+  black is what Moon Knight already owns, but the failure mode here was the
+  opposite of Silver Surfer's. Venom's poster art is a black symbiote in a
+  black sewer, so at Moon Knight's depth (`26,28,34`) the band vanished *into
+  the picture* rather than duplicating another subject. It is lifted to
+  `34,44,36`, with a faint green cast so it still reads as its own black.
+- **No logos, so the plate falls back to the name as text.** `posterHTML()`
+  renders `.pname` when a subject has no `logo`, which is the existing
+  degrade-don't-vanish path, not a bug — but the five read as a visibly
+  different set from the ten above them until logos arrive. See open item 19.
+- **No banners either.** That costs nothing today: a banner is only ever read
+  by a *tracker* page, and none of these has one. It becomes a blocker the
+  moment one of them is curated.
+- **Every `pos` was rendered and looked at**, the same as the ten above. The
+  Avengers plate is the one to remember: it is a crowd, so the band has to land
+  on the face row (`39%`) or it is a picture of torsos. Black Panther went
+  26% → 30% because 34% clipped the ear tips and 26% clipped the big panther
+  eyes behind him into a smear along the top edge — 30% drops them and keeps
+  the mask whole, which is the better trade.
+
+The five `desc` strings are **briefs, not specs** — each one ends "Nothing is
+decided yet", because the scope call on every one of them is the user's. The
+Avengers is the hard one (omnibuses run to dozens of volumes plus the spin-off
+teams); Venom overlaps the Spider-Man shelf, which already carries Spider-Man
+vs. Venom and briefly carried both Venomnibus volumes; Ghost Rider is two
+characters before a single issue is picked.
 
 `fetch_hero_art.py` keeps its wiki `PICKS` table for every subject including new
 ones, but only as the fallback it has been since Aug 2026 — `SUPPLIED` lists
@@ -3621,6 +3678,23 @@ cannot currently do is the opposite: make two devices agree.
     retailer thumbnail, the smallest on the shelf, and the Marvel Database will
     have a proper scan once the jacket is photographed.
 
+19. **Five subjects have a poster and nothing else.** The row-three
+    placeholders (Avengers, Black Panther, Ghost Rider, Venom, Doctor Strange)
+    are missing **both** their printed logo and their banner — the user's
+    upload carried the five poster scans only. Neither blocks anything today:
+    the plate falls back to the subject name as text, and a banner is only read
+    by a tracker page, which none of them has. But the wall shows ten logo
+    plates and five text ones, which reads as unfinished rather than as
+    deliberate.
+
+    Both are the user's to supply (see "Artwork the user supplies") — do not go
+    looking for them. When they land, the two commands are already wired:
+    `logos.py add <id> <file>` and `banners.py add <id> <file>` both accept all
+    five ids, and the `HEROES` entry then needs a `logo:` field adding. Check
+    `logow` at the same time: a wide single-line logo reads oversized at full
+    width, which is what that field is for.
+
+
 
 ## Testing
 
@@ -3662,10 +3736,13 @@ python3 tools/link_issues.py
 # Guided tour content round-trips, and every chip/figure it names exists
 python3 tools/build_tours.py --all --check
 
-# Homescreen logos (every subject has one, and every one has an alpha channel)
+# Homescreen logos. Expect 10/15 -- the five row-three placeholders have none,
+# which is open item 19, not a regression. Every logo that IS there needs an
+# alpha channel or it renders as a box.
 python3 tools/logos.py audit
 
-# Banner art (which of the ten are in, and how big)
+# Banner art. Expect 11 of 16 in (index plus the ten live subjects); the five
+# placeholders are blank for the same reason. iron-man and moon-knight are soft.
 python3 tools/banners.py audit
 
 # Nothing on any page still draws a completion figure. Expect no matches:
