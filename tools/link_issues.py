@@ -452,6 +452,78 @@ def match():
     return added, ambiguous, unmatched, mistimed, issues, how
 
 
+def audit_strays(issues):
+    """An issue whose link sits in a different marvel.com series from the rest
+    of its own prefix.
+
+    This is the same bug audit_collisions() finds, seen from the other side and
+    caught more often: `cap7-1` pointed at What If: Captain America while the
+    other 24 `cap7-` issues all pointed at Captain America (2012), and nothing
+    else claimed that id, so no collision was reported. A shelf issue id prefix
+    IS a series -- that is what it means -- so a lone dissenter is a mislink.
+
+    Reported, never auto-fixed: a prefix can legitimately hold a couple of
+    stragglers (a year-titled annual filed as its own one-issue series, a
+    #1/2, a #0), which is why only a clear minority against a clear majority
+    is flagged.
+    """
+    cat, sers = load(CAT), load(SER)
+    link, series = {}, {}
+    for it in issues:
+        if it["link"]:
+            link[it["id"]] = it["link"]
+    for iid, l in link.items():
+        rec = cat.get(l.split("/", 1)[0])
+        if rec:
+            series[iid] = rec[1]
+    byp = {}
+    for iid, sid in series.items():
+        byp.setdefault(iid.rsplit("-", 1)[0], []).append((iid, sid))
+    out = []
+    for pfx, rows in byp.items():
+        counts = Counter(sid for _, sid in rows)
+        if len(counts) < 2:
+            continue
+        main, n = counts.most_common(1)[0]
+        if n < 5:                       # too small a prefix to call a majority
+            continue
+        for iid, sid in rows:
+            if sid != main and counts[sid] <= 2:
+                out.append((iid, link[iid], sers.get(str(sid), "?"),
+                            sers.get(str(main), "?"), n))
+    return sorted(out)
+
+
+def audit_collisions(issues):
+    """Two shelf issues pointing at the same marvel.com comic is nearly always
+    a mislink, and it is invisible any other way.
+
+    The shelf shares an ISSUE ID when two omnibuses collect the same comic --
+    that is deliberate, and it means one id, one link. So two *different* ids
+    resolving to one catalog record means one of them is wrong, and the shape
+    is always the same: a later volume's #1 inherited the id of an earlier
+    book with the same name. Seventeen issues across four shelves were wrong
+    this way and nothing reported it, because the matcher only ever adds links
+    and never re-examines one it wrote earlier.
+
+    The exception is real and rare: a comic genuinely published under two
+    names, like Marvel Graphic Novel #67 and Wolverine: The Jungle Adventure
+    #1. Those are listed too -- the point is to look, not to auto-fix.
+    """
+    cat = load(CAT)
+    # One shelf id can appear several times -- an issue collected in two
+    # omnibuses is deliberately the same id in both -- so collapse to distinct
+    # ids first or every shared issue reports itself as a collision.
+    link = {}
+    for it in issues:
+        if it["link"]:
+            link[it["id"]] = it["link"]
+    seen = {}
+    for iid, l in link.items():
+        seen.setdefault(l.split("/", 1)[0], []).append(iid)
+    return {c: v for c, v in seen.items() if len(v) > 1}, cat
+
+
 def main(argv):
     added, ambiguous, unmatched, mistimed, issues, how = match()
     if "--dump" in argv:
@@ -467,6 +539,24 @@ def main(argv):
              sum(1 for v in how.values() if v == "pinned")))
     print("  %d ambiguous (reported, never guessed)" % len(ambiguous))
     print("  %d not in the catalog" % len(unmatched))
+    strays = audit_strays(issues)
+    if strays:
+        print("  !! %d issue(s) linked into a different series from the rest of "
+              "their own prefix" % len(strays))
+        for iid, l, got, expect, n in strays:
+            print("     stray:     %-14s -> %-42s %s" % (iid, l, got))
+            print("                %s  (its prefix's other %d are %s)"
+                  % (" " * 14, n, expect))
+
+    coll, _cat = audit_collisions(issues)
+    if coll:
+        print("  !! %d marvel.com issues are claimed by more than one shelf issue"
+              % len(coll))
+        for cid, who in sorted(coll.items(), key=lambda x: x[1]):
+            print("     collision: %-46s <- %s"
+                  % (_cat.get(cid, ["?"])[0], ", ".join(sorted(who))))
+        print("     (two ids on one comic is a mislink unless the comic really "
+              "was published twice under different names)")
     print("  %d rejected: that series already belongs to another shelf series"
           % len(mistimed))
     for it, t, owner in mistimed[:15]:

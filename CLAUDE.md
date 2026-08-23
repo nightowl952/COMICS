@@ -1580,6 +1580,57 @@ So the check when one appears is: `python3 tools/catalog.py find "<title>"`. A
 hit means the matcher missed it and the run's own report will say whether it was
 ambiguous or rejected; no hit means Marvel does not have it.
 
+### Two shelf issues on one marvel.com comic is a mislink
+
+Found in Aug 2026 by looking at a cover, which is the whole lesson. Fetching
+tour art for `dd5-1` (Daredevil (2015) #1) returned **What If: Daredevil**, and
+pulling that thread found **17 wrong deep links across four shelves** that
+nothing had ever reported.
+
+They were all one shape: **a later volume's #1 carrying an earlier same-named
+book's id.** `cap6-1`–`cap6-10` (Captain America 2011) pointed at the 2004
+series; `dd4-1`, `dd5-1` and `dd7-1` all pointed at the *same* What If one-shot;
+`mk3-*` pointed at Marc Spector; `wvann4-1` pointed at the 1997 annual. They are
+old entries from the superseded `series_harvest.py` route, and they survived
+every catalog-era run because **`link_issues.py` only ever adds a link and never
+re-examines one it wrote earlier**.
+
+**Two checks now run on every pass**, because one of them alone was not enough:
+
+- `audit_collisions()` — the shelf shares an **issue id** when two omnibuses
+  collect the same comic, so one id means one link. Two *different* shelf ids
+  resolving to one catalog record means one of them is wrong.
+- `audit_strays()` — an issue whose link sits in a **different marvel.com
+  series from the rest of its own prefix**. This is the same bug seen from the
+  other side, and it catches more: `cap7-1` pointed at *What If: Captain
+  America* while its other 24 siblings pointed at Captain America (2012), and
+  nothing else claimed that id, so no collision was reported. It was found by
+  fetching a cover, again, after the first sweep had already run.
+
+A shelf issue id prefix **is** a series — that is what it means — so a lone
+dissenter against a clear majority is a mislink.
+
+Both report and neither auto-fixes, because the exceptions are real. One
+standing collision: **Marvel Graphic Novel #67 and Wolverine: The Jungle
+Adventure #1 are the same comic published under two names.** Seven standing
+strays, all legitimate — year-titled annuals (`caan1-2000`, `caan1-2001`,
+`hkann-1997`) and half-, zero- and infinite-comic issues (`usm-½`, `imm-0`,
+`ddp7c-7`, `ddp7c-8`) that marvel.com files as their own one-issue series.
+
+Two of the repairs were to *unlink* rather than repoint, and both are worth
+recording because the tempting fix was wrong:
+
+- **Captain America (2017) #25 does not exist.** That series runs #695–704.
+  Its link was pointing at the 2018 series' #25, a different comic.
+- **Moon Knight Vol 3 (1998, *Resurrection War*) is not on marvel.com.** The
+  catalog's only four-issue Moon Knight of that period is the 1999 *High
+  Strangeness* mini, which is the shelf's `mk4`. Repointing `mk3` at it just
+  moved the collision — the give-away was the catalog description (*Aliens!
+  Mind Control!*), not the title or the date.
+
+Both are now refused by the "two shelf series cannot be one marvel.com series"
+rule on any future run, so the bad links cannot come back.
+
 ### Tooling (`tools/`)
 
 - `catalog.py` — **the id harvester to use.** Sweeps marvel.com's open JSON
@@ -3571,8 +3622,12 @@ python3 tools/build_omnibus_data.py --check --hero captain-america
 python3 tools/build_omnibus_data.py --check --hero iron-man
 
 # Every shelf issue that can be linked, is.
-# Expect: 0 matched, 0 ambiguous, and one standing rejection (tta3-1, which is
-# deliberate -- see "An unmapped series is derived, not dropped").
+# Expect: 0 matched, 0 ambiguous, five standing rejections (tta3-1, cap8-25 and
+# mk3-1..4 -- all deliberate, see "An unmapped series is derived, not dropped"
+# and "Two shelf issues on one marvel.com comic"), exactly ONE collision
+# (Marvel Graphic Novel #67 / Wolverine: The Jungle Adventure #1, which really
+# are the same comic under two names) and SEVEN strays, all annuals and
+# half/zero issues marvel.com files as their own series. More of either is a bug.
 python3 tools/link_issues.py
 
 # Guided tour content round-trips, and every chip/figure it names exists
