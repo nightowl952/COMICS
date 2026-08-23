@@ -699,7 +699,537 @@
    "The Guided Tour" in CLAUDE.md. Empty is a valid state: the button hides
    itself, so a hero whose history has not been written yet shows no dead
    control. */
-const TOUR = {overview:null, volumes:{}};
+const TOUR = {
+ "overview": {
+  "kicker": "Guided tour",
+  "title": "Iron Man, decade by decade",
+  "lede": "Iron Man was designed in 1963 to be unlikeable. Stan Lee's stated intent was to build a hero out of everything his readership was supposed to hate &mdash; <b>a rich industrialist who manufactured weapons</b>, at the start of the Vietnam era &mdash; and see whether he could make them care anyway. That bet is still the character: every era on this shelf is a different answer to the question of whether Tony Stark is a good man, and the two best runs both answer it by taking something away from him.",
+  "sections": [
+   {
+    "era": "Silver",
+    "years": "1963–1968",
+    "h": "A weapons manufacturer with a bad heart",
+    "body": [
+     "<b>Tales of Suspense</b> #39, March 1963. Stan Lee plotted, Larry Lieber scripted, <b>Don Heck</b> drew it and Jack Kirby designed the armour. The origin is shrapnel near the heart and a magnetic chest plate built in captivity, and the armour is a <b>life-support machine first and a weapon second</b> &mdash; which is the detail every later version keeps.",
+     "The first suit is grey and bulky and genuinely reads as a machine somebody welded together. It goes gold in #40 and to the red-and-gold in <b>#48</b>, and that redesign is one of the great commercial fixes: the character becomes instantly legible.",
+     "<b>Gene Colan</b> takes over the art mid-run under the pen name Adam Austin &mdash; he was working for DC at the time &mdash; and his smoky, tonal style gives the strip a sleekness Heck's engineering never had.",
+     "Read these as a Cold War comic. The villains are communists, the technology is military, and the book is entirely comfortable with that in a way it stops being about six years later."
+    ],
+    "fig": {
+     "src": [
+      "Art/Tours/iron-man/tos-39.jpg",
+      "Art/Tours/iron-man/tos-48.jpg"
+     ],
+     "cap": "<b>Left:</b> #39 &mdash; the grey armour, and a cover that is selling a machine. <b>Right:</b> #48, the red-and-gold redesign."
+    },
+    "makers": [
+     {
+      "n": "Don Heck",
+      "r": "Pencils, 1963–66",
+      "b": "Heck is the most under-credited of the early Marvel artists, and his strength is the thing the book needed: he draws <b>machinery that looks engineered</b>, and human figures with real weight. Look at how the early armour is articulated &mdash; you can see how the joints would work."
+     }
+    ],
+    "shelf": [
+     "iim-o1",
+     "iim-o2"
+    ]
+   },
+   {
+    "era": "Bronze",
+    "years": "1968–1978",
+    "h": "The solo book, Vietnam curdling, and Thanos arriving in an Iron Man comic",
+    "body": [
+     "He gets his own title in 1968 and the 1970s are where the premise starts biting. Public opinion turns on the arms industry, and the book has to decide what its lead actually does for a living &mdash; which is a problem Spider-Man never has.",
+     "<b>Archie Goodwin</b> writes much of the early solo run and is the era's best writer; <b>George Tuska</b> draws most of the decade and is the definitive Bronze Age Iron Man artist, in a blunt, solid, unfussy style.",
+     "The single most consequential thing in this stretch is a footnote: <b>Thanos first appears in Iron Man #55</b>, drawn and co-created by Jim Starlin, in the middle of an otherwise ordinary issue. The whole cosmic Marvel edifice starts in a Tony Stark comic.",
+     "There is a gap the shelf cannot close: <b>#113&ndash;114</b> fall between the last numbered volume and the Michelinie book, because one is a run collection and the other stops at #112."
+    ],
+    "fig": {
+     "src": [
+      "Art/Tours/iron-man/im-55.jpg",
+      "Art/Tours/iron-man/im-100.jpg"
+     ],
+     "cap": "<b>Left:</b> #55 &mdash; Thanos's first appearance, sold on the cover as <i>Blood Brothers</i>. <b>Right:</b> Tuska's #100."
+    },
+    "shelf": [
+     "iim-o3",
+     "iim-o4"
+    ]
+   },
+   {
+    "era": "Bronze",
+    "years": "1978–1982",
+    "h": "Demon in a Bottle, and the run that made the character serious",
+    "body": [
+     "<b>David Michelinie, Bob Layton and John Romita Jr.</b> take the book in 1978 and do the thing nobody had tried: they make the flaw <b>internal</b>. <i>Demon in a Bottle</i> (#120&ndash;128) is about Tony Stark's alcoholism, and it is not a special issue or a metaphor &mdash; it runs for months, he is bad at his job, he loses things, and the recovery is not a victory speech.",
+     "It is one of the very first mainstream superhero stories to treat addiction as an ongoing condition rather than an after-school lesson, and every subsequent writer who has put Tony back on the bottle is working from it.",
+     "The other landmark is <b><i>Doomquest</i></b> (#149&ndash;150), which sends Iron Man and Doctor Doom to Camelot together and is enormously enjoyable. Michelinie and Layton understood the two characters are the same argument from opposite ends.",
+     "<b>Bob Layton</b> is the run's secret weapon &mdash; as inker he gives the armour a hard, reflective, genuinely metallic finish nobody had achieved before, and it is the reason the suit stops looking like a costume."
+    ],
+    "fig": {
+     "src": [
+      "Art/Tours/iron-man/im-120.jpg",
+      "Art/Tours/iron-man/im-128.jpg"
+     ],
+     "cap": "<b>Left:</b> #120, where it starts. <b>Right:</b> #128 &mdash; a man in a dressing gown with a bottle, and the helmet on the table. One of the most reproduced Marvel covers ever drawn."
+    },
+    "makers": [
+     {
+      "n": "Bob Layton",
+      "r": "Inks and co-plots",
+      "b": "Look at the <b>highlights on the armour</b>. Layton renders it as polished metal with hard-edged specular reflections rather than as coloured cloth, and that single technical decision is why Iron Man started looking like a machine in 1978 and has ever since."
+     }
+    ],
+    "shelf": [
+     "mlr-o1"
+    ]
+   },
+   {
+    "era": "Copper",
+    "years": "1987–1991",
+    "h": "Armor Wars: the hero as the problem",
+    "body": [
+     "Michelinie and Layton return with <b>Mark Bright</b>, and <b>Armor Wars</b> (#225&ndash;232) is the best pure Iron Man idea anyone has had: Tony discovers his technology has been stolen and is in other people's suits, and goes to take it back &mdash; illegally, violently, against heroes as well as villains, and without telling anybody.",
+     "It is a story about a man who cannot distinguish between responsibility and ownership, and it ends with him a fugitive from his own government. Nothing else on this shelf gets closer to the centre of the character.",
+     "The second half of the volume is <b>Armor Wars II</b>, which is the same idea at lower intensity and is generally rated well below the first."
+    ],
+    "fig": {
+     "src": [
+      "Art/Tours/iron-man/im-225.jpg"
+     ],
+     "cap": "#225. <i>They stole his technology</i> &mdash; the cover is a row of ghosted armours behind him, which is the whole plot."
+    },
+    "shelf": [
+     "armor-o1"
+    ]
+   },
+   {
+    "era": "Chromium",
+    "years": "1998–2002",
+    "h": "Heroes Return, then the armour wakes up",
+    "body": [
+     "<b>Kurt Busiek and Sean Chen</b> relaunch the book after the Heroes Reborn year, and the approach is restorative and unfashionable: solid, traditional, well-constructed superhero comics with the supporting cast rebuilt. Busiek was doing the same job on <i>Avengers</i> at the same time.",
+     "Then <b>Joe Quesada and Frank Tieri</b> do the strangest thing on this shelf. <b><i>The Mask in the Iron Man</i></b> gives the armour an artificial intelligence, and it falls in love with Tony, and then decides the world would be better without him. It is body horror in a superhero book, and the opening arc is genuinely unsettling.",
+     "There is a large hole after this: <b>everything between 2002 and 2018 is uncollected in omnibus</b>, which means Warren Ellis's <i>Extremis</i> and the whole Fraction and Larroca run &mdash; the definitive modern Iron Man for a lot of readers &mdash; are not on this shelf. That is Marvel's doing, not a scope call."
+    ],
+    "fig": {
+     "src": [
+      "Art/Tours/iron-man/im3-1.jpg",
+      "Art/Tours/iron-man/im3-26.jpg"
+     ],
+     "cap": "<b>Left:</b> Busiek and Chen's relaunch. <b>Right:</b> Quesada's <i>Mask in the Iron Man</i>."
+    },
+    "shelf": [
+     "busiek-o1",
+     "mask-o1"
+    ]
+   },
+   {
+    "era": "Modern",
+    "years": "2018–2020",
+    "h": "Slott, and the question of what a copy is",
+    "body": [
+     "<b>Dan Slott's <i>Tony Stark: Iron Man</i></b> is the most conceptually playful run here. It takes the character's actual modern preoccupations &mdash; simulation, digital consciousness, whether a backed-up mind is the same person &mdash; and builds the plot out of them, which is a much better fit for Iron Man than for almost anyone else at Marvel.",
+     "<b>Valerio Schiti</b>'s art is clean, bright and legible, and the run is funnier than any other on this shelf.",
+     "It ends by setting up Arno Stark, which is why the volume reprints <i>Iron Man</i> (1998) #25 at the back &mdash; a 1999 Busiek issue that is backmatter here rather than an error."
+    ],
+    "fig": {
+     "src": [
+      "Art/Tours/iron-man/tsim-1.jpg"
+     ],
+     "cap": "Slott and Schiti. <i>Self-Made Man</i> is the arc title, and it is doing double duty."
+    },
+    "shelf": [
+     "tsim-o1"
+    ]
+   }
+  ],
+  "tone": {
+   "h": "The tone map",
+   "sub": "Nine books &mdash; every Iron Man omnibus that exists &mdash; and they swing from Cold War adventure to body horror.",
+   "modes": [
+    {
+     "l": "Most Cold War",
+     "b": "The Tales of Suspense years: communist villains, military hardware, and a book entirely comfortable with the arms trade. A period document.",
+     "vols": [
+      "iim-o1",
+      "iim-o2"
+     ]
+    },
+    {
+     "l": "Most Bronze Age",
+     "b": "Goodwin and Tuska through the 70s &mdash; blunt, solid superhero comics, and the issue where Thanos turns up.",
+     "vols": [
+      "iim-o3",
+      "iim-o4"
+     ]
+    },
+    {
+     "l": "Most human",
+     "b": "<i>Demon in a Bottle</i>. Alcoholism written as a condition rather than a lesson, over months, with real damage. The run that made the character serious.",
+     "vols": [
+      "mlr-o1"
+     ]
+    },
+    {
+     "l": "Best premise",
+     "b": "<i>Armor Wars</i> &mdash; the hero as the problem, hunting his own technology through other people's suits and becoming a fugitive for it.",
+     "vols": [
+      "armor-o1"
+     ]
+    },
+    {
+     "l": "Most traditional",
+     "b": "Busiek and Chen rebuilding the book after Heroes Reborn. Unfashionable, well-made, and a good place to start.",
+     "vols": [
+      "busiek-o1"
+     ]
+    },
+    {
+     "l": "Strangest",
+     "b": "The armour develops an intelligence, falls in love with Tony, and tries to replace him. Body horror in a Marvel monthly.",
+     "vols": [
+      "mask-o1"
+     ]
+    },
+    {
+     "l": "Funniest and most modern",
+     "b": "Slott on simulation, copies and digital minds &mdash; the character's actual 21st-century problem, played for ideas and jokes.",
+     "vols": [
+      "tsim-o1"
+     ]
+    }
+   ]
+  }
+ },
+ "volumes": {
+  "iim-o1": {
+   "kicker": "Volume 01 · 1963–1966",
+   "title": "Invincible Iron Man Omnibus Vol. 1",
+   "lede": "The debut, the grey armour, and the redesign that made him legible. A Cold War comic with a life-support machine at the centre of it.",
+   "sections": [
+    {
+     "era": "Silver",
+     "years": "1963–1966",
+     "h": "Designed to be disliked",
+     "body": [
+      "Stan Lee's account of the pitch is that he wanted to build a hero out of everything his readership was supposed to object to &mdash; a wealthy industrialist making weapons, in 1963 &mdash; and see if he could make it work anyway.",
+      "The mechanism that makes it work is the <b>chest plate</b>. The armour is keeping him alive; the heroism is a side effect of a man who cannot stop wearing his own life support. That is a much better hook than the wealth.",
+      "<b>#48</b> is the commercial turning point: the clunky gold suit becomes the streamlined red-and-gold, and the character finally reads at a glance."
+     ],
+     "makers": [
+      {
+       "n": "Don Heck",
+       "r": "Pencils",
+       "b": "Look at the <b>joints</b>. Heck draws the early armour as something assembled &mdash; segmented, articulated, plausibly mechanical &mdash; which is exactly the register the strip needs and which later, sleeker artists lose."
+      },
+      {
+       "n": "Gene Colan",
+       "r": "Pencils, as 'Adam Austin'",
+       "b": "Colan used a pen name because he was working for DC. His Iron Man is <b>tonal rather than linear</b> &mdash; built from shading, with a moving camera &mdash; and it makes the armour look sleek where Heck's looked welded."
+      }
+     ],
+     "fig": {
+      "src": [
+       "Art/Tours/iron-man/tos-39.jpg",
+       "Art/Tours/iron-man/tos-48.jpg"
+      ],
+      "cap": "<b>Left:</b> #39. <b>Right:</b> #48, and the suit everybody pictures."
+     }
+    }
+   ],
+   "verdict": {
+    "standing": "Historically important, dated",
+    "cls": "mixed",
+    "body": [
+     "Rated below the equivalent Spider-Man and Fantastic Four volumes by most readers, and the reasons given are consistent: the ten-page format is restrictive, the villains are interchangeable communists, and the politics are very much of 1963.",
+     "<b>The armour designs are the pleasure</b>, and the origin holds up better than the stories around it. Note the wiki's jacket for this book is itself a scan of a Tales of Suspense cover &mdash; the shelf uses the Parel variant instead, which is the only file carrying real omnibus trade dress."
+    ]
+   }
+  },
+  "iim-o2": {
+   "kicker": "Volume 02 · 1966–1970",
+   "title": "Invincible Iron Man Omnibus Vol. 2",
+   "lede": "The end of the shared book and the start of the solo one, with Archie Goodwin arriving to give the character something to be about.",
+   "sections": [
+    {
+     "era": "Silver",
+     "years": "1966–1970",
+     "h": "Splitting off",
+     "body": [
+      "<i>Tales of Suspense</i> ends, the one-shot <i>Iron Man and Sub-Mariner</i> bridges the gap, and <i>Iron Man</i> #1 arrives in 1968.",
+      "<b>Archie Goodwin</b> is the significant arrival. He is the first writer to treat Tony Stark's business as a moral problem rather than as set dressing, and the run gets noticeably more thoughtful.",
+      "One ordering note: the shelf puts <b>Iron Man and Sub-Mariner #1 between Tales of Suspense #99 and Iron Man #1</b>, where it belongs chronologically. The wiki lists it last; a book that prints its own bridging issue as an appendix is not a book anyone has made."
+     ]
+    }
+   ],
+   "verdict": {
+    "standing": "A step up",
+    "cls": "",
+    "body": [
+     "Better received than Vol. 1, and the reason is <b>Goodwin</b> &mdash; readers consistently name his issues as the point where the series starts having ideas rather than just villains.",
+     "The art transition is also praised. It remains a second-tier Silver Age book by most reckonings, and it is the volume where that starts to feel unfair."
+    ]
+   }
+  },
+  "iim-o3": {
+   "kicker": "Volume 03 · 1970–1974",
+   "title": "Invincible Iron Man Omnibus Vol. 3",
+   "lede": "The Bronze Age arrives, the arms trade stops being neutral, and Thanos turns up in the middle of an ordinary issue.",
+   "sections": [
+    {
+     "era": "Bronze",
+     "years": "1970–1974",
+     "h": "#55",
+     "body": [
+      "<b>Iron Man #55</b> is the first appearance of <b>Thanos</b>, drawn and co-created by <b>Jim Starlin</b>, alongside Drax and the Blood Brothers. The entire cosmic half of the Marvel Universe begins here, in a Tony Stark comic, with no fanfare whatever.",
+      "Around it, the decade is doing to Iron Man what it did to everyone: the politics get harder, the villains get less foreign, and the book has to look at what its lead manufactures.",
+      "<b>George Tuska</b> settles in as the artist and stays for most of the decade."
+     ],
+     "fig": {
+      "src": [
+       "Art/Tours/iron-man/im-55.jpg"
+      ],
+      "cap": "#55. The cover advertises the Blood Brothers; the character it actually introduced went on to carry two films."
+     }
+    }
+   ],
+   "verdict": {
+    "standing": "Underrated",
+    "cls": "cult",
+    "body": [
+     "Its reputation is dominated by #55, and the rest is a solid, unglamorous Bronze Age run that readers working through the shelf report enjoying more than they expected.",
+     "The frequent criticism is Tuska &mdash; a blunt, functional draughtsman whom some readers find plain next to Colan. Others rate him precisely for the solidity. Its own solicit range matches the shelf exactly, which is rarer than it should be."
+    ]
+   }
+  },
+  "iim-o4": {
+   "kicker": "Volume 04 · 1974–1978",
+   "title": "Invincible Iron Man Omnibus Vol. 4",
+   "lede": "The last of the numbered volumes: Mantlo and Friedrich, #100, and the run-up to the book's best decade.",
+   "sections": [
+    {
+     "era": "Bronze",
+     "years": "1974–1978",
+     "h": "Marking time well",
+     "body": [
+      "Mike Friedrich and then Bill Mantlo write a book that is competent, busy and not especially distinctive &mdash; a lot of armour upgrades, a lot of corporate intrigue, and the supporting cast getting fleshed out.",
+      "<b>#100</b> is the anniversary and the era's showpiece, a Mandarin story with Tuska at full stretch.",
+      "The frustrating detail is the ending: this volume stops at <b>#112</b> and the Michelinie run starts at #115, so <b>#113&ndash;114 fall down the crack</b> between a numbered volume and a creator collection. Two issues of Mantlo, uncollected in this format."
+     ],
+     "fig": {
+      "src": [
+       "Art/Tours/iron-man/im-100.jpg"
+      ],
+      "cap": "#100."
+     }
+    }
+   ],
+   "verdict": {
+    "standing": "Solid",
+    "cls": "",
+    "body": [
+     "The least-discussed of the four numbered volumes and rated accordingly: <b>well-made 1970s superhero comics with no landmark in them</b> beyond #100.",
+     "What people do note is that it sets the table &mdash; the supporting cast and the corporate machinery that Michelinie and Layton then use are largely built here."
+    ]
+   }
+  },
+  "mlr-o1": {
+   "kicker": "Volume 05 · 1978–1982",
+   "title": "Iron Man by Michelinie, Layton & Romita Jr. Omnibus",
+   "lede": "The run that made Iron Man serious. <i>Demon in a Bottle</i>, <i>Doomquest</i>, and an inker who made the armour look like metal.",
+   "sections": [
+    {
+     "era": "Bronze",
+     "years": "1979",
+     "h": "Demon in a Bottle",
+     "body": [
+      "<b>#120&ndash;128.</b> Tony Stark's drinking stops being a character note and becomes the plot: he is compromised, he is bad at his job, he loses control of his company, and the story does not resolve it with a single moment of resolve.",
+      "It is among the earliest mainstream superhero stories to handle addiction as an <b>ongoing condition</b> rather than a lesson, and its influence is total &mdash; every later writer who has put Tony back on the bottle is quoting this.",
+      "The cover of #128 &mdash; a man in a dressing gown, a bottle, and the helmet sitting on the table looking at him &mdash; is one of the most reproduced images Marvel has published."
+     ]
+    },
+    {
+     "era": "Bronze",
+     "years": "1981–1982",
+     "h": "Doomquest, and Layton's armour",
+     "body": [
+      "<b>#149&ndash;150</b> puts Iron Man and Doctor Doom in Camelot together, and it works because the two are the same argument from opposite ends &mdash; a man who believes technology entitles him to decide things, twice over.",
+      "The technical achievement of the run is <b>Bob Layton's inking</b>. He renders the armour with hard specular highlights, as polished metal rather than coloured cloth, and it is the reason Iron Man stopped looking like a man in a suit."
+     ],
+     "makers": [
+      {
+       "n": "Bob Layton",
+       "r": "Inks and co-plots",
+       "b": "The <b>highlights</b>. Layton puts hard-edged white reflections on every curved surface of the armour, which is how you draw chrome. It is a small technical trick and it redefined the character visually for forty years."
+      },
+      {
+       "n": "John Romita Jr.",
+       "r": "Pencils",
+       "b": "Very early Romita Jr., before the slabs. What is already here is his sense of <b>machinery in motion</b> &mdash; he draws the armour flying with weight and momentum rather than posing it."
+      }
+     ],
+     "fig": {
+      "src": [
+       "Art/Tours/iron-man/im-120.jpg",
+       "Art/Tours/iron-man/im-128.jpg",
+       "Art/Tours/iron-man/im-150.jpg"
+      ],
+      "cap": "<b>Left and centre:</b> <i>Demon in a Bottle</i>. <b>Right:</b> <i>Doomquest</i>."
+     }
+    }
+   ],
+   "verdict": {
+    "standing": "The peak",
+    "cls": "",
+    "body": [
+     "Very widely named the <b>definitive Iron Man run</b>, and <i>Demon in a Bottle</i> is on essentially every best-Marvel-story list ever compiled. Its influence on later Iron Man &mdash; including the films &mdash; is enormous.",
+     "The honest caveat readers raise is that <i>Demon in a Bottle</i> is nine issues in a forty-three-issue volume, and the addiction material is less continuous than its reputation implies. The rest of the run is very good and is not about that.",
+     "If you read one book on this shelf, read this one."
+    ]
+   }
+  },
+  "armor-o1": {
+   "kicker": "Volume 06 · 1987–1991",
+   "title": "Iron Man: Armor Wars Omnibus",
+   "lede": "The best premise anyone has built for this character: his technology is in other people's hands and he decides to take it back, whatever that costs.",
+   "sections": [
+    {
+     "era": "Copper",
+     "years": "1987–1988",
+     "h": "Armor Wars",
+     "body": [
+      "<b>#225&ndash;232.</b> Tony discovers his designs have been stolen and are in armour worn by criminals, government agents and other heroes, and he sets out to disable every one of them &mdash; without authority, without telling anyone, and without much caring who is wearing it.",
+      "It is the sharpest statement of the character's actual flaw, which is not the drinking: <b>he cannot tell the difference between responsibility and ownership</b>. By the end he is a fugitive, has attacked people who did nothing wrong, and is unrepentant.",
+      "The idea reportedly came from Layton wanting a story big enough to get the book noticed after his and Michelinie's return. It worked.",
+      "<b>Mark Bright</b> draws it with a clean, powerful clarity that keeps a story about a dozen different armours legible."
+     ],
+     "fig": {
+      "src": [
+       "Art/Tours/iron-man/im-225.jpg"
+      ],
+      "cap": "#225 &mdash; the stolen armours ghosted in behind him."
+     }
+    },
+    {
+     "era": "Chromium",
+     "years": "1990–1991",
+     "h": "Armor Wars II",
+     "body": [
+      "The second half of the volume is the sequel, which repeats the shape at lower intensity and without the moral clarity. It is where most readers' enthusiasm drops off.",
+      "Note the volume is a <b>storyline collection, not a run</b> &mdash; it skips #233&ndash;257 between the two, which is deliberate rather than an omission."
+     ]
+    }
+   ],
+   "verdict": {
+    "standing": "Classic, with a weaker half",
+    "cls": "",
+    "body": [
+     "The original <b><i>Armor Wars</i> is very highly rated</b> and is the Iron Man story most often named alongside <i>Demon in a Bottle</i>. Its central idea &mdash; the hero as the antagonist of his own story &mdash; is the one that has aged best.",
+     "<b><i>Armor Wars II</i> is consistently rated well below it</b>, as a sequel that repeats the structure without the argument. Buy the volume for the first eight issues and treat the rest as context."
+    ]
+   }
+  },
+  "busiek-o1": {
+   "kicker": "Volume 07 · 1998–2000",
+   "title": "Iron Man by Kurt Busiek & Sean Chen Omnibus",
+   "lede": "The relaunch after Heroes Reborn. Traditional, well-made, and deliberately unfashionable &mdash; and the best place on this shelf to start cold.",
+   "sections": [
+    {
+     "era": "Chromium",
+     "years": "1998–2000",
+     "h": "Rebuilding",
+     "body": [
+      "<b>Kurt Busiek</b> was doing the same restorative job on <i>Avengers</i> at the same time, and the method is identical: put the supporting cast back, respect the history, tell complete stories, and refuse the decade's cynicism.",
+      "The result is a book with no gimmick and a very high floor. It is the most <i>readable</i> volume on this shelf for someone with no background at all.",
+      "<b>Sean Chen</b>'s art is clean, detailed and easy to follow, which is what the approach needs.",
+      "The volume closes with nine crossover issues from <i>The Eighth Day</i>, which is why it is chaptered per book rather than as numbered parts."
+     ],
+     "fig": {
+      "src": [
+       "Art/Tours/iron-man/im3-1.jpg"
+      ],
+      "cap": "The Heroes Return relaunch."
+     }
+    }
+   ],
+   "verdict": {
+    "standing": "Quietly excellent",
+    "cls": "cult",
+    "body": [
+     "Under-discussed and warmly regarded by the people who have read it. The recurring assessment is <b>solid, generous, traditional superhero comics</b> by a writer who understood exactly what the book needed after four chaotic years.",
+     "The criticism is that it is unambitious, and readers who want a landmark will not find one. The crossover material at the end is the weakest part."
+    ]
+   }
+  },
+  "mask-o1": {
+   "kicker": "Volume 08 · 2000–2002",
+   "title": "Iron Man: The Mask in the Iron Man Omnibus",
+   "lede": "The armour develops an artificial intelligence, falls in love with Tony, and decides the world would be better without him. Easily the strangest book on this shelf.",
+   "sections": [
+    {
+     "era": "Plastic",
+     "years": "2000–2002",
+     "h": "Body horror in a superhero comic",
+     "body": [
+      "<b>Joe Quesada</b>'s premise takes the one thing that has always been true of Iron Man &mdash; that the armour is closer to him than any person is &mdash; and makes it literal and awful. The suit becomes sentient, becomes devoted, and becomes possessive.",
+      "The opening arc is genuinely unsettling and is the reason the book is remembered. It is doing horror in a way Marvel's flagship titles were not in 2000.",
+      "<b>Frank Tieri</b> takes over afterwards and the run gets considerably more conventional, which is the volume's structural problem.",
+      "After this the shelf jumps sixteen years: <b>nothing between 2002 and 2018 has an omnibus</b>, which means Ellis's <i>Extremis</i> and the entire Fraction and Larroca run are missing. That is Marvel's doing."
+     ],
+     "fig": {
+      "src": [
+       "Art/Tours/iron-man/im3-26.jpg"
+      ],
+      "cap": "Quesada's #26."
+     }
+    }
+   ],
+   "verdict": {
+    "standing": "Great start, diminishing",
+    "cls": "mixed",
+    "body": [
+     "The reception is unusually consistent and unusually shaped: readers <b>love the opening arc and report the run getting steadily worse</b> from there. The phrase that recurs is that it is worth reading for the first story.",
+     "The premise is widely admired as the boldest conceptual idea anyone has had about the armour. The execution across two years does not sustain it.",
+     "Read the first six issues at minimum. Whether you continue is a fair question."
+    ]
+   }
+  },
+  "tsim-o1": {
+   "kicker": "Volume 09 · 2018–2020",
+   "title": "Tony Stark: Iron Man by Dan Slott Omnibus",
+   "lede": "The most modern book here: simulation, digital minds, and whether a backed-up copy of a person is that person. Also the funniest.",
+   "sections": [
+    {
+     "era": "Modern",
+     "years": "2018–2020",
+     "h": "The right character for the question",
+     "body": [
+      "<b>Dan Slott</b> builds the run out of Iron Man's actual 21st-century preoccupations &mdash; virtual worlds, uploaded consciousness, the ethics of a person who can be restored from backup &mdash; and they fit him far better than they would fit anybody else at Marvel.",
+      "It is also genuinely comic, which nothing else on this shelf attempts. The eScape arc and the Iron Man 2020 material are the parts people name.",
+      "<b>Valerio Schiti</b>'s art is bright, clean and very legible, and it keeps a book full of abstractions grounded.",
+      "The volume reprints <i>Iron Man</i> (1998) #25 at the back &mdash; a 1999 Busiek issue &mdash; which looks like an error and is deliberate: it is where Arno Stark was set up, and Iron Man 2020 is Arno's story."
+     ],
+     "fig": {
+      "src": [
+       "Art/Tours/iron-man/tsim-1.jpg"
+      ],
+      "cap": "Slott and Schiti's #1."
+     }
+    }
+   ],
+   "verdict": {
+    "standing": "Well liked",
+    "cls": "",
+    "body": [
+     "Received as a <b>smart, funny, conceptually ambitious run</b> that gets less attention than it deserves, largely because it followed a long period of the character being difficult to publish.",
+     "The criticism is that the ideas sometimes outrun the emotional stakes, and that the Iron Man 2020 event it leads into is weaker than the run itself. Schiti's art gets consistent praise.",
+     "It is the best modern starting point on a shelf whose modern era Marvel has largely failed to collect."
+    ]
+   }
+  }
+ }
+};
 
 const OMNI = [
 {

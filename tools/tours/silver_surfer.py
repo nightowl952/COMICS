@@ -1,0 +1,342 @@
+# -*- coding: utf-8 -*-
+"""The Silver Surfer guided tour.  See tools/tours/hulk.py for the field list."""
+
+A = "Art/Tours/silver-surfer/"
+
+OVERVIEW = {
+    "kicker": "Guided tour",
+    "title": "The Silver Surfer, decade by decade",
+    "lede": (
+        "The Silver Surfer was <b>not in the script</b>. Jack Kirby added him to <i>Fantastic "
+        "Four</i> #48 unasked, because he decided a being like Galactus would have a herald, "
+        "and handed in the pages with a character nobody had commissioned. He has been the "
+        "most awkward property Marvel owns ever since &mdash; too abstract to carry an action "
+        "book, too striking to leave alone &mdash; and this is the smallest shelf on the site "
+        "because of it: four books across sixty years, and every one of them is somebody "
+        "solving that problem differently."),
+    "sections": [
+        {
+            "era": "Silver", "years": "1966–1970",
+            "h": "Lee's most personal book, and the argument with Kirby",
+            "body": [
+                "Stan Lee took the character for a solo title in 1968, and it is the closest "
+                "thing to a personal statement he made in comics: <b>an exile of enormous power "
+                "trapped on Earth, appalled by humanity and unable to stop caring about it</b>, "
+                "talking in extended soliloquies about war and cruelty and greed.",
+                "It is also where Lee and Kirby genuinely diverged. Kirby's Surfer had no past "
+                "&mdash; he was a construct of Galactus, and the blankness was the point. Lee "
+                "gave him <b>Zenn-La, a home world and a lost love</b>, which Kirby reportedly "
+                "disliked, and which is why Kirby did not draw the solo book.",
+                "<b>John Buscema</b> did, and it is his best work. The book was double-sized "
+                "and priced at 25 cents, which gave Buscema room for full-page figure drawing, "
+                "and his Surfer is a genuinely beautiful piece of design: weightless, "
+                "classical, more sculpture than superhero.",
+                "It was cancelled at #18 &mdash; cut to standard size at #15 first, which is "
+                "always the sign &mdash; and he had no solo title again for twelve years."],
+            "fig": {"src": [A + "ssf-1.jpg", A + "ssf-4.jpg"],
+                    "cap": "<b>Left:</b> #1, 1968, double-sized. <b>Right:</b> #4 &mdash; the "
+                           "Thor issue, and the most-reproduced Buscema cover of the run."},
+            "makers": [
+                {"n": "John Buscema", "r": "Pencils, 1968–70",
+                 "b": "Look at the <b>anatomy under the chrome</b>. Buscema was a classical "
+                      "figure draughtsman and he draws the Surfer as a nude study &mdash; there "
+                      "is no costume to hide behind, so every panel is pure figure work. It is "
+                      "why the character still looks right sixty years later."}],
+            "shelf": ["ss-o1"],
+        },
+        {
+            "era": "Bronze", "years": "1970–1982",
+            "h": "The twelve years with no book",
+            "body": [
+                "This is not a gap in the shelf &mdash; it is a gap in the character's career. "
+                "After 1970 he had <b>no title of his own for twelve years</b>, appearing in "
+                "<i>Fantastic Four</i> and <i>The Defenders</i> instead.",
+                "The barrier is why. Galactus had confined him to Earth, which made the "
+                "premise a prison drama, and a prison drama is very hard to run monthly.",
+                "The 1982 Stan Lee and <b>John Byrne</b> one-shot is the bridge, and it is the "
+                "book that finally lets him off the planet."],
+            "shelf": ["ss-o1", "spaceways-o1"], "shelfLabel": "Either side of the hiatus",
+        },
+        {
+            "era": "Copper", "years": "1987–1990",
+            "h": "Off Earth at last, and Moebius",
+            "body": [
+                "<b>Steve Englehart</b> and <b>Marshall Rogers</b> relaunch him in 1987 with "
+                "the barrier gone, and the book immediately becomes what it should always have "
+                "been: <b>space opera</b>. Kree, Skrulls, Elders of the Universe, politics on a "
+                "galactic scale.",
+                "Rogers is the artist Todd McFarlane singled out for capes, and his Surfer is "
+                "all clean geometry and reflective surface. <b>Ron Lim</b> follows and becomes "
+                "the definitive Surfer artist of the era by sheer volume.",
+                "And in 1988 Stan Lee wrote <b><i>Parable</i></b> with <b>Moebius</b> &mdash; "
+                "Jean Giraud, the most influential European comics artist of the century. It is "
+                "a two-issue story about Galactus posing as a god and humanity choosing to "
+                "worship him, and it looks like nothing else Marvel has ever printed: clear "
+                "line, flat colour, enormous empty spaces, no rendering at all.",
+                "Both graphic novels &mdash; <i>Judgment Day</i> and <i>The Enslavers</i> "
+                "&mdash; are in that volume too."],
+            "fig": {"src": [A + "ssf3-1.jpg", A + "ssfpar-1.jpg"],
+                    "cap": "<b>Left:</b> the 1987 relaunch. <b>Right:</b> Moebius's "
+                           "<i>Parable</i> &mdash; look at how little is on the page."},
+            "shelf": ["spaceways-o1"],
+        },
+        {
+            "era": "Copper", "years": "1990–1992",
+            "h": "Starlin, Thanos, and the book stops being about the Surfer",
+            "body": [
+                "<b>Jim Starlin</b> takes the title in 1990 and does something unusual: he uses "
+                "it to build somebody else's story. <i>The Thanos Quest</i>, then <b><i>The "
+                "Infinity Gauntlet</i></b> &mdash; and the Silver Surfer's own book becomes the "
+                "launchpad for the biggest Marvel event of its decade and, eventually, the "
+                "spine of two billion-dollar films.",
+                "It works because the Surfer is <b>the only character who can credibly be in "
+                "the room</b> for a story at that scale, and because Starlin had been writing "
+                "Thanos since inventing him in an Iron Man comic in 1973.",
+                "What it costs is the title character. Read as a Silver Surfer story, this "
+                "stretch is about a man watching something enormous happen to him. Read as "
+                "cosmic Marvel, it is the centre of everything.",
+                "<b>Ron Lim</b> draws most of it, and his clean, uncluttered figure work is "
+                "what makes a story with fifty characters in it legible."],
+            "fig": {"src": [A + "tquest-1.jpg", A + "infg-1.jpg"],
+                    "cap": "<b>Left:</b> <i>The Thanos Quest</i>. <b>Right:</b> <i>The Infinity "
+                           "Gauntlet</i> &mdash; and the Surfer is one figure in the crowd on "
+                           "his own book's crossover."},
+            "shelf": ["gauntlet-o1"],
+        },
+        {
+            "era": "Chromium", "years": "1992–2014",
+            "h": "The twenty-two-year hole",
+            "body": [
+                "<b>Silver Surfer (1987) #67&ndash;146, the 2003 Straczynski series and the "
+                "2011 mini have no omnibus</b>, so the shelf jumps from 1992 to 2014.",
+                "That is a large absence and it is Marvel's, not a curation call. It includes "
+                "the entire back half of the longest run the character has ever had.",
+                "The note on the Slott volume says so on the page."],
+            "shelf": ["gauntlet-o1", "slott-o1"], "shelfLabel": "Either side of the gap",
+        },
+        {
+            "era": "Modern", "years": "2014–2017",
+            "h": "Slott and Allred: the one where he is happy",
+            "body": [
+                "<b>Dan Slott and Michael Allred</b> solve the Surfer problem by refusing it "
+                "entirely. Instead of an alien mourning his exile, they write <b><i>Doctor "
+                "Who</i></b>: a strange, powerful traveller and an ordinary human woman from "
+                "Massachusetts named Dawn Greenwood, going anywhere, mostly delighted.",
+                "It is the only genuinely <b>joyful</b> book on this shelf and it is by some "
+                "distance the best-reviewed.",
+                "Allred draws it in flat pop-art line with no rendering &mdash; solid colour, "
+                "clean contour, mid-century design &mdash; and Laura Allred's colouring does "
+                "half the work. Against a character defined by reflective chrome, refusing to "
+                "render is a genuinely bold choice, and it works.",
+                "<b>#11 of the 2016 series won the Eisner for Best Single Issue.</b> It is a "
+                "formal experiment &mdash; part of it runs backwards and upside down, and the "
+                "page structure has to be physically turned &mdash; and it is one of the very "
+                "few Marvel comics that is meaningfully worse in digital."],
+            "fig": {"src": [A + "ssf7-1.jpg"],
+                    "cap": "Allred's #1 &mdash; flat colour, clean line, and no attempt at "
+                           "chrome at all."},
+            "makers": [
+                {"n": "Michael Allred", "r": "Pencils",
+                 "b": "The <b>refusal to render</b>. Every other Surfer artist has tried to "
+                      "draw reflective metal; Allred draws a flat white shape with a black "
+                      "contour and lets the colour carry it. It should not work on this "
+                      "character and it is the best-looking version there has been."}],
+            "shelf": ["slott-o1"],
+        },
+    ],
+    "tone": {
+        "h": "The tone map",
+        "sub": "Only four books, and they could hardly disagree more about what a Silver Surfer "
+               "comic is for.",
+        "modes": [
+            {"l": "Most philosophical",
+             "b": "Lee and Buscema, 1968. Soliloquies about human cruelty from a man who cannot "
+                  "leave. Stan Lee's most personal work, and the most beautiful figure drawing "
+                  "on the shelf.",
+             "vols": ["ss-o1"]},
+            {"l": "Most space opera",
+             "b": "The 1987 relaunch with the barrier gone &mdash; Kree, Skrulls, galactic "
+                  "politics. Plus Moebius's <i>Parable</i>, which looks like nothing else "
+                  "Marvel has printed.",
+             "vols": ["spaceways-o1"]},
+            {"l": "Most consequential",
+             "b": "Starlin's Thanos material. The Surfer's own title becomes the launchpad for "
+                  "the biggest event in Marvel's history &mdash; at the cost of being about "
+                  "him.",
+             "vols": ["gauntlet-o1"]},
+            {"l": "Happiest",
+             "b": "Slott and Allred. <i>Doctor Who</i> with a surfboard, in flat pop-art "
+                  "colour, and an Eisner-winning issue that reads upside down. The only "
+                  "joyful book here.",
+             "vols": ["slott-o1"]},
+        ],
+    },
+}
+
+
+def _v(k, t, l, s, v):
+    return {"kicker": k, "title": t, "lede": l, "sections": s, "verdict": v}
+
+
+VOLUMES = {
+
+"ss-o1": _v("Volume 01 · 1967–1970", "Silver Surfer Omnibus",
+    "Eighteen double-sized issues of Stan Lee's most personal writing, drawn by John Buscema "
+    "at the height of his powers &mdash; and cancelled anyway.",
+    [{"era": "Silver", "years": "1968–1970",
+      "h": "The exile",
+      "body": [
+          "The premise is a prison: Galactus has confined him to Earth, and he spends eighteen "
+          "issues appalled by what he finds and unable to leave or to stop caring.",
+          "Lee writes it in <b>extended soliloquy</b>, and it is by some way the most "
+          "self-consciously literary thing he did &mdash; long speeches about war, greed and "
+          "human self-destruction, with the Surfer as a permanent outsider. Whether that reads "
+          "as profound or as overwritten is the volume's whole argument, and both readings are "
+          "defensible.",
+          "It is also where Lee and Kirby disagreed. <b>Kirby's Surfer had no past at all</b> "
+          "&mdash; a construct of Galactus, blank by design. Lee gave him Zenn-La, a home and "
+          "a lost love, and Kirby did not draw the book.",
+          "The format is the other thing to know: <b>double-sized, 25 cents</b>, which is why "
+          "Buscema gets full-page figure work. It was cut to standard size at #15 and cancelled "
+          "at #18."],
+      "makers": [{"n": "John Buscema", "r": "Pencils",
+                  "b": "This is a <b>nude figure study</b> with a surfboard. There is no costume "
+                       "and no face detail to hide behind, so every panel is anatomy and "
+                       "gesture, and Buscema was one of the two or three best in the industry "
+                       "at exactly that."}],
+      "fig": {"src": [A + "ssf-1.jpg", A + "ssf-18.jpg"],
+              "cap": "<b>Left:</b> #1, double-sized. <b>Right:</b> #18, the last one &mdash; "
+                     "note it is back to standard size."}}],
+    {"standing": "Beautiful and divisive", "cls": "mixed",
+     "body": ["<b>The art has no detractors.</b> Buscema's work here is routinely named among "
+              "the finest of the Silver Age, and the double-sized format is a large part of "
+              "why.",
+              "The writing splits people sharply. Its admirers call it Lee's most sincere and "
+              "ambitious work; its critics find the soliloquising <b>relentless and "
+              "self-pitying</b> across eighteen issues, and the phrase 'the Surfer complains "
+              "for a hundred pages' is not rare.",
+              "Both camps are describing the same book. Read three issues before deciding, and "
+              "note it was cancelled &mdash; the audience of 1970 sided with the critics."]}),
+
+"spaceways-o1": _v("Volume 02 · 1980–1990", "Silver Surfer: Return to the Spaceways Omnibus",
+    "The barrier comes down and the book becomes space opera at last &mdash; plus two graphic "
+    "novels and Moebius.",
+    [{"era": "Copper", "years": "1987–1990",
+      "h": "Englehart, Rogers, and getting off Earth",
+      "body": [
+          "<b>Steve Englehart</b>'s relaunch does the obvious thing nobody had done: it removes "
+          "the barrier. Freed of the prison premise the book becomes galactic &mdash; Kree, "
+          "Skrulls, the Elders of the Universe, and real political scale.",
+          "<b>Marshall Rogers</b> draws the early issues, and he is the artist Todd McFarlane "
+          "named for capes: clean geometry, architectural precision, and a real feel for "
+          "reflective surface. <b>Ron Lim</b> then takes over and becomes the era's definitive "
+          "Surfer artist.",
+          "The 1982 Stan Lee and <b>John Byrne</b> one-shot opens the volume and is the bridge "
+          "out of the twelve-year hiatus."]},
+     {"era": "Copper", "years": "1988–1990",
+      "h": "Parable",
+      "body": [
+          "Stan Lee and <b>Moebius</b> &mdash; Jean Giraud, the most influential European "
+          "cartoonist of the century &mdash; made a two-issue story in which Galactus arrives "
+          "on Earth, poses as a god, and humanity worships him.",
+          "It looks like nothing else on this site. <b>Clear line, flat colour, no rendering, "
+          "enormous empty spaces</b>, and a stillness that American superhero comics do not "
+          "attempt. Whether the script matches the art is arguable; the art is not.",
+          "The volume also holds both graphic novels &mdash; <i>Judgment Day</i> and <i>The "
+          "Enslavers</i> &mdash; and a long tail of one-offs, which is why eight of its eleven "
+          "chapters are a single issue each. That is the book, not a chaptering error."],
+      "fig": {"src": [A + "ssf2-1.jpg", A + "ssfpar-1.jpg"],
+              "cap": "<b>Left:</b> the 1982 Byrne one-shot. <b>Right:</b> Moebius."}}],
+    {"standing": "Strong and varied", "cls": "",
+     "body": ["Well regarded, and the reception is unusually split by component. <b>Englehart's "
+              "relaunch</b> is treated as the moment the character finally worked as an ongoing "
+              "concern. <b><i>Parable</i></b> is regarded as an art landmark and gets "
+              "recommended well outside superhero circles.",
+              "The graphic novels are more mixed &mdash; <i>The Enslavers</i> in particular is "
+              "considered slight. Rogers's short stint leaves readers wishing for more of it.",
+              "As a package it is the most varied book on this small shelf and probably the "
+              "best value on it."]}),
+
+"gauntlet-o1": _v("Volume 03 · 1990–1992", "Silver Surfer: The Infinity Gauntlet Omnibus",
+    "Starlin turns the Surfer's own book into the launchpad for the biggest story Marvel has "
+    "&mdash; which is both its achievement and its cost.",
+    [{"era": "Copper", "years": "1990–1992",
+      "h": "Somebody else's story",
+      "body": [
+          "<b>Jim Starlin</b> had created Thanos in an Iron Man comic in 1973 and had been "
+          "building him for seventeen years. <i>The Thanos Quest</i> and then <b><i>The "
+          "Infinity Gauntlet</i></b> are the payoff, and they run through the Silver Surfer's "
+          "title.",
+          "The Surfer is the right vehicle because he is <b>the only Marvel character who can "
+          "credibly stand in that room</b> &mdash; the scale requires someone who has met "
+          "Galactus and survived.",
+          "What it costs is that this is not really his story. He is a witness to it. Readers "
+          "who come for a Silver Surfer comic and find an Infinity Gauntlet comic have a fair "
+          "complaint.",
+          "<b>Ron Lim</b> draws most of it, and his clean, uncluttered work is why a story with "
+          "several dozen characters in it stays readable. George P&eacute;rez drew the first "
+          "half of the <i>Gauntlet</i> mini itself."],
+      "fig": {"src": [A + "ssf3-34.jpg", A + "infg-1.jpg"],
+              "cap": "<b>Left:</b> #34, where Thanos arrives. <b>Right:</b> the event."}},
+     {"era": "Copper", "years": "2026",
+      "h": "One practical note",
+      "body": [
+          "<b>This volume has not shipped yet</b> &mdash; 3 November 2026 &mdash; and is on the "
+          "shelf ahead of that because its contents, its deep links and its jacket are all "
+          "real. Its cover here is a small flat scan taken from a bookseller, because the wiki "
+          "has no jacket for an unreleased book; it will be replaced when the volume ships.",
+          "It is also <b>not</b> the 2014 <i>Infinity Gauntlet Omnibus</i>, which is the event "
+          "edition with the crossover tie-ins. This is the Surfer edition: his run, his annuals, "
+          "the Thanos Quest and the Marvel Comics Presents stories, and nothing that is not his."]}],
+    {"standing": "Hugely influential", "cls": "",
+     "body": ["<i>The Infinity Gauntlet</i> is one of the most consequential Marvel stories "
+              "ever published &mdash; it defined the cosmic corner of the universe for thirty "
+              "years and supplied the plot of two of the highest-grossing films ever made.",
+              "The criticism specific to <i>this</i> volume is scope: readers note that "
+              "<b>the Silver Surfer is a supporting character in his own omnibus</b>, and if "
+              "you want the Surfer rather than Thanos, the volume either side of it serves you "
+              "better.",
+              "Starlin's Thanos writing gets consistent praise; the sheer number of characters "
+              "is the recurring complaint."]}),
+
+"slott-o1": _v("Volume 04 · 2014–2017", "Silver Surfer by Slott & Allred Omnibus",
+    "<i>Doctor Who</i> with a surfboard, in flat pop-art colour &mdash; and an Eisner-winning "
+    "issue that has to be physically turned upside down.",
+    [{"era": "Modern", "years": "2014–2017",
+      "h": "Refusing the premise",
+      "body": [
+          "Every previous run treats the Surfer as an exile in mourning. <b>Dan Slott and "
+          "Michael Allred</b> pair him with <b>Dawn Greenwood</b>, an ordinary woman from "
+          "Massachusetts who has never left her home town, and send them anywhere they like.",
+          "The template is openly <i>Doctor Who</i> &mdash; a strange powerful traveller, a "
+          "human companion who supplies the moral centre, and a universe treated as a place to "
+          "be <i>delighted</i> by. It is the only happy book on this shelf and it is the "
+          "best-reviewed.",
+          "<b>#11 of the 2016 series won the Eisner Award for Best Single Issue.</b> Part of it "
+          "runs backwards and upside down, and the reading path requires physically rotating "
+          "the book &mdash; which makes it one of the very few Marvel comics that is genuinely "
+          "worse to read digitally.",
+          "The ending of the run is widely described as one of the most moving conclusions "
+          "Marvel has published in the modern era."],
+      "makers": [{"n": "Michael Allred", "r": "Pencils",
+                  "b": "Compare a page here with any Buscema or Lim page. Allred <b>refuses to "
+                       "render the chrome at all</b> &mdash; a flat white shape with a black "
+                       "outline &mdash; and instead makes the colour and the composition carry "
+                       "everything. Laura Allred's flat, saturated palette is doing at least "
+                       "half the work."}],
+      "fig": {"src": [A + "ssf7-1.jpg"],
+              "cap": "Allred's #1. No gradients, no reflections, no rendering."}}],
+    {"standing": "Modern classic", "cls": "",
+     "body": ["Critically the <b>best-received Silver Surfer run there has been</b>, with an "
+              "Eisner for its best-known issue and a conclusion readers frequently describe as "
+              "genuinely affecting.",
+              "The reservation is tonal and honest: it is a <b>very different book</b> from "
+              "everything else on this shelf, and readers who want cosmic gravity find it "
+              "whimsical. If you loved the 1968 soliloquies you may bounce off this "
+              "completely, and vice versa.",
+              "Its cover scan is one of the shelf's low-resolution ones. It is the easiest "
+              "book here to recommend to someone who does not read comics."]}),
+
+}
+
+TOUR = {"overview": OVERVIEW, "volumes": VOLUMES}
