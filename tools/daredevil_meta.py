@@ -40,11 +40,16 @@ ORDER = [
   art="o-crimson", tex="tex-crosshatch", spine="Daredevil",
  cover="Art/Daredevil/dd-o3.jpg",
   note="Daredevil and the Black Widow, which is what the cover said for four years — Matt leaves New York for San Francisco and the book becomes a two-hander. Natasha's own Amazing Adventures strips are collected in front of it, so you get her solo run and the partnership it fed into."),),
+("Daredevil Omnibus Vol 1 4", dict(id="dd-o4", title="Daredevil Omnibus", vol="Vol. 4",
+  creators="Marv Wolfman, Jim Shooter & Gene Colan", era="1975–1979", released="Sep 2026",
+  art="o-kitchen", tex="tex-halftone", spine="Daredevil",
+ cover="Art/Daredevil/dd-o4.jpg",
+  note="Ships September 2026 \u2014 on the shelf ahead of that because its contents, links and jacket are all real. The stretch nobody collects: Matt back in New York, Bullseye created, the Death-Stalker and the Purple Man, and Klaus Janson arriving as inker two issues before the book changes forever. It ends on #158, Frank Miller's first issue, which the Miller & Janson volume then opens with."),),
 ("Daredevil by Miller and Janson Omnibus Vol 1 1", dict(id="miller-o1", title="Daredevil by Miller & Janson Omnibus", vol="",
   creators="Frank Miller, Klaus Janson & Roger McKenzie", era="1979–1983", released="Mar 2007",
   art="o-kitchen", tex="tex-crosshatch", spine="Miller & Janson",
  cover="Art/Daredevil/miller-o1.jpg",
-  note="The run that decided what Daredevil is. Miller arrives as the artist on #158 under Roger McKenzie, takes the writing at #168 with Elektra, and by the time he leaves at #191 the book is about Hell's Kitchen, the Hand, and Wilson Fisk. #162 is skipped because it is a Ditko fill-in, not theirs. Note the jump to get here: Daredevil #120–157 has no omnibus until Vol. 4 ships in September 2026."),),
+  note="The run that decided what Daredevil is. Miller arrives as the artist on #158 under Roger McKenzie, takes the writing at #168 with Elektra, and by the time he leaves at #191 the book is about Hell's Kitchen, the Hand, and Wilson Fisk. #162 is skipped because it is a Ditko fill-in, not theirs. Note it opens on #158, which Omnibus Vol. 4 also holds — that issue is Miller's first and both books want it, so it is the shelf's only overlap."),),
 ("Daredevil by Frank Miller Omnibus Companion Vol 1 1", dict(id="millerc-o1", title="Daredevil by Frank Miller Omnibus Companion", vol="",
   creators="Frank Miller, David Mazzucchelli & John Romita Jr.", era="1979–1993", released="Dec 2007",
   art="o-borna", tex="tex-brick", chapterby="series", spine="Miller Companion",
@@ -121,7 +126,7 @@ PLACEHOLDERS = []
 # the Miller run it comments on, rather than at its 1993 end date) is already
 # what publication order gives.
 SHELF = [
-  "dd-o1", "dd-o2", "dd-o3",
+  "dd-o1", "dd-o2", "dd-o3", "dd-o4",
   "miller-o1", "millerc-o1",
   "nocenti-o1", "nocenti-o2",
   "bendis-o1", "bendis-o2",
@@ -147,6 +152,7 @@ PLACEHOLDER_PAGES = {}
 # the marvel_ids.json store is shared -- but the display name is free, and
 # naming the year is tiebreak()'s strongest rule.
 SERIES_EXTRA = {
+ "Ghost Rider Vol 2":                                  ("gr2",    "Ghost Rider (1973)"),
  "Daredevil Vol 1":                                    ("dd",     "Daredevil (1964)"),
  "Daredevil Vol 2":                                    ("dd2",    "Daredevil (1998)"),
  "Daredevil Vol 3":                                    ("dd3",    "Daredevil (2011)"),

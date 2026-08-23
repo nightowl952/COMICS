@@ -353,6 +353,7 @@
   .a-moon{background:linear-gradient(163deg,#fdfeff 0%,#d4dfec 26%,#8494ab 56%,#1b2432 100%);}
   .a-daredevil{background:linear-gradient(163deg,#e8353a 0%,#9d0f16 38%,#4a060c 68%,#120306 100%);}
   .a-surfer{background:linear-gradient(163deg,#eef4fb 0%,#9fb3cc 30%,#3b4a6b 62%,#0a0a12 100%);}
+  .a-cap{background:linear-gradient(163deg,#bfe0ff 0%,#3a6fd8 34%,#8f1016 70%,#160308 100%);}
 
   /* ---------- hero textures ---------- */
   .tex-web{background:
@@ -387,6 +388,9 @@
     radial-gradient(circle at 63% 76%, rgba(255,255,255,.55) 0 1.1px, transparent 1.6px),
     radial-gradient(circle at 33% 88%, rgba(255,255,255,.45) 0 1px, transparent 1.5px),
     linear-gradient(180deg, transparent 52%, rgba(18,24,38,.55));}
+  .tex-stripes{background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.10) 0 6px,transparent 6px 18px),
+    repeating-radial-gradient(circle at 50% 34%,rgba(255,255,255,.13) 0 2px,transparent 2px 15px);}
   .tex-wake{background:
     linear-gradient(97deg, transparent 40%, rgba(255,255,255,.24) 41%, rgba(255,255,255,.03) 45%, transparent 46%),
     linear-gradient(97deg, transparent 56%, rgba(255,255,255,.18) 57%, rgba(255,255,255,.02) 61%, transparent 62%),
@@ -409,6 +413,7 @@
   .a-moon.wide{background:linear-gradient(104deg,#fdfeff 0%,#d4dfec 34%,#8494ab 66%,#1b2432 100%);}
   .a-daredevil.wide{background:linear-gradient(104deg,#e8353a 0%,#9d0f16 44%,#4a060c 74%,#120306 100%);}
   .a-surfer.wide{background:linear-gradient(104deg,#eef4fb 0%,#9fb3cc 36%,#3b4a6b 70%,#0a0a12 100%);}
+  .a-cap.wide{background:linear-gradient(104deg,#bfe0ff 0%,#3a6fd8 40%,#8f1016 74%,#160308 100%);}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
   @media (max-width:600px){
@@ -461,7 +466,7 @@
     <div class="hb-in">
       <div class="hb-name">C.O.M.I.C.S.</div>
       <div class="hb-sub">Caleb&rsquo;s Online Marvel Intractable Comic Shelf</div>
-      <div class="hb-blurb">Eight subjects, every one of them a shelf of omnibus volumes with the issue list
+      <div class="hb-blurb">Nine subjects, every one of them a shelf of omnibus volumes with the issue list
         each printed book actually holds. Pick up wherever you left off &mdash; or start something new.</div>
     </div>
   </div>
@@ -573,6 +578,11 @@ const EMBLEMS = {
     '<circle cx="52" cy="22" r="6.6" fill="url(#g$)"/>' +
     '<ellipse cx="52" cy="65" rx="33" ry="7" transform="rotate(-13 52 65)" fill="url(#g$)"/>',
 
+  star: '<g fill="none" stroke="url(#g$)" stroke-width="7">' +
+    '<circle cx="50" cy="50" r="40"/><circle cx="50" cy="50" r="25"/></g>' +
+    '<circle cx="50" cy="50" r="12" fill="url(#g$)" opacity=".3"/>' +
+    '<path fill="url(#g$)" d="M50,35 l4,8.7 9.5,1.1 -7.1,6.5 1.9,9.4 -8.3,-4.8 -8.3,4.8 1.9,-9.4 -7.1,-6.5 9.5,-1.1 z"/>',
+
   dd: '<g fill="none" stroke="url(#g$)" stroke-width="6"><circle cx="50" cy="50" r="39"/></g>' +
     '<text x="50" y="52" text-anchor="middle" dominant-baseline="central" fill="url(#g$)"' +
     ' font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="44" font-weight="900" font-style="italic"' +
@@ -598,7 +608,7 @@ const HEROES = [
     desc:"A curated Spider-Man shelf of 16 omnibus volumes — each one collecting exactly what the printed book collects, in print order. All 16 carry full issue lists (606 issues) across Lee/Ditko, Romita, Conway, Untold Tales, Stern, McFarlane, Larsen, Venom and Maximum Carnage, the Clone Saga, Ben Reilly, Straczynski and Ultimate Spider-Man." },
 
   { id:"wolverine", name:"Wolverine", art:"a-wolverine", tex:"tex-claw", emblem:"claws", cover:"Art/Heroes/wolverine.jpg", pos:"13%", plate:["188,130,10","46,28,2"], logo:"Art/Logos/wolverine.png", logow:"84%",
-    era:"Omnibus Shelf · 1974–2024", file:"wolverine-reading-tracker.html", total:636,
+    era:"Omnibus Shelf · 1974–2024", file:"wolverine-reading-tracker.html", total:665,
     desc:"Fourteen omnibuses on a shelf, from Incredible Hulk #180 to the end of the Sabretooth War — 635 issues reproducing exactly what each printed book holds. Six mainline volumes carry 1974–1997 and Not Dead Yet runs on to 2001; after that it is the creator runs and the event books — Millar's Enemy of the State and Old Man Logan, Aaron's two stretches, Remender's Uncanny X-Force, and the death and the return. One gap is Marvel's, not ours: Wolverine #159–189 is not collected in omnibus until 2027. Laura Kinney's books and the X-Men team titles are a different subject and are not here." },
 
   { id:"hulk", name:"Hulk", art:"a-hulk", tex:"tex-smash", emblem:"fist", cover:"Art/Heroes/hulk.jpg", pos:"41%", plate:["104,52,158","26,10,50"], logo:"Art/Logos/hulk.png", logow:"84%",
@@ -610,20 +620,24 @@ const HEROES = [
     desc:"Four omnibuses Marvel never printed. The Messiah trilogy has no collected edition, so this shelf is a mock-up: the same researched chronological read — 174 issues across 27 arcs, Divided We Stand through Second Coming — cut into the four hardcovers it would take. Marvel deep links, per-arc spoiler digests that work offline, and optional arcs still foldable out of the way." },
 
   { id:"fantastic-four", name:"Fantastic Four", art:"a-ff", tex:"tex-cosmic", emblem:"four", cover:"Art/Heroes/fantastic-four.jpg", pos:"45%", plate:["22,96,146","5,26,44"], logo:"Art/Logos/fantastic-four.png",
-    era:"Omnibus Shelf · 1961–2020", file:"fantasticfour-reading-tracker.html", total:661,
+    era:"Omnibus Shelf · 1961–2022", file:"fantasticfour-reading-tracker.html", total:688,
     desc:"Eighteen omnibuses on a shelf, from Fantastic Four #1 to the end of the Griever arc — 660 issues reproducing exactly what each printed book holds. Lee and Kirby carry six volumes, then Byrne, Waid & Wieringo, Millar & Hitch, Hickman, Fraction and Slott. The Thing's solo omnibus sits between the two Byrne books, where it was published; Doctor Doom's Book of Doom and both Ultimate volumes close the shelf. One gap is Marvel's, not ours: Fantastic Four #296–488 has never been collected." },
 
   { id:"moon-knight", name:"Moon Knight", art:"a-moon", tex:"tex-moon", emblem:"crescent", cover:"Art/Heroes/moon-knight.jpg", pos:"7%", plate:["26,28,34","3,3,7"], logo:"Art/Logos/moon-knight.png", light:true,
     era:"Omnibus Shelf · 1975–2024", file:"moonknight-reading-tracker.html", total:260,
     desc:"Every Moon Knight omnibus Marvel has printed — seven volumes, 260 issues, reproducing exactly what each book holds. Moench and Sienkiewicz build him across the first two, the sixty-issue Marc Spector run fills the next two, then the relaunches that each decided he was something else: Huston's horror, Ellis and Shalvey's white suit, MacKay's Midnight Mission. Two gaps are Marvel's, not ours — Bendis and Maleev's 2011 series and Lemire's 2016 one have never been collected." },
 
+  { id:"daredevil", name:"Daredevil", art:"a-daredevil", tex:"tex-radar", emblem:"dd", cover:"Art/Heroes/daredevil.jpg", pos:"11%", plate:["124,14,20","30,2,5"], logo:"Art/Logos/daredevil.png",
+    era:"Omnibus Shelf · 1964–2023", file:"daredevil-reading-tracker.html", total:633,
+    desc:"Seventeen omnibuses on a shelf, from Daredevil #1 to the end of Zdarsky's run — 590 issues reproducing exactly what each printed book holds. Three mainline volumes carry the Lee/Colan years, then the runs that made the character: Miller and Janson, Born Again in the Miller Companion, Nocenti and Romita Jr., Bendis and Maleev, Brubaker and Lark, Shadowland, Waid and Samnee, Soule, Zdarsky. Two gaps are Marvel's, not ours — the Denny O'Neil run and the whole 1991–2000 stretch through the Marvel Knights relaunch have never been collected. Elektra's own books are a different subject and are not here." },
+
+  { id:"captain-america", name:"Captain America", art:"a-cap", tex:"tex-stripes", emblem:"star", cover:"Art/Heroes/captain-america.jpg", pos:"26%", plate:["30,58,132","7,14,42"], logo:"Art/Logos/captain-america.png",
+    era:"Omnibus Shelf · 1941–2021", file:"captainamerica-reading-tracker.html", total:725,
+    desc:"Twenty-two omnibuses of Steve Rogers' own book, 725 issues, reproducing exactly what each printed volume holds. It starts where he does — Simon and Kirby in 1941, punching Hitler a year before America entered the war — then the thaw in Tales of Suspense, Englehart's Secret Empire, Kirby's return, ten years of Gruenwald, Waid, Jurgens, and the eight years of Brubaker that reset the character and killed him in the middle of it. Spencer's Secret Empire and Coates close it out. The Invaders are a team book and are not here; the Jack Kirby omnibus is not either, because Omnibus Vol. 4 holds every issue of it and one more." },
+
   { id:"silver-surfer", name:"Silver Surfer", art:"a-surfer", tex:"tex-wake", emblem:"board", cover:"Art/Heroes/silver-surfer.jpg", pos:"39%", plate:["74,86,102","28,34,44"], logo:"Art/Logos/silver-surfer.png",
     era:"Omnibus Shelf · 1967–2017", file:"silversurfer-reading-tracker.html", total:141,
-    desc:"Every Silver Surfer omnibus there is — four volumes, 141 issues, reproducing exactly what each printed book holds. Lee and Buscema's eighteen double-sized issues under Galactus's barrier; Return to the Spaceways for the 1980s, when Englehart and Rogers finally let him off Earth, with Stan Lee's two graphic novels and Moebius's Parable in the tail of it; Starlin's Infinity Gauntlet, where the book stops being about the Surfer's conscience and becomes about Thanos; then Slott and Allred's thirty issues of him and Dawn Greenwood loose in time. The Gauntlet volume ships in November and is on the shelf ahead of that, because its contents, links and cover are all real. What is still missing is Marvel's doing, not ours — Silver Surfer (1987) #67–146, the 2003 series and the 2011 one have no omnibus at all." },
-
-  { id:"daredevil", name:"Daredevil", art:"a-daredevil", tex:"tex-radar", emblem:"dd", cover:"Art/Heroes/daredevil.jpg", pos:"11%", plate:["124,14,20","30,2,5"], logo:"Art/Logos/daredevil.png",
-    era:"Omnibus Shelf · 1964–2023", file:"daredevil-reading-tracker.html", total:590,
-    desc:"Seventeen omnibuses on a shelf, from Daredevil #1 to the end of Zdarsky's run — 590 issues reproducing exactly what each printed book holds. Three mainline volumes carry the Lee/Colan years, then the runs that made the character: Miller and Janson, Born Again in the Miller Companion, Nocenti and Romita Jr., Bendis and Maleev, Brubaker and Lark, Shadowland, Waid and Samnee, Soule, Zdarsky. Two gaps are Marvel's, not ours — the Denny O'Neil run and the whole 1991–2000 stretch through the Marvel Knights relaunch have never been collected. Elektra's own books are a different subject and are not here." }
+    desc:"Every Silver Surfer omnibus there is — four volumes, 141 issues, reproducing exactly what each printed book holds. Lee and Buscema's eighteen double-sized issues under Galactus's barrier; Return to the Spaceways for the 1980s, when Englehart and Rogers finally let him off Earth, with Stan Lee's two graphic novels and Moebius's Parable in the tail of it; Starlin's Infinity Gauntlet, where the book stops being about the Surfer's conscience and becomes about Thanos; then Slott and Allred's thirty issues of him and Dawn Greenwood loose in time. The Gauntlet volume ships in November and is on the shelf ahead of that, because its contents, links and cover are all real. What is still missing is Marvel's doing, not ours — Silver Surfer (1987) #67–146, the 2003 series and the 2011 one have no omnibus at all." }
 ];
 
 /* ============ STORAGE (dual-mode, same contract as the trackers) ============ */
@@ -673,6 +687,7 @@ const PROGRESS_KEYS = {
   "moon-knight":    "moonknight-omni-progress-v1",
   "daredevil":      "daredevil-omni-progress-v1",
   "silver-surfer":  "silversurfer-omni-progress-v1",
+  "captain-america":"captainamerica-omni-progress-v1",
   "xmen":           "xmen-saga-progress-v2"
 };
 /* Read straight from the X-Men tracker's own progress key as a fallback, so the

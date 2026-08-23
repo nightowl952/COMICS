@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C.O.M.I.C.S. // Spider-Man Omnibus Protocol</title>
+<title>C.O.M.I.C.S. // Captain America Omnibus Protocol</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -364,42 +364,37 @@
     background:linear-gradient(104deg, rgba(255,255,255,.30), transparent 72%);}
   .vig{position:absolute;inset:0;pointer-events:none;
     background:radial-gradient(ellipse 92% 72% at 50% 32%, transparent 42%, rgba(0,8,26,.5) 100%);}
-  .omni .spidey{position:absolute;left:0;right:0;top:13%;display:flex;align-items:center;justify-content:center;}
-  .omni .spidey svg{width:47%;max-width:104px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,10,35,.6));}
+  .omni .glyph{position:absolute;left:0;right:0;top:13%;display:flex;align-items:center;justify-content:center;}
+  .omni .glyph svg{width:47%;max-width:104px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,10,35,.6));}
 
   /* ---- omnibus cover ramps (placeholders until real art is dropped in) ---- */
-  .o-ditko{background:linear-gradient(163deg,#e2483f 0%,#b81f26 34%,#1d3f8c 70%,#0b1d47 100%);}
-  .o-untold{background:linear-gradient(163deg,#f0c874 0%,#c9702e 32%,#8d2226 66%,#2a1024 100%);}
-  .o-romita{background:linear-gradient(163deg,#ff6a5e 0%,#d92a30 34%,#2454b0 70%,#0d2154 100%);}
-  .o-teamup{background:linear-gradient(163deg,#ffb24d 0%,#e2661f 32%,#7d2a8e 68%,#25113f 100%);}
-  .o-conway{background:linear-gradient(163deg,#ee5a4a 0%,#bd2028 36%,#16306e 70%,#080f33 100%);}
-  .o-spectacular{background:linear-gradient(163deg,#7fc0f2 0%,#3566c4 34%,#4a2a92 68%,#140b34 100%);}
-  .o-eighties{background:linear-gradient(163deg,#f2564c 0%,#a8151d 36%,#2b2b33 72%,#0a0a10 100%);}
-  .o-stern{background:linear-gradient(163deg,#ffd66b 0%,#e07a1c 32%,#a3161d 66%,#2c0810 100%);}
-  .o-black{background:linear-gradient(163deg,#6d7f9c 0%,#31405c 34%,#141a2c 70%,#05070f 100%);}
-  .o-mcfarlane{background:linear-gradient(163deg,#8f6fd6 0%,#4a2f9c 34%,#1c1140 70%,#07040f 100%);}
-  .o-larsen{background:linear-gradient(163deg,#5fd3d0 0%,#1f8f9c 32%,#a8231f 70%,#2b0708 100%);}
-  .o-bagley{background:linear-gradient(163deg,#ff5f52 0%,#d5121a 34%,#1b4fb5 70%,#0a1b4d 100%);}
-  .o-dematteis{background:linear-gradient(163deg,#8fd45c 0%,#3f8c2c 34%,#5c2a8e 70%,#1a0a33 100%);}
-  .o-clone{background:linear-gradient(163deg,#9fe06a 0%,#3f9433 32%,#a81d22 68%,#280609 100%);}
-  .o-benreilly{background:linear-gradient(163deg,#ff5a52 0%,#c2161c 32%,#1e3f96 68%,#080f33 100%);}
-  .o-jms{background:linear-gradient(163deg,#c94f3a 0%,#8c1a22 34%,#3a1f5e 70%,#0d0718 100%);}
-  .o-ultimate{background:linear-gradient(163deg,#ff4d4d 0%,#d01018 32%,#123a99 68%,#050f33 100%);}
-  .o-venom{background:linear-gradient(163deg,#b9b3d6 0%,#4c3f8f 32%,#1a1330 68%,#040308 100%);}
+  .o-goldenage{background:linear-gradient(163deg,#f5e08a 0%,#d8a72c 30%,#6b4a10 66%,#140d02 100%);}
+  .o-shield{background:linear-gradient(163deg,#a9d0ff 0%,#3a6fd8 32%,#12306b 68%,#050c1c 100%);}
+  .o-secret{background:linear-gradient(163deg,#d8dee8 0%,#6f7d95 32%,#2a3145 68%,#080a12 100%);}
+  .o-kirbycap{background:linear-gradient(163deg,#ffd97a 0%,#e0561f 34%,#1b3a8f 70%,#070d22 100%);}
+  .o-cap80s{background:linear-gradient(163deg,#ffe0a8 0%,#e0a72c 30%,#1b3a8f 66%,#060c1e 100%);}
+  .o-heroes{background:linear-gradient(163deg,#bfe0ff 0%,#4a86e8 32%,#12306b 68%,#040a18 100%);}
+  .o-wintersoldier{background:linear-gradient(163deg,#e2e8f0 0%,#7f8fa3 32%,#2c3542 68%,#080a0e 100%);}
+  .o-mourning{background:linear-gradient(163deg,#c9ced6 0%,#5d646c 30%,#22262e 66%,#060709 100%);}
+  .o-dimensionz{background:linear-gradient(163deg,#ffb98a 0%,#e0512a 32%,#3a1050 68%,#0c0418 100%);}
+  .o-hydra{background:linear-gradient(163deg,#9ee0a8 0%,#2f8f4a 32%,#0e3a24 68%,#030e08 100%);}
+  .o-coates{background:linear-gradient(163deg,#eef2f8 0%,#9aa4b5 30%,#3a4150 66%,#0a0c11 100%);}
   .o-placeholder{background:linear-gradient(163deg,#8ba3bd 0%,#4d6480 34%,#26344a 70%,#0d141f 100%);}
 
   /* ---- cover textures ---- */
-  .tex-web{background:
-    repeating-conic-gradient(from 0deg at 50% 26%, rgba(255,255,255,.13) 0deg .6deg, transparent .6deg 22.5deg),
-    radial-gradient(circle at 50% 26%, transparent 0 6%, rgba(255,255,255,.12) 6% 6.6%, transparent 6.6% 14%,
-      rgba(255,255,255,.11) 14% 14.6%, transparent 14.6% 24%, rgba(255,255,255,.1) 24% 24.6%, transparent 24.6% 36%,
-      rgba(255,255,255,.09) 36% 36.6%, transparent 36.6% 50%, rgba(255,255,255,.07) 50% 50.6%, transparent 50.6%);}
+  .tex-brick{background:
+    repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 13px),
+    repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 1px,transparent 1px 27px) 0 0/27px 26px,
+    repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,transparent 1px 27px) 13px 13px/27px 26px;}
+  .tex-crosshatch{background:
+    repeating-linear-gradient(45deg,rgba(0,0,0,.13) 0 1px,transparent 1px 6px),
+    repeating-linear-gradient(-45deg,rgba(255,255,255,.10) 0 1px,transparent 1px 6px);}
   .tex-halftone{background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,.16) 0 1.4px, transparent 1.8px) 0 0/9px 9px,
-    radial-gradient(circle at 50% 50%, rgba(0,0,0,.10) 0 1.2px, transparent 1.6px) 4px 4px/9px 9px;}
-  .tex-burst{background:
-    repeating-conic-gradient(from 8deg at 50% 34%, rgba(255,255,255,.10) 0deg 2.2deg, transparent 2.2deg 24deg),
-    radial-gradient(circle at 50% 34%, rgba(255,255,255,.2), transparent 54%);}
+    radial-gradient(circle,rgba(255,255,255,.16) 1px,transparent 1.6px) 0 0/9px 9px,
+    radial-gradient(circle,rgba(0,0,0,.14) 1px,transparent 1.6px) 4.5px 4.5px/9px 9px;}
+  .tex-fourdot{background:
+    radial-gradient(circle,rgba(255,255,255,.20) 1.4px,transparent 2px) 0 0/15px 15px,
+    radial-gradient(circle,rgba(0,0,0,.16) 1.4px,transparent 2px) 7.5px 7.5px/15px 15px;}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
   @media (max-width:600px){
@@ -437,7 +432,7 @@
 <nav class="topbar">
   <a class="backlink" href="index.html"><span class="caret">&#9664;</span> C.O.M.I.C.S.</a>
   <button class="backlink hidden" id="backShelf"><span class="caret">&#9664;</span> All omnibuses</button>
-  <span class="crumb" id="crumb">Subject &middot; Spider-Man</span>
+  <span class="crumb" id="crumb">Subject &middot; Captain America</span>
 </nav>
 
 <div class="wrap">
@@ -449,15 +444,15 @@
   <!-- ============ SHELF VIEW ============ -->
   <section id="viewShelf">
     <div class="hb" id="heroBanner">
-      <div class="hb-fallback" style="background:linear-gradient(122deg,#4a0e12 0%,#8d1219 30%,#12275e 70%,#080b13 100%)"></div>
-      <img class="hb-art" src="Art/Banners/spider-man.jpg" alt="" style="object-position:50% 72%" onerror="hbFallback(this)">
+      <div class="hb-fallback" style="background:linear-gradient(122deg,#5c0a10 0%,#8d0f16 32%,#20060b 70%,#080b13 100%)"></div>
+      <img class="hb-art" src="Art/Banners/captain-america.jpg" alt="" style="object-position:50% 0%" onerror="hbFallback(this)">
       <div class="hb-scrim"></div>
       <div class="hb-in">
-        <img class="hb-logo" src="Art/Logos/spider-man.png" alt="Spider-Man"
+        <img class="hb-logo" src="Art/Logos/captain-america.png" alt="Captain America"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-        <div class="hb-name" style="display:none">Spider-Man</div>
-        <div class="hb-sub">Omnibus Shelf &middot; 1962&ndash;2011</div>
-        <div class="hb-blurb">Sixteen omnibus volumes, each reproducing exactly what the printed book collects, in print order &mdash; Lee and Ditko through Ultimate Spider-Man.</div>
+        <div class="hb-name" style="display:none">Captain America</div>
+        <div class="hb-sub">Omnibus Shelf &middot; 1941&ndash;2021</div>
+        <div class="hb-blurb">Twenty-two omnibuses of Steve Rogers&rsquo; own book, Captain America Comics #1 in 1941 to the end of the Coates run.</div>
       </div>
     </div>
     <div class="kr" id="krShelf"></div>
@@ -513,1808 +508,1432 @@
 </div>
 
 <script>const SC = {
-"Amazing Fantasy": [
-"#c9822a",
-"#5c2f0c"
-],
-"Amazing Spider-Man": [
-"#d5262e",
-"#5c0b10"
-],
-"Amazing Spider-Man (1999)": [
-"#d5262e",
-"#5c0b10"
-],
-"Ultimate Spider-Man": [
-"#e02b22",
-"#0e2f7a"
-],
-"Ultimate Comics Spider-Man": [
-"#c21e28",
-"#14173f"
-],
-"Ultimate Avengers vs. New Ultimates": [
-"#3b6fbf",
-"#131a3a"
-],
-"Ultimate Fallout": [
-"#5c6470",
-"#12151c"
-],
-"Amazing Spider-Man Annual": [
-"#e0553a",
-"#6b1a10"
-],
-"Amazing Spider-Man Annual (1999)": [
-"#e0553a",
-"#6b1a10"
-],
-"Spectacular Spider-Man": [
-"#2f6fc4",
-"#122f66"
-],
-"Spectacular Spider-Man Annual": [
-"#3f80d0",
-"#16306b"
-],
-"Spectacular Spider-Man Magazine": [
-"#4a5a7a",
-"#1c2438"
-],
-"Web of Spider-Man": [
-"#2a3550",
-"#0b1020"
-],
-"Web of Spider-Man Annual": [
-"#38466a",
-"#131a2e"
-],
-"Spider-Man (1990)": [
-"#4a2f9c",
-"#1a0f40"
-],
-"Spider-Man Unlimited": [
-"#6a3fb0",
-"#241048"
-],
-"Sensational Spider-Man": [
-"#c2161c",
-"#3d060a"
-],
-"Marvel Team-Up": [
-"#e2661f",
-"#5c2408"
-],
-"Marvel Team-Up Annual": [
-"#ef7a2c",
-"#66290a"
-],
-"Untold Tales of Spider-Man": [
-"#c9702e",
-"#4c2010"
-],
-"Untold Tales of Spider-Man Annual": [
-"#d98a45",
-"#563018"
-],
-"Untold Tales: Strange Encounters": [
-"#b06030",
-"#3e1c0e"
-],
-"Scarlet Spider": [
-"#b0181e",
-"#3a0508"
-],
-"Scarlet Spider Unlimited": [
-"#c02026",
-"#40070a"
-],
-"Web of Scarlet Spider": [
-"#8e1418",
-"#2e0406"
-],
-"Amazing Scarlet Spider": [
-"#c8232a",
-"#450709"
-],
-"Spectacular Scarlet Spider": [
-"#a81d22",
-"#380608"
-],
-"Green Goblin": [
-"#4d9c2c",
-"#173a0d"
-],
-"New Warriors": [
-"#1f8f9c",
-"#08343a"
-],
-"New Warriors Annual": [
-"#26a3b0",
-"#0b3f47"
-],
-"Venom: Lethal Protector": [
-"#1d1d24",
-"#050508"
-],
-"Venom: Along Came a Spider": [
-"#26262f",
-"#07070a"
-],
-"X-Force": [
-"#3a4f8c",
-"#111a38"
-],
-"Nova": [
-"#d8a020",
-"#5c4008"
-],
-"Daredevil": [
-"#a8151d",
-"#380508"
-],
-"Fantastic Four": [
-"#2454b0",
-"#0b2054"
-],
-"Fantastic Four Annual": [
-"#2f66c8",
-"#102a66"
-],
-"Strange Tales Annual": [
-"#6a4fb0",
-"#241a48"
-],
-"Incredible Hulk": [
-"#4d9c2c",
-"#173a0d"
-],
-"Marvel Super-Heroes": [
-"#c04a20",
-"#40170a"
-],
-"Marvel Comics Presents": [
-"#7a5ab0",
-"#2a1c48"
-],
-"What If?": [
-"#5a6a8c",
-"#1e2434"
-],
-"Not Brand Echh": [
-"#d8a83a",
-"#5c4610"
-],
-"101 Ways to End the Clone Saga": [
-"#4a9fd8",
-"#123c78"
-],
-"Amazing Spider-Man Ashcan": [
-"#4a9fd8",
-"#123c78"
-],
-"Amazing Spider-Man Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Collectors' Preview": [
-"#4a9fd8",
-"#123c78"
-],
-"Dead Man's Hand": [
-"#4a9fd8",
-"#123c78"
-],
-"Funeral for an Octopus": [
-"#4a9fd8",
-"#123c78"
-],
-"Giant-Size Spider-Man": [
-"#4a9fd8",
-"#123c78"
-],
-"Giant-Size Super-Heroes": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Bicentennial Calendar 1976": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Guide to Collecting Comics": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Memory Album Calendar 1977": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Premiere": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Tales": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Treasury Edition": [
-"#4a9fd8",
-"#123c78"
-],
-"Marvel Two-In-One": [
-"#4a9fd8",
-"#123c78"
-],
-"Maximum Clonage Alpha": [
-"#4a9fd8",
-"#123c78"
-],
-"Maximum Clonage Omega": [
-"#4a9fd8",
-"#123c78"
-],
-"Mighty Marvel Calendar 1975": [
-"#4a9fd8",
-"#123c78"
-],
-"Official Marvel Try-Out Book": [
-"#4a9fd8",
-"#123c78"
-],
-"Osborn Journals": [
-"#4a9fd8",
-"#123c78"
-],
-"Soul of the Hunter": [
-"#4a9fd8",
-"#123c78"
-],
-"Spectacular Spider-Man Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man Holiday Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man Team-Up": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man/Punisher: Family Plot": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man: Redemption": [
-"#4a9fd8",
-"#123c78"
-],
-"Spider-Man: Revelations": [
-"#4a9fd8",
-"#123c78"
-],
-"The Clone Journal": [
-"#4a9fd8",
-"#123c78"
-],
-"The Final Adventure": [
-"#4a9fd8",
-"#123c78"
-],
-"The Jackal Files": [
-"#4a9fd8",
-"#123c78"
-],
-"The Lost Years": [
-"#4a9fd8",
-"#123c78"
-],
-"The Parker Years": [
-"#4a9fd8",
-"#123c78"
-],
-"Venom Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Web of Spider-Man Super Special": [
-"#4a9fd8",
-"#123c78"
-],
-"Wizard Mini-Comic": [
-"#4a9fd8",
-"#123c78"
-]
-};
+"Captain America Comics": ["#e8d24a", "#1b3a8f"],
+"Captain America (1968)": ["#3a6fd8", "#8f1016"],
+"Captain America (1998)": ["#4a86e8", "#12306b"],
+"Captain America (2004)": ["#7f8fa3", "#1c2432"],
+"Captain America (2011)": ["#4a86e8", "#8f1016"],
+"Captain America (2012)": ["#e8563a", "#2a1048"],
+"Captain America (2017)": ["#5a9be0", "#12306b"],
+"Captain America (2018)": ["#d8d8de", "#2a2f3a"],
+"Captain America Annual (1971)": ["#3a6fd8", "#8f1016"],
+"Tales of Suspense": ["#f0b429", "#8a2c14"],
+"Captain America And Bucky": ["#7f8fa3", "#1c2432"],
+"Captain America: Sam Wilson": ["#e05a2a", "#12306b"],
+"Captain America: Steve Rogers": ["#2f8f4a", "#0e2a18"],
+"Captain America Sentinel Of Liberty (1998)": ["#4a86e8", "#12306b"],
+"Captain America: Reborn": ["#c2242a", "#2a0509"],
+"Captain America: The Legend": ["#d8d8de", "#2a2f3a"],
+"All-New Captain America": ["#e05a2a", "#12306b"],
+"Adventures Of Captain America": ["#e8d24a", "#1b3a8f"],
+"Steve Rogers: Super-Soldier": ["#7f8fa3", "#1c2432"],
+"Winter Soldier (2012)": ["#6c737d", "#171a20"],
+"Secret Empire": ["#2f8f4a", "#0e2a18"],
+"Captain America: Hail Hydra": ["#2f8f4a", "#0e2a18"],
+"U.S.Agent": ["#d84a3a", "#2a1010"],
+"Black Widow (2016)": ["#b0141c", "#1c0508"],
+"Fear Itself": ["#c9a15a", "#3a2410"],
+"Marvel Fanfare": ["#7fd0c2", "#123a4a"],
+"Iron Man": ["#ffd23f", "#a8161a"],
+"What If?": ["#a86fd0", "#2a1048"],
+"Not Brand Echh": ["#f2d24a", "#5a4a10"]
+}
 
 /* ============ OMNIBUS DATA ============
    Contents come from the Marvel Database's structured ReprintOf fields for each
    collected edition, so every issue list matches what the book actually prints,
    in print order. Ordered by the cover date of the material collected.
    `cover` is unset on every volume -- add a real cover image path there and the
-   CSS placeholder art is replaced automatically. */
+   CSS placeholder art is replaced automatically.
+   Generated from tools/captainamerica_meta.py by tools/build_omnibus_data.py --
+   do not hand-edit. */
 const OMNI = [
 {
-"id": "asm-o1",
-"spine": "Amazing Spider-Man",
-"cover": "Art/Spider-Man/asm-o1.jpg",
-"title": "Amazing Spider-Man Omnibus",
+"id": "ga-o1",
+"spine": "Golden Age",
+"cover": "Art/Captain-America/ga-o1.jpg",
+"title": "Golden Age Captain America Omnibus",
 "vol": "Vol. 1",
-"creators": "Stan Lee & Steve Ditko",
-"era": "1962–1966",
-"released": "Apr 2007",
-"art": "o-ditko",
+"creators": "Joe Simon & Jack Kirby",
+"era": "1941–1942",
+"released": "Feb 2014",
+"art": "o-goldenage",
 "tex": "tex-halftone",
-"note": "The complete Lee/Ditko run. Everything Spider-Man is starts here — Amazing Fantasy #15 through the Master Planner saga and Ditko's exit.",
+"note": "Where he starts: Simon and Kirby, twelve anthology issues, and a cover of Cap punching Hitler that ran a year before America entered the war. Each issue is a full book rather than a single story, so this is 12 issues and a great deal of comics.",
 "chapters": [
 {
-"id": "asm-o1-c1",
-"title": "Amazing Fantasy #15",
-"era": "1962–1966",
+"id": "ga-o1-c1",
+"title": "Captain America Comics #1–12",
+"era": "1941–1942",
 "issues": [
 {
-"id": "af-15",
-"t": "Amazing Fantasy #15",
-"s": "Amazing Fantasy"
-}
-]
+"id": "cac-1",
+"t": "Captain America Comics #1",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-o1-c2",
-"title": "Amazing Spider-Man #1–38",
-"era": "1962–1966",
-"issues": [
-{
-"id": "asm-1",
-"t": "Amazing Spider-Man #1",
-"s": "Amazing Spider-Man"
+"id": "cac-2",
+"t": "Captain America Comics #2",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-2",
-"t": "Amazing Spider-Man #2",
-"s": "Amazing Spider-Man"
+"id": "cac-3",
+"t": "Captain America Comics #3",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-3",
-"t": "Amazing Spider-Man #3",
-"s": "Amazing Spider-Man"
+"id": "cac-4",
+"t": "Captain America Comics #4",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-4",
-"t": "Amazing Spider-Man #4",
-"s": "Amazing Spider-Man"
+"id": "cac-5",
+"t": "Captain America Comics #5",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-5",
-"t": "Amazing Spider-Man #5",
-"s": "Amazing Spider-Man"
+"id": "cac-6",
+"t": "Captain America Comics #6",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-6",
-"t": "Amazing Spider-Man #6",
-"s": "Amazing Spider-Man"
+"id": "cac-7",
+"t": "Captain America Comics #7",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-7",
-"t": "Amazing Spider-Man #7",
-"s": "Amazing Spider-Man"
+"id": "cac-8",
+"t": "Captain America Comics #8",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-8",
-"t": "Amazing Spider-Man #8",
-"s": "Amazing Spider-Man"
+"id": "cac-9",
+"t": "Captain America Comics #9",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-9",
-"t": "Amazing Spider-Man #9",
-"s": "Amazing Spider-Man"
+"id": "cac-10",
+"t": "Captain America Comics #10",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-10",
-"t": "Amazing Spider-Man #10",
-"s": "Amazing Spider-Man"
+"id": "cac-11",
+"t": "Captain America Comics #11",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-11",
-"t": "Amazing Spider-Man #11",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-12",
-"t": "Amazing Spider-Man #12",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-13",
-"t": "Amazing Spider-Man #13",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-14",
-"t": "Amazing Spider-Man #14",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-15",
-"t": "Amazing Spider-Man #15",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-16",
-"t": "Amazing Spider-Man #16",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-17",
-"t": "Amazing Spider-Man #17",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-18",
-"t": "Amazing Spider-Man #18",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-19",
-"t": "Amazing Spider-Man #19",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-20",
-"t": "Amazing Spider-Man #20",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-21",
-"t": "Amazing Spider-Man #21",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-22",
-"t": "Amazing Spider-Man #22",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-23",
-"t": "Amazing Spider-Man #23",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-24",
-"t": "Amazing Spider-Man #24",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-25",
-"t": "Amazing Spider-Man #25",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-26",
-"t": "Amazing Spider-Man #26",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-27",
-"t": "Amazing Spider-Man #27",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-28",
-"t": "Amazing Spider-Man #28",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-29",
-"t": "Amazing Spider-Man #29",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-30",
-"t": "Amazing Spider-Man #30",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-31",
-"t": "Amazing Spider-Man #31",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-32",
-"t": "Amazing Spider-Man #32",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-33",
-"t": "Amazing Spider-Man #33",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-34",
-"t": "Amazing Spider-Man #34",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-35",
-"t": "Amazing Spider-Man #35",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-36",
-"t": "Amazing Spider-Man #36",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-37",
-"t": "Amazing Spider-Man #37",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-38",
-"t": "Amazing Spider-Man #38",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "asm-o1-c3",
-"title": "Amazing Spider-Man Annual #1–2",
-"era": "1962–1966",
-"issues": [
-{
-"id": "asmann-1",
-"t": "Amazing Spider-Man Annual #1",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "asmann-2",
-"t": "Amazing Spider-Man Annual #2",
-"s": "Amazing Spider-Man Annual"
-}
-]
-},
-{
-"id": "asm-o1-c4",
-"title": "Strange Tales Annual #2",
-"era": "1962–1966",
-"issues": [
-{
-"id": "stann-2",
-"t": "Strange Tales Annual #2",
-"s": "Strange Tales Annual"
-}
-]
-},
-{
-"id": "asm-o1-c5",
-"title": "Fantastic Four Annual #1",
-"era": "1962–1966",
-"issues": [
-{
-"id": "ffann-1",
-"t": "Fantastic Four Annual #1",
-"s": "Fantastic Four Annual"
+"id": "cac-12",
+"t": "Captain America Comics #12",
+"s": "Captain America Comics"
 }
 ]
 }
 ]
 },
 {
-"id": "asm-o2",
-"spine": "Amazing Spider-Man",
-"cover": "Art/Spider-Man/asm-o2.jpg",
-"title": "Amazing Spider-Man Omnibus",
+"id": "ga-o2",
+"spine": "Golden Age",
+"cover": "Art/Captain-America/ga-o2.jpg",
+"title": "Golden Age Captain America Omnibus",
 "vol": "Vol. 2",
-"creators": "Stan Lee & John Romita Sr.",
-"era": "1966–1968",
-"released": "Apr 2012",
-"art": "o-romita",
-"tex": "tex-halftone",
-"note": "Romita takes over. The Green Goblin's identity, Mary Jane's entrance, the Kingpin's debut, and \"Spider-Man No More!\"",
+"creators": "Stan Lee, Al Avison & Syd Shores",
+"era": "1942–1943",
+"released": "Jun 2021",
+"art": "o-goldenage",
+"tex": "tex-crosshatch",
+"note": "Simon and Kirby leave after #10 and the book carries on without them — this is #13–24, the stretch where a nineteen-year-old Stan Lee is writing some of it. The Golden Age run goes to #75 and the omnibus line stops here, so everything after 1943 is uncollected in this format.",
 "chapters": [
 {
-"id": "asm-o2-c1",
-"title": "Amazing Spider-Man #39–67",
-"era": "1966–1968",
+"id": "ga-o2-c1",
+"title": "Captain America Comics #13–24",
+"era": "1942–1943",
 "issues": [
 {
-"id": "asm-39",
-"t": "Amazing Spider-Man #39",
-"s": "Amazing Spider-Man"
+"id": "cac-13",
+"t": "Captain America Comics #13",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-40",
-"t": "Amazing Spider-Man #40",
-"s": "Amazing Spider-Man"
+"id": "cac-14",
+"t": "Captain America Comics #14",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-41",
-"t": "Amazing Spider-Man #41",
-"s": "Amazing Spider-Man"
+"id": "cac-15",
+"t": "Captain America Comics #15",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-42",
-"t": "Amazing Spider-Man #42",
-"s": "Amazing Spider-Man"
+"id": "cac-16",
+"t": "Captain America Comics #16",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-43",
-"t": "Amazing Spider-Man #43",
-"s": "Amazing Spider-Man"
+"id": "cac-17",
+"t": "Captain America Comics #17",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-44",
-"t": "Amazing Spider-Man #44",
-"s": "Amazing Spider-Man"
+"id": "cac-18",
+"t": "Captain America Comics #18",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-45",
-"t": "Amazing Spider-Man #45",
-"s": "Amazing Spider-Man"
+"id": "cac-19",
+"t": "Captain America Comics #19",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-46",
-"t": "Amazing Spider-Man #46",
-"s": "Amazing Spider-Man"
+"id": "cac-20",
+"t": "Captain America Comics #20",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-47",
-"t": "Amazing Spider-Man #47",
-"s": "Amazing Spider-Man"
+"id": "cac-21",
+"t": "Captain America Comics #21",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-48",
-"t": "Amazing Spider-Man #48",
-"s": "Amazing Spider-Man"
+"id": "cac-22",
+"t": "Captain America Comics #22",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-49",
-"t": "Amazing Spider-Man #49",
-"s": "Amazing Spider-Man"
+"id": "cac-23",
+"t": "Captain America Comics #23",
+"s": "Captain America Comics"
 },
 {
-"id": "asm-50",
-"t": "Amazing Spider-Man #50",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-51",
-"t": "Amazing Spider-Man #51",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-52",
-"t": "Amazing Spider-Man #52",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-53",
-"t": "Amazing Spider-Man #53",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-54",
-"t": "Amazing Spider-Man #54",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-55",
-"t": "Amazing Spider-Man #55",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-56",
-"t": "Amazing Spider-Man #56",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-57",
-"t": "Amazing Spider-Man #57",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-58",
-"t": "Amazing Spider-Man #58",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-59",
-"t": "Amazing Spider-Man #59",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-60",
-"t": "Amazing Spider-Man #60",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-61",
-"t": "Amazing Spider-Man #61",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-62",
-"t": "Amazing Spider-Man #62",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-63",
-"t": "Amazing Spider-Man #63",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-64",
-"t": "Amazing Spider-Man #64",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-65",
-"t": "Amazing Spider-Man #65",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-66",
-"t": "Amazing Spider-Man #66",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-67",
-"t": "Amazing Spider-Man #67",
-"s": "Amazing Spider-Man"
+"id": "cac-24",
+"t": "Captain America Comics #24",
+"s": "Captain America Comics"
+}
+]
 }
 ]
 },
 {
-"id": "asm-o2-c2",
-"title": "Amazing Spider-Man Annual #3–5",
-"era": "1966–1968",
+"id": "ca-o1",
+"spine": "Captain America",
+"cover": "Art/Captain-America/ca-o1.jpg",
+"title": "Captain America Omnibus",
+"vol": "Vol. 1",
+"creators": "Stan Lee & Jack Kirby",
+"era": "1964–1969",
+"released": "May 2011",
+"art": "o-shield",
+"tex": "tex-halftone",
+"note": "The thaw. Tales of Suspense #59–99 is Cap sharing a book with Iron Man ten pages at a time, and it is where Kirby works out what a Captain America fight scene looks like; then the split, and Captain America #100 onward as his own title again. The Red Skull, the Cosmic Cube, and Bucky's death told properly for the first time.",
+"chapters": [
+{
+"id": "ca-o1-c1",
+"title": "Tales of Suspense #59–99",
+"era": "1964–1969",
 "issues": [
 {
-"id": "asmann-3",
-"t": "Amazing Spider-Man Annual #3",
-"s": "Amazing Spider-Man Annual"
+"id": "tos-59",
+"t": "Tales of Suspense #59",
+"s": "Tales of Suspense"
 },
 {
-"id": "asmann-4",
-"t": "Amazing Spider-Man Annual #4",
-"s": "Amazing Spider-Man Annual"
+"id": "tos-60",
+"t": "Tales of Suspense #60",
+"s": "Tales of Suspense"
 },
 {
-"id": "asmann-5",
-"t": "Amazing Spider-Man Annual #5",
-"s": "Amazing Spider-Man Annual"
+"id": "tos-61",
+"t": "Tales of Suspense #61",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-62",
+"t": "Tales of Suspense #62",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-63",
+"t": "Tales of Suspense #63",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-64",
+"t": "Tales of Suspense #64",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-65",
+"t": "Tales of Suspense #65",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-66",
+"t": "Tales of Suspense #66",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-67",
+"t": "Tales of Suspense #67",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-68",
+"t": "Tales of Suspense #68",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-69",
+"t": "Tales of Suspense #69",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-70",
+"t": "Tales of Suspense #70",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-71",
+"t": "Tales of Suspense #71",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-72",
+"t": "Tales of Suspense #72",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-73",
+"t": "Tales of Suspense #73",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-74",
+"t": "Tales of Suspense #74",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-75",
+"t": "Tales of Suspense #75",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-76",
+"t": "Tales of Suspense #76",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-77",
+"t": "Tales of Suspense #77",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-78",
+"t": "Tales of Suspense #78",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-79",
+"t": "Tales of Suspense #79",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-80",
+"t": "Tales of Suspense #80",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-81",
+"t": "Tales of Suspense #81",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-82",
+"t": "Tales of Suspense #82",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-83",
+"t": "Tales of Suspense #83",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-84",
+"t": "Tales of Suspense #84",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-85",
+"t": "Tales of Suspense #85",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-86",
+"t": "Tales of Suspense #86",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-87",
+"t": "Tales of Suspense #87",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-88",
+"t": "Tales of Suspense #88",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-89",
+"t": "Tales of Suspense #89",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-90",
+"t": "Tales of Suspense #90",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-91",
+"t": "Tales of Suspense #91",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-92",
+"t": "Tales of Suspense #92",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-93",
+"t": "Tales of Suspense #93",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-94",
+"t": "Tales of Suspense #94",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-95",
+"t": "Tales of Suspense #95",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-96",
+"t": "Tales of Suspense #96",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-97",
+"t": "Tales of Suspense #97",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-98",
+"t": "Tales of Suspense #98",
+"s": "Tales of Suspense"
+},
+{
+"id": "tos-99",
+"t": "Tales of Suspense #99",
+"s": "Tales of Suspense"
 }
 ]
 },
 {
-"id": "asm-o2-c3",
-"title": "Spectacular Spider-Man Magazine #1–2",
-"era": "1966–1968",
+"id": "ca-o1-c2",
+"title": "Captain America (1968) #100–113",
+"era": "1964–1969",
 "issues": [
 {
-"id": "ppmag-1",
-"t": "Spectacular Spider-Man Magazine #1",
-"s": "Spectacular Spider-Man Magazine"
+"id": "cap-100",
+"t": "Captain America (1968) #100",
+"s": "Captain America (1968)"
 },
 {
-"id": "ppmag-2",
-"t": "Spectacular Spider-Man Magazine #2",
-"s": "Spectacular Spider-Man Magazine"
+"id": "cap-101",
+"t": "Captain America (1968) #101",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-102",
+"t": "Captain America (1968) #102",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-103",
+"t": "Captain America (1968) #103",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-104",
+"t": "Captain America (1968) #104",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-105",
+"t": "Captain America (1968) #105",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-106",
+"t": "Captain America (1968) #106",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-107",
+"t": "Captain America (1968) #107",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-108",
+"t": "Captain America (1968) #108",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-109",
+"t": "Captain America (1968) #109",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-110",
+"t": "Captain America (1968) #110",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-111",
+"t": "Captain America (1968) #111",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-112",
+"t": "Captain America (1968) #112",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-113",
+"t": "Captain America (1968) #113",
+"s": "Captain America (1968)"
 }
 ]
 },
 {
-"id": "asm-o2-c4",
-"title": "Not Brand Echh #2, #6, #11",
-"era": "1966–1968",
+"id": "ca-o1-c3",
+"title": "Not Brand Echh #3",
+"era": "1964–1969",
 "issues": [
 {
-"id": "nbe-2",
-"t": "Not Brand Echh #2",
+"id": "nbe-3",
+"t": "Not Brand Echh #3",
 "s": "Not Brand Echh"
-},
-{
-"id": "nbe-6",
-"t": "Not Brand Echh #6",
-"s": "Not Brand Echh"
-},
-{
-"id": "nbe-11",
-"t": "Not Brand Echh #11",
-"s": "Not Brand Echh"
 }
 ]
 }
 ]
 },
 {
-"id": "asm-o3",
-"spine": "Amazing Spider-Man",
-"cover": "Art/Spider-Man/asm-o3.jpg",
-"title": "Amazing Spider-Man Omnibus",
+"id": "ca-o2",
+"spine": "Captain America",
+"cover": "Art/Captain-America/ca-o2.jpg",
+"title": "Captain America Omnibus",
+"vol": "Vol. 2",
+"creators": "Stan Lee, Gene Colan & John Romita Sr.",
+"era": "1969–1972",
+"released": "Mar 2016",
+"art": "o-shield",
+"tex": "tex-crosshatch",
+"note": "#114–148, and the book stops being a war comic. Cap and the Falcon become a partnership and the title changes to say so; Colan draws New York like a crime film, and the stories start being about whether the man out of time has anything to say about 1971.",
+"chapters": [
+{
+"id": "ca-o2-c1",
+"title": "Captain America (1968) #114–148",
+"era": "1969–1972",
+"issues": [
+{
+"id": "cap-114",
+"t": "Captain America (1968) #114",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-115",
+"t": "Captain America (1968) #115",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-116",
+"t": "Captain America (1968) #116",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-117",
+"t": "Captain America (1968) #117",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-118",
+"t": "Captain America (1968) #118",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-119",
+"t": "Captain America (1968) #119",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-120",
+"t": "Captain America (1968) #120",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-121",
+"t": "Captain America (1968) #121",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-122",
+"t": "Captain America (1968) #122",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-123",
+"t": "Captain America (1968) #123",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-124",
+"t": "Captain America (1968) #124",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-125",
+"t": "Captain America (1968) #125",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-126",
+"t": "Captain America (1968) #126",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-127",
+"t": "Captain America (1968) #127",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-128",
+"t": "Captain America (1968) #128",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-129",
+"t": "Captain America (1968) #129",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-130",
+"t": "Captain America (1968) #130",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-131",
+"t": "Captain America (1968) #131",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-132",
+"t": "Captain America (1968) #132",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-133",
+"t": "Captain America (1968) #133",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-134",
+"t": "Captain America (1968) #134",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-135",
+"t": "Captain America (1968) #135",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-136",
+"t": "Captain America (1968) #136",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-137",
+"t": "Captain America (1968) #137",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-138",
+"t": "Captain America (1968) #138",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-139",
+"t": "Captain America (1968) #139",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-140",
+"t": "Captain America (1968) #140",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-141",
+"t": "Captain America (1968) #141",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-142",
+"t": "Captain America (1968) #142",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-143",
+"t": "Captain America (1968) #143",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-144",
+"t": "Captain America (1968) #144",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-145",
+"t": "Captain America (1968) #145",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-146",
+"t": "Captain America (1968) #146",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-147",
+"t": "Captain America (1968) #147",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-148",
+"t": "Captain America (1968) #148",
+"s": "Captain America (1968)"
+}
+]
+}
+]
+},
+{
+"id": "ca-o3",
+"spine": "Captain America",
+"cover": "Art/Captain-America/ca-o3.jpg",
+"title": "Captain America Omnibus",
 "vol": "Vol. 3",
-"creators": "Lee, Romita Sr. & Gil Kane",
-"era": "1968–1971",
-"released": "May 2017",
-"art": "o-romita",
-"tex": "tex-web",
-"note": "The Stone Tablet saga, Captain Stacy's death, the Comics Code-defying drug issues, and Morbius's debut.",
-"chapters": [
-{
-"id": "asm-o3-c1",
-"title": "Amazing Spider-Man #68–104",
-"era": "1968–1971",
-"issues": [
-{
-"id": "asm-68",
-"t": "Amazing Spider-Man #68",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-69",
-"t": "Amazing Spider-Man #69",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-70",
-"t": "Amazing Spider-Man #70",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-71",
-"t": "Amazing Spider-Man #71",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-72",
-"t": "Amazing Spider-Man #72",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-73",
-"t": "Amazing Spider-Man #73",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-74",
-"t": "Amazing Spider-Man #74",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-75",
-"t": "Amazing Spider-Man #75",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-76",
-"t": "Amazing Spider-Man #76",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-77",
-"t": "Amazing Spider-Man #77",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-78",
-"t": "Amazing Spider-Man #78",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-79",
-"t": "Amazing Spider-Man #79",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-80",
-"t": "Amazing Spider-Man #80",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-81",
-"t": "Amazing Spider-Man #81",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-82",
-"t": "Amazing Spider-Man #82",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-83",
-"t": "Amazing Spider-Man #83",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-84",
-"t": "Amazing Spider-Man #84",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-85",
-"t": "Amazing Spider-Man #85",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-86",
-"t": "Amazing Spider-Man #86",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-87",
-"t": "Amazing Spider-Man #87",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-88",
-"t": "Amazing Spider-Man #88",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-89",
-"t": "Amazing Spider-Man #89",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-90",
-"t": "Amazing Spider-Man #90",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-91",
-"t": "Amazing Spider-Man #91",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-92",
-"t": "Amazing Spider-Man #92",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-93",
-"t": "Amazing Spider-Man #93",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-94",
-"t": "Amazing Spider-Man #94",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-95",
-"t": "Amazing Spider-Man #95",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-96",
-"t": "Amazing Spider-Man #96",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-97",
-"t": "Amazing Spider-Man #97",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-98",
-"t": "Amazing Spider-Man #98",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-99",
-"t": "Amazing Spider-Man #99",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-100",
-"t": "Amazing Spider-Man #100",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-101",
-"t": "Amazing Spider-Man #101",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-102",
-"t": "Amazing Spider-Man #102",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-103",
-"t": "Amazing Spider-Man #103",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-104",
-"t": "Amazing Spider-Man #104",
-"s": "Amazing Spider-Man"
-}
-]
-}
-]
-},
-{
-"id": "asm-o4",
-"spine": "Amazing Spider-Man",
-"cover": "Art/Spider-Man/asm-o4.jpg",
-"title": "Amazing Spider-Man Omnibus",
-"vol": "Vol. 4",
-"creators": "Gerry Conway & Ross Andru",
+"creators": "Steve Englehart, Sal Buscema & Frank Robbins",
 "era": "1972–1975",
-"released": "May 2019",
-"art": "o-conway",
-"tex": "tex-web",
-"note": "The Night Gwen Stacy Died, the death of the Green Goblin, and the first Punisher and Clone Saga.",
-"chapters": [
-{
-"id": "asm-o4-c1",
-"title": "Amazing Spider-Man #105–142",
-"era": "1972–1975",
-"issues": [
-{
-"id": "asm-105",
-"t": "Amazing Spider-Man #105",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-106",
-"t": "Amazing Spider-Man #106",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-107",
-"t": "Amazing Spider-Man #107",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-108",
-"t": "Amazing Spider-Man #108",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-109",
-"t": "Amazing Spider-Man #109",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-110",
-"t": "Amazing Spider-Man #110",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-111",
-"t": "Amazing Spider-Man #111",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-112",
-"t": "Amazing Spider-Man #112",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-113",
-"t": "Amazing Spider-Man #113",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-114",
-"t": "Amazing Spider-Man #114",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-115",
-"t": "Amazing Spider-Man #115",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-116",
-"t": "Amazing Spider-Man #116",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-117",
-"t": "Amazing Spider-Man #117",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-118",
-"t": "Amazing Spider-Man #118",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-119",
-"t": "Amazing Spider-Man #119",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-120",
-"t": "Amazing Spider-Man #120",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-121",
-"t": "Amazing Spider-Man #121",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-122",
-"t": "Amazing Spider-Man #122",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-123",
-"t": "Amazing Spider-Man #123",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-124",
-"t": "Amazing Spider-Man #124",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-125",
-"t": "Amazing Spider-Man #125",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-126",
-"t": "Amazing Spider-Man #126",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-127",
-"t": "Amazing Spider-Man #127",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-128",
-"t": "Amazing Spider-Man #128",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-129",
-"t": "Amazing Spider-Man #129",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-130",
-"t": "Amazing Spider-Man #130",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-131",
-"t": "Amazing Spider-Man #131",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-132",
-"t": "Amazing Spider-Man #132",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-133",
-"t": "Amazing Spider-Man #133",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-134",
-"t": "Amazing Spider-Man #134",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-135",
-"t": "Amazing Spider-Man #135",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-136",
-"t": "Amazing Spider-Man #136",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-137",
-"t": "Amazing Spider-Man #137",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-138",
-"t": "Amazing Spider-Man #138",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-139",
-"t": "Amazing Spider-Man #139",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-140",
-"t": "Amazing Spider-Man #140",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-141",
-"t": "Amazing Spider-Man #141",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-142",
-"t": "Amazing Spider-Man #142",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "asm-o4-c2",
-"title": "Giant-Size Super-Heroes #1",
-"era": "1972–1975",
-"issues": [
-{
-"id": "gssh-1",
-"t": "Giant-Size Super-Heroes #1",
-"s": "Giant-Size Super-Heroes"
-}
-]
-},
-{
-"id": "asm-o4-c3",
-"title": "Marvel Super-Heroes #14",
-"era": "1972–1975",
-"issues": [
-{
-"id": "msh-14",
-"t": "Marvel Super-Heroes #14",
-"s": "Marvel Super-Heroes"
-}
-]
-}
-]
-},
-{
-"id": "utsm-o1",
-"spine": "Untold Tales",
-"cover": "Art/Spider-Man/utsm-o1.jpg",
-"title": "Untold Tales of Spider-Man Omnibus",
-"vol": "",
-"creators": "Kurt Busiek & Pat Olliffe",
-"era": "Set 1962–1965",
-"released": "Apr 2012",
-"art": "o-untold",
+"released": "Jul 2021",
+"art": "o-secret",
 "tex": "tex-halftone",
-"note": "Published 1995–97 but set between the early Lee/Ditko issues. Slots here by story chronology, not print date — read it alongside Omnibus Vol. 1 or straight after.",
+"note": "#149–192, which is mostly Englehart, and contains the single most famous thing anyone has done with the character: the Secret Empire story, where the trail of a government conspiracy leads to the White House and Steve Rogers quits being Captain America over it. Published while Watergate was on television.",
 "chapters": [
 {
-"id": "utsm-o1-c1",
-"title": "Untold Tales of Spider-Man #1–25, #-1",
-"era": "Set 1962–1965",
+"id": "ca-o3-c1",
+"title": "Captain America (1968) #149–192",
+"era": "1972–1975",
 "issues": [
 {
-"id": "utsm-1",
-"t": "Untold Tales of Spider-Man #1",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-149",
+"t": "Captain America (1968) #149",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-2",
-"t": "Untold Tales of Spider-Man #2",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-150",
+"t": "Captain America (1968) #150",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-3",
-"t": "Untold Tales of Spider-Man #3",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-151",
+"t": "Captain America (1968) #151",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-4",
-"t": "Untold Tales of Spider-Man #4",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-152",
+"t": "Captain America (1968) #152",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-5",
-"t": "Untold Tales of Spider-Man #5",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-153",
+"t": "Captain America (1968) #153",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-6",
-"t": "Untold Tales of Spider-Man #6",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-154",
+"t": "Captain America (1968) #154",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-7",
-"t": "Untold Tales of Spider-Man #7",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-155",
+"t": "Captain America (1968) #155",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-8",
-"t": "Untold Tales of Spider-Man #8",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-156",
+"t": "Captain America (1968) #156",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-9",
-"t": "Untold Tales of Spider-Man #9",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-157",
+"t": "Captain America (1968) #157",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-10",
-"t": "Untold Tales of Spider-Man #10",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-158",
+"t": "Captain America (1968) #158",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-11",
-"t": "Untold Tales of Spider-Man #11",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-159",
+"t": "Captain America (1968) #159",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-12",
-"t": "Untold Tales of Spider-Man #12",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-160",
+"t": "Captain America (1968) #160",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-13",
-"t": "Untold Tales of Spider-Man #13",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-161",
+"t": "Captain America (1968) #161",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-14",
-"t": "Untold Tales of Spider-Man #14",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-162",
+"t": "Captain America (1968) #162",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-15",
-"t": "Untold Tales of Spider-Man #15",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-163",
+"t": "Captain America (1968) #163",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-16",
-"t": "Untold Tales of Spider-Man #16",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-164",
+"t": "Captain America (1968) #164",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-17",
-"t": "Untold Tales of Spider-Man #17",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-165",
+"t": "Captain America (1968) #165",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-18",
-"t": "Untold Tales of Spider-Man #18",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-166",
+"t": "Captain America (1968) #166",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-19",
-"t": "Untold Tales of Spider-Man #19",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-167",
+"t": "Captain America (1968) #167",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-20",
-"t": "Untold Tales of Spider-Man #20",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-168",
+"t": "Captain America (1968) #168",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-21",
-"t": "Untold Tales of Spider-Man #21",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-169",
+"t": "Captain America (1968) #169",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-22",
-"t": "Untold Tales of Spider-Man #22",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-170",
+"t": "Captain America (1968) #170",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-23",
-"t": "Untold Tales of Spider-Man #23",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-171",
+"t": "Captain America (1968) #171",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-24",
-"t": "Untold Tales of Spider-Man #24",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-172",
+"t": "Captain America (1968) #172",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm-25",
-"t": "Untold Tales of Spider-Man #25",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-173",
+"t": "Captain America (1968) #173",
+"s": "Captain America (1968)"
 },
 {
-"id": "utsm--1",
-"t": "Untold Tales of Spider-Man #-1",
-"s": "Untold Tales of Spider-Man"
+"id": "cap-174",
+"t": "Captain America (1968) #174",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-175",
+"t": "Captain America (1968) #175",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-176",
+"t": "Captain America (1968) #176",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-177",
+"t": "Captain America (1968) #177",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-178",
+"t": "Captain America (1968) #178",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-179",
+"t": "Captain America (1968) #179",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-180",
+"t": "Captain America (1968) #180",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-181",
+"t": "Captain America (1968) #181",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-182",
+"t": "Captain America (1968) #182",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-183",
+"t": "Captain America (1968) #183",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-184",
+"t": "Captain America (1968) #184",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-185",
+"t": "Captain America (1968) #185",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-186",
+"t": "Captain America (1968) #186",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-187",
+"t": "Captain America (1968) #187",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-188",
+"t": "Captain America (1968) #188",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-189",
+"t": "Captain America (1968) #189",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-190",
+"t": "Captain America (1968) #190",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-191",
+"t": "Captain America (1968) #191",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-192",
+"t": "Captain America (1968) #192",
+"s": "Captain America (1968)"
+}
+]
 }
 ]
 },
 {
-"id": "utsm-o1-c2",
-"title": "Untold Tales of Spider-Man Annual #1996–1997",
-"era": "Set 1962–1965",
-"issues": [
-{
-"id": "utsmann-1996",
-"t": "Untold Tales of Spider-Man Annual #1996",
-"s": "Untold Tales of Spider-Man Annual"
-},
-{
-"id": "utsmann-1997",
-"t": "Untold Tales of Spider-Man Annual #1997",
-"s": "Untold Tales of Spider-Man Annual"
-}
-]
-},
-{
-"id": "utsm-o1-c3",
-"title": "Untold Tales: Strange Encounters #1",
-"era": "Set 1962–1965",
-"issues": [
-{
-"id": "utsmse-1",
-"t": "Untold Tales: Strange Encounters #1",
-"s": "Untold Tales: Strange Encounters"
-}
-]
-},
-{
-"id": "utsm-o1-c4",
-"title": "Amazing Fantasy #16–18",
-"era": "Set 1962–1965",
-"issues": [
-{
-"id": "af-16",
-"t": "Amazing Fantasy #16",
-"s": "Amazing Fantasy"
-},
-{
-"id": "af-17",
-"t": "Amazing Fantasy #17",
-"s": "Amazing Fantasy"
-},
-{
-"id": "af-18",
-"t": "Amazing Fantasy #18",
-"s": "Amazing Fantasy"
-}
-]
-},
-{
-"id": "utsm-o1-c5",
-"title": "Amazing Spider-Man Annual (1999) #37",
-"era": "Set 1962–1965",
-"issues": [
-{
-"id": "asm2ann-37",
-"t": "Amazing Spider-Man Annual (1999) #37",
-"s": "Amazing Spider-Man Annual (1999)"
-}
-]
-}
-]
-},
-{
-"id": "stern-o1",
-"spine": "By Roger Stern",
-"cover": "Art/Spider-Man/stern-o1.jpg",
-"title": "Spider-Man by Roger Stern Omnibus",
-"vol": "",
-"creators": "Roger Stern, JRJR & John Byrne",
-"era": "1980–1984",
-"released": "Apr 2014",
-"art": "o-stern",
-"tex": "tex-web",
-"note": "The Hobgoblin mystery, \"The Kid Who Collects Spider-Man,\" and Nothing Can Stop the Juggernaut.",
+"id": "ca-o4",
+"spine": "Captain America",
+"cover": "Art/Captain-America/ca-o4.jpg",
+"title": "Captain America Omnibus",
+"vol": "Vol. 4",
+"creators": "Jack Kirby",
+"era": "1976–1977",
+"released": "Mar 2024",
+"art": "o-kirbycap",
+"tex": "tex-fourdot",
+"note": "Kirby comes back to the character he made and writes as well as draws him — #193–214, the Madbomb, the Swine, Arnim Zola, and the Bicentennial Battles treasury. Note this supersedes the separate Captain America by Jack Kirby Omnibus, which holds the same issues minus FOOM #11.",
 "chapters": [
 {
-"id": "stern-o1-c1",
-"title": "Spectacular Spider-Man #43–59, #18, #60–61",
-"era": "1980–1984",
+"id": "ca-o4-c1",
+"title": "Captain America (1968) #193–214",
+"era": "1976–1977",
 "issues": [
 {
-"id": "pp-43",
-"t": "Spectacular Spider-Man #43",
-"s": "Spectacular Spider-Man"
+"id": "cap-193",
+"t": "Captain America (1968) #193",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-44",
-"t": "Spectacular Spider-Man #44",
-"s": "Spectacular Spider-Man"
+"id": "cap-194",
+"t": "Captain America (1968) #194",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-45",
-"t": "Spectacular Spider-Man #45",
-"s": "Spectacular Spider-Man"
+"id": "cap-195",
+"t": "Captain America (1968) #195",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-46",
-"t": "Spectacular Spider-Man #46",
-"s": "Spectacular Spider-Man"
+"id": "cap-196",
+"t": "Captain America (1968) #196",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-47",
-"t": "Spectacular Spider-Man #47",
-"s": "Spectacular Spider-Man"
+"id": "cap-197",
+"t": "Captain America (1968) #197",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-48",
-"t": "Spectacular Spider-Man #48",
-"s": "Spectacular Spider-Man"
+"id": "cap-198",
+"t": "Captain America (1968) #198",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-49",
-"t": "Spectacular Spider-Man #49",
-"s": "Spectacular Spider-Man"
+"id": "cap-199",
+"t": "Captain America (1968) #199",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-50",
-"t": "Spectacular Spider-Man #50",
-"s": "Spectacular Spider-Man"
+"id": "cap-200",
+"t": "Captain America (1968) #200",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-51",
-"t": "Spectacular Spider-Man #51",
-"s": "Spectacular Spider-Man"
+"id": "cap-201",
+"t": "Captain America (1968) #201",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-52",
-"t": "Spectacular Spider-Man #52",
-"s": "Spectacular Spider-Man"
+"id": "cap-202",
+"t": "Captain America (1968) #202",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-53",
-"t": "Spectacular Spider-Man #53",
-"s": "Spectacular Spider-Man"
+"id": "cap-203",
+"t": "Captain America (1968) #203",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-54",
-"t": "Spectacular Spider-Man #54",
-"s": "Spectacular Spider-Man"
+"id": "cap-204",
+"t": "Captain America (1968) #204",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-55",
-"t": "Spectacular Spider-Man #55",
-"s": "Spectacular Spider-Man"
+"id": "cap-205",
+"t": "Captain America (1968) #205",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-56",
-"t": "Spectacular Spider-Man #56",
-"s": "Spectacular Spider-Man"
+"id": "cap-206",
+"t": "Captain America (1968) #206",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-57",
-"t": "Spectacular Spider-Man #57",
-"s": "Spectacular Spider-Man"
+"id": "cap-207",
+"t": "Captain America (1968) #207",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-58",
-"t": "Spectacular Spider-Man #58",
-"s": "Spectacular Spider-Man"
+"id": "cap-208",
+"t": "Captain America (1968) #208",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-59",
-"t": "Spectacular Spider-Man #59",
-"s": "Spectacular Spider-Man"
+"id": "cap-209",
+"t": "Captain America (1968) #209",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-18",
-"t": "Spectacular Spider-Man #18",
-"s": "Spectacular Spider-Man"
+"id": "cap-210",
+"t": "Captain America (1968) #210",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-60",
-"t": "Spectacular Spider-Man #60",
-"s": "Spectacular Spider-Man"
+"id": "cap-211",
+"t": "Captain America (1968) #211",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-61",
-"t": "Spectacular Spider-Man #61",
-"s": "Spectacular Spider-Man"
+"id": "cap-212",
+"t": "Captain America (1968) #212",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-213",
+"t": "Captain America (1968) #213",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-214",
+"t": "Captain America (1968) #214",
+"s": "Captain America (1968)"
 }
 ]
 },
 {
-"id": "stern-o1-c2",
-"title": "Spectacular Spider-Man Annual #3",
-"era": "1980–1984",
+"id": "ca-o4-c2",
+"title": "Captain America Annual #3–4",
+"era": "1976–1977",
 "issues": [
 {
-"id": "ppann-3",
-"t": "Spectacular Spider-Man Annual #3",
-"s": "Spectacular Spider-Man Annual"
+"id": "caan1-3",
+"t": "Captain America Annual #3",
+"s": "Captain America Annual"
+},
+{
+"id": "caan1-4",
+"t": "Captain America Annual #4",
+"s": "Captain America Annual"
 }
 ]
 },
 {
-"id": "stern-o1-c3",
-"title": "Amazing Spider-Man #203, #224–241, #243–252",
-"era": "1980–1984",
+"id": "ca-o4-c3",
+"title": "Captain America's Bicentennial Battles #1",
+"era": "1976–1977",
 "issues": [
 {
-"id": "asm-203",
-"t": "Amazing Spider-Man #203",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-224",
-"t": "Amazing Spider-Man #224",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-225",
-"t": "Amazing Spider-Man #225",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-226",
-"t": "Amazing Spider-Man #226",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-227",
-"t": "Amazing Spider-Man #227",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-228",
-"t": "Amazing Spider-Man #228",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-229",
-"t": "Amazing Spider-Man #229",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-230",
-"t": "Amazing Spider-Man #230",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-231",
-"t": "Amazing Spider-Man #231",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-232",
-"t": "Amazing Spider-Man #232",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-233",
-"t": "Amazing Spider-Man #233",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-234",
-"t": "Amazing Spider-Man #234",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-235",
-"t": "Amazing Spider-Man #235",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-236",
-"t": "Amazing Spider-Man #236",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-237",
-"t": "Amazing Spider-Man #237",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-238",
-"t": "Amazing Spider-Man #238",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-239",
-"t": "Amazing Spider-Man #239",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-240",
-"t": "Amazing Spider-Man #240",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-241",
-"t": "Amazing Spider-Man #241",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-243",
-"t": "Amazing Spider-Man #243",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-244",
-"t": "Amazing Spider-Man #244",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-245",
-"t": "Amazing Spider-Man #245",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-246",
-"t": "Amazing Spider-Man #246",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-247",
-"t": "Amazing Spider-Man #247",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-248",
-"t": "Amazing Spider-Man #248",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-249",
-"t": "Amazing Spider-Man #249",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-250",
-"t": "Amazing Spider-Man #250",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-251",
-"t": "Amazing Spider-Man #251",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-252",
-"t": "Amazing Spider-Man #252",
-"s": "Amazing Spider-Man"
+"id": "capbb-1",
+"t": "Captain America's Bicentennial Battles #1",
+"s": "Captain America's Bicentennial Battles"
 }
 ]
 },
 {
-"id": "stern-o1-c4",
-"title": "Amazing Spider-Man Annual #15–17",
-"era": "1980–1984",
+"id": "ca-o4-c4",
+"title": "FOOM #11",
+"era": "1976–1977",
 "issues": [
 {
-"id": "asmann-15",
-"t": "Amazing Spider-Man Annual #15",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "asmann-16",
-"t": "Amazing Spider-Man Annual #16",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "asmann-17",
-"t": "Amazing Spider-Man Annual #17",
-"s": "Amazing Spider-Man Annual"
+"id": "foom-11",
+"t": "FOOM #11",
+"s": "FOOM"
+}
+]
 }
 ]
 },
 {
-"id": "stern-o1-c5",
-"title": "Web of Spider-Man Annual #3",
-"era": "1980–1984",
+"id": "ca-o5",
+"spine": "Captain America",
+"cover": "Art/Captain-America/ca-o5.jpg",
+"title": "Captain America Omnibus",
+"vol": "Vol. 5",
+"creators": "Roger Stern, John Byrne & Roger McKenzie",
+"era": "1978–1981",
+"released": "Jul 2026",
+"art": "o-shield",
+"tex": "tex-crosshatch",
+"note": "#215–260. The run people mean when they say Stern and Byrne only lasted nine issues but fixed the character — they give him an apartment, a job and a reason to be Steve Rogers, and the book keeps that shape after they leave.",
+"chapters": [
+{
+"id": "ca-o5-c1",
+"title": "Captain America (1968) #215–230",
+"era": "1978–1981",
 "issues": [
 {
-"id": "webann-3",
-"t": "Web of Spider-Man Annual #3",
-"s": "Web of Spider-Man Annual"
+"id": "cap-215",
+"t": "Captain America (1968) #215",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-216",
+"t": "Captain America (1968) #216",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-217",
+"t": "Captain America (1968) #217",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-218",
+"t": "Captain America (1968) #218",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-219",
+"t": "Captain America (1968) #219",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-220",
+"t": "Captain America (1968) #220",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-221",
+"t": "Captain America (1968) #221",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-222",
+"t": "Captain America (1968) #222",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-223",
+"t": "Captain America (1968) #223",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-224",
+"t": "Captain America (1968) #224",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-225",
+"t": "Captain America (1968) #225",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-226",
+"t": "Captain America (1968) #226",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-227",
+"t": "Captain America (1968) #227",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-228",
+"t": "Captain America (1968) #228",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-229",
+"t": "Captain America (1968) #229",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-230",
+"t": "Captain America (1968) #230",
+"s": "Captain America (1968)"
 }
 ]
 },
 {
-"id": "stern-o1-c6",
-"title": "What If? #34",
-"era": "1980–1984",
+"id": "ca-o5-c2",
+"title": "Incredible Hulk #232",
+"era": "1978–1981",
 "issues": [
 {
-"id": "wi-34",
-"t": "What If? #34",
+"id": "hulk-232",
+"t": "Incredible Hulk #232",
+"s": "Incredible Hulk"
+}
+]
+},
+{
+"id": "ca-o5-c3",
+"title": "Captain America (1968) #231–260",
+"era": "1978–1981",
+"issues": [
+{
+"id": "cap-231",
+"t": "Captain America (1968) #231",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-232",
+"t": "Captain America (1968) #232",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-233",
+"t": "Captain America (1968) #233",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-234",
+"t": "Captain America (1968) #234",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-235",
+"t": "Captain America (1968) #235",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-236",
+"t": "Captain America (1968) #236",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-237",
+"t": "Captain America (1968) #237",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-238",
+"t": "Captain America (1968) #238",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-239",
+"t": "Captain America (1968) #239",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-240",
+"t": "Captain America (1968) #240",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-241",
+"t": "Captain America (1968) #241",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-242",
+"t": "Captain America (1968) #242",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-243",
+"t": "Captain America (1968) #243",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-244",
+"t": "Captain America (1968) #244",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-245",
+"t": "Captain America (1968) #245",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-246",
+"t": "Captain America (1968) #246",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-247",
+"t": "Captain America (1968) #247",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-248",
+"t": "Captain America (1968) #248",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-249",
+"t": "Captain America (1968) #249",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-250",
+"t": "Captain America (1968) #250",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-251",
+"t": "Captain America (1968) #251",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-252",
+"t": "Captain America (1968) #252",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-253",
+"t": "Captain America (1968) #253",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-254",
+"t": "Captain America (1968) #254",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-255",
+"t": "Captain America (1968) #255",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-256",
+"t": "Captain America (1968) #256",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-257",
+"t": "Captain America (1968) #257",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-258",
+"t": "Captain America (1968) #258",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-259",
+"t": "Captain America (1968) #259",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-260",
+"t": "Captain America (1968) #260",
+"s": "Captain America (1968)"
+}
+]
+},
+{
+"id": "ca-o5-c4",
+"title": "Marvel Premiere #49",
+"era": "1978–1981",
+"issues": [
+{
+"id": "mprem-49",
+"t": "Marvel Premiere #49",
+"s": "Marvel Premiere"
+}
+]
+},
+{
+"id": "ca-o5-c5",
+"title": "What If? #5, #26",
+"era": "1978–1981",
+"issues": [
+{
+"id": "wi-5",
+"t": "What If? #5",
+"s": "What If?"
+},
+{
+"id": "wi-26",
+"t": "What If? #26",
 "s": "What If?"
 }
 ]
@@ -2322,2324 +1941,3147 @@ const OMNI = [
 ]
 },
 {
-"id": "mcf-o1",
-"spine": "Michelinie & McFarlane",
-"cover": "Art/Spider-Man/mcf-o1.jpg",
-"title": "ASM by Michelinie & McFarlane Omnibus",
-"vol": "",
-"creators": "David Michelinie & Todd McFarlane",
-"era": "1987–1990",
-"released": "Aug 2011",
-"art": "o-mcfarlane",
-"tex": "tex-web",
-"note": "ASM #300 — the first full Venom. McFarlane's run that reset what a Spider-Man comic looked like.",
-"chapters": [
-{
-"id": "mcf-o1-c1",
-"title": "Amazing Spider-Man #296–329",
-"era": "1987–1990",
-"issues": [
-{
-"id": "asm-296",
-"t": "Amazing Spider-Man #296",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-297",
-"t": "Amazing Spider-Man #297",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-298",
-"t": "Amazing Spider-Man #298",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-299",
-"t": "Amazing Spider-Man #299",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-300",
-"t": "Amazing Spider-Man #300",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-301",
-"t": "Amazing Spider-Man #301",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-302",
-"t": "Amazing Spider-Man #302",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-303",
-"t": "Amazing Spider-Man #303",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-304",
-"t": "Amazing Spider-Man #304",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-305",
-"t": "Amazing Spider-Man #305",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-306",
-"t": "Amazing Spider-Man #306",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-307",
-"t": "Amazing Spider-Man #307",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-308",
-"t": "Amazing Spider-Man #308",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-309",
-"t": "Amazing Spider-Man #309",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-310",
-"t": "Amazing Spider-Man #310",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-311",
-"t": "Amazing Spider-Man #311",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-312",
-"t": "Amazing Spider-Man #312",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-313",
-"t": "Amazing Spider-Man #313",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-314",
-"t": "Amazing Spider-Man #314",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-315",
-"t": "Amazing Spider-Man #315",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-316",
-"t": "Amazing Spider-Man #316",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-317",
-"t": "Amazing Spider-Man #317",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-318",
-"t": "Amazing Spider-Man #318",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-319",
-"t": "Amazing Spider-Man #319",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-320",
-"t": "Amazing Spider-Man #320",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-321",
-"t": "Amazing Spider-Man #321",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-322",
-"t": "Amazing Spider-Man #322",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-323",
-"t": "Amazing Spider-Man #323",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-324",
-"t": "Amazing Spider-Man #324",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-325",
-"t": "Amazing Spider-Man #325",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-326",
-"t": "Amazing Spider-Man #326",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-327",
-"t": "Amazing Spider-Man #327",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-328",
-"t": "Amazing Spider-Man #328",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-329",
-"t": "Amazing Spider-Man #329",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "mcf-o1-c2",
-"title": "Spectacular Spider-Man Annual #10",
-"era": "1987–1990",
-"issues": [
-{
-"id": "ppann-10",
-"t": "Spectacular Spider-Man Annual #10",
-"s": "Spectacular Spider-Man Annual"
-}
-]
-}
-]
-},
-{
-"id": "larsen-o1",
-"spine": "Michelinie & Larsen",
-"cover": "Art/Spider-Man/larsen-o1.jpg",
-"title": "Spider-Man by Michelinie & Larsen Omnibus",
-"vol": "",
-"creators": "David Michelinie & Erik Larsen",
-"era": "1990–1991",
-"released": "Jun 2017",
-"art": "o-larsen",
-"tex": "tex-burst",
-"note": "Picks up directly from the McFarlane omnibus. Overlaps it at ASM #324, #327 and #329.",
-"chapters": [
-{
-"id": "larsen-o1-c1",
-"title": "Amazing Spider-Man #287, #324, #327, #329–350",
-"era": "1990–1991",
-"issues": [
-{
-"id": "asm-287",
-"t": "Amazing Spider-Man #287",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-324",
-"t": "Amazing Spider-Man #324",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-327",
-"t": "Amazing Spider-Man #327",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-329",
-"t": "Amazing Spider-Man #329",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-330",
-"t": "Amazing Spider-Man #330",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-331",
-"t": "Amazing Spider-Man #331",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-332",
-"t": "Amazing Spider-Man #332",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-333",
-"t": "Amazing Spider-Man #333",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-334",
-"t": "Amazing Spider-Man #334",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-335",
-"t": "Amazing Spider-Man #335",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-336",
-"t": "Amazing Spider-Man #336",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-337",
-"t": "Amazing Spider-Man #337",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-338",
-"t": "Amazing Spider-Man #338",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-339",
-"t": "Amazing Spider-Man #339",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-340",
-"t": "Amazing Spider-Man #340",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-341",
-"t": "Amazing Spider-Man #341",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-342",
-"t": "Amazing Spider-Man #342",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-343",
-"t": "Amazing Spider-Man #343",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-344",
-"t": "Amazing Spider-Man #344",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-345",
-"t": "Amazing Spider-Man #345",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-346",
-"t": "Amazing Spider-Man #346",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-347",
-"t": "Amazing Spider-Man #347",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-348",
-"t": "Amazing Spider-Man #348",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-349",
-"t": "Amazing Spider-Man #349",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-350",
-"t": "Amazing Spider-Man #350",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "larsen-o1-c2",
-"title": "Spider-Man (1990) #15, #18–23",
-"era": "1990–1991",
-"issues": [
-{
-"id": "spm-15",
-"t": "Spider-Man (1990) #15",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-18",
-"t": "Spider-Man (1990) #18",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-19",
-"t": "Spider-Man (1990) #19",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-20",
-"t": "Spider-Man (1990) #20",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-21",
-"t": "Spider-Man (1990) #21",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-22",
-"t": "Spider-Man (1990) #22",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-23",
-"t": "Spider-Man (1990) #23",
-"s": "Spider-Man (1990)"
-}
-]
-},
-{
-"id": "larsen-o1-c3",
-"title": "Marvel Comics Presents #48–50",
-"era": "1990–1991",
-"issues": [
-{
-"id": "mcp-48",
-"t": "Marvel Comics Presents #48",
-"s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-49",
-"t": "Marvel Comics Presents #49",
-"s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-50",
-"t": "Marvel Comics Presents #50",
-"s": "Marvel Comics Presents"
-}
-]
-},
-{
-"id": "larsen-o1-c4",
-"title": "Amazing Spider-Man (1999) #19–21",
-"era": "1990–1991",
-"issues": [
-{
-"id": "asm2-19",
-"t": "Amazing Spider-Man (1999) #19",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-20",
-"t": "Amazing Spider-Man (1999) #20",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-21",
-"t": "Amazing Spider-Man (1999) #21",
-"s": "Amazing Spider-Man (1999)"
-}
-]
-}
-]
-},
-{
-"id": "mcf-o2",
-"spine": "By Todd McFarlane",
-"cover": "Art/Spider-Man/mcf-o2.jpg",
-"title": "Spider-Man by Todd McFarlane Omnibus",
-"vol": "",
-"creators": "Todd McFarlane",
-"era": "1990–1991",
-"released": "Aug 2016",
-"art": "o-mcfarlane",
-"tex": "tex-web",
-"note": "The adjectiveless Spider-Man #1 — one of the best-selling comics ever printed — and McFarlane's solo writer/artist run.",
-"chapters": [
-{
-"id": "mcf-o2-c1",
-"title": "Spider-Man (1990) #1–14, #16",
-"era": "1990–1991",
-"issues": [
-{
-"id": "spm-1",
-"t": "Spider-Man (1990) #1",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-2",
-"t": "Spider-Man (1990) #2",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-3",
-"t": "Spider-Man (1990) #3",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-4",
-"t": "Spider-Man (1990) #4",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-5",
-"t": "Spider-Man (1990) #5",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-6",
-"t": "Spider-Man (1990) #6",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-7",
-"t": "Spider-Man (1990) #7",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-8",
-"t": "Spider-Man (1990) #8",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-9",
-"t": "Spider-Man (1990) #9",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-10",
-"t": "Spider-Man (1990) #10",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-11",
-"t": "Spider-Man (1990) #11",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-12",
-"t": "Spider-Man (1990) #12",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-13",
-"t": "Spider-Man (1990) #13",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-14",
-"t": "Spider-Man (1990) #14",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "spm-16",
-"t": "Spider-Man (1990) #16",
-"s": "Spider-Man (1990)"
-}
-]
-},
-{
-"id": "mcf-o2-c2",
-"title": "X-Force #4",
-"era": "1990–1991",
-"issues": [
-{
-"id": "xf-4",
-"t": "X-Force #4",
-"s": "X-Force"
-}
-]
-}
-]
-},
-{
-"id": "vs-venom-o1",
-"spine": "Spider-Man vs. Venom",
-"cover": "Art/Spider-Man/vs-venom-o1.jpg",
-"title": "Spider-Man vs. Venom Omnibus",
-"vol": "",
-"creators": "David Michelinie & various",
-"era": "1984–1994",
-"released": "Sep 2018",
-"art": "o-venom",
-"tex": "tex-web",
-"note": "Every Venom appearance from the black suit's origin through Maximum Carnage, so it doubles back across the two Michelinie volumes above — ASM #300 and #315–317 are also in the McFarlane book, #332–333 and #346–347 in the Larsen one. Maximum Carnage is printed in crossover order, interleaving Amazing, Web, Spider-Man and Spectacular month by month.",
-"chapters": [
-{
-"id": "vs-venom-o1-c1",
-"title": "Part 1",
-"era": "Amazing Spider-Man #258 → Amazing Spider-Man #332",
-"issues": [
-{
-"id": "asm-258",
-"t": "Amazing Spider-Man #258",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-300",
-"t": "Amazing Spider-Man #300",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-315",
-"t": "Amazing Spider-Man #315",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-316",
-"t": "Amazing Spider-Man #316",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-317",
-"t": "Amazing Spider-Man #317",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-332",
-"t": "Amazing Spider-Man #332",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "vs-venom-o1-c2",
-"title": "Part 2",
-"era": "Amazing Spider-Man #333 → Amazing Spider-Man #363",
-"issues": [
-{
-"id": "asm-333",
-"t": "Amazing Spider-Man #333",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-346",
-"t": "Amazing Spider-Man #346",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-347",
-"t": "Amazing Spider-Man #347",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-361",
-"t": "Amazing Spider-Man #361",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-362",
-"t": "Amazing Spider-Man #362",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-363",
-"t": "Amazing Spider-Man #363",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "vs-venom-o1-c3",
-"title": "Part 3",
-"era": "Amazing Spider-Man #373 → Amazing Spider-Man #378",
-"issues": [
-{
-"id": "asm-373",
-"t": "Amazing Spider-Man #373",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-374",
-"t": "Amazing Spider-Man #374",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "asm-375",
-"t": "Amazing Spider-Man #375",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spun-1",
-"t": "Spider-Man Unlimited #1",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "web-101",
-"t": "Web of Spider-Man #101",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-378",
-"t": "Amazing Spider-Man #378",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "vs-venom-o1-c4",
-"title": "Part 4",
-"era": "Spider-Man (1990) #35 → Spectacular Spider-Man #202",
-"issues": [
-{
-"id": "spm-35",
-"t": "Spider-Man (1990) #35",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-201",
-"t": "Spectacular Spider-Man #201",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-102",
-"t": "Web of Spider-Man #102",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-379",
-"t": "Amazing Spider-Man #379",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-36",
-"t": "Spider-Man (1990) #36",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-202",
-"t": "Spectacular Spider-Man #202",
-"s": "Spectacular Spider-Man"
-}
-]
-},
-{
-"id": "vs-venom-o1-c5",
-"title": "Part 5",
-"era": "Web of Spider-Man #103 → Amazing Spider-Man #388",
-"issues": [
-{
-"id": "web-103",
-"t": "Web of Spider-Man #103",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-380",
-"t": "Amazing Spider-Man #380",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-37",
-"t": "Spider-Man (1990) #37",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-203",
-"t": "Spectacular Spider-Man #203",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "spun-2",
-"t": "Spider-Man Unlimited #2",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "asm-388",
-"t": "Amazing Spider-Man #388",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "vs-venom-o1-c6",
-"title": "Part 6",
-"era": "Amazing Spider-Man Annual #25 → Web of Spider-Man #95",
-"issues": [
-{
-"id": "asmann-25",
-"t": "Amazing Spider-Man Annual #25",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "asmann-26",
-"t": "Amazing Spider-Man Annual #26",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "ppann-12",
-"t": "Spectacular Spider-Man Annual #12",
-"s": "Spectacular Spider-Man Annual"
-},
-{
-"id": "webann-8",
-"t": "Web of Spider-Man Annual #8",
-"s": "Web of Spider-Man Annual"
-},
-{
-"id": "web-1",
-"t": "Web of Spider-Man #1",
-"s": "Web of Spider-Man"
-},
-{
-"id": "web-95",
-"t": "Web of Spider-Man #95",
-"s": "Web of Spider-Man"
-}
-]
-},
-{
-"id": "vs-venom-o1-c7",
-"title": "Part 7",
-"era": "Ghost Rider/Blaze: Spirits of Vengeance #5 → Darkhawk #13",
-"issues": [
-{
-"id": "grbsov-5",
-"t": "Ghost Rider/Blaze: Spirits of Vengeance #5",
-"s": "Ghost Rider/Blaze: Spirits of Vengeance"
-},
-{
-"id": "web-96",
-"t": "Web of Spider-Man #96",
-"s": "Web of Spider-Man"
-},
-{
-"id": "grbsov-6",
-"t": "Ghost Rider/Blaze: Spirits of Vengeance #6",
-"s": "Ghost Rider/Blaze: Spirits of Vengeance"
-},
-{
-"id": "webann-7",
-"t": "Web of Spider-Man Annual #7",
-"s": "Web of Spider-Man Annual"
-},
-{
-"id": "mgn-68",
-"t": "Marvel Graphic Novel #68",
-"s": "Marvel Graphic Novel"
-},
-{
-"id": "darkhawk-13",
-"t": "Darkhawk #13",
-"s": "Darkhawk"
-}
-]
-},
-{
-"id": "vs-venom-o1-c8",
-"title": "Part 8",
-"era": "Darkhawk #14 → Marvel Comics Presents #120",
-"issues": [
-{
-"id": "darkhawk-14",
-"t": "Darkhawk #14",
-"s": "Darkhawk"
-},
-{
-"id": "smse-1",
-"t": "Spider-Man Special Edition #1",
-"s": "Spider-Man Special Edition"
-},
-{
-"id": "mcp-117",
-"t": "Marvel Comics Presents #117",
-"s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-118",
-"t": "Marvel Comics Presents #118",
-"s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-119",
-"t": "Marvel Comics Presents #119",
-"s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-120",
-"t": "Marvel Comics Presents #120",
-"s": "Marvel Comics Presents"
-}
-]
-},
-{
-"id": "vs-venom-o1-c9",
-"title": "Part 9",
-"era": "Marvel Comics Presents #121 → Marvel Comics Presents #122",
-"issues": [
-{
-"id": "mcp-121",
-"t": "Marvel Comics Presents #121",
-"s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-122",
-"t": "Marvel Comics Presents #122",
-"s": "Marvel Comics Presents"
-}
-]
-}
-]
-},
-{
-"id": "clone-o1",
-"spine": "Clone Saga",
-"cover": "Art/Spider-Man/clone-o1.jpg",
-"title": "Spider-Man: Clone Saga Omnibus",
+"id": "gru-o1",
+"spine": "By Gruenwald",
+"cover": "Art/Captain-America/gru-o1.jpg",
+"title": "Captain America by Mark Gruenwald Omnibus",
 "vol": "Vol. 1",
-"creators": "Various",
-"era": "1994–1995",
-"released": "Oct 2016",
-"art": "o-clone",
-"tex": "tex-burst",
-"note": "Printed in true crossover reading order — Web, Amazing, Spider-Man and Spectacular interleave month by month, which is how the chapters below are grouped.",
+"creators": "Mark Gruenwald, Paul Neary & Kieron Dwyer",
+"era": "1985–1989",
+"released": "Jul 2024",
+"art": "o-cap80s",
+"tex": "tex-halftone",
+"note": "Ten years on the book, which is still the longest anyone has managed. This is #307–350: the Scourge of the Underworld, Diamondback, and the Captain — the year the government takes the identity off Steve and gives it to John Walker, which is the story every screen version has borrowed since.",
 "chapters": [
 {
-"id": "clone-o1-c1",
-"title": "Part 1",
-"era": "Web of Spider-Man #117 → Spider-Man Unlimited #7",
+"id": "gru-o1-c1",
+"title": "Captain America (1968) #307–322, #333–343, #345–350",
+"era": "1985–1989",
 "issues": [
 {
-"id": "web-117",
-"t": "Web of Spider-Man #117",
-"s": "Web of Spider-Man"
+"id": "cap-307",
+"t": "Captain America (1968) #307",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm-394",
-"t": "Amazing Spider-Man #394",
-"s": "Amazing Spider-Man"
+"id": "cap-308",
+"t": "Captain America (1968) #308",
+"s": "Captain America (1968)"
 },
 {
-"id": "spm-51",
-"t": "Spider-Man (1990) #51",
-"s": "Spider-Man (1990)"
+"id": "cap-309",
+"t": "Captain America (1968) #309",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-217",
-"t": "Spectacular Spider-Man #217",
-"s": "Spectacular Spider-Man"
+"id": "cap-310",
+"t": "Captain America (1968) #310",
+"s": "Captain America (1968)"
 },
 {
-"id": "web-118",
-"t": "Web of Spider-Man #118",
-"s": "Web of Spider-Man"
+"id": "cap-311",
+"t": "Captain America (1968) #311",
+"s": "Captain America (1968)"
 },
 {
-"id": "spun-7",
-"t": "Spider-Man Unlimited #7",
-"s": "Spider-Man Unlimited"
+"id": "cap-312",
+"t": "Captain America (1968) #312",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-313",
+"t": "Captain America (1968) #313",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-314",
+"t": "Captain America (1968) #314",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-315",
+"t": "Captain America (1968) #315",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-316",
+"t": "Captain America (1968) #316",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-317",
+"t": "Captain America (1968) #317",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-318",
+"t": "Captain America (1968) #318",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-319",
+"t": "Captain America (1968) #319",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-320",
+"t": "Captain America (1968) #320",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-321",
+"t": "Captain America (1968) #321",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-322",
+"t": "Captain America (1968) #322",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-333",
+"t": "Captain America (1968) #333",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-334",
+"t": "Captain America (1968) #334",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-335",
+"t": "Captain America (1968) #335",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-336",
+"t": "Captain America (1968) #336",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-337",
+"t": "Captain America (1968) #337",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-338",
+"t": "Captain America (1968) #338",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-339",
+"t": "Captain America (1968) #339",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-340",
+"t": "Captain America (1968) #340",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-341",
+"t": "Captain America (1968) #341",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-342",
+"t": "Captain America (1968) #342",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-343",
+"t": "Captain America (1968) #343",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-345",
+"t": "Captain America (1968) #345",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-346",
+"t": "Captain America (1968) #346",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-347",
+"t": "Captain America (1968) #347",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-348",
+"t": "Captain America (1968) #348",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-349",
+"t": "Captain America (1968) #349",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-350",
+"t": "Captain America (1968) #350",
+"s": "Captain America (1968)"
 }
 ]
 },
 {
-"id": "clone-o1-c2",
-"title": "Part 2",
-"era": "Spider-Man (1990) #52 → Amazing Spider-Man #396",
+"id": "gru-o1-c2",
+"title": "Captain America Annual #8",
+"era": "1985–1989",
 "issues": [
 {
-"id": "spm-52",
-"t": "Spider-Man (1990) #52",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "web-119",
-"t": "Web of Spider-Man #119",
-"s": "Web of Spider-Man"
-},
-{
-"id": "spm-53",
-"t": "Spider-Man (1990) #53",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "asm-395",
-"t": "Amazing Spider-Man #395",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "pp-218",
-"t": "Spectacular Spider-Man #218",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "asm-396",
-"t": "Amazing Spider-Man #396",
-"s": "Amazing Spider-Man"
+"id": "caan1-8",
+"t": "Captain America Annual #8",
+"s": "Captain America Annual"
 }
 ]
 },
 {
-"id": "clone-o1-c3",
-"title": "Part 3",
-"era": "Spectacular Spider-Man #219 → Amazing Spider-Man #397",
+"id": "gru-o1-c3",
+"title": "Marvel Fanfare #26, #29, #31–32",
+"era": "1985–1989",
 "issues": [
 {
-"id": "pp-219",
-"t": "Spectacular Spider-Man #219",
-"s": "Spectacular Spider-Man"
+"id": "mfan-26",
+"t": "Marvel Fanfare #26",
+"s": "Marvel Fanfare"
 },
 {
-"id": "web-120",
-"t": "Web of Spider-Man #120",
-"s": "Web of Spider-Man"
+"id": "mfan-29",
+"t": "Marvel Fanfare #29",
+"s": "Marvel Fanfare"
 },
 {
-"id": "spm-54",
-"t": "Spider-Man (1990) #54",
-"s": "Spider-Man (1990)"
+"id": "mfan-31",
+"t": "Marvel Fanfare #31",
+"s": "Marvel Fanfare"
 },
 {
-"id": "web-121",
-"t": "Web of Spider-Man #121",
-"s": "Web of Spider-Man"
-},
-{
-"id": "spm-55",
-"t": "Spider-Man (1990) #55",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "asm-397",
-"t": "Amazing Spider-Man #397",
-"s": "Amazing Spider-Man"
+"id": "mfan-32",
+"t": "Marvel Fanfare #32",
+"s": "Marvel Fanfare"
 }
 ]
 },
 {
-"id": "clone-o1-c4",
-"title": "Part 4",
-"era": "Spectacular Spider-Man #220 → Funeral for an Octopus #3",
+"id": "gru-o1-c4",
+"title": "Amazing Spider-Man #278",
+"era": "1985–1989",
 "issues": [
 {
-"id": "pp-220",
-"t": "Spectacular Spider-Man #220",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "asm-398",
-"t": "Amazing Spider-Man #398",
+"id": "asm-278",
+"t": "Amazing Spider-Man #278",
 "s": "Amazing Spider-Man"
-},
-{
-"id": "pp-221",
-"t": "Spectacular Spider-Man #221",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "ffo-1",
-"t": "Funeral for an Octopus #1",
-"s": "Funeral for an Octopus"
-},
-{
-"id": "ffo-2",
-"t": "Funeral for an Octopus #2",
-"s": "Funeral for an Octopus"
-},
-{
-"id": "ffo-3",
-"t": "Funeral for an Octopus #3",
-"s": "Funeral for an Octopus"
 }
 ]
 },
 {
-"id": "clone-o1-c5",
-"title": "Part 5",
-"era": "Spider-Man Unlimited #8 → Spectacular Spider-Man #222",
+"id": "gru-o1-c5",
+"title": "Iron Man #228",
+"era": "1985–1989",
 "issues": [
 {
-"id": "spun-8",
-"t": "Spider-Man Unlimited #8",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "web-122",
-"t": "Web of Spider-Man #122",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-399",
-"t": "Amazing Spider-Man #399",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-56",
-"t": "Spider-Man (1990) #56",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "cj-1",
-"t": "The Clone Journal #1",
-"s": "The Clone Journal"
-},
-{
-"id": "pp-222",
-"t": "Spectacular Spider-Man #222",
-"s": "Spectacular Spider-Man"
-}
-]
-},
-{
-"id": "clone-o1-c6",
-"title": "Part 6",
-"era": "Web of Spider-Man #123 → Amazing Spider-Man #401",
-"issues": [
-{
-"id": "web-123",
-"t": "Web of Spider-Man #123",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-400",
-"t": "Amazing Spider-Man #400",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-57",
-"t": "Spider-Man (1990) #57",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-223",
-"t": "Spectacular Spider-Man #223",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-124",
-"t": "Web of Spider-Man #124",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-401",
-"t": "Amazing Spider-Man #401",
-"s": "Amazing Spider-Man"
-}
-]
-},
-{
-"id": "clone-o1-c7",
-"title": "Part 7",
-"era": "Spider-Man (1990) #58 → Collectors' Preview #1",
-"issues": [
-{
-"id": "spm-58",
-"t": "Spider-Man (1990) #58",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-224",
-"t": "Spectacular Spider-Man #224",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-125",
-"t": "Web of Spider-Man #125",
-"s": "Web of Spider-Man"
-},
-{
-"id": "spun-9",
-"t": "Spider-Man Unlimited #9",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "cp-1",
-"t": "Collectors' Preview #1",
-"s": "Collectors' Preview"
+"id": "im-228",
+"t": "Iron Man #228",
+"s": "Iron Man"
 }
 ]
 }
 ]
 },
 {
-"id": "clone-o2",
-"spine": "Clone Saga",
-"cover": "Art/Spider-Man/clone-o2.jpg",
-"title": "Spider-Man: Clone Saga Omnibus",
+"id": "gru-o2",
+"spine": "By Gruenwald",
+"cover": "Art/Captain-America/gru-o2.jpg",
+"title": "Captain America by Mark Gruenwald Omnibus",
 "vol": "Vol. 2",
-"creators": "Various",
-"era": "1995",
-"released": "Nov 2017",
-"art": "o-clone",
-"tex": "tex-burst",
-"note": "Maximum Clonage and the Jackal's endgame. Also interleaved in reading order.",
+"creators": "Mark Gruenwald, Kieron Dwyer & Ron Lim",
+"era": "1989–1991",
+"released": "Jul 2025",
+"art": "o-cap80s",
+"tex": "tex-crosshatch",
+"note": "#351–386, plus the Adventures of Captain America retelling of the origin. The Red Skull is back with a body he did not have before, Crossbones arrives, and Bloodstone hunts through a book that has settled into being a very well-made superhero comic every month.",
 "chapters": [
 {
-"id": "clone-o2-c1",
-"title": "Part 1",
-"era": "Amazing Spider-Man #402 → Spider-Man (1990) #60",
+"id": "gru-o2-c1",
+"title": "Captain America (1968) #351–386",
+"era": "1989–1991",
 "issues": [
 {
-"id": "asm-402",
-"t": "Amazing Spider-Man #402",
-"s": "Amazing Spider-Man"
+"id": "cap-351",
+"t": "Captain America (1968) #351",
+"s": "Captain America (1968)"
 },
 {
-"id": "spm-59",
-"t": "Spider-Man (1990) #59",
-"s": "Spider-Man (1990)"
+"id": "cap-352",
+"t": "Captain America (1968) #352",
+"s": "Captain America (1968)"
 },
 {
-"id": "pp-225",
-"t": "Spectacular Spider-Man #225",
-"s": "Spectacular Spider-Man"
+"id": "cap-353",
+"t": "Captain America (1968) #353",
+"s": "Captain America (1968)"
 },
 {
-"id": "web-126",
-"t": "Web of Spider-Man #126",
-"s": "Web of Spider-Man"
+"id": "cap-354",
+"t": "Captain America (1968) #354",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm-403",
-"t": "Amazing Spider-Man #403",
-"s": "Amazing Spider-Man"
+"id": "cap-355",
+"t": "Captain America (1968) #355",
+"s": "Captain America (1968)"
 },
 {
-"id": "spm-60",
-"t": "Spider-Man (1990) #60",
-"s": "Spider-Man (1990)"
+"id": "cap-356",
+"t": "Captain America (1968) #356",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-357",
+"t": "Captain America (1968) #357",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-358",
+"t": "Captain America (1968) #358",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-359",
+"t": "Captain America (1968) #359",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-360",
+"t": "Captain America (1968) #360",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-361",
+"t": "Captain America (1968) #361",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-362",
+"t": "Captain America (1968) #362",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-363",
+"t": "Captain America (1968) #363",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-364",
+"t": "Captain America (1968) #364",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-365",
+"t": "Captain America (1968) #365",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-366",
+"t": "Captain America (1968) #366",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-367",
+"t": "Captain America (1968) #367",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-368",
+"t": "Captain America (1968) #368",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-369",
+"t": "Captain America (1968) #369",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-370",
+"t": "Captain America (1968) #370",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-371",
+"t": "Captain America (1968) #371",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-372",
+"t": "Captain America (1968) #372",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-373",
+"t": "Captain America (1968) #373",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-374",
+"t": "Captain America (1968) #374",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-375",
+"t": "Captain America (1968) #375",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-376",
+"t": "Captain America (1968) #376",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-377",
+"t": "Captain America (1968) #377",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-378",
+"t": "Captain America (1968) #378",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-379",
+"t": "Captain America (1968) #379",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-380",
+"t": "Captain America (1968) #380",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-381",
+"t": "Captain America (1968) #381",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-382",
+"t": "Captain America (1968) #382",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-383",
+"t": "Captain America (1968) #383",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-384",
+"t": "Captain America (1968) #384",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-385",
+"t": "Captain America (1968) #385",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-386",
+"t": "Captain America (1968) #386",
+"s": "Captain America (1968)"
 }
 ]
 },
 {
-"id": "clone-o2-c2",
-"title": "Part 2",
-"era": "Spectacular Spider-Man #226 → Amazing Spider-Man #404",
+"id": "gru-o2-c2",
+"title": "Captain America Annual #9",
+"era": "1989–1991",
 "issues": [
 {
-"id": "pp-226",
-"t": "Spectacular Spider-Man #226",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "jf-1",
-"t": "The Jackal Files #1",
-"s": "The Jackal Files"
-},
-{
-"id": "nw-61",
-"t": "New Warriors #61",
-"s": "New Warriors"
-},
-{
-"id": "mca-1",
-"t": "Maximum Clonage Alpha #1",
-"s": "Maximum Clonage Alpha"
-},
-{
-"id": "web-127",
-"t": "Web of Spider-Man #127",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-404",
-"t": "Amazing Spider-Man #404",
-"s": "Amazing Spider-Man"
+"id": "caan1-9",
+"t": "Captain America Annual #9",
+"s": "Captain America Annual"
 }
 ]
 },
 {
-"id": "clone-o2-c3",
-"title": "Part 3",
-"era": "Spider-Man (1990) #61 → Spider-Man Super Special #1",
+"id": "gru-o2-c3",
+"title": "Daredevil Annual #7",
+"era": "1989–1991",
 "issues": [
 {
-"id": "spm-61",
-"t": "Spider-Man (1990) #61",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-227",
-"t": "Spectacular Spider-Man #227",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "mco-1",
-"t": "Maximum Clonage Omega #1",
-"s": "Maximum Clonage Omega"
-},
-{
-"id": "nw-62",
-"t": "New Warriors #62",
-"s": "New Warriors"
-},
-{
-"id": "asmss-1",
-"t": "Amazing Spider-Man Super Special #1",
-"s": "Amazing Spider-Man Super Special"
-},
-{
-"id": "spmss-1",
-"t": "Spider-Man Super Special #1",
-"s": "Spider-Man Super Special"
+"id": "ddann-7",
+"t": "Daredevil Annual #7",
+"s": "Daredevil Annual"
 }
 ]
 },
 {
-"id": "clone-o2-c4",
-"title": "Part 4",
-"era": "Venom Super Special #1 → Spider-Man (1990) #62",
+"id": "gru-o2-c4",
+"title": "Punisher Annual #4",
+"era": "1989–1991",
 "issues": [
 {
-"id": "vss-1",
-"t": "Venom Super Special #1",
-"s": "Venom Super Special"
-},
-{
-"id": "ppss-1",
-"t": "Spectacular Spider-Man Super Special #1",
-"s": "Spectacular Spider-Man Super Special"
-},
-{
-"id": "webss-1",
-"t": "Web of Spider-Man Super Special #1",
-"s": "Web of Spider-Man Super Special"
-},
-{
-"id": "web-128",
-"t": "Web of Spider-Man #128",
-"s": "Web of Spider-Man"
-},
-{
-"id": "asm-405",
-"t": "Amazing Spider-Man #405",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-62",
-"t": "Spider-Man (1990) #62",
-"s": "Spider-Man (1990)"
+"id": "punann-4",
+"t": "Punisher Annual #4",
+"s": "Punisher Annual"
 }
 ]
 },
 {
-"id": "clone-o2-c5",
-"title": "Part 5",
-"era": "Spider-Man Unlimited #10 → New Warriors #65",
+"id": "gru-o2-c5",
+"title": "Captain America Annual #10",
+"era": "1989–1991",
 "issues": [
 {
-"id": "spun-10",
-"t": "Spider-Man Unlimited #10",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "pp-228",
-"t": "Spectacular Spider-Man #228",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "web-129",
-"t": "Web of Spider-Man #129",
-"s": "Web of Spider-Man"
-},
-{
-"id": "nw-63",
-"t": "New Warriors #63",
-"s": "New Warriors"
-},
-{
-"id": "nw-64",
-"t": "New Warriors #64",
-"s": "New Warriors"
-},
-{
-"id": "nw-65",
-"t": "New Warriors #65",
-"s": "New Warriors"
+"id": "caan1-10",
+"t": "Captain America Annual #10",
+"s": "Captain America Annual"
 }
 ]
 },
 {
-"id": "clone-o2-c6",
-"title": "Part 6",
-"era": "New Warriors #66 → The Lost Years #1",
+"id": "gru-o2-c6",
+"title": "Adventures Of Captain America #1–4",
+"era": "1989–1991",
 "issues": [
 {
-"id": "nw-66",
-"t": "New Warriors #66",
-"s": "New Warriors"
+"id": "advcap-1",
+"t": "Adventures Of Captain America #1",
+"s": "Adventures Of Captain America"
 },
 {
-"id": "asm-406",
-"t": "Amazing Spider-Man #406",
-"s": "Amazing Spider-Man"
+"id": "advcap-2",
+"t": "Adventures Of Captain America #2",
+"s": "Adventures Of Captain America"
 },
 {
-"id": "spm-63",
-"t": "Spider-Man (1990) #63",
-"s": "Spider-Man (1990)"
+"id": "advcap-3",
+"t": "Adventures Of Captain America #3",
+"s": "Adventures Of Captain America"
 },
 {
-"id": "stu-1",
-"t": "Spider-Man Team-Up #1",
-"s": "Spider-Man Team-Up"
-},
-{
-"id": "pp-229",
-"t": "Spectacular Spider-Man #229",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "ly-1",
-"t": "The Lost Years #1",
-"s": "The Lost Years"
-}
-]
-},
-{
-"id": "clone-o2-c7",
-"title": "Part 7",
-"era": "The Lost Years #2 → The Parker Years #1",
-"issues": [
-{
-"id": "ly-2",
-"t": "The Lost Years #2",
-"s": "The Lost Years"
-},
-{
-"id": "ly-3",
-"t": "The Lost Years #3",
-"s": "The Lost Years"
-},
-{
-"id": "py-1",
-"t": "The Parker Years #1",
-"s": "The Parker Years"
+"id": "advcap-4",
+"t": "Adventures Of Captain America #4",
+"s": "Adventures Of Captain America"
 }
 ]
 }
 ]
 },
 {
-"id": "ben-o1",
-"spine": "Ben Reilly",
-"cover": "Art/Spider-Man/ben-o1.jpg",
-"title": "Spider-Man: Ben Reilly Omnibus",
-"vol": "Vol. 1",
-"creators": "Various",
-"era": "1995–1996",
-"released": "Jan 2019",
-"art": "o-benreilly",
-"tex": "tex-burst",
-"note": "Ben Reilly takes over as Spider-Man. The Scarlet Spider titles and the Sensational relaunch.",
+"id": "gru-o3",
+"spine": "By Gruenwald",
+"cover": "Art/Captain-America/gru-o3.jpg",
+"title": "Captain America by Mark Gruenwald Omnibus",
+"vol": "Vol. 3",
+"creators": "Mark Gruenwald, Rik Levins & Dave Hoover",
+"era": "1991–1993",
+"released": "Jul 2026",
+"art": "o-cap80s",
+"tex": "tex-fourdot",
+"note": "#387–418, Blood and Glory with the Punisher, and U.S.Agent's own mini. Operation: Galactic Storm runs through the middle of it. The run goes on to #443 and the omnibus line stops at #418, so the last two years of Gruenwald — Fighting Chance, and Cap's body failing him — are not collected here.",
 "chapters": [
 {
-"id": "ben-o1-c1",
-"title": "Part 1",
-"era": "Scarlet Spider Unlimited #1 → Web of Scarlet Spider #2",
+"id": "gru-o3-c1",
+"title": "Captain America (1968) #387–418",
+"era": "1991–1993",
 "issues": [
 {
-"id": "ssu-1",
-"t": "Scarlet Spider Unlimited #1",
-"s": "Scarlet Spider Unlimited"
+"id": "cap-387",
+"t": "Captain America (1968) #387",
+"s": "Captain America (1968)"
 },
 {
-"id": "wss-1",
-"t": "Web of Scarlet Spider #1",
-"s": "Web of Scarlet Spider"
+"id": "cap-388",
+"t": "Captain America (1968) #388",
+"s": "Captain America (1968)"
 },
 {
-"id": "ass-1",
-"t": "Amazing Scarlet Spider #1",
-"s": "Amazing Scarlet Spider"
+"id": "cap-389",
+"t": "Captain America (1968) #389",
+"s": "Captain America (1968)"
 },
 {
-"id": "ss-1",
-"t": "Scarlet Spider #1",
-"s": "Scarlet Spider"
+"id": "cap-390",
+"t": "Captain America (1968) #390",
+"s": "Captain America (1968)"
 },
 {
-"id": "pss-1",
-"t": "Spectacular Scarlet Spider #1",
-"s": "Spectacular Scarlet Spider"
+"id": "cap-391",
+"t": "Captain America (1968) #391",
+"s": "Captain America (1968)"
 },
 {
-"id": "wss-2",
-"t": "Web of Scarlet Spider #2",
-"s": "Web of Scarlet Spider"
+"id": "cap-392",
+"t": "Captain America (1968) #392",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-393",
+"t": "Captain America (1968) #393",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-394",
+"t": "Captain America (1968) #394",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-395",
+"t": "Captain America (1968) #395",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-396",
+"t": "Captain America (1968) #396",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-397",
+"t": "Captain America (1968) #397",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-398",
+"t": "Captain America (1968) #398",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-399",
+"t": "Captain America (1968) #399",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-400",
+"t": "Captain America (1968) #400",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-401",
+"t": "Captain America (1968) #401",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-402",
+"t": "Captain America (1968) #402",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-403",
+"t": "Captain America (1968) #403",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-404",
+"t": "Captain America (1968) #404",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-405",
+"t": "Captain America (1968) #405",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-406",
+"t": "Captain America (1968) #406",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-407",
+"t": "Captain America (1968) #407",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-408",
+"t": "Captain America (1968) #408",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-409",
+"t": "Captain America (1968) #409",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-410",
+"t": "Captain America (1968) #410",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-411",
+"t": "Captain America (1968) #411",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-412",
+"t": "Captain America (1968) #412",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-413",
+"t": "Captain America (1968) #413",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-414",
+"t": "Captain America (1968) #414",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-415",
+"t": "Captain America (1968) #415",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-416",
+"t": "Captain America (1968) #416",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-417",
+"t": "Captain America (1968) #417",
+"s": "Captain America (1968)"
+},
+{
+"id": "cap-418",
+"t": "Captain America (1968) #418",
+"s": "Captain America (1968)"
 }
 ]
 },
 {
-"id": "ben-o1-c2",
-"title": "Part 2",
-"era": "Amazing Scarlet Spider #2 → Amazing Spider-Man #407",
+"id": "gru-o3-c2",
+"title": "Captain America Annual #11",
+"era": "1991–1993",
 "issues": [
 {
-"id": "ass-2",
-"t": "Amazing Scarlet Spider #2",
-"s": "Amazing Scarlet Spider"
-},
-{
-"id": "gg-3",
-"t": "Green Goblin #3",
-"s": "Green Goblin"
-},
-{
-"id": "ss-2",
-"t": "Scarlet Spider #2",
-"s": "Scarlet Spider"
-},
-{
-"id": "pss-2",
-"t": "Spectacular Scarlet Spider #2",
-"s": "Spectacular Scarlet Spider"
-},
-{
-"id": "sen-0",
-"t": "Sensational Spider-Man #0",
-"s": "Sensational Spider-Man"
-},
-{
-"id": "asm-407",
-"t": "Amazing Spider-Man #407",
-"s": "Amazing Spider-Man"
+"id": "caan1-11",
+"t": "Captain America Annual #11",
+"s": "Captain America Annual"
 }
 ]
 },
 {
-"id": "ben-o1-c3",
-"title": "Part 3",
-"era": "Spider-Man (1990) #64 → Spider-Man/Punisher: Family Plot #1",
+"id": "gru-o3-c3",
+"title": "Punisher/Captain America: Blood and Glory #1–3",
+"era": "1991–1993",
 "issues": [
 {
-"id": "spm-64",
-"t": "Spider-Man (1990) #64",
-"s": "Spider-Man (1990)"
+"id": "bandg-1",
+"t": "Punisher/Captain America: Blood and Glory #1",
+"s": "Punisher/Captain America: Blood and Glory"
 },
 {
-"id": "sen-1",
-"t": "Sensational Spider-Man #1",
-"s": "Sensational Spider-Man"
+"id": "bandg-2",
+"t": "Punisher/Captain America: Blood and Glory #2",
+"s": "Punisher/Captain America: Blood and Glory"
 },
 {
-"id": "asm-408",
-"t": "Amazing Spider-Man #408",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-65",
-"t": "Spider-Man (1990) #65",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-230",
-"t": "Spectacular Spider-Man #230",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "fp-1",
-"t": "Spider-Man/Punisher: Family Plot #1",
-"s": "Spider-Man/Punisher: Family Plot"
+"id": "bandg-3",
+"t": "Punisher/Captain America: Blood and Glory #3",
+"s": "Punisher/Captain America: Blood and Glory"
 }
 ]
 },
 {
-"id": "ben-o1-c4",
-"title": "Part 4",
-"era": "Spider-Man/Punisher: Family Plot #2 → Venom: Along Came a Spider #1",
+"id": "gru-o3-c4",
+"title": "Ghost Rider/Captain America: Fear #1",
+"era": "1991–1993",
 "issues": [
 {
-"id": "fp-2",
-"t": "Spider-Man/Punisher: Family Plot #2",
-"s": "Spider-Man/Punisher: Family Plot"
-},
-{
-"id": "wss-3",
-"t": "Web of Scarlet Spider #3",
-"s": "Web of Scarlet Spider"
-},
-{
-"id": "nw-67",
-"t": "New Warriors #67",
-"s": "New Warriors"
-},
-{
-"id": "wss-4",
-"t": "Web of Scarlet Spider #4",
-"s": "Web of Scarlet Spider"
-},
-{
-"id": "hs-1995",
-"t": "Spider-Man Holiday Special #1995",
-"s": "Spider-Man Holiday Special"
-},
-{
-"id": "vacs-1",
-"t": "Venom: Along Came a Spider #1",
-"s": "Venom: Along Came a Spider"
+"id": "grcapf-1",
+"t": "Ghost Rider/Captain America: Fear #1",
+"s": "Ghost Rider/Captain America: Fear"
 }
 ]
 },
 {
-"id": "ben-o1-c5",
-"title": "Part 5",
-"era": "Venom: Along Came a Spider #2 → Sensational Spider-Man #2",
+"id": "gru-o3-c5",
+"title": "U.S.Agent #1–4",
+"era": "1991–1993",
 "issues": [
 {
-"id": "vacs-2",
-"t": "Venom: Along Came a Spider #2",
-"s": "Venom: Along Came a Spider"
+"id": "usagent-1",
+"t": "U.S.Agent #1",
+"s": "U.S.Agent"
 },
 {
-"id": "vacs-3",
-"t": "Venom: Along Came a Spider #3",
-"s": "Venom: Along Came a Spider"
+"id": "usagent-2",
+"t": "U.S.Agent #2",
+"s": "U.S.Agent"
 },
 {
-"id": "vacs-4",
-"t": "Venom: Along Came a Spider #4",
-"s": "Venom: Along Came a Spider"
+"id": "usagent-3",
+"t": "U.S.Agent #3",
+"s": "U.S.Agent"
 },
 {
-"id": "asmann-1996",
-"t": "Amazing Spider-Man Annual #1996",
-"s": "Amazing Spider-Man Annual"
-},
-{
-"id": "pp-231",
-"t": "Spectacular Spider-Man #231",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "sen-2",
-"t": "Sensational Spider-Man #2",
-"s": "Sensational Spider-Man"
-}
-]
-},
-{
-"id": "ben-o1-c6",
-"title": "Part 6",
-"era": "Amazing Spider-Man #409 → Spider-Man (1990) #67",
-"issues": [
-{
-"id": "asm-409",
-"t": "Amazing Spider-Man #409",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-66",
-"t": "Spider-Man (1990) #66",
-"s": "Spider-Man (1990)"
-},
-{
-"id": "pp-232",
-"t": "Spectacular Spider-Man #232",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "sen-3",
-"t": "Sensational Spider-Man #3",
-"s": "Sensational Spider-Man"
-},
-{
-"id": "asm-410",
-"t": "Amazing Spider-Man #410",
-"s": "Amazing Spider-Man"
-},
-{
-"id": "spm-67",
-"t": "Spider-Man (1990) #67",
-"s": "Spider-Man (1990)"
-}
-]
-},
-{
-"id": "ben-o1-c7",
-"title": "Part 7",
-"era": "Spectacular Spider-Man #233 → Spider-Man Team-Up #2",
-"issues": [
-{
-"id": "pp-233",
-"t": "Spectacular Spider-Man #233",
-"s": "Spectacular Spider-Man"
-},
-{
-"id": "fa-1",
-"t": "The Final Adventure #1",
-"s": "The Final Adventure"
-},
-{
-"id": "fa-2",
-"t": "The Final Adventure #2",
-"s": "The Final Adventure"
-},
-{
-"id": "fa-3",
-"t": "The Final Adventure #3",
-"s": "The Final Adventure"
-},
-{
-"id": "fa-4",
-"t": "The Final Adventure #4",
-"s": "The Final Adventure"
-},
-{
-"id": "stu-2",
-"t": "Spider-Man Team-Up #2",
-"s": "Spider-Man Team-Up"
-}
-]
-},
-{
-"id": "ben-o1-c8",
-"title": "Part 8",
-"era": "Spider-Man Team-Up #3 → Wizard Mini-Comic #3",
-"issues": [
-{
-"id": "stu-3",
-"t": "Spider-Man Team-Up #3",
-"s": "Spider-Man Team-Up"
-},
-{
-"id": "spun-11",
-"t": "Spider-Man Unlimited #11",
-"s": "Spider-Man Unlimited"
-},
-{
-"id": "wiz-3",
-"t": "Wizard Mini-Comic #3",
-"s": "Wizard Mini-Comic"
+"id": "usagent-4",
+"t": "U.S.Agent #4",
+"s": "U.S.Agent"
 }
 ]
 }
 ]
 },
 {
-"id": "jms-o1",
-"spine": "By J.M. Straczynski",
-"cover": "Art/Spider-Man/jms-o1.jpg",
-"title": "Amazing Spider-Man by J. Michael Straczynski Omnibus",
+"id": "waid-o1",
+"spine": "By Waid",
+"cover": "Art/Captain-America/waid-o1.jpg",
+"title": "Captain America by Waid, Garney & Kubert Omnibus",
 "vol": "",
-"creators": "J. Michael Straczynski & John Romita Jr.",
-"era": "2001–2005",
-"released": "May 2019",
-"art": "o-jms",
-"tex": "tex-web",
-"note": "The post-9/11 relaunch. Ezekiel and the totem question, Aunt May finding out, and \"The Conversation.\"",
+"creators": "Mark Waid, Ron Garney & Andy Kubert",
+"era": "1995–1998",
+"released": "Dec 2017",
+"art": "o-heroes",
+"tex": "tex-halftone",
+"note": "Two runs with Heroes Reborn in the gap between them. Waid and Garney take #444–454 and immediately bring Sharon Carter back from the dead; then the book is cancelled for the Heroes Reborn year, and they return for Captain America (1998) #1–23 plus the Sentinel of Liberty mini. The Heroes Reborn year itself is a different book and is not here.",
 "chapters": [
 {
-"id": "jms-o1-c1",
-"title": "Amazing Spider-Man (1999) #30–58, #500–514",
-"era": "2001–2005",
+"id": "waid-o1-c1",
+"title": "Captain America (1968) #444–454",
+"era": "1995–1998",
 "issues": [
 {
-"id": "asm2-30",
-"t": "Amazing Spider-Man (1999) #30",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-444",
+"t": "Captain America (1968) #444",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-31",
-"t": "Amazing Spider-Man (1999) #31",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-445",
+"t": "Captain America (1968) #445",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-32",
-"t": "Amazing Spider-Man (1999) #32",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-446",
+"t": "Captain America (1968) #446",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-33",
-"t": "Amazing Spider-Man (1999) #33",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-447",
+"t": "Captain America (1968) #447",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-34",
-"t": "Amazing Spider-Man (1999) #34",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-448",
+"t": "Captain America (1968) #448",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-35",
-"t": "Amazing Spider-Man (1999) #35",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-449",
+"t": "Captain America (1968) #449",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-36",
-"t": "Amazing Spider-Man (1999) #36",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-450",
+"t": "Captain America (1968) #450",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-37",
-"t": "Amazing Spider-Man (1999) #37",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-451",
+"t": "Captain America (1968) #451",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-38",
-"t": "Amazing Spider-Man (1999) #38",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-452",
+"t": "Captain America (1968) #452",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-39",
-"t": "Amazing Spider-Man (1999) #39",
-"s": "Amazing Spider-Man (1999)"
+"id": "cap-453",
+"t": "Captain America (1968) #453",
+"s": "Captain America (1968)"
 },
 {
-"id": "asm2-40",
-"t": "Amazing Spider-Man (1999) #40",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-41",
-"t": "Amazing Spider-Man (1999) #41",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-42",
-"t": "Amazing Spider-Man (1999) #42",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-43",
-"t": "Amazing Spider-Man (1999) #43",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-44",
-"t": "Amazing Spider-Man (1999) #44",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-45",
-"t": "Amazing Spider-Man (1999) #45",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-46",
-"t": "Amazing Spider-Man (1999) #46",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-47",
-"t": "Amazing Spider-Man (1999) #47",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-48",
-"t": "Amazing Spider-Man (1999) #48",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-49",
-"t": "Amazing Spider-Man (1999) #49",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-50",
-"t": "Amazing Spider-Man (1999) #50",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-51",
-"t": "Amazing Spider-Man (1999) #51",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-52",
-"t": "Amazing Spider-Man (1999) #52",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-53",
-"t": "Amazing Spider-Man (1999) #53",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-54",
-"t": "Amazing Spider-Man (1999) #54",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-55",
-"t": "Amazing Spider-Man (1999) #55",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-56",
-"t": "Amazing Spider-Man (1999) #56",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-57",
-"t": "Amazing Spider-Man (1999) #57",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-58",
-"t": "Amazing Spider-Man (1999) #58",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-500",
-"t": "Amazing Spider-Man (1999) #500",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-501",
-"t": "Amazing Spider-Man (1999) #501",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-502",
-"t": "Amazing Spider-Man (1999) #502",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-503",
-"t": "Amazing Spider-Man (1999) #503",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-504",
-"t": "Amazing Spider-Man (1999) #504",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-505",
-"t": "Amazing Spider-Man (1999) #505",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-506",
-"t": "Amazing Spider-Man (1999) #506",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-507",
-"t": "Amazing Spider-Man (1999) #507",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-508",
-"t": "Amazing Spider-Man (1999) #508",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-509",
-"t": "Amazing Spider-Man (1999) #509",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-510",
-"t": "Amazing Spider-Man (1999) #510",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-511",
-"t": "Amazing Spider-Man (1999) #511",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-512",
-"t": "Amazing Spider-Man (1999) #512",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-513",
-"t": "Amazing Spider-Man (1999) #513",
-"s": "Amazing Spider-Man (1999)"
-},
-{
-"id": "asm2-514",
-"t": "Amazing Spider-Man (1999) #514",
-"s": "Amazing Spider-Man (1999)"
-}
-]
+"id": "cap-454",
+"t": "Captain America (1968) #454",
+"s": "Captain America (1968)"
 }
 ]
 },
 {
-"id": "ult-o1",
-"spine": "Ultimate Spider-Man",
-"cover": "Art/Spider-Man/ult-o1.jpg",
-"title": "Ultimate Spider-Man Omnibus",
-"vol": "Vol. 1",
-"creators": "Brian Michael Bendis & Mark Bagley",
-"era": "2000–2003",
-"released": "Jun 2012",
-"art": "o-ultimate",
-"tex": "tex-web",
-"note": "A separate continuity, not the next chapter of the one above — the origin retold for 2000. Bendis and Bagley from #1 through the Venom arc and Gwen Stacy's death.",
-"chapters": [
-{
-"id": "ult-o1-c1",
-"title": "Ultimate Spider-Man #1–39, #½",
-"era": "2000–2003",
+"id": "waid-o1-c2",
+"title": "Captain America (1998) #1–23",
+"era": "1995–1998",
 "issues": [
 {
-"id": "usm-1",
-"t": "Ultimate Spider-Man #1",
-"s": "Ultimate Spider-Man"
+"id": "cap3-1",
+"t": "Captain America (1998) #1",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-2",
-"t": "Ultimate Spider-Man #2",
-"s": "Ultimate Spider-Man"
+"id": "cap3-2",
+"t": "Captain America (1998) #2",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-3",
-"t": "Ultimate Spider-Man #3",
-"s": "Ultimate Spider-Man"
+"id": "cap3-3",
+"t": "Captain America (1998) #3",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-4",
-"t": "Ultimate Spider-Man #4",
-"s": "Ultimate Spider-Man"
+"id": "cap3-4",
+"t": "Captain America (1998) #4",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-5",
-"t": "Ultimate Spider-Man #5",
-"s": "Ultimate Spider-Man"
+"id": "cap3-5",
+"t": "Captain America (1998) #5",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-6",
-"t": "Ultimate Spider-Man #6",
-"s": "Ultimate Spider-Man"
+"id": "cap3-6",
+"t": "Captain America (1998) #6",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-7",
-"t": "Ultimate Spider-Man #7",
-"s": "Ultimate Spider-Man"
+"id": "cap3-7",
+"t": "Captain America (1998) #7",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-8",
-"t": "Ultimate Spider-Man #8",
-"s": "Ultimate Spider-Man"
+"id": "cap3-8",
+"t": "Captain America (1998) #8",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-9",
-"t": "Ultimate Spider-Man #9",
-"s": "Ultimate Spider-Man"
+"id": "cap3-9",
+"t": "Captain America (1998) #9",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-10",
-"t": "Ultimate Spider-Man #10",
-"s": "Ultimate Spider-Man"
+"id": "cap3-10",
+"t": "Captain America (1998) #10",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-11",
-"t": "Ultimate Spider-Man #11",
-"s": "Ultimate Spider-Man"
+"id": "cap3-11",
+"t": "Captain America (1998) #11",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-12",
-"t": "Ultimate Spider-Man #12",
-"s": "Ultimate Spider-Man"
+"id": "cap3-12",
+"t": "Captain America (1998) #12",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-13",
-"t": "Ultimate Spider-Man #13",
-"s": "Ultimate Spider-Man"
+"id": "cap3-13",
+"t": "Captain America (1998) #13",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-14",
-"t": "Ultimate Spider-Man #14",
-"s": "Ultimate Spider-Man"
+"id": "cap3-14",
+"t": "Captain America (1998) #14",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-15",
-"t": "Ultimate Spider-Man #15",
-"s": "Ultimate Spider-Man"
+"id": "cap3-15",
+"t": "Captain America (1998) #15",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-16",
-"t": "Ultimate Spider-Man #16",
-"s": "Ultimate Spider-Man"
+"id": "cap3-16",
+"t": "Captain America (1998) #16",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-17",
-"t": "Ultimate Spider-Man #17",
-"s": "Ultimate Spider-Man"
+"id": "cap3-17",
+"t": "Captain America (1998) #17",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-18",
-"t": "Ultimate Spider-Man #18",
-"s": "Ultimate Spider-Man"
+"id": "cap3-18",
+"t": "Captain America (1998) #18",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-19",
-"t": "Ultimate Spider-Man #19",
-"s": "Ultimate Spider-Man"
+"id": "cap3-19",
+"t": "Captain America (1998) #19",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-20",
-"t": "Ultimate Spider-Man #20",
-"s": "Ultimate Spider-Man"
+"id": "cap3-20",
+"t": "Captain America (1998) #20",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-21",
-"t": "Ultimate Spider-Man #21",
-"s": "Ultimate Spider-Man"
+"id": "cap3-21",
+"t": "Captain America (1998) #21",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-22",
-"t": "Ultimate Spider-Man #22",
-"s": "Ultimate Spider-Man"
+"id": "cap3-22",
+"t": "Captain America (1998) #22",
+"s": "Captain America (1998)"
 },
 {
-"id": "usm-23",
-"t": "Ultimate Spider-Man #23",
-"s": "Ultimate Spider-Man"
+"id": "cap3-23",
+"t": "Captain America (1998) #23",
+"s": "Captain America (1998)"
+}
+]
 },
 {
-"id": "usm-24",
-"t": "Ultimate Spider-Man #24",
-"s": "Ultimate Spider-Man"
+"id": "waid-o1-c3",
+"title": "Iron Man & Captain America Annual #1998",
+"era": "1995–1998",
+"issues": [
+{
+"id": "imcaann-1998",
+"t": "Iron Man & Captain America Annual #1998",
+"s": "Iron Man & Captain America Annual"
+}
+]
 },
 {
-"id": "usm-25",
-"t": "Ultimate Spider-Man #25",
-"s": "Ultimate Spider-Man"
+"id": "waid-o1-c4",
+"title": "Captain America Sentinel Of Liberty (1998) #1–12",
+"era": "1995–1998",
+"issues": [
+{
+"id": "capsol-1",
+"t": "Captain America Sentinel Of Liberty (1998) #1",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-26",
-"t": "Ultimate Spider-Man #26",
-"s": "Ultimate Spider-Man"
+"id": "capsol-2",
+"t": "Captain America Sentinel Of Liberty (1998) #2",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-27",
-"t": "Ultimate Spider-Man #27",
-"s": "Ultimate Spider-Man"
+"id": "capsol-3",
+"t": "Captain America Sentinel Of Liberty (1998) #3",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-28",
-"t": "Ultimate Spider-Man #28",
-"s": "Ultimate Spider-Man"
+"id": "capsol-4",
+"t": "Captain America Sentinel Of Liberty (1998) #4",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-29",
-"t": "Ultimate Spider-Man #29",
-"s": "Ultimate Spider-Man"
+"id": "capsol-5",
+"t": "Captain America Sentinel Of Liberty (1998) #5",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-30",
-"t": "Ultimate Spider-Man #30",
-"s": "Ultimate Spider-Man"
+"id": "capsol-6",
+"t": "Captain America Sentinel Of Liberty (1998) #6",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-31",
-"t": "Ultimate Spider-Man #31",
-"s": "Ultimate Spider-Man"
+"id": "capsol-7",
+"t": "Captain America Sentinel Of Liberty (1998) #7",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-32",
-"t": "Ultimate Spider-Man #32",
-"s": "Ultimate Spider-Man"
+"id": "capsol-8",
+"t": "Captain America Sentinel Of Liberty (1998) #8",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-33",
-"t": "Ultimate Spider-Man #33",
-"s": "Ultimate Spider-Man"
+"id": "capsol-9",
+"t": "Captain America Sentinel Of Liberty (1998) #9",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-34",
-"t": "Ultimate Spider-Man #34",
-"s": "Ultimate Spider-Man"
+"id": "capsol-10",
+"t": "Captain America Sentinel Of Liberty (1998) #10",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-35",
-"t": "Ultimate Spider-Man #35",
-"s": "Ultimate Spider-Man"
+"id": "capsol-11",
+"t": "Captain America Sentinel Of Liberty (1998) #11",
+"s": "Captain America Sentinel Of Liberty (1998)"
 },
 {
-"id": "usm-36",
-"t": "Ultimate Spider-Man #36",
-"s": "Ultimate Spider-Man"
+"id": "capsol-12",
+"t": "Captain America Sentinel Of Liberty (1998) #12",
+"s": "Captain America Sentinel Of Liberty (1998)"
+}
+]
 },
 {
-"id": "usm-37",
-"t": "Ultimate Spider-Man #37",
-"s": "Ultimate Spider-Man"
+"id": "waid-o1-c5",
+"title": "Captain America: Sentinel of Liberty Rough Cut #1",
+"era": "1995–1998",
+"issues": [
+{
+"id": "capsolrc-1",
+"t": "Captain America: Sentinel of Liberty Rough Cut #1",
+"s": "Captain America: Sentinel of Liberty Rough Cut"
+}
+]
 },
 {
-"id": "usm-38",
-"t": "Ultimate Spider-Man #38",
-"s": "Ultimate Spider-Man"
+"id": "waid-o1-c6",
+"title": "Captain America: The Legend #1",
+"era": "1995–1998",
+"issues": [
+{
+"id": "caplgd-1",
+"t": "Captain America: The Legend #1",
+"s": "Captain America: The Legend"
+}
+]
 },
 {
-"id": "usm-39",
-"t": "Ultimate Spider-Man #39",
-"s": "Ultimate Spider-Man"
-},
+"id": "waid-o1-c7",
+"title": "Captain America: Red, White & Blue #1",
+"era": "1995–1998",
+"issues": [
 {
-"id": "usm-½",
-"t": "Ultimate Spider-Man #½",
-"s": "Ultimate Spider-Man"
+"id": "caprwb-1",
+"t": "Captain America: Red, White & Blue #1",
+"s": "Captain America: Red, White & Blue"
 }
 ]
 }
 ]
 },
 {
-"id": "ult-death-o1",
-"spine": "Death of Ultimate",
-"cover": "Art/Spider-Man/ult-death-o1.jpg",
-"title": "Death of Ultimate Spider-Man Omnibus",
+"id": "jurgens-o1",
+"spine": "By Jurgens",
+"cover": "Art/Captain-America/jurgens-o1.jpg",
+"title": "Captain America by Dan Jurgens Omnibus",
 "vol": "",
-"creators": "Brian Michael Bendis & Mark Bagley",
-"era": "2010–2011",
-"released": "Nov 2012",
-"art": "o-black",
-"tex": "tex-burst",
-"note": "The end of Ultimate Peter Parker. Jumps well past the volume above — the 100-odd issues between the two are not collected in omnibus.",
+"creators": "Dan Jurgens & Andy Kubert",
+"era": "2000–2002",
+"released": "Aug 2021",
+"art": "o-heroes",
+"tex": "tex-crosshatch",
+"note": "Captain America (1998) #25–50, which finishes that volume. Jurgens writes and draws most of it — Protocide, the Red Skull's return, and a Korea story that is the book at its best. After this the title relaunches twice more before anything is collected again.",
 "chapters": [
 {
-"id": "ult-death-o1-c1",
-"title": "Ultimate Comics Spider-Man #15, #150–160",
-"era": "2010–2011",
+"id": "jurgens-o1-c1",
+"title": "Captain America (1998) #25–50",
+"era": "2000–2002",
 "issues": [
 {
-"id": "ucsm-15",
-"t": "Ultimate Comics Spider-Man #15",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-25",
+"t": "Captain America (1998) #25",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-150",
-"t": "Ultimate Comics Spider-Man #150",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-26",
+"t": "Captain America (1998) #26",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-151",
-"t": "Ultimate Comics Spider-Man #151",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-27",
+"t": "Captain America (1998) #27",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-152",
-"t": "Ultimate Comics Spider-Man #152",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-28",
+"t": "Captain America (1998) #28",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-153",
-"t": "Ultimate Comics Spider-Man #153",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-29",
+"t": "Captain America (1998) #29",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-154",
-"t": "Ultimate Comics Spider-Man #154",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-30",
+"t": "Captain America (1998) #30",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-155",
-"t": "Ultimate Comics Spider-Man #155",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-31",
+"t": "Captain America (1998) #31",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-156",
-"t": "Ultimate Comics Spider-Man #156",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-32",
+"t": "Captain America (1998) #32",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-157",
-"t": "Ultimate Comics Spider-Man #157",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-33",
+"t": "Captain America (1998) #33",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-158",
-"t": "Ultimate Comics Spider-Man #158",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-34",
+"t": "Captain America (1998) #34",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-159",
-"t": "Ultimate Comics Spider-Man #159",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-35",
+"t": "Captain America (1998) #35",
+"s": "Captain America (1998)"
 },
 {
-"id": "ucsm-160",
-"t": "Ultimate Comics Spider-Man #160",
-"s": "Ultimate Comics Spider-Man"
+"id": "cap3-36",
+"t": "Captain America (1998) #36",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-37",
+"t": "Captain America (1998) #37",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-38",
+"t": "Captain America (1998) #38",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-39",
+"t": "Captain America (1998) #39",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-40",
+"t": "Captain America (1998) #40",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-41",
+"t": "Captain America (1998) #41",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-42",
+"t": "Captain America (1998) #42",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-43",
+"t": "Captain America (1998) #43",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-44",
+"t": "Captain America (1998) #44",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-45",
+"t": "Captain America (1998) #45",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-46",
+"t": "Captain America (1998) #46",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-47",
+"t": "Captain America (1998) #47",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-48",
+"t": "Captain America (1998) #48",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-49",
+"t": "Captain America (1998) #49",
+"s": "Captain America (1998)"
+},
+{
+"id": "cap3-50",
+"t": "Captain America (1998) #50",
+"s": "Captain America (1998)"
 }
 ]
 },
 {
-"id": "ult-death-o1-c2",
-"title": "Ultimate Avengers vs. New Ultimates #1–6",
-"era": "2010–2011",
+"id": "jurgens-o1-c2",
+"title": "Captain America Annual #2000–2001",
+"era": "2000–2002",
 "issues": [
 {
-"id": "uavn-1",
-"t": "Ultimate Avengers vs. New Ultimates #1",
-"s": "Ultimate Avengers vs. New Ultimates"
+"id": "caan1-2000",
+"t": "Captain America Annual #2000",
+"s": "Captain America Annual"
 },
 {
-"id": "uavn-2",
-"t": "Ultimate Avengers vs. New Ultimates #2",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-3",
-"t": "Ultimate Avengers vs. New Ultimates #3",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-4",
-"t": "Ultimate Avengers vs. New Ultimates #4",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-5",
-"t": "Ultimate Avengers vs. New Ultimates #5",
-"s": "Ultimate Avengers vs. New Ultimates"
-},
-{
-"id": "uavn-6",
-"t": "Ultimate Avengers vs. New Ultimates #6",
-"s": "Ultimate Avengers vs. New Ultimates"
+"id": "caan1-2001",
+"t": "Captain America Annual #2001",
+"s": "Captain America Annual"
 }
 ]
 },
 {
-"id": "ult-death-o1-c3",
-"title": "Ultimate Fallout #1–6",
+"id": "jurgens-o1-c3",
+"title": "Captain America: The Legend #1",
+"era": "2000–2002",
+"issues": [
+{
+"id": "caplgd-1",
+"t": "Captain America: The Legend #1",
+"s": "Captain America: The Legend"
+}
+]
+}
+]
+},
+{
+"id": "bru-o1",
+"spine": "By Brubaker",
+"cover": "Art/Captain-America/bru-o1.jpg",
+"title": "Captain America by Ed Brubaker Omnibus",
+"vol": "",
+"creators": "Ed Brubaker, Steve Epting & Michael Lark",
+"era": "2005–2007",
+"released": "Sep 2007",
+"art": "o-wintersoldier",
+"tex": "tex-crosshatch",
+"note": "Captain America (2004) #1–25, and the run that reset the character for twenty years. Brubaker writes it as a spy thriller, Epting draws it like one, and the thing everyone said could not be done — bringing Bucky back — turns out to be the best idea anyone had had about Cap in decades.",
+"chapters": [
+{
+"id": "bru-o1-c1",
+"title": "Captain America (2004) #1–25",
+"era": "2005–2007",
+"issues": [
+{
+"id": "cap5-1",
+"t": "Captain America (2004) #1",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-2",
+"t": "Captain America (2004) #2",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-3",
+"t": "Captain America (2004) #3",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-4",
+"t": "Captain America (2004) #4",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-5",
+"t": "Captain America (2004) #5",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-6",
+"t": "Captain America (2004) #6",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-7",
+"t": "Captain America (2004) #7",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-8",
+"t": "Captain America (2004) #8",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-9",
+"t": "Captain America (2004) #9",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-10",
+"t": "Captain America (2004) #10",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-11",
+"t": "Captain America (2004) #11",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-12",
+"t": "Captain America (2004) #12",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-13",
+"t": "Captain America (2004) #13",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-14",
+"t": "Captain America (2004) #14",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-15",
+"t": "Captain America (2004) #15",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-16",
+"t": "Captain America (2004) #16",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-17",
+"t": "Captain America (2004) #17",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-18",
+"t": "Captain America (2004) #18",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-19",
+"t": "Captain America (2004) #19",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-20",
+"t": "Captain America (2004) #20",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-21",
+"t": "Captain America (2004) #21",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-22",
+"t": "Captain America (2004) #22",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-23",
+"t": "Captain America (2004) #23",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-24",
+"t": "Captain America (2004) #24",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-25",
+"t": "Captain America (2004) #25",
+"s": "Captain America (2004)"
+}
+]
+},
+{
+"id": "bru-o1-c2",
+"title": "Captain America 65th Anniversary #1",
+"era": "2005–2007",
+"issues": [
+{
+"id": "cap65-1",
+"t": "Captain America 65th Anniversary #1",
+"s": "Captain America 65th Anniversary"
+}
+]
+},
+{
+"id": "bru-o1-c3",
+"title": "Winter Soldier: Winter Kills #1",
+"era": "2005–2007",
+"issues": [
+{
+"id": "wsolwk-1",
+"t": "Winter Soldier: Winter Kills #1",
+"s": "Winter Soldier: Winter Kills"
+}
+]
+}
+]
+},
+{
+"id": "death-o1",
+"spine": "Death of Cap",
+"cover": "Art/Captain-America/death-o1.jpg",
+"title": "Death of Captain America Omnibus",
+"vol": "",
+"creators": "Ed Brubaker & Steve Epting",
+"era": "2007–2008",
+"released": "Dec 2009",
+"art": "o-mourning",
+"tex": "tex-crosshatch",
+"note": "#25–42, straight on from the Brubaker volume, which is why #25 is in both books. Steve is shot on the courthouse steps and the book keeps going for eighteen issues about everyone else — Bucky, Sharon, the Falcon, the Red Skull — which is the trick of it: the title character is dead and it is still the best comic Marvel is publishing.",
+"chapters": [
+{
+"id": "death-o1-c1",
+"title": "Captain America (2004) #25–42",
+"era": "2007–2008",
+"issues": [
+{
+"id": "cap5-25",
+"t": "Captain America (2004) #25",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-26",
+"t": "Captain America (2004) #26",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-27",
+"t": "Captain America (2004) #27",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-28",
+"t": "Captain America (2004) #28",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-29",
+"t": "Captain America (2004) #29",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-30",
+"t": "Captain America (2004) #30",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-31",
+"t": "Captain America (2004) #31",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-32",
+"t": "Captain America (2004) #32",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-33",
+"t": "Captain America (2004) #33",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-34",
+"t": "Captain America (2004) #34",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-35",
+"t": "Captain America (2004) #35",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-36",
+"t": "Captain America (2004) #36",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-37",
+"t": "Captain America (2004) #37",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-38",
+"t": "Captain America (2004) #38",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-39",
+"t": "Captain America (2004) #39",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-40",
+"t": "Captain America (2004) #40",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-41",
+"t": "Captain America (2004) #41",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-42",
+"t": "Captain America (2004) #42",
+"s": "Captain America (2004)"
+}
+]
+}
+]
+},
+{
+"id": "lives-o1",
+"spine": "Cap Lives!",
+"cover": "Art/Captain-America/lives-o1.jpg",
+"title": "Captain America Lives! Omnibus",
+"vol": "",
+"creators": "Ed Brubaker, Butch Guice & Bryan Hitch",
+"era": "2008–2010",
+"released": "Mar 2011",
+"art": "o-mourning",
+"tex": "tex-halftone",
+"note": "#43–601 and the Reborn mini — how they undid it. Bucky is wearing the costume and carrying a gun, which the book takes seriously as a problem, and Steve is unstuck in his own timeline rather than simply dead. Note the numbering jumps to #600 partway through: the title reverted to its original count for the anniversary.",
+"chapters": [
+{
+"id": "lives-o1-c1",
+"title": "Captain America (2004) #43–50, #600–601",
+"era": "2008–2010",
+"issues": [
+{
+"id": "cap5-43",
+"t": "Captain America (2004) #43",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-44",
+"t": "Captain America (2004) #44",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-45",
+"t": "Captain America (2004) #45",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-46",
+"t": "Captain America (2004) #46",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-47",
+"t": "Captain America (2004) #47",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-48",
+"t": "Captain America (2004) #48",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-49",
+"t": "Captain America (2004) #49",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-50",
+"t": "Captain America (2004) #50",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-600",
+"t": "Captain America (2004) #600",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-601",
+"t": "Captain America (2004) #601",
+"s": "Captain America (2004)"
+}
+]
+},
+{
+"id": "lives-o1-c2",
+"title": "Captain America: Reborn Digital Prologue #1",
+"era": "2008–2010",
+"issues": [
+{
+"id": "caprebp-1",
+"t": "Captain America: Reborn Digital Prologue #1",
+"s": "Captain America: Reborn Digital Prologue"
+}
+]
+},
+{
+"id": "lives-o1-c3",
+"title": "Captain America: Reborn #1–6",
+"era": "2008–2010",
+"issues": [
+{
+"id": "capreb-1",
+"t": "Captain America: Reborn #1",
+"s": "Captain America: Reborn"
+},
+{
+"id": "capreb-2",
+"t": "Captain America: Reborn #2",
+"s": "Captain America: Reborn"
+},
+{
+"id": "capreb-3",
+"t": "Captain America: Reborn #3",
+"s": "Captain America: Reborn"
+},
+{
+"id": "capreb-4",
+"t": "Captain America: Reborn #4",
+"s": "Captain America: Reborn"
+},
+{
+"id": "capreb-5",
+"t": "Captain America: Reborn #5",
+"s": "Captain America: Reborn"
+},
+{
+"id": "capreb-6",
+"t": "Captain America: Reborn #6",
+"s": "Captain America: Reborn"
+}
+]
+}
+]
+},
+{
+"id": "trial-o1",
+"spine": "The Trial",
+"cover": "Art/Captain-America/trial-o1.jpg",
+"title": "Captain America: The Trial of Captain America Omnibus",
+"vol": "",
+"creators": "Ed Brubaker, Butch Guice & Mitch Breitweiser",
+"era": "2010–2011",
+"released": "Dec 2014",
+"art": "o-wintersoldier",
+"tex": "tex-fourdot",
+"note": "#602–619 and then Captain America (2011) #1–10, with Steve Rogers: Super-Soldier alongside. Bucky is put on trial for what he did as the Winter Soldier, which is the question the whole Brubaker run has been circling: whether a man is guilty of things done while he was someone else's weapon.",
+"chapters": [
+{
+"id": "trial-o1-c1",
+"title": "Captain America (2004) #602–619, #615.1",
 "era": "2010–2011",
 "issues": [
 {
-"id": "ufal-1",
-"t": "Ultimate Fallout #1",
-"s": "Ultimate Fallout"
+"id": "cap5-602",
+"t": "Captain America (2004) #602",
+"s": "Captain America (2004)"
 },
 {
-"id": "ufal-2",
-"t": "Ultimate Fallout #2",
-"s": "Ultimate Fallout"
+"id": "cap5-603",
+"t": "Captain America (2004) #603",
+"s": "Captain America (2004)"
 },
 {
-"id": "ufal-3",
-"t": "Ultimate Fallout #3",
-"s": "Ultimate Fallout"
+"id": "cap5-604",
+"t": "Captain America (2004) #604",
+"s": "Captain America (2004)"
 },
 {
-"id": "ufal-4",
-"t": "Ultimate Fallout #4",
-"s": "Ultimate Fallout"
+"id": "cap5-605",
+"t": "Captain America (2004) #605",
+"s": "Captain America (2004)"
 },
 {
-"id": "ufal-5",
-"t": "Ultimate Fallout #5",
-"s": "Ultimate Fallout"
+"id": "cap5-606",
+"t": "Captain America (2004) #606",
+"s": "Captain America (2004)"
 },
 {
-"id": "ufal-6",
-"t": "Ultimate Fallout #6",
-"s": "Ultimate Fallout"
+"id": "cap5-607",
+"t": "Captain America (2004) #607",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-608",
+"t": "Captain America (2004) #608",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-609",
+"t": "Captain America (2004) #609",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-610",
+"t": "Captain America (2004) #610",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-611",
+"t": "Captain America (2004) #611",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-612",
+"t": "Captain America (2004) #612",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-613",
+"t": "Captain America (2004) #613",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-614",
+"t": "Captain America (2004) #614",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-615",
+"t": "Captain America (2004) #615",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-616",
+"t": "Captain America (2004) #616",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-617",
+"t": "Captain America (2004) #617",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-618",
+"t": "Captain America (2004) #618",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-619",
+"t": "Captain America (2004) #619",
+"s": "Captain America (2004)"
+},
+{
+"id": "cap5-615.1",
+"t": "Captain America (2004) #615.1",
+"s": "Captain America (2004)"
+}
+]
+},
+{
+"id": "trial-o1-c2",
+"title": "Captain America: Who Will Wield  the Shield? #1",
+"era": "2010–2011",
+"issues": [
+{
+"id": "capwws-1",
+"t": "Captain America: Who Will Wield  the Shield? #1",
+"s": "Captain America: Who Will Wield  the Shield?"
+}
+]
+},
+{
+"id": "trial-o1-c3",
+"title": "Steve Rogers: Super-Soldier #1–4",
+"era": "2010–2011",
+"issues": [
+{
+"id": "srss-1",
+"t": "Steve Rogers: Super-Soldier #1",
+"s": "Steve Rogers: Super-Soldier"
+},
+{
+"id": "srss-2",
+"t": "Steve Rogers: Super-Soldier #2",
+"s": "Steve Rogers: Super-Soldier"
+},
+{
+"id": "srss-3",
+"t": "Steve Rogers: Super-Soldier #3",
+"s": "Steve Rogers: Super-Soldier"
+},
+{
+"id": "srss-4",
+"t": "Steve Rogers: Super-Soldier #4",
+"s": "Steve Rogers: Super-Soldier"
+}
+]
+},
+{
+"id": "trial-o1-c4",
+"title": "Captain America (2011) #1–10",
+"era": "2010–2011",
+"issues": [
+{
+"id": "cap6-1",
+"t": "Captain America (2011) #1",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-2",
+"t": "Captain America (2011) #2",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-3",
+"t": "Captain America (2011) #3",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-4",
+"t": "Captain America (2011) #4",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-5",
+"t": "Captain America (2011) #5",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-6",
+"t": "Captain America (2011) #6",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-7",
+"t": "Captain America (2011) #7",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-8",
+"t": "Captain America (2011) #8",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-9",
+"t": "Captain America (2011) #9",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-10",
+"t": "Captain America (2011) #10",
+"s": "Captain America (2011)"
+}
+]
+}
+]
+},
+{
+"id": "rows-o1",
+"spine": "Return of WS",
+"cover": "Art/Captain-America/rows-o1.jpg",
+"title": "Captain America: Return of the Winter Soldier Omnibus",
+"vol": "",
+"creators": "Ed Brubaker, Butch Guice & Chris Samnee",
+"era": "2011–2012",
+"released": "May 2015",
+"art": "o-wintersoldier",
+"tex": "tex-halftone",
+"note": "The end of Brubaker's eight years. Captain America and Bucky, the Fear Itself tie-ins, Captain America (2011) #11–19, and the whole Winter Soldier ongoing — fourteen issues of Bucky running black operations that Cap is not told about, which is the closest this run comes to a spy book with no superheroes in it at all.",
+"chapters": [
+{
+"id": "rows-o1-c1",
+"title": "Captain America And Bucky #620–628",
+"era": "2011–2012",
+"issues": [
+{
+"id": "capbuck-620",
+"t": "Captain America And Bucky #620",
+"s": "Captain America And Bucky"
+},
+{
+"id": "capbuck-621",
+"t": "Captain America And Bucky #621",
+"s": "Captain America And Bucky"
+},
+{
+"id": "capbuck-622",
+"t": "Captain America And Bucky #622",
+"s": "Captain America And Bucky"
+},
+{
+"id": "capbuck-623",
+"t": "Captain America And Bucky #623",
+"s": "Captain America And Bucky"
+},
+{
+"id": "capbuck-624",
+"t": "Captain America And Bucky #624",
+"s": "Captain America And Bucky"
+},
+{
+"id": "capbuck-625",
+"t": "Captain America And Bucky #625",
+"s": "Captain America And Bucky"
+},
+{
+"id": "capbuck-626",
+"t": "Captain America And Bucky #626",
+"s": "Captain America And Bucky"
+},
+{
+"id": "capbuck-627",
+"t": "Captain America And Bucky #627",
+"s": "Captain America And Bucky"
+},
+{
+"id": "capbuck-628",
+"t": "Captain America And Bucky #628",
+"s": "Captain America And Bucky"
+}
+]
+},
+{
+"id": "rows-o1-c2",
+"title": "Fear Itself #7.1",
+"era": "2011–2012",
+"issues": [
+{
+"id": "fearit-7.1",
+"t": "Fear Itself #7.1",
+"s": "Fear Itself"
+}
+]
+},
+{
+"id": "rows-o1-c3",
+"title": "Winter Soldier (2012) #1–14",
+"era": "2011–2012",
+"issues": [
+{
+"id": "wsol-1",
+"t": "Winter Soldier (2012) #1",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-2",
+"t": "Winter Soldier (2012) #2",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-3",
+"t": "Winter Soldier (2012) #3",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-4",
+"t": "Winter Soldier (2012) #4",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-5",
+"t": "Winter Soldier (2012) #5",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-6",
+"t": "Winter Soldier (2012) #6",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-7",
+"t": "Winter Soldier (2012) #7",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-8",
+"t": "Winter Soldier (2012) #8",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-9",
+"t": "Winter Soldier (2012) #9",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-10",
+"t": "Winter Soldier (2012) #10",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-11",
+"t": "Winter Soldier (2012) #11",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-12",
+"t": "Winter Soldier (2012) #12",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-13",
+"t": "Winter Soldier (2012) #13",
+"s": "Winter Soldier (2012)"
+},
+{
+"id": "wsol-14",
+"t": "Winter Soldier (2012) #14",
+"s": "Winter Soldier (2012)"
+}
+]
+},
+{
+"id": "rows-o1-c4",
+"title": "Captain America (2011) #11–19",
+"era": "2011–2012",
+"issues": [
+{
+"id": "cap6-11",
+"t": "Captain America (2011) #11",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-12",
+"t": "Captain America (2011) #12",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-13",
+"t": "Captain America (2011) #13",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-14",
+"t": "Captain America (2011) #14",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-15",
+"t": "Captain America (2011) #15",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-16",
+"t": "Captain America (2011) #16",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-17",
+"t": "Captain America (2011) #17",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-18",
+"t": "Captain America (2011) #18",
+"s": "Captain America (2011)"
+},
+{
+"id": "cap6-19",
+"t": "Captain America (2011) #19",
+"s": "Captain America (2011)"
+}
+]
+}
+]
+},
+{
+"id": "rem-o1",
+"spine": "By Remender",
+"cover": "Art/Captain-America/rem-o1.jpg",
+"title": "Captain America by Rick Remender Omnibus",
+"vol": "",
+"creators": "Rick Remender, John Romita Jr. & Carlos Pacheco",
+"era": "2012–2015",
+"released": "Sep 2021",
+"art": "o-dimensionz",
+"tex": "tex-fourdot",
+"note": "Captain America (2012) #1–25 and then All-New Captain America. Remender opens by stranding Steve in Dimension Z for a year of publishing, raising a child there, which is either the boldest thing anyone has done with the book or a very long detour depending on who you ask. It ends with the serum gone and Sam Wilson carrying the shield.",
+"chapters": [
+{
+"id": "rem-o1-c1",
+"title": "Captain America (2012) #1–15, #17–25, #16.NOW",
+"era": "2012–2015",
+"issues": [
+{
+"id": "cap7-1",
+"t": "Captain America (2012) #1",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-2",
+"t": "Captain America (2012) #2",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-3",
+"t": "Captain America (2012) #3",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-4",
+"t": "Captain America (2012) #4",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-5",
+"t": "Captain America (2012) #5",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-6",
+"t": "Captain America (2012) #6",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-7",
+"t": "Captain America (2012) #7",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-8",
+"t": "Captain America (2012) #8",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-9",
+"t": "Captain America (2012) #9",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-10",
+"t": "Captain America (2012) #10",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-11",
+"t": "Captain America (2012) #11",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-12",
+"t": "Captain America (2012) #12",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-13",
+"t": "Captain America (2012) #13",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-14",
+"t": "Captain America (2012) #14",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-15",
+"t": "Captain America (2012) #15",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-16.NOW",
+"t": "Captain America (2012) #16.NOW",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-17",
+"t": "Captain America (2012) #17",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-18",
+"t": "Captain America (2012) #18",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-19",
+"t": "Captain America (2012) #19",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-20",
+"t": "Captain America (2012) #20",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-21",
+"t": "Captain America (2012) #21",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-22",
+"t": "Captain America (2012) #22",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-23",
+"t": "Captain America (2012) #23",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-24",
+"t": "Captain America (2012) #24",
+"s": "Captain America (2012)"
+},
+{
+"id": "cap7-25",
+"t": "Captain America (2012) #25",
+"s": "Captain America (2012)"
+}
+]
+},
+{
+"id": "rem-o1-c2",
+"title": "Winter Soldier: The Bitter March #2–5, #1.NOW",
+"era": "2012–2015",
+"issues": [
+{
+"id": "wsolbm-1.NOW",
+"t": "Winter Soldier: The Bitter March #1.NOW",
+"s": "Winter Soldier: The Bitter March"
+},
+{
+"id": "wsolbm-2",
+"t": "Winter Soldier: The Bitter March #2",
+"s": "Winter Soldier: The Bitter March"
+},
+{
+"id": "wsolbm-3",
+"t": "Winter Soldier: The Bitter March #3",
+"s": "Winter Soldier: The Bitter March"
+},
+{
+"id": "wsolbm-4",
+"t": "Winter Soldier: The Bitter March #4",
+"s": "Winter Soldier: The Bitter March"
+},
+{
+"id": "wsolbm-5",
+"t": "Winter Soldier: The Bitter March #5",
+"s": "Winter Soldier: The Bitter March"
+}
+]
+},
+{
+"id": "rem-o1-c3",
+"title": "All-New Captain America: Fear Him #1–4",
+"era": "2012–2015",
+"issues": [
+{
+"id": "ancapfh-1",
+"t": "All-New Captain America: Fear Him #1",
+"s": "All-New Captain America: Fear Him"
+},
+{
+"id": "ancapfh-2",
+"t": "All-New Captain America: Fear Him #2",
+"s": "All-New Captain America: Fear Him"
+},
+{
+"id": "ancapfh-3",
+"t": "All-New Captain America: Fear Him #3",
+"s": "All-New Captain America: Fear Him"
+},
+{
+"id": "ancapfh-4",
+"t": "All-New Captain America: Fear Him #4",
+"s": "All-New Captain America: Fear Him"
+}
+]
+},
+{
+"id": "rem-o1-c4",
+"title": "All-New Captain America #1–6",
+"era": "2012–2015",
+"issues": [
+{
+"id": "ancap-1",
+"t": "All-New Captain America #1",
+"s": "All-New Captain America"
+},
+{
+"id": "ancap-2",
+"t": "All-New Captain America #2",
+"s": "All-New Captain America"
+},
+{
+"id": "ancap-3",
+"t": "All-New Captain America #3",
+"s": "All-New Captain America"
+},
+{
+"id": "ancap-4",
+"t": "All-New Captain America #4",
+"s": "All-New Captain America"
+},
+{
+"id": "ancap-5",
+"t": "All-New Captain America #5",
+"s": "All-New Captain America"
+},
+{
+"id": "ancap-6",
+"t": "All-New Captain America #6",
+"s": "All-New Captain America"
+}
+]
+},
+{
+"id": "rem-o1-c5",
+"title": "Captain America: Hail Hydra #1–4",
+"era": "2012–2015",
+"issues": [
+{
+"id": "hhydra-1",
+"t": "Captain America: Hail Hydra #1",
+"s": "Captain America: Hail Hydra"
+},
+{
+"id": "hhydra-2",
+"t": "Captain America: Hail Hydra #2",
+"s": "Captain America: Hail Hydra"
+},
+{
+"id": "hhydra-3",
+"t": "Captain America: Hail Hydra #3",
+"s": "Captain America: Hail Hydra"
+},
+{
+"id": "hhydra-4",
+"t": "Captain America: Hail Hydra #4",
+"s": "Captain America: Hail Hydra"
+}
+]
+}
+]
+},
+{
+"id": "spencer-o1",
+"spine": "By Spencer",
+"cover": "Art/Captain-America/spencer-o1.jpg",
+"title": "Captain America by Nick Spencer Omnibus",
+"vol": "Vol. 1",
+"creators": "Nick Spencer, Daniel Acuña & Jesus Saiz",
+"era": "2015–2016",
+"released": "Jan 2023",
+"art": "o-hydra",
+"tex": "tex-halftone",
+"note": "Two Captains at once: Sam Wilson has the shield and a book about how much of America hates him for what he says with it, and Steve Rogers gets his youth back and a secret. Standoff runs through the middle. This is the setup for the thing everyone remembers, and it is better read as the argument it actually is than as the twist.",
+"chapters": [
+{
+"id": "spencer-o1-c1",
+"title": "Captain America: Sam Wilson #1–17",
+"era": "2015–2016",
+"issues": [
+{
+"id": "capsam-1",
+"t": "Captain America: Sam Wilson #1",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-2",
+"t": "Captain America: Sam Wilson #2",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-3",
+"t": "Captain America: Sam Wilson #3",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-4",
+"t": "Captain America: Sam Wilson #4",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-5",
+"t": "Captain America: Sam Wilson #5",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-6",
+"t": "Captain America: Sam Wilson #6",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-7",
+"t": "Captain America: Sam Wilson #7",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-8",
+"t": "Captain America: Sam Wilson #8",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-9",
+"t": "Captain America: Sam Wilson #9",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-10",
+"t": "Captain America: Sam Wilson #10",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-11",
+"t": "Captain America: Sam Wilson #11",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-12",
+"t": "Captain America: Sam Wilson #12",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-13",
+"t": "Captain America: Sam Wilson #13",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-14",
+"t": "Captain America: Sam Wilson #14",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-15",
+"t": "Captain America: Sam Wilson #15",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-16",
+"t": "Captain America: Sam Wilson #16",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-17",
+"t": "Captain America: Sam Wilson #17",
+"s": "Captain America: Sam Wilson"
+}
+]
+},
+{
+"id": "spencer-o1-c2",
+"title": "Captain America: Steve Rogers #1–11",
+"era": "2015–2016",
+"issues": [
+{
+"id": "capsr-1",
+"t": "Captain America: Steve Rogers #1",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-2",
+"t": "Captain America: Steve Rogers #2",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-3",
+"t": "Captain America: Steve Rogers #3",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-4",
+"t": "Captain America: Steve Rogers #4",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-5",
+"t": "Captain America: Steve Rogers #5",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-6",
+"t": "Captain America: Steve Rogers #6",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-7",
+"t": "Captain America: Steve Rogers #7",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-8",
+"t": "Captain America: Steve Rogers #8",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-9",
+"t": "Captain America: Steve Rogers #9",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-10",
+"t": "Captain America: Steve Rogers #10",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-11",
+"t": "Captain America: Steve Rogers #11",
+"s": "Captain America: Steve Rogers"
+}
+]
+},
+{
+"id": "spencer-o1-c3",
+"title": "Avengers Standoff: Welcome to Pleasant Hill #1",
+"era": "2015–2016",
+"issues": [
+{
+"id": "stndw-1",
+"t": "Avengers Standoff: Welcome to Pleasant Hill #1",
+"s": "Avengers Standoff: Welcome to Pleasant Hill"
+}
+]
+},
+{
+"id": "spencer-o1-c4",
+"title": "Avengers Standoff: Assault on Pleasant Hill Alpha #1",
+"era": "2015–2016",
+"issues": [
+{
+"id": "stnda-1",
+"t": "Avengers Standoff: Assault on Pleasant Hill Alpha #1",
+"s": "Avengers Standoff: Assault on Pleasant Hill Alpha"
+}
+]
+},
+{
+"id": "spencer-o1-c5",
+"title": "Avengers Standoff: Assault on Pleasant Hill Omega #1",
+"era": "2015–2016",
+"issues": [
+{
+"id": "stndo-1",
+"t": "Avengers Standoff: Assault on Pleasant Hill Omega #1",
+"s": "Avengers Standoff: Assault on Pleasant Hill Omega"
+}
+]
+},
+{
+"id": "spencer-o1-c6",
+"title": "Civil War II: The Oath #1",
+"era": "2015–2016",
+"issues": [
+{
+"id": "cw2oath-1",
+"t": "Civil War II: The Oath #1",
+"s": "Civil War II: The Oath"
+}
+]
+},
+{
+"id": "spencer-o1-c7",
+"title": "Free Comic Book Day 2016 (Captain America) #1",
+"era": "2015–2016",
+"issues": [
+{
+"id": "fcbd16-1",
+"t": "Free Comic Book Day 2016 (Captain America) #1",
+"s": "Free Comic Book Day 2016 (Captain America)"
+}
+]
+}
+]
+},
+{
+"id": "spencer-o2",
+"spine": "By Spencer",
+"cover": "Art/Captain-America/spencer-o2.jpg",
+"title": "Captain America by Nick Spencer Omnibus",
+"vol": "Vol. 2",
+"creators": "Nick Spencer, Andrea Sorrentino & Daniel Acuña",
+"era": "2017–2018",
+"released": "May 2024",
+"art": "o-hydra",
+"tex": "tex-crosshatch",
+"note": "Secret Empire, and the rest of both books around it. Cap has been a Hydra sleeper the whole time and wins; the story is about what the country does while he does it. Divisive on publication and still is. Ends with Generations and the restoration.",
+"chapters": [
+{
+"id": "spencer-o2-c1",
+"title": "Captain America: Sam Wilson #18–24",
+"era": "2017–2018",
+"issues": [
+{
+"id": "capsam-18",
+"t": "Captain America: Sam Wilson #18",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-19",
+"t": "Captain America: Sam Wilson #19",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-20",
+"t": "Captain America: Sam Wilson #20",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-21",
+"t": "Captain America: Sam Wilson #21",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-22",
+"t": "Captain America: Sam Wilson #22",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-23",
+"t": "Captain America: Sam Wilson #23",
+"s": "Captain America: Sam Wilson"
+},
+{
+"id": "capsam-24",
+"t": "Captain America: Sam Wilson #24",
+"s": "Captain America: Sam Wilson"
+}
+]
+},
+{
+"id": "spencer-o2-c2",
+"title": "Captain America: Steve Rogers #12–19",
+"era": "2017–2018",
+"issues": [
+{
+"id": "capsr-12",
+"t": "Captain America: Steve Rogers #12",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-13",
+"t": "Captain America: Steve Rogers #13",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-14",
+"t": "Captain America: Steve Rogers #14",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-15",
+"t": "Captain America: Steve Rogers #15",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-16",
+"t": "Captain America: Steve Rogers #16",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-17",
+"t": "Captain America: Steve Rogers #17",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-18",
+"t": "Captain America: Steve Rogers #18",
+"s": "Captain America: Steve Rogers"
+},
+{
+"id": "capsr-19",
+"t": "Captain America: Steve Rogers #19",
+"s": "Captain America: Steve Rogers"
+}
+]
+},
+{
+"id": "spencer-o2-c3",
+"title": "Captain America (2017) #25",
+"era": "2017–2018",
+"issues": [
+{
+"id": "cap8-25",
+"t": "Captain America (2017) #25",
+"s": "Captain America (2017)"
+}
+]
+},
+{
+"id": "spencer-o2-c4",
+"title": "Secret Empire #0–8",
+"era": "2017–2018",
+"issues": [
+{
+"id": "sempire-0",
+"t": "Secret Empire #0",
+"s": "Secret Empire"
+},
+{
+"id": "sempire-1",
+"t": "Secret Empire #1",
+"s": "Secret Empire"
+},
+{
+"id": "sempire-2",
+"t": "Secret Empire #2",
+"s": "Secret Empire"
+},
+{
+"id": "sempire-3",
+"t": "Secret Empire #3",
+"s": "Secret Empire"
+},
+{
+"id": "sempire-4",
+"t": "Secret Empire #4",
+"s": "Secret Empire"
+},
+{
+"id": "sempire-5",
+"t": "Secret Empire #5",
+"s": "Secret Empire"
+},
+{
+"id": "sempire-6",
+"t": "Secret Empire #6",
+"s": "Secret Empire"
+},
+{
+"id": "sempire-7",
+"t": "Secret Empire #7",
+"s": "Secret Empire"
+},
+{
+"id": "sempire-8",
+"t": "Secret Empire #8",
+"s": "Secret Empire"
+}
+]
+},
+{
+"id": "spencer-o2-c5",
+"title": "Secret Empire Omega #1",
+"era": "2017–2018",
+"issues": [
+{
+"id": "sempo-1",
+"t": "Secret Empire Omega #1",
+"s": "Secret Empire Omega"
+}
+]
+},
+{
+"id": "spencer-o2-c6",
+"title": "Generations: Sam Wilson Captain America & Steve Rogers Captain America #1",
+"era": "2017–2018",
+"issues": [
+{
+"id": "gencap-1",
+"t": "Generations: Sam Wilson Captain America & Steve Rogers Captain America #1",
+"s": "Generations: Sam Wilson Captain America & Steve Rogers Captain America"
+}
+]
+},
+{
+"id": "spencer-o2-c7",
+"title": "Free Comic Book Day 2017 (Secret Empire) #1",
+"era": "2017–2018",
+"issues": [
+{
+"id": "fcbd17-1",
+"t": "Free Comic Book Day 2017 (Secret Empire) #1",
+"s": "Free Comic Book Day 2017 (Secret Empire)"
+}
+]
+},
+{
+"id": "spencer-o2-c8",
+"title": "Not Brand Echh (2017) #14",
+"era": "2017–2018",
+"issues": [
+{
+"id": "nbe2-14",
+"t": "Not Brand Echh (2017) #14",
+"s": "Not Brand Echh (2017)"
+}
+]
+}
+]
+},
+{
+"id": "bwca-o1",
+"spine": "Waid & Samnee",
+"cover": "Art/Captain-America/bwca-o1.jpg",
+"title": "Black Widow & Captain America by Waid & Samnee Omnibus",
+"vol": "",
+"creators": "Mark Waid & Chris Samnee",
+"era": "2016–2018",
+"released": "Mar 2026",
+"art": "o-heroes",
+"tex": "tex-fourdot",
+"note": "Half of this is Black Widow's book, and it is on the shelf anyway because the other half — Captain America (2017) #695–704 — is collected in omnibus nowhere else. Waid and Samnee put Steve back in the costume after Secret Empire and write ten issues of deliberately uncomplicated Captain America, which after the previous volume is the point.",
+"chapters": [
+{
+"id": "bwca-o1-c1",
+"title": "Black Widow (2016) #1–12",
+"era": "2016–2018",
+"issues": [
+{
+"id": "bwid6-1",
+"t": "Black Widow (2016) #1",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-2",
+"t": "Black Widow (2016) #2",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-3",
+"t": "Black Widow (2016) #3",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-4",
+"t": "Black Widow (2016) #4",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-5",
+"t": "Black Widow (2016) #5",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-6",
+"t": "Black Widow (2016) #6",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-7",
+"t": "Black Widow (2016) #7",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-8",
+"t": "Black Widow (2016) #8",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-9",
+"t": "Black Widow (2016) #9",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-10",
+"t": "Black Widow (2016) #10",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-11",
+"t": "Black Widow (2016) #11",
+"s": "Black Widow (2016)"
+},
+{
+"id": "bwid6-12",
+"t": "Black Widow (2016) #12",
+"s": "Black Widow (2016)"
+}
+]
+},
+{
+"id": "bwca-o1-c2",
+"title": "Captain America (2018) #695–704",
+"era": "2016–2018",
+"issues": [
+{
+"id": "cap18-695",
+"t": "Captain America (2018) #695",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-696",
+"t": "Captain America (2018) #696",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-697",
+"t": "Captain America (2018) #697",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-698",
+"t": "Captain America (2018) #698",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-699",
+"t": "Captain America (2018) #699",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-700",
+"t": "Captain America (2018) #700",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-701",
+"t": "Captain America (2018) #701",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-702",
+"t": "Captain America (2018) #702",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-703",
+"t": "Captain America (2018) #703",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap18-704",
+"t": "Captain America (2018) #704",
+"s": "Captain America (2018)"
+}
+]
+}
+]
+},
+{
+"id": "coates-o1",
+"spine": "By Coates",
+"cover": "Art/Captain-America/coates-o1.jpg",
+"title": "Captain America by Ta-Nehisi Coates Omnibus",
+"vol": "",
+"creators": "Ta-Nehisi Coates, Leinil Francis Yu & Adam Kubert",
+"era": "2018–2021",
+"released": "Jul 2023",
+"art": "o-coates",
+"tex": "tex-crosshatch",
+"note": "Captain America (2018) #1–30, the whole run. Coates writes a Steve Rogers who has come out of Secret Empire with his reputation wrecked and no idea what the symbol is worth any more, and answers it slowly, through the Power Elite and a Red Skull who fights with rhetoric rather than a gun.",
+"chapters": [
+{
+"id": "coates-o1-c1",
+"title": "Free Comic Book Day 2018 (Avengers/Captain America) #1",
+"era": "2018–2021",
+"issues": [
+{
+"id": "fcbd18-1",
+"t": "Free Comic Book Day 2018 (Avengers/Captain America) #1",
+"s": "Free Comic Book Day 2018 (Avengers/Captain America)"
+}
+]
+},
+{
+"id": "coates-o1-c2",
+"title": "Captain America (2018) #1–30",
+"era": "2018–2021",
+"issues": [
+{
+"id": "cap10-1",
+"t": "Captain America (2018) #1",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-2",
+"t": "Captain America (2018) #2",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-3",
+"t": "Captain America (2018) #3",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-4",
+"t": "Captain America (2018) #4",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-5",
+"t": "Captain America (2018) #5",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-6",
+"t": "Captain America (2018) #6",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-7",
+"t": "Captain America (2018) #7",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-8",
+"t": "Captain America (2018) #8",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-9",
+"t": "Captain America (2018) #9",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-10",
+"t": "Captain America (2018) #10",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-11",
+"t": "Captain America (2018) #11",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-12",
+"t": "Captain America (2018) #12",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-13",
+"t": "Captain America (2018) #13",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-14",
+"t": "Captain America (2018) #14",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-15",
+"t": "Captain America (2018) #15",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-16",
+"t": "Captain America (2018) #16",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-17",
+"t": "Captain America (2018) #17",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-18",
+"t": "Captain America (2018) #18",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-19",
+"t": "Captain America (2018) #19",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-20",
+"t": "Captain America (2018) #20",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-21",
+"t": "Captain America (2018) #21",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-22",
+"t": "Captain America (2018) #22",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-23",
+"t": "Captain America (2018) #23",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-24",
+"t": "Captain America (2018) #24",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-25",
+"t": "Captain America (2018) #25",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-26",
+"t": "Captain America (2018) #26",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-27",
+"t": "Captain America (2018) #27",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-28",
+"t": "Captain America (2018) #28",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-29",
+"t": "Captain America (2018) #29",
+"s": "Captain America (2018)"
+},
+{
+"id": "cap10-30",
+"t": "Captain America (2018) #30",
+"s": "Captain America (2018)"
 }
 ]
 }
 ]
 }
 ];
+
 
 /* internal issue id -> marvel.com `<id>/<slug>` path fragment.
    Missing ids fall back to a marvel.com search URL and render a grey Read button. */
@@ -10507,8 +10949,9 @@ const MARVEL = {
 "wsolbm-1.NOW": "49785/winter_soldier_the_bitter_march_2014_1"
 };
 
+
 /* ============ STATE ============ */
-const KEY_P="spidey-omni-progress-v1";
+const KEY_P="captainamerica-omni-progress-v1";
 let readSet=new Set(), skipSet=new Set();
 /* Volume id -> when something in it was last marked. This is what orders
    the Keep Reading rail. Additive in the saved record: a backup written
@@ -10523,7 +10966,7 @@ let touch={};
    Nothing is dismissed permanently: the stamp is compared against `touch`, so
    marking anything in the volume stamps a newer touch and the tile comes back.
    That is also why a dismissal is a timestamp rather than a flag. */
-const HERO_ID="spider-man", KEY_HIDE="comics-kr-hidden";
+const HERO_ID="captain-america", KEY_HIDE="comics-kr-hidden";
 let hidden={};
 function isHidden(o){ const h=hidden[HERO_ID+"|"+o.id]||0; return h>0 && h>(touch[o.id]||0); }
 async function saveHidden(){ try{ await store.set(KEY_HIDE, JSON.stringify(hidden)); }catch(e){} }
@@ -10571,7 +11014,7 @@ function exportProgress(){
   const blob=new Blob([JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet),touch:touch},null,1)],{type:"application/json"});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
-  a.download="spider-man-omnibus-progress.json";
+  a.download="captainamerica-omnibus-progress.json";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),2000);
 }
@@ -10607,15 +11050,15 @@ function artHTML(o,banner){
   return '<div class="art '+o.art+'"></div><div class="tex '+o.tex+'"></div>'+
          (banner?'':'<div class="vig"></div>')+'<div class="gloss"></div>';
 }
-const SPIDER_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="GID" x1="0" y1="0" x2="0" y2="1">'+
- '<stop offset="10%" stop-color="rgba(255,255,255,.95)"/><stop offset="60%" stop-color="rgba(255,255,255,.55)"/>'+
- '<stop offset="100%" stop-color="rgba(255,255,255,.2)"/></linearGradient></defs>'+
- '<g fill="url(#GID)"><ellipse cx="50" cy="60" rx="12" ry="18"/><ellipse cx="50" cy="38" rx="8.5" ry="9.5"/></g>'+
- '<g fill="none" stroke="url(#GID)" stroke-width="4.2" stroke-linecap="round">'+
- '<path d="M42,35 Q25,25 21,9"/><path d="M40,44 Q20,38 12,25"/><path d="M40,52 Q19,52 12,45"/><path d="M42,60 Q24,66 20,81"/>'+
- '<path d="M58,35 Q75,25 79,9"/><path d="M60,44 Q80,38 88,25"/><path d="M60,52 Q81,52 88,45"/><path d="M58,60 Q76,66 80,81"/></g></svg>';
+const SHIELD_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="GID" x1="0" y1="0" x2="0" y2="1">'+
+ '<stop offset="6%" stop-color="rgba(255,255,255,.97)"/><stop offset="60%" stop-color="rgba(255,255,255,.66)"/>'+
+ '<stop offset="100%" stop-color="rgba(255,255,255,.30)"/></linearGradient></defs>'+
+ '<g fill="none" stroke="url(#GID)" stroke-width="7">'+
+ '<circle cx="50" cy="50" r="42"/><circle cx="50" cy="50" r="27"/></g>'+
+ '<circle cx="50" cy="50" r="13" fill="url(#GID)" opacity=".28"/>'+
+ '<path fill="url(#GID)" d="M50,36.5 l3.6,7.9 8.6,1 -6.4,5.9 1.7,8.5 -7.5,-4.3 -7.5,4.3 1.7,-8.5 -6.4,-5.9 8.6,-1 z"/></svg>';
 let gid=0;
-const spiderSVG = () => SPIDER_SVG.split("GID").join("sp"+(++gid));
+const shieldSVG = () => SHIELD_SVG.split("GID").join("ca"+(++gid));
 
 /* ============ SHELF ============ */
 const shelfEl=document.getElementById("shelf");
@@ -10639,14 +11082,20 @@ function shipsLater(o){
 }
 
 const SPINE_C={
-  'o-ditko':['#b81f26','#1d3f8c'],'o-untold':['#c9702e','#8d2226'],'o-romita':['#d92a30','#2454b0'],
-  'o-teamup':['#e2661f','#7d2a8e'],'o-conway':['#bd2028','#16306e'],'o-spectacular':['#3566c4','#4a2a92'],
-  'o-eighties':['#a8151d','#2b2b33'],'o-stern':['#e07a1c','#a3161d'],'o-black':['#31405c','#141a2c'],
-  'o-mcfarlane':['#4a2f9c','#1c1140'],'o-larsen':['#1f8f9c','#a8231f'],'o-bagley':['#d5121a','#1b4fb5'],
-  'o-dematteis':['#3f8c2c','#5c2a8e'],'o-clone':['#3f9433','#a81d22'],'o-benreilly':['#c2161c','#1e3f96'],
-  'o-jms':['#8c1a22','#3a1f5e'],'o-ultimate':['#d01018','#123a99'],'o-venom':['#4c3f8f','#1a1330'],
-  'o-placeholder':['#4d6480','#26344a']
+'o-goldenage':['#d8a72c','#6b4a10'],
+'o-shield':['#3a6fd8','#12306b'],
+'o-secret':['#6f7d95','#2a3145'],
+'o-kirbycap':['#e0561f','#1b3a8f'],
+'o-cap80s':['#e0a72c','#1b3a8f'],
+'o-heroes':['#4a86e8','#12306b'],
+'o-wintersoldier':['#7f8fa3','#2c3542'],
+'o-mourning':['#5d646c','#22262e'],
+'o-dimensionz':['#e0512a','#3a1050'],
+'o-hydra':['#2f8f4a','#0e3a24'],
+'o-coates':['#9aa4b5','#3a4150'],
+'o-placeholder':['#4d6480','#26344a']
 };
+
 /* A printed omnibus is ~1.5-3in across a 7.4in-wide cover, i.e. 20-40% of the
    tile width -- not the 22-40px sliver this used to draw. Placeholders (0 issues)
    fall through to the 42px floor, which still reads as a real omnibus. */
@@ -10680,7 +11129,7 @@ function buildShelf(){
         '<div class="face">'+
           artHTML(o)+
           '<span class="onum">'+num+'</span>'+ badge +
-          (o.cover?'':'<div class="spidey">'+spiderSVG()+'</div>')+
+          (o.cover?'':'<div class="glyph">'+shieldSVG()+'</div>')+
           '<div class="plate">'+
             '<div class="oname">'+esc(o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'')+'</div>'+
             '<div class="ocre">'+esc(o.creators)+'</div>'+
@@ -10897,7 +11346,7 @@ function touchIssue(id){
    The banner file is dropped in by hand (tools/banners.py), so the page has to
    look right before one exists. */
 function hbFallback(img){
-  if(!img.dataset.fb){ img.dataset.fb="1"; img.src="Art/Heroes/spider-man.jpg"; img.style.objectPosition="50% 14%"; }
+  if(!img.dataset.fb){ img.dataset.fb="1"; img.src="Art/Heroes/captain-america.jpg"; img.style.objectPosition="50% 28%"; }
   else img.style.display="none";
 }
 
@@ -10925,7 +11374,7 @@ function publishIndex(){
   try{
     let r=0,s=0; uniqIds.forEach(id=>{ if(readSet.has(id))r++; else if(skipSet.has(id))s++; });
     const n=flat.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
-    store.set("comics-hero-spider-man", JSON.stringify({
+    store.set("comics-hero-captain-america", JSON.stringify({
       total:uniqIds.size, read:r, skip:s,
       next: n ? {t:n.issue.t, arc:n.o.title+(n.o.vol?" "+n.o.vol:""), ch:n.ch.title} : null,
       spots: spots().slice(0,10).map(sp=>({
@@ -10949,7 +11398,7 @@ function publishIndex(){
    The key is NOT owned by this page: it lives under one storage name for the
    whole site, set from the gear on the C.O.M.I.C.S. homescreen, so one paste
    covers every tracker. KEY_API_OLD is where the X-Men page used to keep it. */
-const KEY_S="spidey-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
+const KEY_S="captainamerica-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
 let sums={};
 async function loadSums(){ try{ const v=await store.get(KEY_S); if(v) sums=JSON.parse(v)||{}; }catch(e){} }
 async function saveSums(){ try{ await store.set(KEY_S, JSON.stringify(sums)); }catch(e){} }
@@ -11079,7 +11528,7 @@ function showShelf(){
   document.getElementById("viewShelf").classList.remove("hidden");
   document.getElementById("viewOmni").classList.add("hidden");
   document.getElementById("backShelf").classList.add("hidden");
-  document.getElementById("crumb").textContent="Subject · Spider-Man";
+  document.getElementById("crumb").textContent="Subject · Captain America";
   buildShelf(); refresh();
   window.scrollTo(0,0);
 }
@@ -11090,7 +11539,7 @@ function showOmni(id){
   document.getElementById("viewShelf").classList.add("hidden");
   document.getElementById("viewOmni").classList.remove("hidden");
   document.getElementById("backShelf").classList.remove("hidden");
-  document.getElementById("crumb").textContent="Spider-Man · "+o.title+(o.vol?" "+o.vol:"");
+  document.getElementById("crumb").textContent="Captain America · "+o.title+(o.vol?" "+o.vol:"");
   window.scrollTo(0,0);
   buildOmni(o); refresh();
   if(pendingJump) jumpToIssue();

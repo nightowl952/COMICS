@@ -61,6 +61,10 @@ PICKS = {
     "daredevil":      ("Daredevil Vol 1 227",
                        "Mazzucchelli, 1986 -- the opening chapter of Born Again, "
                        "which the pending reading list is built around."),
+    "captain-america":("Captain America Vol 1 117",
+                       "Romita, 1969 -- Cap and the Falcon, the partnership the "
+                       "shelf's second volume is named for. A fallback only; the "
+                       "poster on the wall is the user's own art."),
     "silver-surfer":  ("Silver Surfer Vol 1 4",
                        "Buscema, 1969 -- the Surfer against Thor, and the only "
                        "cover of that run people can picture. Inside the shelf's "

@@ -33,7 +33,8 @@ WIDTH   = 500          # plate renders it ~170px wide; 500 covers a 3x display
 MIN_TIGHT = 220        # below this the source was too small to look clean
 
 HERO_IDS = ["spider-man", "wolverine", "hulk", "xmen",
-            "fantastic-four", "moon-knight", "daredevil", "silver-surfer"]
+            "fantastic-four", "moon-knight", "daredevil", "silver-surfer",
+            "captain-america"]
 
 
 def save_logo(im, hid):
