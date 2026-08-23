@@ -71,6 +71,19 @@ HEROES = {
         # reach for, so an overlap resolves without being harvested twice.
         ids     = "marvel_ids.json",
     ),
+    "silver-surfer": dict(
+        name    = "Silver Surfer",
+        tracker = "silversurfer-reading-tracker.html",
+        art     = os.path.join("Art", "Silver-Surfer"),
+        meta    = "silversurfer_meta",
+        raw     = "silversurfer_contents_raw.json",
+        # the same shared store again -- this shelf collects Fantastic Four,
+        # Fantastic Four Annual, Marvel Comics Presents, Marvel Fanfare, Epic
+        # Illustrated and Marvel Graphic Novel issues the other six shelves
+        # already reach for, so an overlap resolves without being harvested
+        # twice.
+        ids     = "marvel_ids.json",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",

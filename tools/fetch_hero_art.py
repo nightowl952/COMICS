@@ -12,6 +12,7 @@ sized identically. The difference is where it lands and how it is wired:
   * nothing is generated from them -- the `cover` field in HEROES in index.html
     is hand-written, so a new pick means editing PICKS here and that entry there
 
+    python3 tools/fetch_hero_art.py adopt silver-surfer 'Art/covers/Silver Surfer.png'
     python3 tools/fetch_hero_art.py            # everything missing
     python3 tools/fetch_hero_art.py --all      # refetch, overwriting
     python3 tools/fetch_hero_art.py hulk xmen  # just these
@@ -60,6 +61,10 @@ PICKS = {
     "daredevil":      ("Daredevil Vol 1 227",
                        "Mazzucchelli, 1986 -- the opening chapter of Born Again, "
                        "which the pending reading list is built around."),
+    "silver-surfer":  ("Silver Surfer Vol 1 4",
+                       "Buscema, 1969 -- the Surfer against Thor, and the only "
+                       "cover of that run people can picture. Inside the shelf's "
+                       "1967-2017 span and inside its first volume."),
 }
 
 
@@ -90,7 +95,44 @@ def image_url(title):
     return None, 0, 0
 
 
+def adopt(hid, src):
+    """Normalise a poster scan the user supplied into Art/Heroes/<hid>.jpg.
+
+    The counterpart of `covers.py add` and `logos.py add`, and since Aug 2026
+    the route that is actually used: every subject's poster is hand-supplied
+    art dropped into Art/covers/, not a wiki scan. Same covers.save_cover
+    downscale as the shelf art, so the whole site's images are sized alike.
+
+    The source file is left where it is on purpose -- Art/covers/ keeps the
+    full-size originals so a poster can be re-cropped without re-sourcing it.
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        sys.exit("needs Pillow:  pip install Pillow")
+    if hid not in PICKS:
+        sys.exit("unknown hero id %r\nknown: %s" % (hid, ", ".join(PICKS)))
+    if not os.path.exists(src):
+        sys.exit("no such image: %s" % src)
+    sys.path.insert(0, HERE)
+    import covers
+    covers.ART = ART
+    rel, size = covers.save_cover(Image.open(src), hid)
+    print("wrote %s  (%dx%d, %.0f KB, was %.0f KB)"
+          % (rel, size[0], size[1],
+             os.path.getsize(os.path.join(ROOT, rel)) / 1024,
+             os.path.getsize(src) / 1024))
+    print('\nwire it into HEROES in index.html as:\n  cover:"%s",' % rel)
+    print("\nthen screenshot the dossier banner and set `pos` -- the banner is "
+          "a 2.8:1\nslot cut out of a 2:3 page, so the crop is per-cover.")
+
+
 def main(argv):
+    if argv and argv[0] == "adopt":
+        if len(argv) != 3:
+            sys.exit("usage: fetch_hero_art.py adopt <hero-id> <image>")
+        return adopt(argv[1], argv[2])
+
     try:
         from PIL import Image
     except ImportError:

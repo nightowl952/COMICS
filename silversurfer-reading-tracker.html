@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C.O.M.I.C.S. // Hulk Omnibus Protocol</title>
+<title>C.O.M.I.C.S. // Silver Surfer Omnibus Protocol</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -368,34 +368,21 @@
   .omni .glyph svg{width:47%;max-width:104px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,10,35,.6));}
 
   /* ---- omnibus cover ramps (placeholders until real art is dropped in) ---- */
-  .o-kirby{background:linear-gradient(163deg,#7fd35a 0%,#3d8f2f 34%,#4a2a92 70%,#150a33 100%);}
-  .o-trimpe{background:linear-gradient(163deg,#8ede6a 0%,#3f9c34 32%,#1d4f9c 68%,#08183f 100%);}
-  .o-buscema{background:linear-gradient(163deg,#a7e06a 0%,#4f9c2c 34%,#a3521a 70%,#2a1006 100%);}
-  .o-bronze{background:linear-gradient(163deg,#c2e07a 0%,#5f9c2f 34%,#8c3a1a 70%,#240c05 100%);}
-  .o-pad{background:linear-gradient(163deg,#9fb0a6 0%,#4d7a52 34%,#1e3320 70%,#080f09 100%);}
-  .o-maestro{background:linear-gradient(163deg,#b98ce0 0%,#6a3aa8 34%,#2b6b3c 70%,#0d1a12 100%);}
-  .o-byrne{background:linear-gradient(163deg,#7fe0c0 0%,#2f9c7a 34%,#1b4030 70%,#060f0b 100%);}
-  .o-jones{background:linear-gradient(163deg,#8fa39a 0%,#3f5a4c 34%,#1a231e 70%,#070a08 100%);}
-  .o-planet{background:linear-gradient(163deg,#ffc457 0%,#e06a1c 32%,#9c1d16 68%,#2a0806 100%);}
-  .o-warbound{background:linear-gradient(163deg,#ff6a4a 0%,#c2201a 34%,#3a1210 70%,#0c0403 100%);}
-  .o-redhulk{background:linear-gradient(163deg,#ff5b4d 0%,#d0141a 32%,#4a0d12 70%,#140204 100%);}
-  .o-immortal{background:linear-gradient(163deg,#5fbf7a 0%,#1f7a45 34%,#0d2a1c 70%,#030805 100%);}
-  .o-cates{background:linear-gradient(163deg,#7fe05a 0%,#2f9c34 32%,#a8231f 70%,#2b0708 100%);}
+  .o-chrome{background:linear-gradient(163deg,#ffffff 0%,#cfd8e2 30%,#5a6a7d 66%,#080c14 100%);}
+  .o-cosmic{background:linear-gradient(163deg,#efe4ff 0%,#8f6fd6 32%,#2a1e5e 68%,#060412 100%);}
+  .o-dawn{background:linear-gradient(163deg,#fff3c9 0%,#f2953a 32%,#1d7f93 68%,#061c22 100%);}
   .o-placeholder{background:linear-gradient(163deg,#8ba3bd 0%,#4d6480 34%,#26344a 70%,#0d141f 100%);}
 
   /* ---- cover textures ---- */
-  .tex-gamma{background:
-    repeating-radial-gradient(circle at 50% 30%, rgba(255,255,255,.09) 0 1.6px, transparent 1.6px 15px),
-    radial-gradient(circle at 50% 30%, rgba(190,255,170,.20), transparent 62%);}
-  .tex-smash{background:
-    repeating-linear-gradient(74deg, rgba(255,255,255,.08) 0 2px, transparent 2px 27px),
-    repeating-linear-gradient(-58deg, rgba(0,0,0,.11) 0 2px, transparent 2px 35px);}
-  .tex-halftone{background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,.16) 0 1.4px, transparent 1.8px) 0 0/9px 9px,
-    radial-gradient(circle at 50% 50%, rgba(0,0,0,.10) 0 1.2px, transparent 1.6px) 4px 4px/9px 9px;}
-  .tex-burst{background:
-    repeating-conic-gradient(from 8deg at 50% 34%, rgba(255,255,255,.10) 0deg 2.2deg, transparent 2.2deg 24deg),
-    radial-gradient(circle at 50% 34%, rgba(255,255,255,.2), transparent 54%);}
+  .tex-starfield{background:
+    radial-gradient(circle,rgba(255,255,255,.55) .7px,transparent 1.1px) 0 0/23px 23px,
+    radial-gradient(circle,rgba(255,255,255,.28) .6px,transparent 1px) 11px 14px/17px 17px;}
+  .tex-cosmic{background:
+    repeating-conic-gradient(from 0deg at 62% 22%,rgba(255,255,255,.10) 0deg 3deg,transparent 3deg 13deg),
+    radial-gradient(circle at 62% 22%,rgba(255,255,255,.20),transparent 46%);}
+  .tex-popdot{background:
+    radial-gradient(circle,rgba(0,0,0,.17) 1.5px,transparent 2.2px) 0 0/13px 13px,
+    radial-gradient(circle,rgba(255,255,255,.17) 1.5px,transparent 2.2px) 6.5px 6.5px/13px 13px;}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
   @media (max-width:600px){
@@ -433,7 +420,7 @@
 <nav class="topbar">
   <a class="backlink" href="index.html"><span class="caret">&#9664;</span> C.O.M.I.C.S.</a>
   <button class="backlink hidden" id="backShelf"><span class="caret">&#9664;</span> All omnibuses</button>
-  <span class="crumb" id="crumb">Subject &middot; Hulk</span>
+  <span class="crumb" id="crumb">Subject &middot; Silver Surfer</span>
 </nav>
 
 <div class="wrap">
@@ -445,15 +432,15 @@
   <!-- ============ SHELF VIEW ============ -->
   <section id="viewShelf">
     <div class="hb" id="heroBanner">
-      <div class="hb-fallback" style="background:linear-gradient(122deg,#1d4a20 0%,#3d2264 34%,#131a2c 72%,#080b13 100%)"></div>
-      <img class="hb-art" src="Art/Banners/hulk.jpg" alt="" onerror="hbFallback(this)">
+      <div class="hb-fallback" style="background:linear-gradient(122deg,#2c2547 0%,#1b1a2e 34%,#101018 72%,#08080f 100%)"></div>
+      <img class="hb-art" src="Art/Banners/silver-surfer.jpg" alt="" onerror="hbFallback(this)">
       <div class="hb-scrim"></div>
       <div class="hb-in">
-        <img class="hb-logo" src="Art/Logos/hulk.png" alt="Hulk"
+        <img class="hb-logo" src="Art/Logos/silver-surfer.png" alt="Silver Surfer"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-        <div class="hb-name" style="display:none">Hulk</div>
-        <div class="hb-sub">Omnibus Shelf &middot; 1962&ndash;2022</div>
-        <div class="hb-blurb">Seventeen mainline Bruce Banner omnibuses, from the six-issue 1962 series through Banner of War. Peter David&rsquo;s twelve-year run is the spine of it.</div>
+        <div class="hb-name" style="display:none">Silver Surfer</div>
+        <div class="hb-sub">Omnibus Shelf &middot; 1967&ndash;2017</div>
+        <div class="hb-blurb">Every Silver Surfer omnibus Marvel has printed &mdash; the Lee and Buscema original, the 1980s return to deep space, and Slott and Allred.</div>
       </div>
     </div>
     <div class="kr" id="krShelf"></div>
@@ -509,370 +496,22 @@
 </div>
 
 <script>const SC = {
-"Incredible Hulk": [
-"#4faa3c",
-"#123f14"
-],
-"Incredible Hulk (2000)": [
-"#4faa3c",
-"#123f14"
-],
-"Incredible Hulk (2009)": [
-"#4faa3c",
-"#123f14"
-],
-"Hulk (1999)": [
-"#4faa3c",
-"#123f14"
-],
-"Hulk (2021)": [
-"#5cbf3f",
-"#0e3a16"
-],
-"Hulk (2008)": [
-"#d8332b",
-"#4a0a0a"
-],
-"Tales to Astonish": [
-"#3f8fd0",
-"#0e2a5c"
-],
-"Tales to Astonish (1994)": [
-"#3f8fd0",
-"#0e2a5c"
-],
-"Incredible Hulk Annual": [
-"#3f8f34",
-"#0c2b10"
-],
-"Incredible Hulk King-Size Special": [
-"#3f8f34",
-"#0c2b10"
-],
-"Hulk Annual": [
-"#3f8f34",
-"#0c2b10"
-],
-"Hulk/Sub-Mariner Annual": [
-"#2f8fa8",
-"#0b2f3f"
-],
-"X-Man/Incredible Hulk Annual": [
-"#6a8fd0",
-"#141f4a"
-],
-"Rampaging Hulk (1998)": [
-"#5c9c3f",
-"#16301a"
-],
-"Giant-Size Hulk": [
-"#3f8f34",
-"#0c2b10"
-],
-"King-Size Hulk": [
-"#3f8f34",
-"#0c2b10"
-],
-"Hulk Monster-Size Special": [
-"#3f8f34",
-"#0c2b10"
-],
-"Incredible Hulk Ashcan": [
-"#7d8c86",
-"#1e2a26"
-],
-"Savage Hulk": [
-"#6fbf46",
-"#173a18"
-],
-"Marvel Adventures Hulk": [
-"#7fcf4f",
-"#1d4420"
-],
-"Hulk-Sized Mini Hulks": [
-"#8fd45c",
-"#274a24"
-],
-"Incredible Hulk vs. Venom": [
-"#5c5f8c",
-"#0e0f24"
-],
-"Hulk vs. Fin Fang Foom": [
-"#4fa86a",
-"#123320"
-],
-"Hulk/Wolverine: 6 Hours": [
-"#d0a92f",
-"#3a2a06"
-],
-"Hulk & Thing: Hard Knocks": [
-"#c9853f",
-"#3a1e0a"
-],
-"Hulk: Destruction": [
-"#a8452f",
-"#2b0d08"
-],
-"Hulk: Broken Worlds": [
-"#7c4fa8",
-"#210f38"
-],
-"Hulk: Future Imperfect": [
-"#7c4fa8",
-"#210f38"
-],
-"Future Imperfect (2015)": [
-"#7c4fa8",
-"#210f38"
-],
-"Maestro": [
-"#7c4fa8",
-"#210f38"
-],
-"Maestro: War and Pax": [
-"#7c4fa8",
-"#210f38"
-],
-"Maestro: World War M": [
-"#7c4fa8",
-"#210f38"
-],
-"Abominations": [
-"#5f8c3f",
-"#16290e"
-],
-"Hulk: Hercules Unleashed": [
-"#c9a33f",
-"#3a2c08"
-],
-"Hulk: The End": [
-"#6a6f5c",
-"#171a12"
-],
-"Hulk: Last Call": [
-"#7d8c86",
-"#1e2a26"
-],
-"What If? General Ross": [
-"#a83f5c",
-"#2b0a16"
-],
-"What If? Planet Hulk": [
-"#a83f5c",
-"#2b0a16"
-],
-"Planet Hulk: Gladiator Guidebook": [
-"#d98a2b",
-"#4a1d0a"
-],
-"World War Hulk": [
-"#c9432a",
-"#3a0d0c"
-],
-"WWH Prologue: World Breaker": [
-"#c9432a",
-"#3a0d0c"
-],
-"World War Hulk: X-Men": [
-"#c95a2a",
-"#3a1408"
-],
-"World War Hulk: Gamma Corps": [
-"#a8a12f",
-"#2b2906"
-],
-"World War Hulk: Front Line": [
-"#8c6f4f",
-"#241a10"
-],
-"World War Hulk: Aftersmash": [
-"#c9432a",
-"#3a0d0c"
-],
-"Aftersmash: Damage Control": [
-"#c9a02f",
-"#3a2a06"
-],
-"Aftersmash: Warbound": [
-"#c9432a",
-"#3a0d0c"
-],
-"Marvel Spotlight: World War Hulk": [
-"#7d8c86",
-"#1e2a26"
-],
-"Fall of the Hulks: Gamma": [
-"#a8c92f",
-"#2b3306"
-],
-"Immortal Hulk": [
-"#2f7a52",
-"#072014"
-],
-"Immortal Hulk: The Best Defense": [
-"#2f7a52",
-"#072014"
-],
-"Immortal Hulk: Time of Monsters": [
-"#2f7a52",
-"#072014"
-],
-"Immortal She-Hulk": [
-"#5faa6f",
-"#123320"
-],
-"Absolute Carnage: Immortal Hulk": [
-"#a8232f",
-"#2b0509"
-],
-"King in Black: Immortal Hulk": [
-"#3f4257",
-"#0a0b14"
-],
-"Defenders: The Best Defense": [
-"#4f6fa8",
-"#101a33"
-],
-"Gamma Flight": [
-"#5fa83f",
-"#153008"
-],
-"Hulk vs. Thor: Banner of War Alpha": [
-"#c95a2f",
-"#3a1408"
-],
-"FCBD 2021: Avengers/Hulk": [
-"#4f8fc9",
-"#0e2244"
-],
-"Thor (2020)": [
-"#4f7fd0",
-"#0e1e4a"
-],
-"Avengers": [
-"#3f6fc9",
-"#0c1a44"
-],
-"Avengers (2016)": [
-"#3f6fc9",
-"#0c1a44"
-],
-"Avengers: The Initiative": [
-"#5f7fa8",
-"#12203a"
-],
-"New Avengers: Illuminati": [
-"#4f4fa8",
-"#0f0f33"
-],
-"Invincible Iron Man": [
-"#c9a02f",
-"#3a2506"
-],
-"Irredeemable Ant-Man": [
-"#4fa8a0",
-"#0e3330"
-],
-"Heroes for Hire (2006)": [
-"#a85f2f",
-"#2b1408"
-],
-"Ghost Rider (2006)": [
-"#c9642f",
-"#2b0d06"
-],
-"Punisher War Journal (2007)": [
-"#5c5f66",
-"#131417"
-],
-"Wolverine (2003)": [
-"#d0b02f",
-"#3a2c06"
-],
-"Cable": [
-"#5f7f8c",
-"#131f24"
-],
-"X-Factor": [
-"#3f8fa8",
-"#0c2733"
-],
-"Fantastic Four": [
-"#3f6fc9",
-"#0c1a44"
-],
-"Fantastic Four (1998)": [
-"#3f6fc9",
-"#0c1a44"
-],
-"New Fantastic Four": [
-"#3f6fc9",
-"#0c1a44"
-],
-"Amazing Fantasy (2004)": [
-"#c9822a",
-"#5c2f0c"
-],
-"Spider-Man 2099 (2014)": [
-"#a8232f",
-"#1a0b2b"
-],
-"Symbiote Spider-Man: Crossroads": [
-"#3f4257",
-"#0a0b14"
-],
-"Captain Marvel (1999)": [
-"#c9a02f",
-"#3a2506"
-],
-"Exiles": [
-"#7f4fa8",
-"#1b0f2b"
-],
-"Secret Wars: Battleworld": [
-"#a8452f",
-"#2b0d08"
-],
-"Onslaught: Marvel Universe": [
-"#6f4fa8",
-"#170f2b"
-],
-"Heroes Reborn: The Return": [
-"#4f8fc9",
-"#0e2244"
-],
-"Cutting Edge": [
-"#7d8c86",
-"#1e2a26"
-],
-"Marvel Holiday Special": [
-"#a8232f",
-"#0c2b12"
-],
-"Marvel Comics": [
-"#c9a02f",
-"#3a2506"
-],
-"Breaking Into Comics the Marvel Way!": [
-"#7d8c86",
-"#1e2a26"
-],
-"Marvel Comics Presents": [
-"#8c6f4f",
-"#241a10"
-],
-"Marvel Super-Heroes": [
-"#4f8fc9",
-"#0e2244"
-],
-"Marvel Treasury Edition": [
-"#c9822a",
-"#3a1d06"
-],
-"Web of Spider-Man": [
-"#c9262e",
-"#3a0508"
-]
+"Silver Surfer (1968)": ["#dfe7f2", "#1b2a52"],
+"Silver Surfer (1982)": ["#cfd8e2", "#2a3550"],
+"Silver Surfer (1987)": ["#b39ce8", "#2a1e5e"],
+"Silver Surfer: Parable": ["#e8dcc0", "#3a2f1c"],
+"Silver Surfer (2014)": ["#7fd8e0", "#12525e"],
+"Silver Surfer (2016)": ["#f2953a", "#5e2c0a"],
+"Silver Surfer Annual (1988)": ["#9f8ad6", "#241a4a"],
+"Fantastic Four": ["#4a9fd8", "#123c78"],
+"Fantastic Four Annual": ["#4a9fd8", "#123c78"],
+"Not Brand Echh": ["#f2d24a", "#5a4a10"],
+"Marvel Comics Presents": ["#d8623c", "#4a1a0e"],
+"Marvel Fanfare": ["#7fd0c2", "#123a4a"],
+"Epic Illustrated": ["#c9a15a", "#3a2410"],
+"Marvel Graphic Novel": ["#b9c7d6", "#2f3a4d"],
+"Super-Villain Classics": ["#8f4fd0", "#2a1048"],
+"All-New Marvel NOW! Point One": ["#e0554a", "#4a1218"]
 }
 
 /* ============ OMNIBUS DATA ============
@@ -883,4399 +522,639 @@
    CSS placeholder art is replaced automatically. */
 const OMNI = [
 {
-"id": "inc-o1",
-"spine": "Incredible Hulk",
-"cover": "Art/Hulk/inc-o1.jpg",
-"title": "Incredible Hulk Omnibus",
-"vol": "Vol. 1",
-"creators": "Stan Lee, Jack Kirby & Steve Ditko",
-"era": "1962–1968",
-"released": "Jun 2008",
-"art": "o-kirby",
-"tex": "tex-gamma",
-"note": "Where it starts. Six issues of the cancelled 1962 series, the whole Tales to Astonish run, and Hulk #102 picking the numbering back up.",
+"id": "ss-o1",
+"spine": "Silver Surfer",
+"cover": "Art/Silver-Surfer/ss-o1.jpg",
+"title": "Silver Surfer Omnibus",
+"vol": "",
+"creators": "Stan Lee & John Buscema",
+"era": "1967–1970",
+"released": "May 2007",
+"art": "o-chrome",
+"tex": "tex-starfield",
+"note": "The Lee and Buscema book, and still the one the character is measured against. Eighteen issues of Galactus's herald marooned inside a barrier over Earth, being magnificent about it and miserable about it in the same panel. It opens with the Fantastic Four Annual where he first got a story of his own, and closes on the Not Brand Echh parody, which is what happened to anything Marvel took seriously in 1969.",
 "chapters": [
 {
-"id": "inc-o1-c1",
-"title": "Incredible Hulk #1–6",
-"era": "1962–1968",
+"id": "ss-o1-c1",
+"title": "Silver Surfer (1968) #1–18",
+"era": "1967–1970",
 "issues": [
 {
-"id": "hulk-1",
-"t": "Incredible Hulk #1",
-"s": "Incredible Hulk"
+"id": "ssf-1",
+"t": "Silver Surfer (1968) #1",
+"s": "Silver Surfer (1968)"
 },
 {
-"id": "hulk-2",
-"t": "Incredible Hulk #2",
-"s": "Incredible Hulk"
+"id": "ssf-2",
+"t": "Silver Surfer (1968) #2",
+"s": "Silver Surfer (1968)"
 },
 {
-"id": "hulk-3",
-"t": "Incredible Hulk #3",
-"s": "Incredible Hulk"
+"id": "ssf-3",
+"t": "Silver Surfer (1968) #3",
+"s": "Silver Surfer (1968)"
 },
 {
-"id": "hulk-4",
-"t": "Incredible Hulk #4",
-"s": "Incredible Hulk"
+"id": "ssf-4",
+"t": "Silver Surfer (1968) #4",
+"s": "Silver Surfer (1968)"
 },
 {
-"id": "hulk-5",
-"t": "Incredible Hulk #5",
-"s": "Incredible Hulk"
+"id": "ssf-5",
+"t": "Silver Surfer (1968) #5",
+"s": "Silver Surfer (1968)"
 },
 {
-"id": "hulk-6",
-"t": "Incredible Hulk #6",
-"s": "Incredible Hulk"
+"id": "ssf-6",
+"t": "Silver Surfer (1968) #6",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-7",
+"t": "Silver Surfer (1968) #7",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-8",
+"t": "Silver Surfer (1968) #8",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-9",
+"t": "Silver Surfer (1968) #9",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-10",
+"t": "Silver Surfer (1968) #10",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-11",
+"t": "Silver Surfer (1968) #11",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-12",
+"t": "Silver Surfer (1968) #12",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-13",
+"t": "Silver Surfer (1968) #13",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-14",
+"t": "Silver Surfer (1968) #14",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-15",
+"t": "Silver Surfer (1968) #15",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-16",
+"t": "Silver Surfer (1968) #16",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-17",
+"t": "Silver Surfer (1968) #17",
+"s": "Silver Surfer (1968)"
+},
+{
+"id": "ssf-18",
+"t": "Silver Surfer (1968) #18",
+"s": "Silver Surfer (1968)"
 }
 ]
 },
 {
-"id": "inc-o1-c2",
-"title": "Tales to Astonish #59–101",
-"era": "1962–1968",
+"id": "ss-o1-c2",
+"title": "Fantastic Four Annual #5",
+"era": "1967–1970",
 "issues": [
 {
-"id": "tta-59",
-"t": "Tales to Astonish #59",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-60",
-"t": "Tales to Astonish #60",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-61",
-"t": "Tales to Astonish #61",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-62",
-"t": "Tales to Astonish #62",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-63",
-"t": "Tales to Astonish #63",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-64",
-"t": "Tales to Astonish #64",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-65",
-"t": "Tales to Astonish #65",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-66",
-"t": "Tales to Astonish #66",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-67",
-"t": "Tales to Astonish #67",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-68",
-"t": "Tales to Astonish #68",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-69",
-"t": "Tales to Astonish #69",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-70",
-"t": "Tales to Astonish #70",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-71",
-"t": "Tales to Astonish #71",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-72",
-"t": "Tales to Astonish #72",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-73",
-"t": "Tales to Astonish #73",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-74",
-"t": "Tales to Astonish #74",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-75",
-"t": "Tales to Astonish #75",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-76",
-"t": "Tales to Astonish #76",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-77",
-"t": "Tales to Astonish #77",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-78",
-"t": "Tales to Astonish #78",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-79",
-"t": "Tales to Astonish #79",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-80",
-"t": "Tales to Astonish #80",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-81",
-"t": "Tales to Astonish #81",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-82",
-"t": "Tales to Astonish #82",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-83",
-"t": "Tales to Astonish #83",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-84",
-"t": "Tales to Astonish #84",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-85",
-"t": "Tales to Astonish #85",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-86",
-"t": "Tales to Astonish #86",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-87",
-"t": "Tales to Astonish #87",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-88",
-"t": "Tales to Astonish #88",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-89",
-"t": "Tales to Astonish #89",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-90",
-"t": "Tales to Astonish #90",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-91",
-"t": "Tales to Astonish #91",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-92",
-"t": "Tales to Astonish #92",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-93",
-"t": "Tales to Astonish #93",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-94",
-"t": "Tales to Astonish #94",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-95",
-"t": "Tales to Astonish #95",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-96",
-"t": "Tales to Astonish #96",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-97",
-"t": "Tales to Astonish #97",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-98",
-"t": "Tales to Astonish #98",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-99",
-"t": "Tales to Astonish #99",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-100",
-"t": "Tales to Astonish #100",
-"s": "Tales to Astonish"
-},
-{
-"id": "tta-101",
-"t": "Tales to Astonish #101",
-"s": "Tales to Astonish"
+"id": "ffann-5",
+"t": "Fantastic Four Annual #5",
+"s": "Fantastic Four Annual"
 }
 ]
 },
 {
-"id": "inc-o1-c3",
-"title": "Incredible Hulk #102",
-"era": "1962–1968",
+"id": "ss-o1-c3",
+"title": "Not Brand Echh #13",
+"era": "1967–1970",
 "issues": [
 {
-"id": "hulk-102",
-"t": "Incredible Hulk #102",
-"s": "Incredible Hulk"
+"id": "nbe-13",
+"t": "Not Brand Echh #13",
+"s": "Not Brand Echh"
 }
 ]
 }
 ]
 },
 {
-"id": "inc-o2",
-"spine": "Incredible Hulk",
-"cover": "Art/Hulk/inc-o2.jpg",
-"title": "Incredible Hulk Omnibus",
-"vol": "Vol. 2",
-"creators": "Stan Lee, Roy Thomas & Herb Trimpe",
-"era": "1968–1970",
-"released": "Nov 2023",
-"art": "o-trimpe",
-"tex": "tex-smash",
-"note": "Trimpe becomes the definitive Bronze Age Hulk artist. Ka-Zar, the Rhino, the Leader's Humanoids and the first Sasquatch.",
+"id": "spaceways-o1",
+"spine": "Return to Spaceways",
+"cover": "Art/Silver-Surfer/spaceways-o1.jpg",
+"title": "Silver Surfer: Return to the Spaceways Omnibus",
+"vol": "",
+"creators": "Steve Englehart, Marshall Rogers & Ron Lim",
+"era": "1980–1990",
+"released": "May 2025",
+"art": "o-cosmic",
+"tex": "tex-cosmic",
+"note": "The barrier breaks and he goes back to the stars. A Stan Lee and John Byrne one-shot in 1982, then Englehart and Rogers relaunch him in 1987 for thirty-three issues — the Kree/Skrull war restarted, the Elders of the Universe hunting Galactus, Nova and Mantis and Shalla-Bal. The tail of the book is the odd material: both of Stan Lee's graphic novels, Moebius drawing Parable, Epic Illustrated #1 and the first Marvel Comics Presents. Note the jump to get here — he had no title at all between 1970 and 1982.",
 "chapters": [
 {
-"id": "inc-o2-c1",
-"title": "Incredible Hulk #103–134",
-"era": "1968–1970",
+"id": "spaceways-o1-c1",
+"title": "Silver Surfer (1982) #1",
+"era": "1980–1990",
 "issues": [
 {
-"id": "hulk-103",
-"t": "Incredible Hulk #103",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-104",
-"t": "Incredible Hulk #104",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-105",
-"t": "Incredible Hulk #105",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-106",
-"t": "Incredible Hulk #106",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-107",
-"t": "Incredible Hulk #107",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-108",
-"t": "Incredible Hulk #108",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-109",
-"t": "Incredible Hulk #109",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-110",
-"t": "Incredible Hulk #110",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-111",
-"t": "Incredible Hulk #111",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-112",
-"t": "Incredible Hulk #112",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-113",
-"t": "Incredible Hulk #113",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-114",
-"t": "Incredible Hulk #114",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-115",
-"t": "Incredible Hulk #115",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-116",
-"t": "Incredible Hulk #116",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-117",
-"t": "Incredible Hulk #117",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-118",
-"t": "Incredible Hulk #118",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-119",
-"t": "Incredible Hulk #119",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-120",
-"t": "Incredible Hulk #120",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-121",
-"t": "Incredible Hulk #121",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-122",
-"t": "Incredible Hulk #122",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-123",
-"t": "Incredible Hulk #123",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-124",
-"t": "Incredible Hulk #124",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-125",
-"t": "Incredible Hulk #125",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-126",
-"t": "Incredible Hulk #126",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-127",
-"t": "Incredible Hulk #127",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-128",
-"t": "Incredible Hulk #128",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-129",
-"t": "Incredible Hulk #129",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-130",
-"t": "Incredible Hulk #130",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-131",
-"t": "Incredible Hulk #131",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-132",
-"t": "Incredible Hulk #132",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-133",
-"t": "Incredible Hulk #133",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-134",
-"t": "Incredible Hulk #134",
-"s": "Incredible Hulk"
+"id": "ssf2-1",
+"t": "Silver Surfer (1982) #1",
+"s": "Silver Surfer (1982)"
 }
 ]
 },
 {
-"id": "inc-o2-c2",
-"title": "Incredible Hulk King-Size Special #1",
-"era": "1968–1970",
+"id": "spaceways-o1-c2",
+"title": "Silver Surfer (1987) #1–33",
+"era": "1980–1990",
 "issues": [
 {
-"id": "hkss-1",
-"t": "Incredible Hulk King-Size Special #1",
-"s": "Incredible Hulk King-Size Special"
-}
-]
+"id": "ssf3-1",
+"t": "Silver Surfer (1987) #1",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-2",
+"t": "Silver Surfer (1987) #2",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-3",
+"t": "Silver Surfer (1987) #3",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-4",
+"t": "Silver Surfer (1987) #4",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-5",
+"t": "Silver Surfer (1987) #5",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-6",
+"t": "Silver Surfer (1987) #6",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-7",
+"t": "Silver Surfer (1987) #7",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-8",
+"t": "Silver Surfer (1987) #8",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-9",
+"t": "Silver Surfer (1987) #9",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-10",
+"t": "Silver Surfer (1987) #10",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-11",
+"t": "Silver Surfer (1987) #11",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-12",
+"t": "Silver Surfer (1987) #12",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-13",
+"t": "Silver Surfer (1987) #13",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-14",
+"t": "Silver Surfer (1987) #14",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-15",
+"t": "Silver Surfer (1987) #15",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-16",
+"t": "Silver Surfer (1987) #16",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-17",
+"t": "Silver Surfer (1987) #17",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-18",
+"t": "Silver Surfer (1987) #18",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-19",
+"t": "Silver Surfer (1987) #19",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-20",
+"t": "Silver Surfer (1987) #20",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-21",
+"t": "Silver Surfer (1987) #21",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-22",
+"t": "Silver Surfer (1987) #22",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-23",
+"t": "Silver Surfer (1987) #23",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-24",
+"t": "Silver Surfer (1987) #24",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-25",
+"t": "Silver Surfer (1987) #25",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-26",
+"t": "Silver Surfer (1987) #26",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-27",
+"t": "Silver Surfer (1987) #27",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-28",
+"t": "Silver Surfer (1987) #28",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-29",
+"t": "Silver Surfer (1987) #29",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-30",
+"t": "Silver Surfer (1987) #30",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-31",
+"t": "Silver Surfer (1987) #31",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-32",
+"t": "Silver Surfer (1987) #32",
+"s": "Silver Surfer (1987)"
+},
+{
+"id": "ssf3-33",
+"t": "Silver Surfer (1987) #33",
+"s": "Silver Surfer (1987)"
 }
 ]
 },
 {
-"id": "inc-o3",
-"spine": "Incredible Hulk",
-"cover": "Art/Hulk/inc-o3.jpg",
-"title": "Incredible Hulk Omnibus",
-"vol": "Vol. 3",
-"creators": "Roy Thomas, Archie Goodwin & Herb Trimpe",
-"era": "1971–1973",
-"released": "Nov 2025",
-"art": "o-buscema",
-"tex": "tex-gamma",
-"note": "Jarella, the Harpy, Doc Samson's debut and the Avengers #88 crossover that leads straight into Hulk #140.",
-"chapters": [
-{
-"id": "inc-o3-c1",
-"title": "Incredible Hulk #135–139",
-"era": "1971–1973",
+"id": "spaceways-o1-c3",
+"title": "Silver Surfer Annual (1988) #1–2",
+"era": "1980–1990",
 "issues": [
 {
-"id": "hulk-135",
-"t": "Incredible Hulk #135",
-"s": "Incredible Hulk"
+"id": "ssfann-1",
+"t": "Silver Surfer Annual (1988) #1",
+"s": "Silver Surfer Annual (1988)"
 },
 {
-"id": "hulk-136",
-"t": "Incredible Hulk #136",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-137",
-"t": "Incredible Hulk #137",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-138",
-"t": "Incredible Hulk #138",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-139",
-"t": "Incredible Hulk #139",
-"s": "Incredible Hulk"
+"id": "ssfann-2",
+"t": "Silver Surfer Annual (1988) #2",
+"s": "Silver Surfer Annual (1988)"
 }
 ]
 },
 {
-"id": "inc-o3-c2",
-"title": "Avengers #88",
-"era": "1971–1973",
+"id": "spaceways-o1-c4",
+"title": "Marvel Graphic Novel #38",
+"era": "1980–1990",
 "issues": [
 {
-"id": "av-88",
-"t": "Avengers #88",
-"s": "Avengers"
+"id": "mgn-38",
+"t": "Marvel Graphic Novel #38",
+"s": "Marvel Graphic Novel"
 }
 ]
 },
 {
-"id": "inc-o3-c3",
-"title": "Incredible Hulk #140–170",
-"era": "1971–1973",
+"id": "spaceways-o1-c5",
+"title": "Silver Surfer: Parable #1–2",
+"era": "1980–1990",
 "issues": [
 {
-"id": "hulk-140",
-"t": "Incredible Hulk #140",
-"s": "Incredible Hulk"
+"id": "ssfpar-1",
+"t": "Silver Surfer: Parable #1",
+"s": "Silver Surfer: Parable"
 },
 {
-"id": "hulk-141",
-"t": "Incredible Hulk #141",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-142",
-"t": "Incredible Hulk #142",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-143",
-"t": "Incredible Hulk #143",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-144",
-"t": "Incredible Hulk #144",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-145",
-"t": "Incredible Hulk #145",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-146",
-"t": "Incredible Hulk #146",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-147",
-"t": "Incredible Hulk #147",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-148",
-"t": "Incredible Hulk #148",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-149",
-"t": "Incredible Hulk #149",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-150",
-"t": "Incredible Hulk #150",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-151",
-"t": "Incredible Hulk #151",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-152",
-"t": "Incredible Hulk #152",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-153",
-"t": "Incredible Hulk #153",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-154",
-"t": "Incredible Hulk #154",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-155",
-"t": "Incredible Hulk #155",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-156",
-"t": "Incredible Hulk #156",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-157",
-"t": "Incredible Hulk #157",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-158",
-"t": "Incredible Hulk #158",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-159",
-"t": "Incredible Hulk #159",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-160",
-"t": "Incredible Hulk #160",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-161",
-"t": "Incredible Hulk #161",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-162",
-"t": "Incredible Hulk #162",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-163",
-"t": "Incredible Hulk #163",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-164",
-"t": "Incredible Hulk #164",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-165",
-"t": "Incredible Hulk #165",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-166",
-"t": "Incredible Hulk #166",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-167",
-"t": "Incredible Hulk #167",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-168",
-"t": "Incredible Hulk #168",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-169",
-"t": "Incredible Hulk #169",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-170",
-"t": "Incredible Hulk #170",
-"s": "Incredible Hulk"
+"id": "ssfpar-2",
+"t": "Silver Surfer: Parable #2",
+"s": "Silver Surfer: Parable"
 }
 ]
 },
 {
-"id": "inc-o3-c4",
-"title": "Marvel Super-Heroes #16",
-"era": "1971–1973",
+"id": "spaceways-o1-c6",
+"title": "Marvel Graphic Novel #58",
+"era": "1980–1990",
 "issues": [
 {
-"id": "msh-16",
-"t": "Marvel Super-Heroes #16",
-"s": "Marvel Super-Heroes"
-}
-]
+"id": "mgn-58",
+"t": "Marvel Graphic Novel #58",
+"s": "Marvel Graphic Novel"
 }
 ]
 },
 {
-"id": "inc-o4",
-"spine": "Incredible Hulk",
-"cover": "Art/Hulk/inc-o4.jpg",
-"title": "Incredible Hulk Omnibus",
-"vol": "Vol. 4",
-"creators": "Len Wein, Roger Stern & Herb Trimpe",
-"era": "1974–1977",
-"released": "Announced",
-"art": "o-bronze",
-"tex": "tex-smash",
-"note": "Hulk #180–181: the first Wolverine. Also the Bi-Beast, the Abomination's return, and issue #200. Solicited for February 2027.",
-"chapters": [
-{
-"id": "inc-o4-c1",
-"title": "Incredible Hulk #171–209",
-"era": "1974–1977",
+"id": "spaceways-o1-c7",
+"title": "Fantastic Four #325",
+"era": "1980–1990",
 "issues": [
 {
-"id": "hulk-171",
-"t": "Incredible Hulk #171",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-172",
-"t": "Incredible Hulk #172",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-173",
-"t": "Incredible Hulk #173",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-174",
-"t": "Incredible Hulk #174",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-175",
-"t": "Incredible Hulk #175",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-176",
-"t": "Incredible Hulk #176",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-177",
-"t": "Incredible Hulk #177",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-178",
-"t": "Incredible Hulk #178",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-179",
-"t": "Incredible Hulk #179",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-180",
-"t": "Incredible Hulk #180",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-181",
-"t": "Incredible Hulk #181",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-182",
-"t": "Incredible Hulk #182",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-183",
-"t": "Incredible Hulk #183",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-184",
-"t": "Incredible Hulk #184",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-185",
-"t": "Incredible Hulk #185",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-186",
-"t": "Incredible Hulk #186",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-187",
-"t": "Incredible Hulk #187",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-188",
-"t": "Incredible Hulk #188",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-189",
-"t": "Incredible Hulk #189",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-190",
-"t": "Incredible Hulk #190",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-191",
-"t": "Incredible Hulk #191",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-192",
-"t": "Incredible Hulk #192",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-193",
-"t": "Incredible Hulk #193",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-194",
-"t": "Incredible Hulk #194",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-195",
-"t": "Incredible Hulk #195",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-196",
-"t": "Incredible Hulk #196",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-197",
-"t": "Incredible Hulk #197",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-198",
-"t": "Incredible Hulk #198",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-199",
-"t": "Incredible Hulk #199",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-200",
-"t": "Incredible Hulk #200",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-201",
-"t": "Incredible Hulk #201",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-202",
-"t": "Incredible Hulk #202",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-203",
-"t": "Incredible Hulk #203",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-204",
-"t": "Incredible Hulk #204",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-205",
-"t": "Incredible Hulk #205",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-206",
-"t": "Incredible Hulk #206",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-207",
-"t": "Incredible Hulk #207",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-208",
-"t": "Incredible Hulk #208",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-209",
-"t": "Incredible Hulk #209",
-"s": "Incredible Hulk"
-}
-]
-},
-{
-"id": "inc-o4-c2",
-"title": "Incredible Hulk Annual #5",
-"era": "1974–1977",
-"issues": [
-{
-"id": "hkann-5",
-"t": "Incredible Hulk Annual #5",
-"s": "Incredible Hulk Annual"
-}
-]
-},
-{
-"id": "inc-o4-c3",
-"title": "Marvel Treasury Edition #13",
-"era": "1974–1977",
-"issues": [
-{
-"id": "mte-13",
-"t": "Marvel Treasury Edition #13",
-"s": "Marvel Treasury Edition"
-}
-]
-}
-]
-},
-{
-"id": "pad-o1",
-"spine": "By Peter David",
-"cover": "Art/Hulk/pad-o1.jpg",
-"title": "Incredible Hulk by Peter David Omnibus",
-"vol": "Vol. 1",
-"creators": "Peter David, Todd McFarlane & Jeff Purves",
-"era": "1987–1990",
-"released": "Jan 2020",
-"art": "o-pad",
-"tex": "tex-halftone",
-"note": "The grey Hulk as Las Vegas leg-breaker Joe Fixit. Note the jump: Hulk #210–327 has never been collected in omnibus, so this opens 118 issues after Vol. 4 closes.",
-"chapters": [
-{
-"id": "pad-o1-c1",
-"title": "Incredible Hulk #328, #331–368",
-"era": "1987–1990",
-"issues": [
-{
-"id": "hulk-328",
-"t": "Incredible Hulk #328",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-331",
-"t": "Incredible Hulk #331",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-332",
-"t": "Incredible Hulk #332",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-333",
-"t": "Incredible Hulk #333",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-334",
-"t": "Incredible Hulk #334",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-335",
-"t": "Incredible Hulk #335",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-336",
-"t": "Incredible Hulk #336",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-337",
-"t": "Incredible Hulk #337",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-338",
-"t": "Incredible Hulk #338",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-339",
-"t": "Incredible Hulk #339",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-340",
-"t": "Incredible Hulk #340",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-341",
-"t": "Incredible Hulk #341",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-342",
-"t": "Incredible Hulk #342",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-343",
-"t": "Incredible Hulk #343",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-344",
-"t": "Incredible Hulk #344",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-345",
-"t": "Incredible Hulk #345",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-346",
-"t": "Incredible Hulk #346",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-347",
-"t": "Incredible Hulk #347",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-348",
-"t": "Incredible Hulk #348",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-349",
-"t": "Incredible Hulk #349",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-350",
-"t": "Incredible Hulk #350",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-351",
-"t": "Incredible Hulk #351",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-352",
-"t": "Incredible Hulk #352",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-353",
-"t": "Incredible Hulk #353",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-354",
-"t": "Incredible Hulk #354",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-355",
-"t": "Incredible Hulk #355",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-356",
-"t": "Incredible Hulk #356",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-357",
-"t": "Incredible Hulk #357",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-358",
-"t": "Incredible Hulk #358",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-359",
-"t": "Incredible Hulk #359",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-360",
-"t": "Incredible Hulk #360",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-361",
-"t": "Incredible Hulk #361",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-362",
-"t": "Incredible Hulk #362",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-363",
-"t": "Incredible Hulk #363",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-364",
-"t": "Incredible Hulk #364",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-365",
-"t": "Incredible Hulk #365",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-366",
-"t": "Incredible Hulk #366",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-367",
-"t": "Incredible Hulk #367",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-368",
-"t": "Incredible Hulk #368",
-"s": "Incredible Hulk"
-}
-]
-},
-{
-"id": "pad-o1-c2",
-"title": "Web of Spider-Man #44",
-"era": "1987–1990",
-"issues": [
-{
-"id": "web-44",
-"t": "Web of Spider-Man #44",
-"s": "Web of Spider-Man"
-}
-]
-},
-{
-"id": "pad-o1-c3",
-"title": "Fantastic Four #320",
-"era": "1987–1990",
-"issues": [
-{
-"id": "ff-320",
-"t": "Fantastic Four #320",
+"id": "ff-325",
+"t": "Fantastic Four #325",
 "s": "Fantastic Four"
 }
 ]
 },
 {
-"id": "pad-o1-c4",
-"title": "Marvel Comics Presents #26, #45",
-"era": "1987–1990",
+"id": "spaceways-o1-c8",
+"title": "Super-Villain Classics #1",
+"era": "1980–1990",
 "issues": [
 {
-"id": "mcp-26",
-"t": "Marvel Comics Presents #26",
+"id": "svc-1",
+"t": "Super-Villain Classics #1",
+"s": "Super-Villain Classics"
+}
+]
+},
+{
+"id": "spaceways-o1-c9",
+"title": "Epic Illustrated #1",
+"era": "1980–1990",
+"issues": [
+{
+"id": "epic-1",
+"t": "Epic Illustrated #1",
+"s": "Epic Illustrated"
+}
+]
+},
+{
+"id": "spaceways-o1-c10",
+"title": "Marvel Comics Presents #1",
+"era": "1980–1990",
+"issues": [
+{
+"id": "mcp-1",
+"t": "Marvel Comics Presents #1",
 "s": "Marvel Comics Presents"
-},
-{
-"id": "mcp-45",
-"t": "Marvel Comics Presents #45",
-"s": "Marvel Comics Presents"
-}
-]
 }
 ]
 },
 {
-"id": "pad-o2",
-"spine": "By Peter David",
-"cover": "Art/Hulk/pad-o2.jpg",
-"title": "Incredible Hulk by Peter David Omnibus",
-"vol": "Vol. 2",
-"creators": "Peter David, Dale Keown & Jeff Purves",
-"era": "1990–1992",
-"released": "Oct 2020",
-"art": "o-pad",
-"tex": "tex-smash",
-"note": "Keown arrives and the Hulk is merged into the Professor. Ground Zero, the Pantheon, and issue #400.",
-"chapters": [
-{
-"id": "pad-o2-c1",
-"title": "Incredible Hulk #369–400",
-"era": "1990–1992",
+"id": "spaceways-o1-c11",
+"title": "Marvel Fanfare #51",
+"era": "1980–1990",
 "issues": [
 {
-"id": "hulk-369",
-"t": "Incredible Hulk #369",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-370",
-"t": "Incredible Hulk #370",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-371",
-"t": "Incredible Hulk #371",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-372",
-"t": "Incredible Hulk #372",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-373",
-"t": "Incredible Hulk #373",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-374",
-"t": "Incredible Hulk #374",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-375",
-"t": "Incredible Hulk #375",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-376",
-"t": "Incredible Hulk #376",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-377",
-"t": "Incredible Hulk #377",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-378",
-"t": "Incredible Hulk #378",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-379",
-"t": "Incredible Hulk #379",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-380",
-"t": "Incredible Hulk #380",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-381",
-"t": "Incredible Hulk #381",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-382",
-"t": "Incredible Hulk #382",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-383",
-"t": "Incredible Hulk #383",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-384",
-"t": "Incredible Hulk #384",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-385",
-"t": "Incredible Hulk #385",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-386",
-"t": "Incredible Hulk #386",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-387",
-"t": "Incredible Hulk #387",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-388",
-"t": "Incredible Hulk #388",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-389",
-"t": "Incredible Hulk #389",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-390",
-"t": "Incredible Hulk #390",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-391",
-"t": "Incredible Hulk #391",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-392",
-"t": "Incredible Hulk #392",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-393",
-"t": "Incredible Hulk #393",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-394",
-"t": "Incredible Hulk #394",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-395",
-"t": "Incredible Hulk #395",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-396",
-"t": "Incredible Hulk #396",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-397",
-"t": "Incredible Hulk #397",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-398",
-"t": "Incredible Hulk #398",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-399",
-"t": "Incredible Hulk #399",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-400",
-"t": "Incredible Hulk #400",
-"s": "Incredible Hulk"
-}
-]
-},
-{
-"id": "pad-o2-c2",
-"title": "Incredible Hulk Annual #16–18",
-"era": "1990–1992",
-"issues": [
-{
-"id": "hkann-16",
-"t": "Incredible Hulk Annual #16",
-"s": "Incredible Hulk Annual"
-},
-{
-"id": "hkann-17",
-"t": "Incredible Hulk Annual #17",
-"s": "Incredible Hulk Annual"
-},
-{
-"id": "hkann-18",
-"t": "Incredible Hulk Annual #18",
-"s": "Incredible Hulk Annual"
-}
-]
-},
-{
-"id": "pad-o2-c3",
-"title": "X-Factor #76",
-"era": "1990–1992",
-"issues": [
-{
-"id": "xfac-76",
-"t": "X-Factor #76",
-"s": "X-Factor"
-}
-]
-},
-{
-"id": "pad-o2-c4",
-"title": "Marvel Holiday Special #1992",
-"era": "1990–1992",
-"issues": [
-{
-"id": "mhs-1992",
-"t": "Marvel Holiday Special #1992",
-"s": "Marvel Holiday Special"
+"id": "mfan-51",
+"t": "Marvel Fanfare #51",
+"s": "Marvel Fanfare"
 }
 ]
 }
 ]
 },
 {
-"id": "pad-o3",
-"spine": "By Peter David",
-"cover": "Art/Hulk/pad-o3.jpg",
-"title": "Incredible Hulk by Peter David Omnibus",
-"vol": "Vol. 3",
-"creators": "Peter David, Gary Frank & George Pérez",
-"era": "1993–1995",
-"released": "Jun 2021",
-"art": "o-pad",
-"tex": "tex-gamma",
-"note": "Future Imperfect — the Maestro — plus the Troyjan War and Betty and Bruce finally married.",
-"chapters": [
-{
-"id": "pad-o3-c1",
-"title": "Incredible Hulk #401–435",
-"era": "1993–1995",
-"issues": [
-{
-"id": "hulk-401",
-"t": "Incredible Hulk #401",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-402",
-"t": "Incredible Hulk #402",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-403",
-"t": "Incredible Hulk #403",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-404",
-"t": "Incredible Hulk #404",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-405",
-"t": "Incredible Hulk #405",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-406",
-"t": "Incredible Hulk #406",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-407",
-"t": "Incredible Hulk #407",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-408",
-"t": "Incredible Hulk #408",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-409",
-"t": "Incredible Hulk #409",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-410",
-"t": "Incredible Hulk #410",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-411",
-"t": "Incredible Hulk #411",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-412",
-"t": "Incredible Hulk #412",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-413",
-"t": "Incredible Hulk #413",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-414",
-"t": "Incredible Hulk #414",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-415",
-"t": "Incredible Hulk #415",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-416",
-"t": "Incredible Hulk #416",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-417",
-"t": "Incredible Hulk #417",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-418",
-"t": "Incredible Hulk #418",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-419",
-"t": "Incredible Hulk #419",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-420",
-"t": "Incredible Hulk #420",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-421",
-"t": "Incredible Hulk #421",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-422",
-"t": "Incredible Hulk #422",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-423",
-"t": "Incredible Hulk #423",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-424",
-"t": "Incredible Hulk #424",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-425",
-"t": "Incredible Hulk #425",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-426",
-"t": "Incredible Hulk #426",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-427",
-"t": "Incredible Hulk #427",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-428",
-"t": "Incredible Hulk #428",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-429",
-"t": "Incredible Hulk #429",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-430",
-"t": "Incredible Hulk #430",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-431",
-"t": "Incredible Hulk #431",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-432",
-"t": "Incredible Hulk #432",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-433",
-"t": "Incredible Hulk #433",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-434",
-"t": "Incredible Hulk #434",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-435",
-"t": "Incredible Hulk #435",
-"s": "Incredible Hulk"
-}
-]
-},
-{
-"id": "pad-o3-c2",
-"title": "Incredible Hulk Annual #19–20",
-"era": "1993–1995",
-"issues": [
-{
-"id": "hkann-19",
-"t": "Incredible Hulk Annual #19",
-"s": "Incredible Hulk Annual"
-},
-{
-"id": "hkann-20",
-"t": "Incredible Hulk Annual #20",
-"s": "Incredible Hulk Annual"
-}
-]
-},
-{
-"id": "pad-o3-c3",
-"title": "Incredible Hulk vs. Venom #1",
-"era": "1993–1995",
-"issues": [
-{
-"id": "hkven-1",
-"t": "Incredible Hulk vs. Venom #1",
-"s": "Incredible Hulk vs. Venom"
-}
-]
-},
-{
-"id": "pad-o3-c4",
-"title": "Hulk: Future Imperfect #1–2",
-"era": "1993–1995",
-"issues": [
-{
-"id": "hkfi-1",
-"t": "Hulk: Future Imperfect #1",
-"s": "Hulk: Future Imperfect"
-},
-{
-"id": "hkfi-2",
-"t": "Hulk: Future Imperfect #2",
-"s": "Hulk: Future Imperfect"
-}
-]
-},
-{
-"id": "pad-o3-c5",
-"title": "Tales to Astonish (1994) #1",
-"era": "1993–1995",
-"issues": [
-{
-"id": "tta3-1",
-"t": "Tales to Astonish (1994) #1",
-"s": "Tales to Astonish (1994)"
-}
-]
-},
-{
-"id": "pad-o3-c6",
-"title": "Incredible Hulk Ashcan #1",
-"era": "1993–1995",
-"issues": [
-{
-"id": "hkash-1",
-"t": "Incredible Hulk Ashcan #1",
-"s": "Incredible Hulk Ashcan"
-}
-]
-},
-{
-"id": "pad-o3-c7",
-"title": "Marvel Holiday Special #1993",
-"era": "1993–1995",
-"issues": [
-{
-"id": "mhs-1993",
-"t": "Marvel Holiday Special #1993",
-"s": "Marvel Holiday Special"
-}
-]
-}
-]
-},
-{
-"id": "pad-o4",
-"spine": "By Peter David",
-"cover": "Art/Hulk/pad-o4.jpg",
-"title": "Incredible Hulk by Peter David Omnibus",
-"vol": "Vol. 4",
-"creators": "Peter David, Angel Medina & Adam Kubert",
-"era": "1995–1997",
-"released": "May 2022",
-"art": "o-pad",
-"tex": "tex-halftone",
-"note": "The end of the twelve-year run: Onslaught, the Hulk split in two, and Banner alone.",
-"chapters": [
-{
-"id": "pad-o4-c1",
-"title": "Incredible Hulk #436–467, #-1",
-"era": "1995–1997",
-"issues": [
-{
-"id": "hulk-436",
-"t": "Incredible Hulk #436",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-437",
-"t": "Incredible Hulk #437",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-438",
-"t": "Incredible Hulk #438",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-439",
-"t": "Incredible Hulk #439",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-440",
-"t": "Incredible Hulk #440",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-441",
-"t": "Incredible Hulk #441",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-442",
-"t": "Incredible Hulk #442",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-443",
-"t": "Incredible Hulk #443",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-444",
-"t": "Incredible Hulk #444",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-445",
-"t": "Incredible Hulk #445",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-446",
-"t": "Incredible Hulk #446",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-447",
-"t": "Incredible Hulk #447",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-448",
-"t": "Incredible Hulk #448",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-449",
-"t": "Incredible Hulk #449",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-450",
-"t": "Incredible Hulk #450",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-451",
-"t": "Incredible Hulk #451",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-452",
-"t": "Incredible Hulk #452",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-453",
-"t": "Incredible Hulk #453",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-454",
-"t": "Incredible Hulk #454",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-455",
-"t": "Incredible Hulk #455",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-456",
-"t": "Incredible Hulk #456",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-457",
-"t": "Incredible Hulk #457",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-458",
-"t": "Incredible Hulk #458",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-459",
-"t": "Incredible Hulk #459",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-460",
-"t": "Incredible Hulk #460",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-461",
-"t": "Incredible Hulk #461",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-462",
-"t": "Incredible Hulk #462",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-463",
-"t": "Incredible Hulk #463",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-464",
-"t": "Incredible Hulk #464",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-465",
-"t": "Incredible Hulk #465",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-466",
-"t": "Incredible Hulk #466",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-467",
-"t": "Incredible Hulk #467",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk--1",
-"t": "Incredible Hulk #-1",
-"s": "Incredible Hulk"
-}
-]
-},
-{
-"id": "pad-o4-c2",
-"title": "Incredible Hulk Annual #1997",
-"era": "1995–1997",
-"issues": [
-{
-"id": "hkann-1997",
-"t": "Incredible Hulk Annual #1997",
-"s": "Incredible Hulk Annual"
-}
-]
-},
-{
-"id": "pad-o4-c3",
-"title": "Savage Hulk #1",
-"era": "1995–1997",
-"issues": [
-{
-"id": "svh-1",
-"t": "Savage Hulk #1",
-"s": "Savage Hulk"
-}
-]
-},
-{
-"id": "pad-o4-c4",
-"title": "Cutting Edge #1",
-"era": "1995–1997",
-"issues": [
-{
-"id": "cedge-1",
-"t": "Cutting Edge #1",
-"s": "Cutting Edge"
-}
-]
-},
-{
-"id": "pad-o4-c5",
-"title": "Cable #34",
-"era": "1995–1997",
-"issues": [
-{
-"id": "cable-34",
-"t": "Cable #34",
-"s": "Cable"
-}
-]
-},
-{
-"id": "pad-o4-c6",
-"title": "Onslaught: Marvel Universe #1",
-"era": "1995–1997",
-"issues": [
-{
-"id": "onsmu-1",
-"t": "Onslaught: Marvel Universe #1",
-"s": "Onslaught: Marvel Universe"
-}
-]
-},
-{
-"id": "pad-o4-c7",
-"title": "Hulk: Hercules Unleashed #1",
-"era": "1995–1997",
-"issues": [
-{
-"id": "hkherc-1",
-"t": "Hulk: Hercules Unleashed #1",
-"s": "Hulk: Hercules Unleashed"
-}
-]
-},
-{
-"id": "pad-o4-c8",
-"title": "Heroes Reborn: The Return #1–4",
-"era": "1995–1997",
-"issues": [
-{
-"id": "hrret-1",
-"t": "Heroes Reborn: The Return #1",
-"s": "Heroes Reborn: The Return"
-},
-{
-"id": "hrret-2",
-"t": "Heroes Reborn: The Return #2",
-"s": "Heroes Reborn: The Return"
-},
-{
-"id": "hrret-3",
-"t": "Heroes Reborn: The Return #3",
-"s": "Heroes Reborn: The Return"
-},
-{
-"id": "hrret-4",
-"t": "Heroes Reborn: The Return #4",
-"s": "Heroes Reborn: The Return"
-}
-]
-}
-]
-},
-{
-"id": "maestro-o1",
-"spine": "Maestro",
-"cover": "Art/Hulk/maestro-o1.jpg",
-"title": "Hulk: Maestro by Peter David Omnibus",
+"id": "slott-o1",
+"spine": "By Slott & Allred",
+"cover": "Art/Silver-Surfer/slott-o1.jpg",
+"title": "Silver Surfer by Slott & Allred Omnibus",
 "vol": "",
-"creators": "Peter David, George Pérez & Germán Peralta",
-"era": "1992–2022",
-"released": "Sep 2023",
-"art": "o-maestro",
-"tex": "tex-gamma",
-"note": "Every Maestro story in one book, so it doubles back over Future Imperfect and Hulk #460–461 from the volumes above — those issues share their ids, so marking them here marks them there.",
+"creators": "Dan Slott & Michael Allred",
+"era": "2014–2017",
+"released": "Dec 2018",
+"art": "o-dawn",
+"tex": "tex-popdot",
+"note": "Doctor Who with a surfboard, and it works. Dawn Greenwood gets in the way of the most humourless character Marvel has and Allred draws the result in pop primaries. Both series here, #1–15 and #1–14, plus the Point One prologue. Mind the jump: Silver Surfer (1987) #34–146, the 2003 Straczynski series and the 2011 mini all sit in front of this book. The Infinity Gauntlet Omnibus takes #34–66 in November 2026; the rest has no omnibus at all.",
 "chapters": [
 {
-"id": "maestro-o1-c1",
-"title": "Hulk: Future Imperfect #1–2",
-"era": "1992–2022",
+"id": "slott-o1-c1",
+"title": "All-New Marvel NOW! Point One #1.NOW",
+"era": "2014–2017",
 "issues": [
 {
-"id": "hkfi-1",
-"t": "Hulk: Future Imperfect #1",
-"s": "Hulk: Future Imperfect"
-},
-{
-"id": "hkfi-2",
-"t": "Hulk: Future Imperfect #2",
-"s": "Hulk: Future Imperfect"
-}
-]
-},
-{
-"id": "maestro-o1-c2",
-"title": "Incredible Hulk #460–461",
-"era": "1992–2022",
-"issues": [
-{
-"id": "hulk-460",
-"t": "Incredible Hulk #460",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-461",
-"t": "Incredible Hulk #461",
-"s": "Incredible Hulk"
-}
-]
-},
-{
-"id": "maestro-o1-c3",
-"title": "Abominations #1–3",
-"era": "1992–2022",
-"issues": [
-{
-"id": "abom-1",
-"t": "Abominations #1",
-"s": "Abominations"
-},
-{
-"id": "abom-2",
-"t": "Abominations #2",
-"s": "Abominations"
-},
-{
-"id": "abom-3",
-"t": "Abominations #3",
-"s": "Abominations"
-}
-]
-},
-{
-"id": "maestro-o1-c4",
-"title": "Captain Marvel (1999) #27–30",
-"era": "1992–2022",
-"issues": [
-{
-"id": "cm4-27",
-"t": "Captain Marvel (1999) #27",
-"s": "Captain Marvel (1999)"
-},
-{
-"id": "cm4-28",
-"t": "Captain Marvel (1999) #28",
-"s": "Captain Marvel (1999)"
-},
-{
-"id": "cm4-29",
-"t": "Captain Marvel (1999) #29",
-"s": "Captain Marvel (1999)"
-},
-{
-"id": "cm4-30",
-"t": "Captain Marvel (1999) #30",
-"s": "Captain Marvel (1999)"
-}
-]
-},
-{
-"id": "maestro-o1-c5",
-"title": "Spider-Man 2099 (2014) #9–10",
-"era": "1992–2022",
-"issues": [
-{
-"id": "sm2099-9",
-"t": "Spider-Man 2099 (2014) #9",
-"s": "Spider-Man 2099 (2014)"
-},
-{
-"id": "sm2099-10",
-"t": "Spider-Man 2099 (2014) #10",
-"s": "Spider-Man 2099 (2014)"
-}
-]
-},
-{
-"id": "maestro-o1-c6",
-"title": "Future Imperfect (2015) #1–5",
-"era": "1992–2022",
-"issues": [
-{
-"id": "fimp-1",
-"t": "Future Imperfect (2015) #1",
-"s": "Future Imperfect (2015)"
-},
-{
-"id": "fimp-2",
-"t": "Future Imperfect (2015) #2",
-"s": "Future Imperfect (2015)"
-},
-{
-"id": "fimp-3",
-"t": "Future Imperfect (2015) #3",
-"s": "Future Imperfect (2015)"
-},
-{
-"id": "fimp-4",
-"t": "Future Imperfect (2015) #4",
-"s": "Future Imperfect (2015)"
-},
-{
-"id": "fimp-5",
-"t": "Future Imperfect (2015) #5",
-"s": "Future Imperfect (2015)"
-}
-]
-},
-{
-"id": "maestro-o1-c7",
-"title": "Maestro #1–5",
-"era": "1992–2022",
-"issues": [
-{
-"id": "mae-1",
-"t": "Maestro #1",
-"s": "Maestro"
-},
-{
-"id": "mae-2",
-"t": "Maestro #2",
-"s": "Maestro"
-},
-{
-"id": "mae-3",
-"t": "Maestro #3",
-"s": "Maestro"
-},
-{
-"id": "mae-4",
-"t": "Maestro #4",
-"s": "Maestro"
-},
-{
-"id": "mae-5",
-"t": "Maestro #5",
-"s": "Maestro"
-}
-]
-},
-{
-"id": "maestro-o1-c8",
-"title": "Maestro: War and Pax #1–5",
-"era": "1992–2022",
-"issues": [
-{
-"id": "maewp-1",
-"t": "Maestro: War and Pax #1",
-"s": "Maestro: War and Pax"
-},
-{
-"id": "maewp-2",
-"t": "Maestro: War and Pax #2",
-"s": "Maestro: War and Pax"
-},
-{
-"id": "maewp-3",
-"t": "Maestro: War and Pax #3",
-"s": "Maestro: War and Pax"
-},
-{
-"id": "maewp-4",
-"t": "Maestro: War and Pax #4",
-"s": "Maestro: War and Pax"
-},
-{
-"id": "maewp-5",
-"t": "Maestro: War and Pax #5",
-"s": "Maestro: War and Pax"
-}
-]
-},
-{
-"id": "maestro-o1-c9",
-"title": "Maestro: World War M #1–5",
-"era": "1992–2022",
-"issues": [
-{
-"id": "maewwm-1",
-"t": "Maestro: World War M #1",
-"s": "Maestro: World War M"
-},
-{
-"id": "maewwm-2",
-"t": "Maestro: World War M #2",
-"s": "Maestro: World War M"
-},
-{
-"id": "maewwm-3",
-"t": "Maestro: World War M #3",
-"s": "Maestro: World War M"
-},
-{
-"id": "maewwm-4",
-"t": "Maestro: World War M #4",
-"s": "Maestro: World War M"
-},
-{
-"id": "maewwm-5",
-"t": "Maestro: World War M #5",
-"s": "Maestro: World War M"
-}
-]
-},
-{
-"id": "maestro-o1-c10",
-"title": "Exiles #79–80",
-"era": "1992–2022",
-"issues": [
-{
-"id": "exi-79",
-"t": "Exiles #79",
-"s": "Exiles"
-},
-{
-"id": "exi-80",
-"t": "Exiles #80",
-"s": "Exiles"
-}
-]
-},
-{
-"id": "maestro-o1-c11",
-"title": "Hulk: Broken Worlds #1",
-"era": "1992–2022",
-"issues": [
-{
-"id": "hkbw-1",
-"t": "Hulk: Broken Worlds #1",
-"s": "Hulk: Broken Worlds"
-}
-]
-},
-{
-"id": "maestro-o1-c12",
-"title": "Secret Wars: Battleworld #4",
-"era": "1992–2022",
-"issues": [
-{
-"id": "swbw-4",
-"t": "Secret Wars: Battleworld #4",
-"s": "Secret Wars: Battleworld"
-}
-]
-}
-]
-},
-{
-"id": "byrne-o1",
-"spine": "Byrne & Casey",
-"cover": "Art/Hulk/byrne-o1.jpg",
-"title": "Incredible Hulk by Byrne & Casey Omnibus",
-"vol": "",
-"creators": "John Byrne, Joe Casey & Ron Garney",
-"era": "1998–2000",
-"released": "May 2024",
-"art": "o-byrne",
-"tex": "tex-smash",
-"note": "The post-David relaunch: Byrne's short run, the retitled Hulk #1–11, and Rampaging Hulk.",
-"chapters": [
-{
-"id": "byrne-o1-c1",
-"title": "Incredible Hulk #468–474",
-"era": "1998–2000",
-"issues": [
-{
-"id": "hulk-468",
-"t": "Incredible Hulk #468",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-469",
-"t": "Incredible Hulk #469",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-470",
-"t": "Incredible Hulk #470",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-471",
-"t": "Incredible Hulk #471",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-472",
-"t": "Incredible Hulk #472",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-473",
-"t": "Incredible Hulk #473",
-"s": "Incredible Hulk"
-},
-{
-"id": "hulk-474",
-"t": "Incredible Hulk #474",
-"s": "Incredible Hulk"
-}
-]
-},
-{
-"id": "byrne-o1-c2",
-"title": "Hulk (1999) #1–11",
-"era": "1998–2000",
-"issues": [
-{
-"id": "hk99-1",
-"t": "Hulk (1999) #1",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-2",
-"t": "Hulk (1999) #2",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-3",
-"t": "Hulk (1999) #3",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-4",
-"t": "Hulk (1999) #4",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-5",
-"t": "Hulk (1999) #5",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-6",
-"t": "Hulk (1999) #6",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-7",
-"t": "Hulk (1999) #7",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-8",
-"t": "Hulk (1999) #8",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-9",
-"t": "Hulk (1999) #9",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-10",
-"t": "Hulk (1999) #10",
-"s": "Hulk (1999)"
-},
-{
-"id": "hk99-11",
-"t": "Hulk (1999) #11",
-"s": "Hulk (1999)"
-}
-]
-},
-{
-"id": "byrne-o1-c3",
-"title": "Hulk/Sub-Mariner Annual #1998",
-"era": "1998–2000",
-"issues": [
-{
-"id": "hksmann-1998",
-"t": "Hulk/Sub-Mariner Annual #1998",
-"s": "Hulk/Sub-Mariner Annual"
-}
-]
-},
-{
-"id": "byrne-o1-c4",
-"title": "X-Man/Incredible Hulk Annual #1998",
-"era": "1998–2000",
-"issues": [
-{
-"id": "xmhkann-1998",
-"t": "X-Man/Incredible Hulk Annual #1998",
-"s": "X-Man/Incredible Hulk Annual"
-}
-]
-},
-{
-"id": "byrne-o1-c5",
-"title": "Hulk Annual #1999",
-"era": "1998–2000",
-"issues": [
-{
-"id": "hk99ann-1999",
-"t": "Hulk Annual #1999",
-"s": "Hulk Annual"
-}
-]
-},
-{
-"id": "byrne-o1-c6",
-"title": "Rampaging Hulk (1998) #1–6",
-"era": "1998–2000",
-"issues": [
-{
-"id": "rhulk-1",
-"t": "Rampaging Hulk (1998) #1",
-"s": "Rampaging Hulk (1998)"
-},
-{
-"id": "rhulk-2",
-"t": "Rampaging Hulk (1998) #2",
-"s": "Rampaging Hulk (1998)"
-},
-{
-"id": "rhulk-3",
-"t": "Rampaging Hulk (1998) #3",
-"s": "Rampaging Hulk (1998)"
-},
-{
-"id": "rhulk-4",
-"t": "Rampaging Hulk (1998) #4",
-"s": "Rampaging Hulk (1998)"
-},
-{
-"id": "rhulk-5",
-"t": "Rampaging Hulk (1998) #5",
-"s": "Rampaging Hulk (1998)"
-},
-{
-"id": "rhulk-6",
-"t": "Rampaging Hulk (1998) #6",
-"s": "Rampaging Hulk (1998)"
-}
-]
-}
-]
-},
-{
-"id": "rotm-o1",
-"spine": "Return of the Monster",
-"cover": "Art/Hulk/rotm-o1.jpg",
-"title": "Incredible Hulk: Return of the Monster Omnibus",
-"vol": "",
-"creators": "Bruce Jones, John Romita Jr. & Lee Weeks",
-"era": "2001–2004",
-"released": "Jun 2026",
-"art": "o-jones",
-"tex": "tex-halftone",
-"note": "Banner on the run, hunted by a conspiracy called Home Base. A thriller more than a superhero book, and the whole Bruce Jones run in one volume.",
-"chapters": [
-{
-"id": "rotm-o1-c1",
-"title": "Incredible Hulk (2000) #34–76",
-"era": "2001–2004",
-"issues": [
-{
-"id": "hulk2-34",
-"t": "Incredible Hulk (2000) #34",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-35",
-"t": "Incredible Hulk (2000) #35",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-36",
-"t": "Incredible Hulk (2000) #36",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-37",
-"t": "Incredible Hulk (2000) #37",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-38",
-"t": "Incredible Hulk (2000) #38",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-39",
-"t": "Incredible Hulk (2000) #39",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-40",
-"t": "Incredible Hulk (2000) #40",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-41",
-"t": "Incredible Hulk (2000) #41",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-42",
-"t": "Incredible Hulk (2000) #42",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-43",
-"t": "Incredible Hulk (2000) #43",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-44",
-"t": "Incredible Hulk (2000) #44",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-45",
-"t": "Incredible Hulk (2000) #45",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-46",
-"t": "Incredible Hulk (2000) #46",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-47",
-"t": "Incredible Hulk (2000) #47",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-48",
-"t": "Incredible Hulk (2000) #48",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-49",
-"t": "Incredible Hulk (2000) #49",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-50",
-"t": "Incredible Hulk (2000) #50",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-51",
-"t": "Incredible Hulk (2000) #51",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-52",
-"t": "Incredible Hulk (2000) #52",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-53",
-"t": "Incredible Hulk (2000) #53",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-54",
-"t": "Incredible Hulk (2000) #54",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-55",
-"t": "Incredible Hulk (2000) #55",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-56",
-"t": "Incredible Hulk (2000) #56",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-57",
-"t": "Incredible Hulk (2000) #57",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-58",
-"t": "Incredible Hulk (2000) #58",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-59",
-"t": "Incredible Hulk (2000) #59",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-60",
-"t": "Incredible Hulk (2000) #60",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-61",
-"t": "Incredible Hulk (2000) #61",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-62",
-"t": "Incredible Hulk (2000) #62",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-63",
-"t": "Incredible Hulk (2000) #63",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-64",
-"t": "Incredible Hulk (2000) #64",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-65",
-"t": "Incredible Hulk (2000) #65",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-66",
-"t": "Incredible Hulk (2000) #66",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-67",
-"t": "Incredible Hulk (2000) #67",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-68",
-"t": "Incredible Hulk (2000) #68",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-69",
-"t": "Incredible Hulk (2000) #69",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-70",
-"t": "Incredible Hulk (2000) #70",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-71",
-"t": "Incredible Hulk (2000) #71",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-72",
-"t": "Incredible Hulk (2000) #72",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-73",
-"t": "Incredible Hulk (2000) #73",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-74",
-"t": "Incredible Hulk (2000) #74",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-75",
-"t": "Incredible Hulk (2000) #75",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-76",
-"t": "Incredible Hulk (2000) #76",
-"s": "Incredible Hulk (2000)"
-}
-]
-},
-{
-"id": "rotm-o1-c2",
-"title": "Hulk/Wolverine: 6 Hours #1–4",
-"era": "2001–2004",
-"issues": [
-{
-"id": "hkwolv-1",
-"t": "Hulk/Wolverine: 6 Hours #1",
-"s": "Hulk/Wolverine: 6 Hours"
-},
-{
-"id": "hkwolv-2",
-"t": "Hulk/Wolverine: 6 Hours #2",
-"s": "Hulk/Wolverine: 6 Hours"
-},
-{
-"id": "hkwolv-3",
-"t": "Hulk/Wolverine: 6 Hours #3",
-"s": "Hulk/Wolverine: 6 Hours"
-},
-{
-"id": "hkwolv-4",
-"t": "Hulk/Wolverine: 6 Hours #4",
-"s": "Hulk/Wolverine: 6 Hours"
-}
-]
-},
-{
-"id": "rotm-o1-c3",
-"title": "Hulk & Thing: Hard Knocks #1–4",
-"era": "2001–2004",
-"issues": [
-{
-"id": "hkthing-1",
-"t": "Hulk & Thing: Hard Knocks #1",
-"s": "Hulk & Thing: Hard Knocks"
-},
-{
-"id": "hkthing-2",
-"t": "Hulk & Thing: Hard Knocks #2",
-"s": "Hulk & Thing: Hard Knocks"
-},
-{
-"id": "hkthing-3",
-"t": "Hulk & Thing: Hard Knocks #3",
-"s": "Hulk & Thing: Hard Knocks"
-},
-{
-"id": "hkthing-4",
-"t": "Hulk & Thing: Hard Knocks #4",
-"s": "Hulk & Thing: Hard Knocks"
-}
-]
-}
-]
-},
-{
-"id": "pad-o5",
-"spine": "By Peter David",
-"cover": "Art/Hulk/pad-o5.jpg",
-"title": "Incredible Hulk by Peter David Omnibus",
-"vol": "Vol. 5",
-"creators": "Peter David, Lee Weeks & Jae Lee",
-"era": "2002–2021",
-"released": "May 2022",
-"art": "o-pad",
-"tex": "tex-burst",
-"note": "David's returns to the character, gathered rather than serialised: The End, the Tempest Fugit arc that follows Return of the Monster, and a long tail of one-shots.",
-"chapters": [
-{
-"id": "pad-o5-c1",
-"title": "Hulk: The End #1",
-"era": "2002–2021",
-"issues": [
-{
-"id": "hkend-1",
-"t": "Hulk: The End #1",
-"s": "Hulk: The End"
-}
-]
-},
-{
-"id": "pad-o5-c2",
-"title": "What If? General Ross #1",
-"era": "2002–2021",
-"issues": [
-{
-"id": "wiross-1",
-"t": "What If? General Ross #1",
-"s": "What If? General Ross"
-}
-]
-},
-{
-"id": "pad-o5-c3",
-"title": "Incredible Hulk (2000) #77–87",
-"era": "2002–2021",
-"issues": [
-{
-"id": "hulk2-77",
-"t": "Incredible Hulk (2000) #77",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-78",
-"t": "Incredible Hulk (2000) #78",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-79",
-"t": "Incredible Hulk (2000) #79",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-80",
-"t": "Incredible Hulk (2000) #80",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-81",
-"t": "Incredible Hulk (2000) #81",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-82",
-"t": "Incredible Hulk (2000) #82",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-83",
-"t": "Incredible Hulk (2000) #83",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-84",
-"t": "Incredible Hulk (2000) #84",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-85",
-"t": "Incredible Hulk (2000) #85",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-86",
-"t": "Incredible Hulk (2000) #86",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-87",
-"t": "Incredible Hulk (2000) #87",
-"s": "Incredible Hulk (2000)"
-}
-]
-},
-{
-"id": "pad-o5-c4",
-"title": "Hulk: Destruction #1–4",
-"era": "2002–2021",
-"issues": [
-{
-"id": "hkdes-1",
-"t": "Hulk: Destruction #1",
-"s": "Hulk: Destruction"
-},
-{
-"id": "hkdes-2",
-"t": "Hulk: Destruction #2",
-"s": "Hulk: Destruction"
-},
-{
-"id": "hkdes-3",
-"t": "Hulk: Destruction #3",
-"s": "Hulk: Destruction"
-},
-{
-"id": "hkdes-4",
-"t": "Hulk: Destruction #4",
-"s": "Hulk: Destruction"
-}
-]
-},
-{
-"id": "pad-o5-c5",
-"title": "Giant-Size Hulk #1",
-"era": "2002–2021",
-"issues": [
-{
-"id": "gshulk-1",
-"t": "Giant-Size Hulk #1",
-"s": "Giant-Size Hulk"
-}
-]
-},
-{
-"id": "pad-o5-c6",
-"title": "WWH Prologue: World Breaker #1",
-"era": "2002–2021",
-"issues": [
-{
-"id": "wwhwb-1",
-"t": "WWH Prologue: World Breaker #1",
-"s": "WWH Prologue: World Breaker"
-}
-]
-},
-{
-"id": "pad-o5-c7",
-"title": "Hulk vs. Fin Fang Foom #1",
-"era": "2002–2021",
-"issues": [
-{
-"id": "hkfff-1",
-"t": "Hulk vs. Fin Fang Foom #1",
-"s": "Hulk vs. Fin Fang Foom"
-}
-]
-},
-{
-"id": "pad-o5-c8",
-"title": "Marvel Adventures Hulk #13–16",
-"era": "2002–2021",
-"issues": [
-{
-"id": "mahulk-13",
-"t": "Marvel Adventures Hulk #13",
-"s": "Marvel Adventures Hulk"
-},
-{
-"id": "mahulk-14",
-"t": "Marvel Adventures Hulk #14",
-"s": "Marvel Adventures Hulk"
-},
-{
-"id": "mahulk-15",
-"t": "Marvel Adventures Hulk #15",
-"s": "Marvel Adventures Hulk"
-},
-{
-"id": "mahulk-16",
-"t": "Marvel Adventures Hulk #16",
-"s": "Marvel Adventures Hulk"
-}
-]
-},
-{
-"id": "pad-o5-c9",
-"title": "Hulk Monster-Size Special #1",
-"era": "2002–2021",
-"issues": [
-{
-"id": "hkmss-1",
-"t": "Hulk Monster-Size Special #1",
-"s": "Hulk Monster-Size Special"
-}
-]
-},
-{
-"id": "pad-o5-c10",
-"title": "Breaking Into Comics the Marvel Way! #2",
-"era": "2002–2021",
-"issues": [
-{
-"id": "bicmw-2",
-"t": "Breaking Into Comics the Marvel Way! #2",
-"s": "Breaking Into Comics the Marvel Way!"
-}
-]
-},
-{
-"id": "pad-o5-c11",
-"title": "Hulk: Last Call #1",
-"era": "2002–2021",
-"issues": [
-{
-"id": "hklc-1",
-"t": "Hulk: Last Call #1",
-"s": "Hulk: Last Call"
-}
-]
-},
-{
-"id": "pad-o5-c12",
-"title": "Marvel Comics #1000",
-"era": "2002–2021",
-"issues": [
-{
-"id": "mc1k-1000",
-"t": "Marvel Comics #1000",
-"s": "Marvel Comics"
-}
-]
-},
-{
-"id": "pad-o5-c13",
-"title": "Symbiote Spider-Man: Crossroads #1–5",
-"era": "2002–2021",
-"issues": [
-{
-"id": "sssxr-1",
-"t": "Symbiote Spider-Man: Crossroads #1",
-"s": "Symbiote Spider-Man: Crossroads"
-},
-{
-"id": "sssxr-2",
-"t": "Symbiote Spider-Man: Crossroads #2",
-"s": "Symbiote Spider-Man: Crossroads"
-},
-{
-"id": "sssxr-3",
-"t": "Symbiote Spider-Man: Crossroads #3",
-"s": "Symbiote Spider-Man: Crossroads"
-},
-{
-"id": "sssxr-4",
-"t": "Symbiote Spider-Man: Crossroads #4",
-"s": "Symbiote Spider-Man: Crossroads"
-},
-{
-"id": "sssxr-5",
-"t": "Symbiote Spider-Man: Crossroads #5",
-"s": "Symbiote Spider-Man: Crossroads"
-}
-]
-},
-{
-"id": "pad-o5-c14",
-"title": "New Fantastic Four #1–5",
-"era": "2002–2021",
-"issues": [
-{
-"id": "nff-1",
-"t": "New Fantastic Four #1",
-"s": "New Fantastic Four"
-},
-{
-"id": "nff-2",
-"t": "New Fantastic Four #2",
-"s": "New Fantastic Four"
-},
-{
-"id": "nff-3",
-"t": "New Fantastic Four #3",
-"s": "New Fantastic Four"
-},
-{
-"id": "nff-4",
-"t": "New Fantastic Four #4",
-"s": "New Fantastic Four"
-},
-{
-"id": "nff-5",
-"t": "New Fantastic Four #5",
-"s": "New Fantastic Four"
-}
-]
-}
-]
-},
-{
-"id": "planet-o1",
-"spine": "Planet Hulk",
-"cover": "Art/Hulk/planet-o1.jpg",
-"title": "Hulk: Planet Hulk Omnibus",
-"vol": "",
-"creators": "Greg Pak & Carlo Pagulayan",
-"era": "2006–2007",
-"released": "Sep 2017",
-"art": "o-planet",
-"tex": "tex-burst",
-"note": "The Illuminati fire him into space and he lands on Sakaar. Gladiator, then king. The best-regarded Hulk story of the century so far.",
-"chapters": [
-{
-"id": "planet-o1-c1",
-"title": "Fantastic Four (1998) #533–535",
-"era": "2006–2007",
-"issues": [
-{
-"id": "ff3-533",
-"t": "Fantastic Four (1998) #533",
-"s": "Fantastic Four (1998)"
-},
-{
-"id": "ff3-534",
-"t": "Fantastic Four (1998) #534",
-"s": "Fantastic Four (1998)"
-},
-{
-"id": "ff3-535",
-"t": "Fantastic Four (1998) #535",
-"s": "Fantastic Four (1998)"
-}
-]
-},
-{
-"id": "planet-o1-c2",
-"title": "Incredible Hulk (2000) #88–91",
-"era": "2006–2007",
-"issues": [
-{
-"id": "hulk2-88",
-"t": "Incredible Hulk (2000) #88",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-89",
-"t": "Incredible Hulk (2000) #89",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-90",
-"t": "Incredible Hulk (2000) #90",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-91",
-"t": "Incredible Hulk (2000) #91",
-"s": "Incredible Hulk (2000)"
-}
-]
-},
-{
-"id": "planet-o1-c3",
-"title": "New Avengers: Illuminati #1",
-"era": "2006–2007",
-"issues": [
-{
-"id": "nail-1",
-"t": "New Avengers: Illuminati #1",
-"s": "New Avengers: Illuminati"
-}
-]
-},
-{
-"id": "planet-o1-c4",
-"title": "Incredible Hulk (2000) #92–95",
-"era": "2006–2007",
-"issues": [
-{
-"id": "hulk2-92",
-"t": "Incredible Hulk (2000) #92",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-93",
-"t": "Incredible Hulk (2000) #93",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-94",
-"t": "Incredible Hulk (2000) #94",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-95",
-"t": "Incredible Hulk (2000) #95",
-"s": "Incredible Hulk (2000)"
-}
-]
-},
-{
-"id": "planet-o1-c5",
-"title": "Giant-Size Hulk #1",
-"era": "2006–2007",
-"issues": [
-{
-"id": "gshulk-1",
-"t": "Giant-Size Hulk #1",
-"s": "Giant-Size Hulk"
-}
-]
-},
-{
-"id": "planet-o1-c6",
-"title": "Incredible Hulk (2000) #96–105",
-"era": "2006–2007",
-"issues": [
-{
-"id": "hulk2-96",
-"t": "Incredible Hulk (2000) #96",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-97",
-"t": "Incredible Hulk (2000) #97",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-98",
-"t": "Incredible Hulk (2000) #98",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-99",
-"t": "Incredible Hulk (2000) #99",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-100",
-"t": "Incredible Hulk (2000) #100",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-101",
-"t": "Incredible Hulk (2000) #101",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-102",
-"t": "Incredible Hulk (2000) #102",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-103",
-"t": "Incredible Hulk (2000) #103",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-104",
-"t": "Incredible Hulk (2000) #104",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-105",
-"t": "Incredible Hulk (2000) #105",
-"s": "Incredible Hulk (2000)"
-}
-]
-},
-{
-"id": "planet-o1-c7",
-"title": "Amazing Fantasy (2004) #15",
-"era": "2006–2007",
-"issues": [
-{
-"id": "af2-15",
-"t": "Amazing Fantasy (2004) #15",
-"s": "Amazing Fantasy (2004)"
-}
-]
-},
-{
-"id": "planet-o1-c8",
-"title": "What If? Planet Hulk #1",
-"era": "2006–2007",
-"issues": [
-{
-"id": "wiph-1",
-"t": "What If? Planet Hulk #1",
-"s": "What If? Planet Hulk"
-}
-]
-},
-{
-"id": "planet-o1-c9",
-"title": "Planet Hulk: Gladiator Guidebook #1",
-"era": "2006–2007",
-"issues": [
-{
-"id": "phgg-1",
-"t": "Planet Hulk: Gladiator Guidebook #1",
-"s": "Planet Hulk: Gladiator Guidebook"
-}
-]
-}
-]
-},
-{
-"id": "wwh-o1",
-"spine": "World War Hulk",
-"cover": "Art/Hulk/wwh-o1.jpg",
-"title": "Hulk: World War Hulk Omnibus",
-"vol": "",
-"creators": "Greg Pak & John Romita Jr.",
-"era": "2007–2008",
-"released": "Oct 2017",
-"art": "o-warbound",
-"tex": "tex-burst",
-"note": "He comes back for the Illuminati. The core series plus every tie-in and the whole Aftersmash line, each mini as its own chapter.",
-"chapters": [
-{
-"id": "wwh-o1-c1",
-"title": "WWH Prologue: World Breaker #1",
-"era": "2007–2008",
-"issues": [
-{
-"id": "wwhwb-1",
-"t": "WWH Prologue: World Breaker #1",
-"s": "WWH Prologue: World Breaker"
-}
-]
-},
-{
-"id": "wwh-o1-c2",
-"title": "World War Hulk #1–5",
-"era": "2007–2008",
-"issues": [
-{
-"id": "wwh-1",
-"t": "World War Hulk #1",
-"s": "World War Hulk"
-},
-{
-"id": "wwh-2",
-"t": "World War Hulk #2",
-"s": "World War Hulk"
-},
-{
-"id": "wwh-3",
-"t": "World War Hulk #3",
-"s": "World War Hulk"
-},
-{
-"id": "wwh-4",
-"t": "World War Hulk #4",
-"s": "World War Hulk"
-},
-{
-"id": "wwh-5",
-"t": "World War Hulk #5",
-"s": "World War Hulk"
-}
-]
-},
-{
-"id": "wwh-o1-c3",
-"title": "Incredible Hulk (2000) #106–111",
-"era": "2007–2008",
-"issues": [
-{
-"id": "hulk2-106",
-"t": "Incredible Hulk (2000) #106",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-107",
-"t": "Incredible Hulk (2000) #107",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-108",
-"t": "Incredible Hulk (2000) #108",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-109",
-"t": "Incredible Hulk (2000) #109",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-110",
-"t": "Incredible Hulk (2000) #110",
-"s": "Incredible Hulk (2000)"
-},
-{
-"id": "hulk2-111",
-"t": "Incredible Hulk (2000) #111",
-"s": "Incredible Hulk (2000)"
-}
-]
-},
-{
-"id": "wwh-o1-c4",
-"title": "Invincible Iron Man #19–20",
-"era": "2007–2008",
-"issues": [
-{
-"id": "iim-19",
-"t": "Invincible Iron Man #19",
-"s": "Invincible Iron Man"
-},
-{
-"id": "iim-20",
-"t": "Invincible Iron Man #20",
-"s": "Invincible Iron Man"
-}
-]
-},
-{
-"id": "wwh-o1-c5",
-"title": "Avengers: The Initiative #4–5",
-"era": "2007–2008",
-"issues": [
-{
-"id": "avin-4",
-"t": "Avengers: The Initiative #4",
-"s": "Avengers: The Initiative"
-},
-{
-"id": "avin-5",
-"t": "Avengers: The Initiative #5",
-"s": "Avengers: The Initiative"
-}
-]
-},
-{
-"id": "wwh-o1-c6",
-"title": "Irredeemable Ant-Man #10",
-"era": "2007–2008",
-"issues": [
-{
-"id": "iam-10",
-"t": "Irredeemable Ant-Man #10",
-"s": "Irredeemable Ant-Man"
-}
-]
-},
-{
-"id": "wwh-o1-c7",
-"title": "World War Hulk: X-Men #1–3",
-"era": "2007–2008",
-"issues": [
-{
-"id": "wwhxm-1",
-"t": "World War Hulk: X-Men #1",
-"s": "World War Hulk: X-Men"
-},
-{
-"id": "wwhxm-2",
-"t": "World War Hulk: X-Men #2",
-"s": "World War Hulk: X-Men"
-},
-{
-"id": "wwhxm-3",
-"t": "World War Hulk: X-Men #3",
-"s": "World War Hulk: X-Men"
-}
-]
-},
-{
-"id": "wwh-o1-c8",
-"title": "Ghost Rider (2006) #12–13",
-"era": "2007–2008",
-"issues": [
-{
-"id": "gr6-12",
-"t": "Ghost Rider (2006) #12",
-"s": "Ghost Rider (2006)"
-},
-{
-"id": "gr6-13",
-"t": "Ghost Rider (2006) #13",
-"s": "Ghost Rider (2006)"
-}
-]
-},
-{
-"id": "wwh-o1-c9",
-"title": "Heroes for Hire (2006) #11–15",
-"era": "2007–2008",
-"issues": [
-{
-"id": "hfh2-11",
-"t": "Heroes for Hire (2006) #11",
-"s": "Heroes for Hire (2006)"
-},
-{
-"id": "hfh2-12",
-"t": "Heroes for Hire (2006) #12",
-"s": "Heroes for Hire (2006)"
-},
-{
-"id": "hfh2-13",
-"t": "Heroes for Hire (2006) #13",
-"s": "Heroes for Hire (2006)"
-},
-{
-"id": "hfh2-14",
-"t": "Heroes for Hire (2006) #14",
-"s": "Heroes for Hire (2006)"
-},
-{
-"id": "hfh2-15",
-"t": "Heroes for Hire (2006) #15",
-"s": "Heroes for Hire (2006)"
-}
-]
-},
-{
-"id": "wwh-o1-c10",
-"title": "Punisher War Journal (2007) #12",
-"era": "2007–2008",
-"issues": [
-{
-"id": "pwj2-12",
-"t": "Punisher War Journal (2007) #12",
-"s": "Punisher War Journal (2007)"
-}
-]
-},
-{
-"id": "wwh-o1-c11",
-"title": "World War Hulk: Gamma Corps #1–4",
-"era": "2007–2008",
-"issues": [
-{
-"id": "wwhgc-1",
-"t": "World War Hulk: Gamma Corps #1",
-"s": "World War Hulk: Gamma Corps"
-},
-{
-"id": "wwhgc-2",
-"t": "World War Hulk: Gamma Corps #2",
-"s": "World War Hulk: Gamma Corps"
-},
-{
-"id": "wwhgc-3",
-"t": "World War Hulk: Gamma Corps #3",
-"s": "World War Hulk: Gamma Corps"
-},
-{
-"id": "wwhgc-4",
-"t": "World War Hulk: Gamma Corps #4",
-"s": "World War Hulk: Gamma Corps"
-}
-]
-},
-{
-"id": "wwh-o1-c12",
-"title": "World War Hulk: Front Line #1–6",
-"era": "2007–2008",
-"issues": [
-{
-"id": "wwhfl-1",
-"t": "World War Hulk: Front Line #1",
-"s": "World War Hulk: Front Line"
-},
-{
-"id": "wwhfl-2",
-"t": "World War Hulk: Front Line #2",
-"s": "World War Hulk: Front Line"
-},
-{
-"id": "wwhfl-3",
-"t": "World War Hulk: Front Line #3",
-"s": "World War Hulk: Front Line"
-},
-{
-"id": "wwhfl-4",
-"t": "World War Hulk: Front Line #4",
-"s": "World War Hulk: Front Line"
-},
-{
-"id": "wwhfl-5",
-"t": "World War Hulk: Front Line #5",
-"s": "World War Hulk: Front Line"
-},
-{
-"id": "wwhfl-6",
-"t": "World War Hulk: Front Line #6",
-"s": "World War Hulk: Front Line"
-}
-]
-},
-{
-"id": "wwh-o1-c13",
-"title": "World War Hulk: Aftersmash #1",
-"era": "2007–2008",
-"issues": [
-{
-"id": "wwhas-1",
-"t": "World War Hulk: Aftersmash #1",
-"s": "World War Hulk: Aftersmash"
-}
-]
-},
-{
-"id": "wwh-o1-c14",
-"title": "Aftersmash: Damage Control #1–3",
-"era": "2007–2008",
-"issues": [
-{
-"id": "wwhdc-1",
-"t": "Aftersmash: Damage Control #1",
-"s": "Aftersmash: Damage Control"
-},
-{
-"id": "wwhdc-2",
-"t": "Aftersmash: Damage Control #2",
-"s": "Aftersmash: Damage Control"
-},
-{
-"id": "wwhdc-3",
-"t": "Aftersmash: Damage Control #3",
-"s": "Aftersmash: Damage Control"
-}
-]
-},
-{
-"id": "wwh-o1-c15",
-"title": "Aftersmash: Warbound #1–5",
-"era": "2007–2008",
-"issues": [
-{
-"id": "wwhwar-1",
-"t": "Aftersmash: Warbound #1",
-"s": "Aftersmash: Warbound"
-},
-{
-"id": "wwhwar-2",
-"t": "Aftersmash: Warbound #2",
-"s": "Aftersmash: Warbound"
-},
-{
-"id": "wwhwar-3",
-"t": "Aftersmash: Warbound #3",
-"s": "Aftersmash: Warbound"
-},
-{
-"id": "wwhwar-4",
-"t": "Aftersmash: Warbound #4",
-"s": "Aftersmash: Warbound"
-},
-{
-"id": "wwhwar-5",
-"t": "Aftersmash: Warbound #5",
-"s": "Aftersmash: Warbound"
+"id": "anmpo-1.NOW",
+"t": "All-New Marvel NOW! Point One #1.NOW",
+"s": "All-New Marvel NOW! Point One"
 }
 ]
 },
 {
-"id": "wwh-o1-c16",
-"title": "Marvel Spotlight: World War Hulk #1",
-"era": "2007–2008",
+"id": "slott-o1-c2",
+"title": "Silver Surfer (2014) #1–15",
+"era": "2014–2017",
 "issues": [
 {
-"id": "mspwwh-1",
-"t": "Marvel Spotlight: World War Hulk #1",
-"s": "Marvel Spotlight: World War Hulk"
-}
-]
-}
-]
-},
-{
-"id": "loeb-o1",
-"spine": "Loeb & McGuinness",
-"cover": "Art/Hulk/loeb-o1.jpg",
-"title": "Hulk by Loeb & McGuinness Omnibus",
-"vol": "",
-"creators": "Jeph Loeb & Ed McGuinness",
-"era": "2008–2010",
-"released": "Jun 2019",
-"art": "o-redhulk",
-"tex": "tex-smash",
-"note": "The Red Hulk mystery and the Hulk (2008) ongoing. Loud, and the whodunit is the point.",
-"chapters": [
-{
-"id": "loeb-o1-c1",
-"title": "Hulk (2008) #1–24",
-"era": "2008–2010",
-"issues": [
-{
-"id": "hulk08-1",
-"t": "Hulk (2008) #1",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-2",
-"t": "Hulk (2008) #2",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-3",
-"t": "Hulk (2008) #3",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-4",
-"t": "Hulk (2008) #4",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-5",
-"t": "Hulk (2008) #5",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-6",
-"t": "Hulk (2008) #6",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-7",
-"t": "Hulk (2008) #7",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-8",
-"t": "Hulk (2008) #8",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-9",
-"t": "Hulk (2008) #9",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-10",
-"t": "Hulk (2008) #10",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-11",
-"t": "Hulk (2008) #11",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-12",
-"t": "Hulk (2008) #12",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-13",
-"t": "Hulk (2008) #13",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-14",
-"t": "Hulk (2008) #14",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-15",
-"t": "Hulk (2008) #15",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-16",
-"t": "Hulk (2008) #16",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-17",
-"t": "Hulk (2008) #17",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-18",
-"t": "Hulk (2008) #18",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-19",
-"t": "Hulk (2008) #19",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-20",
-"t": "Hulk (2008) #20",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-21",
-"t": "Hulk (2008) #21",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-22",
-"t": "Hulk (2008) #22",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-23",
-"t": "Hulk (2008) #23",
-"s": "Hulk (2008)"
-},
-{
-"id": "hulk08-24",
-"t": "Hulk (2008) #24",
-"s": "Hulk (2008)"
-}
-]
-},
-{
-"id": "loeb-o1-c2",
-"title": "King-Size Hulk #1",
-"era": "2008–2010",
-"issues": [
-{
-"id": "kshulk-1",
-"t": "King-Size Hulk #1",
-"s": "King-Size Hulk"
-}
-]
-},
-{
-"id": "loeb-o1-c3",
-"title": "Fall of the Hulks: Gamma #1",
-"era": "2008–2010",
-"issues": [
-{
-"id": "fothg-1",
-"t": "Fall of the Hulks: Gamma #1",
-"s": "Fall of the Hulks: Gamma"
-}
-]
-},
-{
-"id": "loeb-o1-c4",
-"title": "Hulk-Sized Mini Hulks #1",
-"era": "2008–2010",
-"issues": [
-{
-"id": "hsmh-1",
-"t": "Hulk-Sized Mini Hulks #1",
-"s": "Hulk-Sized Mini Hulks"
-}
-]
-},
-{
-"id": "loeb-o1-c5",
-"title": "Incredible Hulk (2009) #600",
-"era": "2008–2010",
-"issues": [
-{
-"id": "hulk3-600",
-"t": "Incredible Hulk (2009) #600",
-"s": "Incredible Hulk (2009)"
-}
-]
-},
-{
-"id": "loeb-o1-c6",
-"title": "Wolverine (2003) #50",
-"era": "2008–2010",
-"issues": [
-{
-"id": "wolv3-50",
-"t": "Wolverine (2003) #50",
-"s": "Wolverine (2003)"
-}
-]
-}
-]
-},
-{
-"id": "imm-o1",
-"spine": "Immortal Hulk",
-"cover": "Art/Hulk/imm-o1.jpg",
-"title": "Immortal Hulk Omnibus",
-"vol": "",
-"creators": "Al Ewing & Joe Bennett",
-"era": "2018–2021",
-"released": "Aug 2023",
-"art": "o-immortal",
-"tex": "tex-gamma",
-"note": "All 50 issues plus #0 and the tie-ins. A horror book about what the Hulk actually is — the run that reframed the character.",
-"chapters": [
-{
-"id": "imm-o1-c1",
-"title": "Immortal Hulk #1–50, #0",
-"era": "2018–2021",
-"issues": [
-{
-"id": "imm-1",
-"t": "Immortal Hulk #1",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-2",
-"t": "Immortal Hulk #2",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-3",
-"t": "Immortal Hulk #3",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-4",
-"t": "Immortal Hulk #4",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-5",
-"t": "Immortal Hulk #5",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-6",
-"t": "Immortal Hulk #6",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-7",
-"t": "Immortal Hulk #7",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-8",
-"t": "Immortal Hulk #8",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-9",
-"t": "Immortal Hulk #9",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-10",
-"t": "Immortal Hulk #10",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-11",
-"t": "Immortal Hulk #11",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-12",
-"t": "Immortal Hulk #12",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-13",
-"t": "Immortal Hulk #13",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-14",
-"t": "Immortal Hulk #14",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-15",
-"t": "Immortal Hulk #15",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-16",
-"t": "Immortal Hulk #16",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-17",
-"t": "Immortal Hulk #17",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-18",
-"t": "Immortal Hulk #18",
-"s": "Immortal Hulk"
+"id": "ssf7-1",
+"t": "Silver Surfer (2014) #1",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-19",
-"t": "Immortal Hulk #19",
-"s": "Immortal Hulk"
+"id": "ssf7-2",
+"t": "Silver Surfer (2014) #2",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-20",
-"t": "Immortal Hulk #20",
-"s": "Immortal Hulk"
+"id": "ssf7-3",
+"t": "Silver Surfer (2014) #3",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-21",
-"t": "Immortal Hulk #21",
-"s": "Immortal Hulk"
+"id": "ssf7-4",
+"t": "Silver Surfer (2014) #4",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-22",
-"t": "Immortal Hulk #22",
-"s": "Immortal Hulk"
+"id": "ssf7-5",
+"t": "Silver Surfer (2014) #5",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-23",
-"t": "Immortal Hulk #23",
-"s": "Immortal Hulk"
+"id": "ssf7-6",
+"t": "Silver Surfer (2014) #6",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-24",
-"t": "Immortal Hulk #24",
-"s": "Immortal Hulk"
+"id": "ssf7-7",
+"t": "Silver Surfer (2014) #7",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-25",
-"t": "Immortal Hulk #25",
-"s": "Immortal Hulk"
+"id": "ssf7-8",
+"t": "Silver Surfer (2014) #8",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-26",
-"t": "Immortal Hulk #26",
-"s": "Immortal Hulk"
+"id": "ssf7-9",
+"t": "Silver Surfer (2014) #9",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-27",
-"t": "Immortal Hulk #27",
-"s": "Immortal Hulk"
+"id": "ssf7-10",
+"t": "Silver Surfer (2014) #10",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-28",
-"t": "Immortal Hulk #28",
-"s": "Immortal Hulk"
+"id": "ssf7-11",
+"t": "Silver Surfer (2014) #11",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-29",
-"t": "Immortal Hulk #29",
-"s": "Immortal Hulk"
+"id": "ssf7-12",
+"t": "Silver Surfer (2014) #12",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-30",
-"t": "Immortal Hulk #30",
-"s": "Immortal Hulk"
+"id": "ssf7-13",
+"t": "Silver Surfer (2014) #13",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-31",
-"t": "Immortal Hulk #31",
-"s": "Immortal Hulk"
+"id": "ssf7-14",
+"t": "Silver Surfer (2014) #14",
+"s": "Silver Surfer (2014)"
 },
 {
-"id": "imm-32",
-"t": "Immortal Hulk #32",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-33",
-"t": "Immortal Hulk #33",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-34",
-"t": "Immortal Hulk #34",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-35",
-"t": "Immortal Hulk #35",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-36",
-"t": "Immortal Hulk #36",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-37",
-"t": "Immortal Hulk #37",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-38",
-"t": "Immortal Hulk #38",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-39",
-"t": "Immortal Hulk #39",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-40",
-"t": "Immortal Hulk #40",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-41",
-"t": "Immortal Hulk #41",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-42",
-"t": "Immortal Hulk #42",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-43",
-"t": "Immortal Hulk #43",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-44",
-"t": "Immortal Hulk #44",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-45",
-"t": "Immortal Hulk #45",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-46",
-"t": "Immortal Hulk #46",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-47",
-"t": "Immortal Hulk #47",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-48",
-"t": "Immortal Hulk #48",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-49",
-"t": "Immortal Hulk #49",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-50",
-"t": "Immortal Hulk #50",
-"s": "Immortal Hulk"
-},
-{
-"id": "imm-0",
-"t": "Immortal Hulk #0",
-"s": "Immortal Hulk"
-}
-]
-},
-{
-"id": "imm-o1-c2",
-"title": "Immortal Hulk: The Best Defense #1",
-"era": "2018–2021",
-"issues": [
-{
-"id": "immbd-1",
-"t": "Immortal Hulk: The Best Defense #1",
-"s": "Immortal Hulk: The Best Defense"
-}
-]
-},
-{
-"id": "imm-o1-c3",
-"title": "Defenders: The Best Defense #1",
-"era": "2018–2021",
-"issues": [
-{
-"id": "defbd-1",
-"t": "Defenders: The Best Defense #1",
-"s": "Defenders: The Best Defense"
-}
-]
-},
-{
-"id": "imm-o1-c4",
-"title": "Absolute Carnage: Immortal Hulk #1",
-"era": "2018–2021",
-"issues": [
-{
-"id": "acimm-1",
-"t": "Absolute Carnage: Immortal Hulk #1",
-"s": "Absolute Carnage: Immortal Hulk"
-}
-]
-},
-{
-"id": "imm-o1-c5",
-"title": "Immortal She-Hulk #1",
-"era": "2018–2021",
-"issues": [
-{
-"id": "immsh-1",
-"t": "Immortal She-Hulk #1",
-"s": "Immortal She-Hulk"
-}
-]
-},
-{
-"id": "imm-o1-c6",
-"title": "King in Black: Immortal Hulk #1",
-"era": "2018–2021",
-"issues": [
-{
-"id": "kibimm-1",
-"t": "King in Black: Immortal Hulk #1",
-"s": "King in Black: Immortal Hulk"
-}
-]
-},
-{
-"id": "imm-o1-c7",
-"title": "Gamma Flight #1–5",
-"era": "2018–2021",
-"issues": [
-{
-"id": "gflt-1",
-"t": "Gamma Flight #1",
-"s": "Gamma Flight"
-},
-{
-"id": "gflt-2",
-"t": "Gamma Flight #2",
-"s": "Gamma Flight"
-},
-{
-"id": "gflt-3",
-"t": "Gamma Flight #3",
-"s": "Gamma Flight"
-},
-{
-"id": "gflt-4",
-"t": "Gamma Flight #4",
-"s": "Gamma Flight"
-},
-{
-"id": "gflt-5",
-"t": "Gamma Flight #5",
-"s": "Gamma Flight"
-}
-]
-},
-{
-"id": "imm-o1-c8",
-"title": "Immortal Hulk: Time of Monsters #1",
-"era": "2018–2021",
-"issues": [
-{
-"id": "immtom-1",
-"t": "Immortal Hulk: Time of Monsters #1",
-"s": "Immortal Hulk: Time of Monsters"
-}
-]
-},
-{
-"id": "imm-o1-c9",
-"title": "Avengers (2016) #684",
-"era": "2018–2021",
-"issues": [
-{
-"id": "av7-684",
-"t": "Avengers (2016) #684",
-"s": "Avengers (2016)"
-}
-]
+"id": "ssf7-15",
+"t": "Silver Surfer (2014) #15",
+"s": "Silver Surfer (2014)"
 }
 ]
 },
 {
-"id": "cates-o1",
-"spine": "Cates & Ottley",
-"cover": "Art/Hulk/cates-o1.jpg",
-"title": "Hulk by Cates & Ottley Omnibus",
-"vol": "",
-"creators": "Donny Cates & Ryan Ottley",
-"era": "2021–2022",
-"released": "Nov 2024",
-"art": "o-cates",
-"tex": "tex-smash",
-"note": "Banner pilots the Hulk like a ship. Runs straight into Banner of War, which is why the two Thor issues sit between Hulk #6 and #8.",
-"chapters": [
-{
-"id": "cates-o1-c1",
-"title": "FCBD 2021: Avengers/Hulk #1",
-"era": "2021–2022",
-"issues": [
-{
-"id": "fcbd21-1",
-"t": "FCBD 2021: Avengers/Hulk #1",
-"s": "FCBD 2021: Avengers/Hulk"
-}
-]
-},
-{
-"id": "cates-o1-c2",
-"title": "Hulk (2021) #1–6",
-"era": "2021–2022",
+"id": "slott-o1-c3",
+"title": "Silver Surfer (2016) #1–14",
+"era": "2014–2017",
 "issues": [
-{
-"id": "hulk21-1",
-"t": "Hulk (2021) #1",
-"s": "Hulk (2021)"
-},
-{
-"id": "hulk21-2",
-"t": "Hulk (2021) #2",
-"s": "Hulk (2021)"
-},
-{
-"id": "hulk21-3",
-"t": "Hulk (2021) #3",
-"s": "Hulk (2021)"
-},
 {
-"id": "hulk21-4",
-"t": "Hulk (2021) #4",
-"s": "Hulk (2021)"
+"id": "ssf8-1",
+"t": "Silver Surfer (2016) #1",
+"s": "Silver Surfer (2016)"
 },
 {
-"id": "hulk21-5",
-"t": "Hulk (2021) #5",
-"s": "Hulk (2021)"
+"id": "ssf8-2",
+"t": "Silver Surfer (2016) #2",
+"s": "Silver Surfer (2016)"
 },
 {
-"id": "hulk21-6",
-"t": "Hulk (2021) #6",
-"s": "Hulk (2021)"
-}
-]
+"id": "ssf8-3",
+"t": "Silver Surfer (2016) #3",
+"s": "Silver Surfer (2016)"
 },
-{
-"id": "cates-o1-c3",
-"title": "Hulk vs. Thor: Banner of War Alpha #1",
-"era": "2021–2022",
-"issues": [
 {
-"id": "bowa-1",
-"t": "Hulk vs. Thor: Banner of War Alpha #1",
-"s": "Hulk vs. Thor: Banner of War Alpha"
-}
-]
+"id": "ssf8-4",
+"t": "Silver Surfer (2016) #4",
+"s": "Silver Surfer (2016)"
 },
-{
-"id": "cates-o1-c4",
-"title": "Thor (2020) #25",
-"era": "2021–2022",
-"issues": [
 {
-"id": "thor6-25",
-"t": "Thor (2020) #25",
-"s": "Thor (2020)"
-}
-]
+"id": "ssf8-5",
+"t": "Silver Surfer (2016) #5",
+"s": "Silver Surfer (2016)"
 },
-{
-"id": "cates-o1-c5",
-"title": "Hulk (2021) #7",
-"era": "2021–2022",
-"issues": [
 {
-"id": "hulk21-7",
-"t": "Hulk (2021) #7",
-"s": "Hulk (2021)"
-}
-]
+"id": "ssf8-6",
+"t": "Silver Surfer (2016) #6",
+"s": "Silver Surfer (2016)"
 },
-{
-"id": "cates-o1-c6",
-"title": "Thor (2020) #26",
-"era": "2021–2022",
-"issues": [
 {
-"id": "thor6-26",
-"t": "Thor (2020) #26",
-"s": "Thor (2020)"
-}
-]
+"id": "ssf8-7",
+"t": "Silver Surfer (2016) #7",
+"s": "Silver Surfer (2016)"
 },
-{
-"id": "cates-o1-c7",
-"title": "Hulk (2021) #8–14",
-"era": "2021–2022",
-"issues": [
 {
-"id": "hulk21-8",
-"t": "Hulk (2021) #8",
-"s": "Hulk (2021)"
+"id": "ssf8-8",
+"t": "Silver Surfer (2016) #8",
+"s": "Silver Surfer (2016)"
 },
 {
-"id": "hulk21-9",
-"t": "Hulk (2021) #9",
-"s": "Hulk (2021)"
+"id": "ssf8-9",
+"t": "Silver Surfer (2016) #9",
+"s": "Silver Surfer (2016)"
 },
 {
-"id": "hulk21-10",
-"t": "Hulk (2021) #10",
-"s": "Hulk (2021)"
+"id": "ssf8-10",
+"t": "Silver Surfer (2016) #10",
+"s": "Silver Surfer (2016)"
 },
 {
-"id": "hulk21-11",
-"t": "Hulk (2021) #11",
-"s": "Hulk (2021)"
+"id": "ssf8-11",
+"t": "Silver Surfer (2016) #11",
+"s": "Silver Surfer (2016)"
 },
 {
-"id": "hulk21-12",
-"t": "Hulk (2021) #12",
-"s": "Hulk (2021)"
+"id": "ssf8-12",
+"t": "Silver Surfer (2016) #12",
+"s": "Silver Surfer (2016)"
 },
 {
-"id": "hulk21-13",
-"t": "Hulk (2021) #13",
-"s": "Hulk (2021)"
+"id": "ssf8-13",
+"t": "Silver Surfer (2016) #13",
+"s": "Silver Surfer (2016)"
 },
 {
-"id": "hulk21-14",
-"t": "Hulk (2021) #14",
-"s": "Hulk (2021)"
+"id": "ssf8-14",
+"t": "Silver Surfer (2016) #14",
+"s": "Silver Surfer (2016)"
 }
 ]
 }
@@ -10322,7 +6201,7 @@ const MARVEL = {
 };
 
 /* ============ STATE ============ */
-const KEY_P="hulk-omni-progress-v1";
+const KEY_P="silversurfer-omni-progress-v1";
 let readSet=new Set(), skipSet=new Set();
 /* Volume id -> when something in it was last marked. This is what orders
    the Keep Reading rail. Additive in the saved record: a backup written
@@ -10337,7 +6216,7 @@ let touch={};
    Nothing is dismissed permanently: the stamp is compared against `touch`, so
    marking anything in the volume stamps a newer touch and the tile comes back.
    That is also why a dismissal is a timestamp rather than a flag. */
-const HERO_ID="hulk", KEY_HIDE="comics-kr-hidden";
+const HERO_ID="silver-surfer", KEY_HIDE="comics-kr-hidden";
 let hidden={};
 function isHidden(o){ const h=hidden[HERO_ID+"|"+o.id]||0; return h>0 && h>(touch[o.id]||0); }
 async function saveHidden(){ try{ await store.set(KEY_HIDE, JSON.stringify(hidden)); }catch(e){} }
@@ -10385,7 +6264,7 @@ function exportProgress(){
   const blob=new Blob([JSON.stringify({read:Array.from(readSet),skip:Array.from(skipSet),touch:touch},null,1)],{type:"application/json"});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
-  a.download="hulk-omnibus-progress.json";
+  a.download="silversurfer-omnibus-progress.json";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),2000);
 }
@@ -10421,12 +6300,20 @@ function artHTML(o,banner){
   return '<div class="art '+o.art+'"></div><div class="tex '+o.tex+'"></div>'+
          (banner?'':'<div class="vig"></div>')+'<div class="gloss"></div>';
 }
-const HULK_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="GID" x1="0" y1="0" x2="0" y2="1">'+
- '<stop offset="10%" stop-color="rgba(255,255,255,.95)"/><stop offset="60%" stop-color="rgba(255,255,255,.55)"/>'+
- '<stop offset="100%" stop-color="rgba(255,255,255,.2)"/></linearGradient></defs>'+
- '<g fill="url(#GID)"><circle cx="30" cy="37" r="8"/><circle cx="43.5" cy="34.5" r="8.5"/><circle cx="57" cy="34.5" r="8.5"/><circle cx="70" cy="37.5" r="8"/><path d="M22,40 L78,40 L78,64 Q78,77 64,77 L36,77 Q22,77 22,64 Z"/><path d="M23,52 Q31,45 42,48 L60,53 Q68,55 66,62 Q63,68 54,66 L30,60 Q21,58 23,52 Z"/></g><g fill="none" stroke="rgba(0,25,8,.42)" stroke-width="2.4" stroke-linecap="round"><path d="M36.5,42 L36.5,50"/><path d="M50,42 L50,50"/><path d="M63.5,42 L63.5,50"/></g></svg>';
+const SURFER_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="GID" x1="0" y1="0" x2="0" y2="1">'+
+ '<stop offset="8%" stop-color="rgba(255,255,255,.97)"/><stop offset="58%" stop-color="rgba(255,255,255,.62)"/>'+
+ '<stop offset="100%" stop-color="rgba(255,255,255,.26)"/></linearGradient></defs>'+
+ '<g fill="url(#GID)" opacity=".45"><path d="M4,74 C26,68 46,64 74,62 l0,4.6 C46,68.6 26,72.6 6,79 z"/>'+
+ '<path d="M13,86 C32,81 48,78 70,76 l0,3.8 C48,81.8 32,84.8 15,90 z"/></g>'+
+ '<g stroke="url(#GID)" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round" fill="none">'+
+ '<path d="M52,33 L52,49"/><path d="M37,41 L52,36 L67,31"/>'+
+ '<path d="M52,49 L44,61"/><path d="M52,49 L61,60"/></g>'+
+ '<circle cx="52" cy="24" r="6.2" fill="url(#GID)"/>'+
+ '<ellipse cx="52" cy="65" rx="31" ry="6.8" transform="rotate(-13 52 65)" fill="url(#GID)"/>'+
+ '<g fill="url(#GID)" opacity=".85"><path d="M16,22 l2.4,5.8 5.8,2.4 -5.8,2.4 -2.4,5.8 -2.4,-5.8 -5.8,-2.4 5.8,-2.4 z"/>'+
+ '<path d="M86,44 l1.9,4.6 4.6,1.9 -4.6,1.9 -1.9,4.6 -1.9,-4.6 -4.6,-1.9 4.6,-1.9 z"/></g></svg>';
 let gid=0;
-const hulkSVG = () => HULK_SVG.split("GID").join("hk"+(++gid));
+const surferSVG = () => SURFER_SVG.split("GID").join("ss"+(++gid));
 
 /* ============ SHELF ============ */
 const shelfEl=document.getElementById("shelf");
@@ -10434,11 +6321,10 @@ const shelfEl=document.getElementById("shelf");
    black/red Marvel trade dress. build_omnibus_data.py still checks that each
    .o-* ramp has an entry here, and it is one line to revert to coloured spines. */
 const SPINE_C={
-  'o-kirby':['#3d8f2f','#4a2a92'],'o-trimpe':['#3f9c34','#1d4f9c'],'o-buscema':['#4f9c2c','#a3521a'],
-  'o-bronze':['#5f9c2f','#8c3a1a'],'o-pad':['#4d7a52','#1e3320'],'o-maestro':['#6a3aa8','#2b6b3c'],
-  'o-byrne':['#2f9c7a','#1b4030'],'o-jones':['#3f5a4c','#1a231e'],'o-planet':['#e06a1c','#9c1d16'],
-  'o-warbound':['#c2201a','#3a1210'],'o-redhulk':['#d0141a','#4a0d12'],'o-immortal':['#1f7a45','#0d2a1c'],
-  'o-cates':['#2f9c34','#a8231f'],'o-placeholder':['#4d6480','#26344a']
+'o-chrome':['#cfd8e2','#5a6a7d'],
+'o-cosmic':['#8f6fd6','#2a1e5e'],
+'o-dawn':['#f2953a','#1d7f93'],
+'o-placeholder':['#4d6480','#26344a']
 };
 
 /* A printed omnibus is ~1.5-3in across a 7.4in-wide cover, i.e. 20-40% of the
@@ -10473,7 +6359,7 @@ function buildShelf(){
         '<div class="face">'+
           artHTML(o)+
           '<span class="onum">'+num+'</span>'+ badge +
-          (o.cover?'':'<div class="glyph">'+hulkSVG()+'</div>')+
+          (o.cover?'':'<div class="glyph">'+surferSVG()+'</div>')+
           '<div class="plate">'+
             '<div class="oname">'+esc(o.title)+(o.vol?' <span class="ovol">'+esc(o.vol)+'</span>':'')+'</div>'+
             '<div class="ocre">'+esc(o.creators)+'</div>'+
@@ -10690,7 +6576,7 @@ function touchIssue(id){
    The banner file is dropped in by hand (tools/banners.py), so the page has to
    look right before one exists. */
 function hbFallback(img){
-  if(!img.dataset.fb){ img.dataset.fb="1"; img.src="Art/Heroes/hulk.jpg"; img.style.objectPosition="50% 41%"; }
+  if(!img.dataset.fb){ img.dataset.fb="1"; img.src="Art/Heroes/silver-surfer.jpg"; img.style.objectPosition="50% 39%"; }
   else img.style.display="none";
 }
 
@@ -10718,7 +6604,7 @@ function publishIndex(){
   try{
     let r=0,s=0; uniqIds.forEach(id=>{ if(readSet.has(id))r++; else if(skipSet.has(id))s++; });
     const n=flat.find(f=>!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
-    store.set("comics-hero-hulk", JSON.stringify({
+    store.set("comics-hero-silver-surfer", JSON.stringify({
       total:uniqIds.size, read:r, skip:s,
       next: n ? {t:n.issue.t, arc:n.o.title+(n.o.vol?" "+n.o.vol:""), ch:n.ch.title} : null,
       spots: spots().slice(0,10).map(sp=>({
@@ -10742,7 +6628,7 @@ function publishIndex(){
    The key is NOT owned by this page: it lives under one storage name for the
    whole site, set from the gear on the C.O.M.I.C.S. homescreen, so one paste
    covers every tracker. KEY_API_OLD is where the X-Men page used to keep it. */
-const KEY_S="hulk-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
+const KEY_S="silversurfer-omni-summaries-v1", KEY_API="comics-anthropic-key", KEY_API_OLD="xmen-anthropic-key";
 let sums={};
 async function loadSums(){ try{ const v=await store.get(KEY_S); if(v) sums=JSON.parse(v)||{}; }catch(e){} }
 async function saveSums(){ try{ await store.set(KEY_S, JSON.stringify(sums)); }catch(e){} }
@@ -10872,7 +6758,7 @@ function showShelf(){
   document.getElementById("viewShelf").classList.remove("hidden");
   document.getElementById("viewOmni").classList.add("hidden");
   document.getElementById("backShelf").classList.add("hidden");
-  document.getElementById("crumb").textContent="Subject · Hulk";
+  document.getElementById("crumb").textContent="Subject · Silver Surfer";
   buildShelf(); refresh();
   window.scrollTo(0,0);
 }
@@ -10883,7 +6769,7 @@ function showOmni(id){
   document.getElementById("viewShelf").classList.add("hidden");
   document.getElementById("viewOmni").classList.remove("hidden");
   document.getElementById("backShelf").classList.remove("hidden");
-  document.getElementById("crumb").textContent="Hulk · "+o.title+(o.vol?" "+o.vol:"");
+  document.getElementById("crumb").textContent="Silver Surfer · "+o.title+(o.vol?" "+o.vol:"");
   window.scrollTo(0,0);
   buildOmni(o); refresh();
   if(pendingJump) jumpToIssue();

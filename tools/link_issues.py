@@ -108,6 +108,13 @@ REPRINT_LINE = re.compile(
 # lands here silently.
 NUM_ALIAS = {
     "ddann-4B": "5",
+    # All-New Marvel NOW! Point One shipped as #1.NOW -- ".NOW" is Marvel NOW!
+    # branding on the cover, not an issue number -- and marvel.com files the
+    # one issue that series has as #1. Deliberately NOT generalised into
+    # numkey(): elsewhere a .NOW is a genuinely separate issue sitting beside a
+    # plain #1 in the same run, so folding the suffix away would link those to
+    # the wrong comic. This is the only .NOW on any shelf.
+    "anmpo-1.NOW": "1",
 }
 
 
