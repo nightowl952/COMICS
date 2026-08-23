@@ -89,16 +89,29 @@
   .kr-head{display:flex;align-items:baseline;gap:12px;margin:0 0 12px;padding:0 2px;}
   .kr-head h2{font-size:13px;font-weight:800;letter-spacing:2.6px;text-transform:uppercase;color:var(--txt);}
   .kr-head .n{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim2);}
-  /* The rail clips vertically and cannot not do: overflow-x:auto forces the
-     other axis to stay hidden, so a visible overflow-y would only become a
-     second scrollbar. A hovered tile therefore only shows its 3px lift and its
-     0/16/34 drop shadow if the padding box already holds them -- 8px above,
-     32px below (16px offset plus half the blur, less the lift). The negative
-     margins hand that room straight back, so the rail still occupies exactly
-     the space it did. Retune the two together if the hover transform or the
-     shadow changes. */
-  .kr-rail{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:8px 2px 32px;margin:-6px 0 -16px;
-    scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;}
+  /* The rail clips on every side and cannot not do: it scrolls, and a scroll
+     container clips. So a hovered tile only shows its 3px lift and its
+     0/16/34 drop shadow where the padding box already holds them -- on all
+     four sides, not just the top and bottom, or the first and last tiles lose
+     their shadow to the edge.
+     The four numbers are measured, not derived: rendered with the clipping off,
+     that shadow reaches 36px below the tile's resting box, 9px above it and
+     23px to each side (the blur's tail runs well past the half-blur the spec
+     implies). The padding is those figures plus a few px; the negative margins
+     hand every one of them back, so the rail occupies exactly the space it did
+     and the tiles stay flush with the poster grid below.
+     scroll-padding is not optional here, and it is the part that is easy to
+     miss: scroll-snap-align:start snaps a tile flush to the scrollport's own
+     edge, which scrolls the side padding straight back out of view -- the rail
+     came to rest at scrollLeft:26 and the first tile lost its shadow again.
+     Matching scroll-padding to the side padding moves the snap position in by
+     the same amount, so tile one rests at scrollLeft:0 with its room intact.
+     One visible cost: the horizontal scrollbar rides at the foot of the padding
+     box, so it sits lower than it used to. Re-measure all four if the hover
+     transform or the shadow changes. */
+  .kr-rail{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:12px 26px 40px;margin:-10px -24px -24px;
+    scroll-snap-type:x proximity;scroll-padding-inline:26px;
+    scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;}
   .kr-rail::-webkit-scrollbar{height:8px;}
   .kr-rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:4px;}
   .kr-rail::-webkit-scrollbar-track{background:transparent;}
@@ -362,6 +375,11 @@
     .hb-logo{max-width:72%;max-height:78px;}
     .hb-name{font-size:30px;}
     .hb-blurb{display:none;}
+    /* The wrap only has 16px of side padding to lend here, so the rail's side
+       room is trimmed to what stays inside the viewport rather than poking
+       past it and being clipped by body{overflow-x:hidden} anyway. */
+    .kr-rail{padding-left:18px;padding-right:18px;margin-left:-16px;margin-right:-16px;
+      scroll-padding-inline:18px;}
     .kr-card{--cw:88px;flex:0 0 clamp(278px,88vw,350px);height:132px;}
     .kr-body{left:calc(var(--cw) + 46px);padding:12px 13px 12px 0;}
     .kr-title{font-size:14px;}
