@@ -116,39 +116,88 @@ kept every chapter, note, tier and issue id exactly as it was, which is why
 progress logged against the old page still reads correctly on the new one — the
 volumes are a regrouping of the same 27 chapters, nothing more.
 
-### A shelf holds books you can actually buy
+### A shelf holds books whose tile is finished
 
-**Never put an unreleased omnibus on a shelf.** If Marvel has solicited it but
-not printed it, it does not go in `ORDER` or `SHELF` — no tile, no issue list,
-no contribution to the hero's `total`. A shelf is a reading list, and an
-announced book is not something anyone can read.
+**The rule changed in Aug 2026, at the user's request.** It used to be "never
+put an unreleased omnibus on a shelf". It is now about the *tile*, not the
+date:
 
-That is what the `released="Announced"` badge is for and why almost nothing
-should use it: a book that ships between one session and the next, not a
-standing category. Fantastic Four by Dan Slott Vol. 2 (solicited December 2026)
-was on the shelf briefly and came off for exactly this reason.
+> An omnibus goes on the shelf when all three of the things a tile is made of
+> are real — its **contents**, its **deep links** and its **cover**. A book that
+> has not shipped yet passes if it can satisfy all three. A book that cannot is
+> off, whether or not it is in print.
 
-**The rule bites hardest on the Silver Surfer shelf, and it was still applied.**
-Silver Surfer: The Infinity Gauntlet Omnibus ships November 2026 and is the
-only book that would close that shelf's 24-year hole — Silver Surfer (1987)
-#34–66, the annuals, Infinity Gauntlet and the Thanos Quest. It is off anyway.
-An expensive exclusion is not an exception.
+The reason for the old rule was never the release date; it was that a solicited
+book usually has no cover scan and often no confirmed issue list, so it lands on
+the shelf as a grey box with "not added yet" where the issue count goes. That is
+the thing to avoid. Once the contents are pulled, every issue resolves to
+marvel.com and a real jacket exists, an unshipped tile is indistinguishable from
+a shipped one except for its badge — and it is genuinely useful, because it
+closes a gap the reader would otherwise take for a missing run.
 
-The cheap way to re-add one when it ships: **leave its entry in the hero's
-`<hero>_contents_raw.json`** when you drop it. The raw file is only read for
-keys named in `ORDER`, so an unused entry costs nothing, and re-adding the
-volume is then a meta-module edit plus a regenerate rather than a fresh wiki
-pull.
+**Check all three before adding one, and in this order** — each is cheaper than
+the next and any one of them can veto:
+
+1. **Contents.** The wiki page's `ReprintOf<N>` fields have to be filled in.
+   A solicited book often has only a `Solicit` blurb; if there are no ReprintOf
+   fields there is no issue list, and it does not go on.
+2. **Links.** Run `link_issues.py` and read its report. Older material is
+   normally fine — the catalog holds the issues whatever the collection's date
+   — but a volume of brand-new comics may not be in the sweep yet.
+3. **Cover.** This is the one that actually fails, because the wiki has no
+   jacket scan until the book is out. See below.
+
+**The cover is the hard gate, and `fetch_covers.py` will lie to you about it.**
+An unreleased volume's wiki page declares its jacket as `Image1`/`Image2` rather
+than `Image`, and both are usually redlinks — the files do not exist. But
+`prop=pageimages` still answers, with **the first image in the reprint gallery**,
+which is a random collected issue's cover. On Silver Surfer: The Infinity
+Gauntlet Omnibus that was Infinity Gauntlet #2. It looks like a successful
+fetch and it is the wrong book.
+
+So for an unreleased volume: fetch the jacket by hand and add it with
+`covers.py add <id> <file> --hero <key>`, and afterwards **never run
+`fetch_covers.py --all` on that shelf**, which would overwrite it with the
+gallery image again.
+
+Where the jacket actually is, in the order worth trying:
+
+| Source | What you get |
+|---|---|
+| `images3.penguinrandomhouse.com/cover/<isbn13>` | the flat jacket, ~306x450 |
+| `images-na.ssl-images-amazon.com/images/P/<isbn10>.01._SCLZZZZZZZ_.jpg` | the flat jacket, ~340x500 |
+| a comic retailer's product photo | often a **3D angled mock-up on white** — unusable |
+| a retailer's "cover art" image | often the **source issue's** cover, price box and all — wrong |
+
+Both flat sources are small enough that `covers.py audit` flags them `soft`.
+That is acceptable; a soft-but-correct jacket beats no tile. Replace it with the
+wiki's scan once the book ships.
+
+**The badge retires itself.** `shipsLater(o)` in every shelf tracker reads
+`released` — either the literal `"Announced"` or a `"Mon YYYY"` date — and puts
+an amber `Ships Nov 2026` pill on the tile until the first of that month, after
+which the tile shows its issue count like any other. So an unreleased volume
+needs no follow-up edit to stop being labelled unreleased; only the volume note,
+if it mentions the date, has to be revisited. `"Announced"` still works and
+still reads "Announced", which is what a book with no date should use.
+
+The volume's `note` should open by saying it has not shipped, and the shelf's
+`hb-blurb` should say so too. Do not rely on the badge alone.
+
+The cheap way to add one later, if you do decide to leave it off: **leave its
+entry in the hero's `<hero>_contents_raw.json`**. The raw file is only read for
+keys named in `ORDER`, so an unused entry costs nothing, and adding the volume
+is then a meta-module edit plus a regenerate rather than a fresh wiki pull.
 
 The omnibus shape is what to copy when the goal is "read the collections as
 published" rather than "read this story in the right order".
 
-**The X-Men shelf breaks this rule on purpose, and it is the only one allowed
-to.** All four of its volumes are mock-ups of books Marvel has never printed, so
-the rule's whole premise — that a tile stands for something a reader can go and
-buy — does not apply. What replaces it is saying so: a standing note in bold
-directly above the shelf, "0 in print" in the shelf count, and "never printed"
-where the other shelves show a release date.
+**The X-Men shelf is still the one real exception.** All four of its volumes are
+mock-ups of books Marvel has never printed — not unshipped, *nonexistent* — so
+no amount of contents, links and cover art makes them buyable. What replaces the
+rule is saying so: a standing note in bold directly above the shelf, "0 in
+print" in the shelf count, and "never printed" where the other shelves show a
+release date.
 
 An amber "Never printed" badge on every tile was the fourth signal and **came
 off at the user's request** once the volumes had cover art — four identical
@@ -156,9 +205,6 @@ warning pills over four convincing book jackets read as nagging rather than as
 information, and the tile badge went back to the issue count every other shelf
 shows. The three remaining signals are the floor, not a starting point: the note
 above the shelf in particular is the one that has to survive any future edit.
-
-None of this is a licence to slip a solicited-but-unshipped book onto a real
-shelf — that is still forbidden.
 
 ## Adding a hero
 
@@ -564,16 +610,16 @@ back to the old navy, so the field is optional and nothing breaks without it.
 | fantastic-four | uniform blue, nudged toward teal | |
 | moon-knight | black | |
 | daredevil | red, run deep | see below |
-| silver-surfer | black | the user's call; see below |
+| silver-surfer | dark stone grey-blue | the user's call; see below |
 
-**Two subjects now carry a black plate**, Moon Knight and Silver Surfer, and
-they get there for opposite reasons. Moon Knight's is the character's colour.
-Silver Surfer's is the user's explicit call, and what makes it work is that the
-poster is chrome on deep space: the plate does not read as a band at all, it
-reads as more of the same black, with the chrome logo floating on it. That is
-the *only* subject where the plate disappearing into the art is the desired
-result — everywhere else it is the failure the Hulk's purple plate exists to
-avoid.
+**Silver Surfer's plate was black for a day and is now dark stone grey-blue**
+(`74,86,102` → `28,34,44`), at the user's request. The black version did work,
+in the sense that the poster is chrome on deep space and the plate read as more
+of the same black with the logo floating on it — but that is also the failure
+mode the Hulk's purple plate exists to avoid, and it left two of the eight
+subjects with the same near-black band. The grey-blue reads as a band again
+while still belonging to the art, and it is the only plate on the wall that is
+a neutral rather than a hue. Moon Knight keeps the one true black.
 
 **Wolverine's and Daredevil's plates are noticeably deeper than the other
 five**, and that is the one non-obvious thing here. Both logos are the same hue
@@ -1136,7 +1182,7 @@ catalog — and the run exits loudly if a pinned id is not in it.
 
 ### What is left, and why
 
-**3449 of 3507 unique issues across the seven shelves resolve (98%).** The 57
+**3495 of 3553 unique issues across the seven shelves resolve (98%).** The 57
 that do not were each checked against the catalog: they are not on marvel.com
 at all — plus one standing rejection, `tta3-1`, which is in the catalog but
 deliberately not linked (see "An unmapped series is derived, not dropped").
@@ -1679,7 +1725,10 @@ Slott Vol. 1. Both Ultimate Fantastic Four volumes are on too, matching the call
 that put Ultimate Spider-Man on the Spider-Man shelf.
 
 **By Dan Slott Vol. 2 is deliberately absent.** It is solicited for December
-2026 and has not been printed — see "A shelf holds books you can actually buy".
+2026 and has not been printed. Under the amended rule (see "A shelf holds books
+whose tile is finished") it is now a **candidate rather than a refusal** — the
+test is whether its contents, links and jacket are all real. Nobody has run that
+check on it yet.
 Its contents stay in `ff_contents_raw.json`, so re-adding it when it ships is an
 `ff_meta.py` edit and a regenerate, not a fresh pull.
 
@@ -1834,7 +1883,9 @@ Deliberately off, every one of these the user's call:
   X-Force, which is Logan's own strike team.
 - **All-New Wolverine** and **X-23** — Laura Kinney is a different character.
 
-Off by the "a shelf holds books you can actually buy" rule: **Wolverine: Old Man
+Off, for now, under the shelf-eligibility rule — these predate the Aug 2026
+amendment and have not been re-checked against it (see "A shelf holds books
+whose tile is finished"): **Wolverine: Old Man
 Logan Omnibus** (solicited December 2026) and **Wolverine: The Return of Weapon X
 Omnibus** (solicited June 2027). Both keep their entries in
 `wolverine_contents_raw.json`, so re-adding either when it ships is a
@@ -2029,7 +2080,7 @@ did not, and that is worth stating rather than leaving implicit:
 - **No team book to argue about.** Nothing like Marvel Team-Up, Marvel
   Two-In-One or Uncanny X-Force.
 - **Nothing unreleased.** The most recent volume shipped October 2024, so the
-  "a shelf holds books you can actually buy" rule excludes nothing.
+  shelf-eligibility rule excludes nothing.
 
 `SHELF` order is a reading order that here is also publication order, so
 nothing is resequenced either.
@@ -2142,8 +2193,10 @@ Three are off, and two of those were the user's call rather than a rule:
   reason Heroes Reborn is off the FF shelf. Nothing is lost by it: its Daredevil
   half (Devil's Reign #1–6, Omega, Woman Without Fear #1–3) is printed inside
   the Zdarsky Vol. 2 omnibus, which is on the shelf.
-- **Daredevil Omnibus Vol. 4** is off by the "a shelf holds books you can
-  actually buy" rule — it ships **September 2026**, which is next month. Its
+- **Daredevil Omnibus Vol. 4** is off, but only because nobody has re-checked
+  it since the rule changed — it ships **September 2026**, which is next month,
+  and under "A shelf holds books whose tile is finished" a date alone no longer
+  excludes it. Its
   entry stays in `daredevil_contents_raw.json`, so adding it then is an edit to
   `ORDER`/`SHELF` in `daredevil_meta.py` plus a regenerate, not a fresh pull.
   Adding it also means rewording the gap note on `miller-o1`, and bumping the
@@ -2274,27 +2327,32 @@ Moon Knight's) and What If Karen Page Had Lived? #1.
 
 ## The Silver Surfer tracker (omnibus shelf)
 
-Same code as the other six shelf pages, same tooling, different data: 3
-volumes, 95 issue slots, 95 unique issues, all 3 with contents and cover art.
+Same code as the other six shelf pages, same tooling, different data: 4
+volumes, 141 issue slots, 141 unique issues, all 4 with contents and cover art.
 No placeholders. `tools/silversurfer_meta.py` is the hand-written half; run
 everything with `--hero silver-surfer`.
 
-It is the smallest shelf on the site by a wide margin — a third of Moon
-Knight's, and less than a sixth of the Hulk's. That is the character, not an
-omission: Marvel has printed four Silver Surfer omnibuses and three of them are
-here.
+It is still the smallest shelf on the site — half of Moon Knight's — but that is
+the character, not an omission: **every Silver Surfer omnibus that exists is on
+it**, which is true of no other shelf.
 
-### Scope call — every printed Surfer omnibus, which is three
+One of the four has not shipped yet. Silver Surfer: The Infinity Gauntlet
+Omnibus is dated **3 November 2026** and is on the shelf under the amended
+eligibility rule, because its contents, its links and its jacket are all real —
+see "A shelf holds books whose tile is finished", which also explains why its
+cover had to be added by hand.
+
+### Scope call — every Surfer omnibus there is, which is four
 
 There was no judgement call to make on the books themselves, and that is worth
 stating rather than leaving implicit. The Marvel Database lists exactly four
-Silver Surfer omnibuses and all four are the character's own solo title:
+Silver Surfer omnibuses, all four are the character's own solo title, and all
+four are on the shelf:
 
 - **Silver Surfer Omnibus** (May 2007) — the 1968 Lee/Buscema series.
 - **Silver Surfer: Return to the Spaceways Omnibus** (May 2025) — the 1980s.
+- **Silver Surfer: The Infinity Gauntlet Omnibus** (3 Nov 2026) — Starlin.
 - **Silver Surfer by Slott & Allred Omnibus** (Dec 2018) — 2014–2017.
-- **Silver Surfer: The Infinity Gauntlet Omnibus** — **November 2026**, and
-  therefore off the shelf. See below.
 
 Nothing here is the Surfer equivalent of She-Hulk or Laura Kinney; no spin-off
 character has an omnibus. There is no team book to argue about either — the
@@ -2302,32 +2360,30 @@ Defenders volumes are the Defenders'. Note the Surfer omnibuses were already
 named as deliberately off the Fantastic Four shelf, which is what left them
 free to be their own subject.
 
-**The one exclusion is the release rule, and it costs more here than anywhere
-else.** The Infinity Gauntlet omnibus collects Silver Surfer (1987) #34–66,
-Annual #3–4, Infinity Gauntlet #1–6, the Thanos Quest and seven Marvel Comics
-Presents — 46 issues, and the only book that would close the shelf's central
-hole. It is still off, by "A shelf holds books you can actually buy". Its
-contents are in `silversurfer_contents_raw.json` already, so adding it in
-November is an edit to `ORDER`/`SHELF` in `silversurfer_meta.py` plus a
-regenerate — not a fresh wiki pull. Doing that also means rewording `slott-o1`'s
-gap note (the hole shrinks to #67–146) and bumping the Silver Surfer `total` on
-the homescreen from 95.
+**`gauntlet-o1` is not the 2014 Infinity Gauntlet Omnibus**, and confusing the
+two would put the wrong contents and the wrong jacket on the shelf. The 2014
+book is the *event* edition: it stops the Surfer run at #60, carries no annuals
+and no Marvel Comics Presents, and adds the crossover tie-ins (Cloak and Dagger,
+Spider-Man, Hulk, Doctor Strange, Quasar, Sleepwalker). The 2026 book is the
+Surfer edition: #34–66, Annual #3–4, Thanos Quest, Infinity Gauntlet #1–6 and
+seven Marvel Comics Presents, and nothing that is not his. The wiki has a real
+cover for the 2014 one, which makes it a tempting and wrong answer to the
+missing-jacket problem.
 
 `SHELF` is a reading order that here is also publication order, so nothing is
 resequenced.
 
-**Two gaps in the shelf are not Marvel's fault in the usual way**, and they are
-different in kind from every other shelf's:
+**Two things that look like gaps, only one of which is one:**
 
 - **1970–1982 is not a gap, it is a hiatus.** The 1968 series ended at #18 and
   the Surfer had no title of his own for twelve years — he was in Fantastic
   Four and the Defenders. There is nothing uncollected to complain about; the
   note on `spaceways-o1` says so, because a reader looking at a 1970 → 1980
   jump will otherwise assume something is missing.
-- **1990–2014 is a real hole**, and a 24-year one: Silver Surfer (1987)
-  #34–146, the 2003 Straczynski series and the 2011 mini. The Infinity Gauntlet
-  omnibus takes #34–66 of it in November 2026; #67–146 and both later series
-  have no omnibus at all. The note on `slott-o1` says so.
+- **1992–2014 is a real hole**, and it used to be a 24-year one. `gauntlet-o1`
+  closes its first third: what is left is Silver Surfer (1987) #67–146, the 2003
+  Straczynski series and the 2011 mini, none of which has an omnibus. The note
+  on `slott-o1` says so.
 
 ### Contents
 
@@ -2336,7 +2392,9 @@ above), into `tools/silversurfer_contents_raw.json`. As clean a pull as Moon
 Knight's:
 
 - **ReprintOf order matched the rendered gallery order on all four volumes**,
-  so nothing needed reordering by hand the way `inc-o1` did.
+  so nothing needed reordering by hand the way `inc-o1` did. That includes the
+  unreleased one — its ReprintOf fields are fully filled in, which is the first
+  of the three gates it had to pass.
 - **Every page writes the full form** (`Silver Surfer Vol 1 1`), so no gallery
   cross-reference was needed — and there are eight volumes of a series called
   "Silver Surfer" for it to have gone wrong on.
@@ -2359,11 +2417,18 @@ contents.
 
 ### Chaptering
 
-All three volumes take the automatic per-series chapters and **none carries
-`chapterby`** — the first shelf where that is true. They score 6.7, 4.1 and 10.0
-on the average-run-length test, well clear of the 3.5 threshold, because each
-book is one long ongoing with a short tail rather than a month-by-month
+All four volumes take the automatic per-series chapters and **none carries
+`chapterby`** — the only shelf where that is true. They score 6.7, 4.1, 9.2 and
+10.0 on the average-run-length test, well clear of the 3.5 threshold, because
+each book is one long ongoing with a short tail rather than a month-by-month
 crossover or an anthology of minis.
+
+`gauntlet-o1` is the one worth checking, because it is a crossover and those
+usually score low: it comes out at five clean chapters (Infinity Gauntlet,
+the Surfer run, the annuals, the Thanos Quest, Marvel Comics Presents) because
+the book prints each series in a block rather than interleaving them month by
+month. Its Surfer chapter renders `#34–38, #40, #44–66`, which is `spanlabel()`
+correctly refusing to claim issues the book does not hold.
 
 `spaceways-o1` is the interesting one: eleven chapters, of which eight are a
 single issue. That is the book, not the heuristic misfiring — it prints the
@@ -2378,24 +2443,33 @@ correctly, not a duplicate.
 
 ### Issue ids — no overlaps at all
 
-95 issue slots and 95 unique issues: the third shelf after Moon Knight and
+141 issue slots and 141 unique issues: the third shelf after Moon Knight and
 Daredevil where those two numbers are equal, so nothing carries the gold "in N
 omnibuses" pill. Unlike Daredevil's, this is not a consequence of a scope call
-— the three books simply tile three separate eras with nothing reprinted
-between them. Adding the Infinity Gauntlet volume would not change it either:
-it starts at Silver Surfer (1987) #34, exactly where `spaceways-o1` stops.
+— the four books simply tile four separate stretches with nothing reprinted
+between them. `gauntlet-o1` fits into that exactly: it opens at Silver Surfer
+(1987) #34, the issue after the one `spaceways-o1` stops on.
 
 ### Marvel deep links
 
-**94 of 95 unique issues (99%) resolve** — joint-best with Daredevil and
+**140 of 141 unique issues (99%) resolve** — joint-best with Daredevil and
 Wolverine. The one that does not falls back to `marvel.com/search?query=` and a
 grey Read button, same convention as the other trackers. Complete: Silver
-Surfer (1968) all 18, (1982), (1987) #1–33, (2014) and (2016) in full, both
-annuals, Parable, and every guest appearance.
+Surfer (1968) all 18, (1982), (1987) #1–66, (2014) and (2016) in full, all four
+annuals, Parable, Thanos Quest, Infinity Gauntlet, and every guest appearance.
 
 **The id harvest was not a step** — the catalog already held everything, so
 this was `link_issues.py --write` twice, 90 issues matched on the first pass
-with 0 ambiguous. Two results are worth keeping:
+with 0 ambiguous, and another 39 when `gauntlet-o1` was added.
+
+**All 46 of the unreleased volume's issues resolve**, which is the point worth
+taking from it: a book's own release date says nothing about whether its
+*contents* are in the catalog. These are 1990–92 comics; the catalog has had
+them for decades. Expect the links gate to pass for any unshipped omnibus of
+older material, and to be the one to actually check for a collection of
+this year's comics.
+
+Two more results are worth keeping:
 
 - **Both Marvel Graphic Novels linked from their numbers.** `mgn-38` and
   `mgn-58` resolve to `marvel_graphic_novel_1982_38` and `_58`, which is *not*
@@ -2428,15 +2502,25 @@ the Fantastic Four shelf, and the tenth on `tools/unlinked.json`.
 Built from `moonknight-reading-tracker.html`, which is the one to copy for a
 small shelf. What changed beyond the identity sweep:
 
-- **Three `.o-*` ramps**, all with `SPINE_C` entries: `o-chrome` (polished
-  silver into black), `o-cosmic` (deep purple space) and `o-dawn` (Allred's
-  teal-and-orange).
+- **Four `.o-*` ramps**, all with `SPINE_C` entries: `o-chrome` (polished
+  silver into black), `o-cosmic` (deep purple space), `o-gauntlet` (gold into
+  Thanos purple) and `o-dawn` (Allred's teal-and-orange).
 - **Three textures**: `tex-starfield`, `tex-cosmic` (radiating rays from a
   bright point) and `tex-popdot`, which is a coarser benday than the shared
   `tex-halftone` because the Allred volume is pop art.
 - **The glyph is a figure on a board over its own wake**, replacing the
   crescent. Same `split("GID").join(...)` fresh-id mechanism, prefix `ss`.
 - **`SC`** rewritten for the sixteen series these three books collect.
+
+**One cover on this shelf was not fetched, and must not be.** `gauntlet-o1`'s
+jacket does not exist on the Marvel Database — the page declares `Image1` and
+`Image2` and both are redlinks — so `fetch_covers.py` answers with Infinity
+Gauntlet #2's cover out of the reprint gallery instead, which looks like a
+success. The real jacket came from Amazon's flat cover image by ISBN and went in
+through `covers.py add`. **Do not run `fetch_covers.py --hero silver-surfer
+--all`** until the book ships; it will silently replace it with the wrong image.
+`covers.py audit` flags it `soft` at 340x500, which is the price of having the
+right cover early.
 
 One naming trap this shelf hit and the next one will too: **`ss` was already
 taken** by Scarlet Spider on the Spider-Man shelf, so every Surfer series code
@@ -2747,11 +2831,15 @@ cannot currently do is the opposite: make two devices agree.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Thirty-two covers are low-res** (~225–450px wide) because that is all the
-   Marvel Database stores — six on the Spider-Man shelf, six on the Hulk shelf,
+3. **Thirty-three covers are low-res** (~225–500px wide). For all but one that
+   is because it is all the Marvel Database stores; `gauntlet-o1` is the
+   exception, at 340x500 because the book is not out and the only flat jacket
+   anywhere is a retailer's thumbnail — replace it with the wiki's scan after 3
+   November 2026. Otherwise — six on the Spider-Man shelf, six on the Hulk shelf,
    eight on the Fantastic Four shelf, two on the Wolverine shelf (`aaron-o1`,
-   `xforce-o1`), two on the Moon Knight shelf (`spector-o1`, `huston-o1`), one
-   on the Silver Surfer shelf (`slott-o1`, at 325x500) and
+   `xforce-o1`), two on the Moon Knight shelf (`spector-o1`, `huston-o1`), two
+   on the Silver Surfer shelf (`slott-o1` at 325x500, `gauntlet-o1` at 340x500)
+   and
    seven on the Daredevil shelf (`bendis-o1`, `bendis-o2`, `bru-o1`, `bru-o2`,
    `shadow-o1`, `waid-o2`, `soule-o1`); see "Cover art". Replacing them needs a
    scan from somewhere else; everything else is 600–700px. Daredevil is the
@@ -2773,13 +2861,14 @@ cannot currently do is the opposite: make two devices agree.
 7. ~~Hulk (2008) #1–29 is the biggest link gap on the Hulk shelf.~~ **Done Aug
    2026** — all 24 on-shelf issues resolve, walked from #1 at id 17623, found by
    web search after the series page dead-ended at #38.
-8. **The Hulk shelf still carries an unreleased volume.** Incredible Hulk
-   Omnibus Vol. 4 (`inc-o4`) is solicited for February 2027 and sits on the
-   shelf with an "Announced" badge, which is exactly what "A shelf holds books
-   you can actually buy" now forbids. It predates the rule and has not been
-   removed yet; doing so means dropping it from `ORDER` and `SHELF` in
-   `hulk_meta.py`, rewording `pad-o1`'s note about the #210–327 gap (which gets
-   bigger), and updating the Hulk `total` on the homescreen.
+8. ~~The Hulk shelf still carries an unreleased volume.~~ **Resolved Aug 2026
+   by the rule change.** `inc-o4` ships February 2027 and was a standing
+   violation of the old rule. It was checked against the new one and passes all
+   three gates: 41 issues from real ReprintOf fields, 41/41 linked, and
+   `Art/Hulk/inc-o4.jpg` is the genuine Wein/Trimpe/Buscema jacket at 700x1045,
+   not a reprint-gallery image. Its `released` went from `"Announced"` to
+   `"Feb 2027"` so the tile now reads "Ships Feb 2027" and retires the badge by
+   itself.
 9. ~~Astonishing Tales (1970) is 15 issues short on the Fantastic Four shelf.~~
    **Settled Aug 2026** — the full catalog holds 21 of its 36 issues, so the
    other 15 were pulled from marvel.com rather than missed by a harvest. Only
@@ -2793,7 +2882,7 @@ cannot currently do is the opposite: make two devices agree.
 11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the
     seven shelves are at 93–99% (Spider-Man 600/606, Hulk 652/659, Fantastic
     Four 644/661, Wolverine 629/636, Moon Knight 243/260, Daredevil 587/590,
-    Silver Surfer 94/95). The
+    Silver Surfer 140/141). The
     remaining 57 are not on marvel.com at all;
     `tools/unlinked.json` names every one. What closed it was sweeping
     marvel.com's open JSON catalog rather than searching per series — see
@@ -2821,13 +2910,13 @@ cannot currently do is the opposite: make two devices agree.
     Nothing was added to the shared store, deliberately: its keys are issue ids,
     and short ones like `nm-6` would collide with another shelf's.
 13. **The X-Men shelf's four books do not exist**, which is the point, but it
-    means the "a shelf holds books you can actually buy" rule now has an
+    means the shelf-eligibility rule now has an
     exception on the wall — and since the tiles gained real cover art and lost
     the "Never printed" badge, they look entirely like books you could buy.
     Three signals carry it now: the bold note above the shelf, "0 in print" in
     the shelf count, and "never printed" in each volume's banner. That is the
     floor, and preserving it is the thing to watch if the shelf is ever edited —
-    see "A shelf holds books you can actually buy".
+    see "A shelf holds books whose tile is finished".
 14. **Moon Knight is the one banner still under-size.** All nine files are in,
     and seven were replaced in Aug 2026 with the user's own upscales — 4096px
     sources, normalised to the new 2400px target. `moon-knight.jpg` was not in
@@ -2849,7 +2938,7 @@ cannot currently do is the opposite: make two devices agree.
     ("David Michelinie & various") it is vague, and on a mainline numbered
     volume it names the run's headline team rather than whoever drew that
     issue. The fix is per-issue credits in the raw-contents pull, which is a
-    wiki request per issue across 3,507 issues and a real size increase in every
+    wiki request per issue across 3,553 issues and a real size increase in every
     tracker. Not attempted; the tile says what the data can support.
 16. **The tile's bar measures the volume, not the issue.** The user asked for a
     per-issue progress bar, in the streaming sense of "you are 40% through this
@@ -2858,24 +2947,32 @@ cannot currently do is the opposite: make two devices agree.
     and the caption is a position ("Issue 12 of 43"). Making it literal would
     mean tracking a page or a percentage per issue, which is a new interaction,
     not a new field.
-17. **The Daredevil shelf is missing Daredevil Omnibus Vol. 4 for one month.**
-    It ships September 2026 and is excluded by the "a shelf holds books you can
-    actually buy" rule, which leaves a #120–157 hole between `dd-o3` and
-    `miller-o1`. Adding it is a `daredevil_meta.py` edit plus a regenerate (the
-    contents are already in the raw file), rewording `miller-o1`'s gap note,
-    and bumping the Daredevil `total` on the homescreen from 590. Note it also
+17. **Daredevil Omnibus Vol. 4 is now eligible and has not been added.** It
+    ships September 2026 — next month — and the old rule was the only thing
+    keeping it off. Under "A shelf holds books whose tile is finished" it needs
+    the three gates run: its contents are already in the raw file (gate one),
+    the links are 1970s material so the catalog will have them (gate two), and
+    **gate three is the open question** — check whether the wiki has its jacket
+    or only redlinked `Image1`/`Image2`, and hand-add the cover if so. Then it
+    is a `daredevil_meta.py` edit plus a regenerate, rewording `miller-o1`'s gap
+    note, and bumping the Daredevil `total` on the homescreen from 590. Note it
     reintroduces the shelf's first issue overlap — #158 is in both books.
-18. **The Silver Surfer shelf is missing its middle for three months.**
-    Silver Surfer: The Infinity Gauntlet Omnibus ships **November 2026** and is
-    excluded by the "a shelf holds books you can actually buy" rule, which
-    leaves a 24-year hole between `spaceways-o1` and `slott-o1`. It is the
-    largest thing that rule currently costs anywhere on the site — 46 issues,
-    and the only book that would close that gap. Adding it in November is a
-    `silversurfer_meta.py` edit plus a regenerate (the contents are already in
-    the raw file), rewording `slott-o1`'s gap note down to #67–146, and bumping
-    the Silver Surfer `total` on the homescreen from 95. Note it introduces no
-    overlap: it starts at Silver Surfer (1987) #34, exactly where `spaceways-o1`
-    stops.
+
+    The same re-check is owed to **Fantastic Four by Dan Slott Vol. 2**
+    (December 2026), **Wolverine: Old Man Logan** (December 2026) and
+    **Wolverine: The Return of Weapon X** (June 2027), all of which were
+    excluded by date alone and none of which has been tested against the new
+    rule.
+18. ~~The Silver Surfer shelf is missing its middle for three months.~~
+    **Done Aug 2026** — the rule changed and `gauntlet-o1` went on, three months
+    ahead of its 3 November ship date. It passed all three gates, though its
+    cover had to be hand-added because the wiki has no jacket for it; see
+    "A shelf holds books whose tile is finished". The shelf is now 4 volumes /
+    141 issues and carries every Silver Surfer omnibus that exists.
+
+    One follow-up when the book ships: **refetch that cover.** It is a 340x500
+    retailer thumbnail, the smallest on the shelf, and the Marvel Database will
+    have a proper scan once the jacket is photographed.
 
 
 ## Testing
@@ -2948,7 +3045,7 @@ issues**; the Fantastic Four shelf **18 volumes / 686 issue slots / 661 unique
 issues**; the Wolverine shelf **14 volumes / 637 issue slots / 636 unique
 issues**; the Moon Knight shelf **7 volumes / 260 issue slots / 260 unique
 issues**; the Daredevil shelf **17 volumes / 590 issue slots / 590 unique
-issues**; the Silver Surfer shelf **3 volumes / 95 issue slots / 95 unique
+issues**; the Silver Surfer shelf **4 volumes / 141 issue slots / 141 unique
 issues**; the X-Men shelf **4 volumes / 174 issue slots / 174 unique issues**.
 If a change moves those numbers without meaning to, something is wrong.
 
