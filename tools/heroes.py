@@ -96,6 +96,18 @@ HEROES = {
         # other seven shelves already reach for.
         ids     = "marvel_ids.json",
     ),
+    "iron-man": dict(
+        name    = "Iron Man",
+        tracker = "ironman-reading-tracker.html",
+        art     = os.path.join("Art", "Iron-Man"),
+        meta    = "ironman_meta",
+        raw     = "ironman_contents_raw.json",
+        # the same shared store again -- this shelf collects Tales of Suspense,
+        # Tales to Astonish, Daredevil, Captain America, Fantastic Four and
+        # Avengers issues the other eight shelves already reach for, and its
+        # own Iron Man run is already keyed `im` by four of them.
+        ids     = "marvel_ids.json",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",
