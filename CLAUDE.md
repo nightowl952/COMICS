@@ -64,29 +64,32 @@ Keep replies short and plain. This is a hobby project, not a code review.
   Same shape and tooling again (`--hero captain-america`); 22 volumes, the
   biggest shelf on the site. Its `OMNI` array is generated from
   `tools/captainamerica_meta.py`.
+- `ironman-reading-tracker.html` — the Iron Man omnibus shelf. Same shape and
+  tooling again (`--hero iron-man`); 9 volumes, which is *every* Iron Man
+  omnibus in print. Its `OMNI` array is generated from `tools/ironman_meta.py`.
 - `silversurfer-reading-tracker.html` — the Silver Surfer omnibus shelf. Same
   shape and tooling again (`--hero silver-surfer`); 3 volumes, the smallest
   shelf on the site. Its `OMNI` array is generated from
   `tools/silversurfer_meta.py`.
 - `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/`,
   `Art/Moon-Knight/`, `Art/Daredevil/`, `Art/Silver-Surfer/`,
-  `Art/Captain-America/`, `Art/X-Men/` — cover scans, committed so
+  `Art/Captain-America/`, `Art/Iron-Man/`, `Art/X-Men/` — cover scans, committed so
   GitHub Pages can serve them. Every page references them by relative path.
   `Art/X-Men/` is the odd one: its four books were never printed, so each file is
   the cover of the issue that volume is named after — see "Cover art for books
   with no covers".
-- `Art/Heroes/` — one cover per homescreen subject, nine files named by hero id.
+- `Art/Heroes/` — one cover per homescreen subject, ten files named by hero id.
   See "Artwork" below.
-- `Art/Banners/` — the wide above-the-fold art, ten files: `index.jpg` for the
+- `Art/Banners/` — the wide above-the-fold art, eleven files: `index.jpg` for the
   homescreen and `<hero id>.jpg` for each subject's shelf. Hand-picked, never
   fetched; `tools/banners.py` normalises them. A missing one is not a broken
   page — see "The banner" below.
-- `Art/covers/` — the original hand-supplied scans the nine `Art/Heroes/`
+- `Art/covers/` — the original hand-supplied scans the ten `Art/Heroes/`
   files were derived from, at full size. Nothing reads this folder; it is kept
   so a poster can be re-cropped without re-sourcing the art, and since Aug 2026
   it is also the **drop box the user delivers new poster art into** — see
   "Artwork the user supplies" below.
-- `Art/Logos/` — one printed logo per homescreen subject, nine of them,
+- `Art/Logos/` — one printed logo per homescreen subject, ten of them,
   `<hero id>.png`,
   cropped to its artwork and alpha-backed. See "The plate" below. The
   source-named originals the user supplied are not kept; git history has them.
@@ -100,13 +103,13 @@ a file boundary is the small storage record described under "Homescreen" below.
 
 ## One tracker shape, two ways of filling it
 
-**All nine subjects are omnibus shelves** (Aug 2026): a shelf of volumes
+**All ten subjects are omnibus shelves** (Aug 2026): a shelf of volumes
 rendered as CSS-3D hardcover books, each opening into its own chapter list. Two
 views in one file, hash-routed (`#/omni/<id>`). What differs is where a shelf's
 data comes from:
 
 - **Wiki-backed** (Spider-Man, Hulk, Fantastic Four, Wolverine, Moon Knight,
-  Daredevil, Silver Surfer, Captain America) — each volume reproduces exactly
+  Daredevil, Silver Surfer, Captain America, Iron Man) — each volume reproduces exactly
   what the printed book collects, in
   print order, pulled from the Marvel Database. `OMNI` is **generated** from a
   `tools/<hero>_meta.py`; the whole pipeline behind it is hero-agnostic — see
@@ -163,6 +166,15 @@ So for an unreleased volume: fetch the jacket by hand and add it with
 `covers.py add <id> <file> --hero <key>`, and afterwards **never run
 `fetch_covers.py --all` on that shelf**, which would overwrite it with the
 gallery image again.
+
+**A shipped book is not safe from this either**, which the Captain America and
+Iron Man shelves both proved: six Captain America pages and two Iron Man ones
+point their infobox at a collected issue's scan rather than at a jacket, and
+`prop=pageimages` answers with it. On Iron Man the giveaway was visible only by
+looking — a 12¢ price box and a Comics Code stamp on what was supposed to be a
+2008 hardcover. **Put every fetched shelf on a contact sheet and look at it**
+before believing "9 fetched, 0 failed"; the tool cannot tell a jacket from the
+comic inside it.
 
 Where the jacket actually is, in the order worth trying:
 
@@ -231,7 +243,7 @@ Every page is one of three levels, and they now share the same top:
 
 | Level | Page | Banner shows | Keep Reading shows |
 |---|---|---|---|
-| 1 | `index.html` | `Art/Banners/index.jpg` + the C.O.M.I.C.S. wordmark | every volume open across all nine subjects |
+| 1 | `index.html` | `Art/Banners/index.jpg` + the C.O.M.I.C.S. wordmark | every volume open across all ten subjects |
 | 2 | a tracker's shelf view | `Art/Banners/<hero>.jpg` + that subject's printed logo | every volume open on that shelf |
 | 3 | a tracker's volume view | that volume's own cover | one tile — the next issue in the volume |
 
@@ -365,7 +377,7 @@ the rail (Aug 2026). Three things about it:
   `touch`. So marking anything in the volume brings the tile straight back, and
   nothing is ever hidden for good. That behaviour is stated on the page in both
   empty states — do not turn it into a permanent hide.
-- **One key, shared by all nine pages**, read and written through each page's
+- **One key, shared by all ten pages**, read and written through each page's
   own `store` — the same origin-wide pattern as `comics-anthropic-key`. It has
   to be shared: the homescreen rail is cross-subject and a tracker's is not, so
   an X in one place has to mean what an X means in the other. The trackers
@@ -425,7 +437,7 @@ What went: the sky gradient, the four floating `.bubble`s, every glass panel
 with a white inner highlight, the glossy orb buttons, and the gradient-clipped
 italic headings.
 
-The chrome is duplicated in all nine files on purpose — same portability rule
+The chrome is duplicated in all ten files on purpose — same portability rule
 as the summary engine. Change one, change the others.
 
 ## Homescreen (`index.html`)
@@ -461,7 +473,7 @@ Aug 2026 it is:
 | Row | Posters |
 |---|---|
 | 1 | Spider-Man, Wolverine, Hulk, X-Men, Fantastic Four |
-| 2 | Moon Knight, Daredevil, Captain America, Silver Surfer |
+| 2 | Moon Knight, Daredevil, Captain America, Iron Man, Silver Surfer |
 
 **Do not reorder it, and do not insert a new subject into the middle of it.**
 This is not a style preference to re-derive each time: the user asked for it
@@ -469,7 +481,10 @@ explicitly after Silver Surfer was inserted between Moon Knight and Daredevil,
 and the instruction was that the order stays put "going forward unless I change
 it". A new hero goes **at the end** unless the user says where it goes — which
 is what happened with Captain America, placed third on row two because the user
-named the row they wanted.
+named the row they wanted, and again with Iron Man, which the user asked to sit
+**between Captain America and Silver Surfer**. Both times the instruction named
+neighbours rather than an index; insert against those neighbours rather than
+counting positions, because the row a subject lands on then follows for free.
 
 There is no sort anywhere in the page to fix if this looks wrong; `wall()` just
 walks `HEROES`. So an accidental reorder is always an edit to that array, and
@@ -482,12 +497,12 @@ the fix is to put the array back.
 through the same `covers.save_cover` 700px/q82 downscale as the omnibus shelf
 covers so the whole site's art is sized identically.
 
-**All nine are hand-supplied art, not wiki scans** (Aug 2026). The user
+**All ten are hand-supplied art, not wiki scans** (Aug 2026). The user
 dropped the originals into `Art/covers/` and they replaced the fetched covers
 outright. They are painted pieces rather than printed covers, and that turns
 out to matter for this particular job: no logo, no barcode strip and no trade
 dress fighting the poster plate, so the subject name sits on clean art on all
-nine. Keep that property in mind when swapping one — a scan of a printed cover
+ten. Keep that property in mind when swapping one — a scan of a printed cover
 will put a logo where the plate goes.
 
 #### Artwork the user supplies — do not source these three
@@ -549,7 +564,7 @@ is the live route.
 
 `tools/fetch_hero_art.py` is now the **fallback** route, not the live one. Its
 `PICKS` table still holds a wiki pick and the reasoning for every subject, and
-`SUPPLIED` beside it lists the nine whose art is hand-supplied; `--all` skips
+`SUPPLIED` beside it lists the ten whose art is hand-supplied; `--all` skips
 those and says so, and `--replace` is what overwrites them. One entry in `PICKS`
 is worth repeating because it is the trap it always was: **Incredible Hulk #340
 is the famous Hulk cover and is three quarters Wolverine**, who is the poster
@@ -564,6 +579,15 @@ instead of to an empty box. (The shelf's own `artHTML(o)` returns the image
 *instead of* its ramp; this one deliberately does not.) `.wide` variants of each
 ramp re-aim the gradient for the short, wide modal banner, which would otherwise
 bottom out to black in its first 40px.
+
+**The posters have no white edge** (Aug 2026, the user's call). `.poster`
+carried `border:1px solid rgba(255,255,255,.55)` and an
+`inset 0 1px 0 rgba(255,255,255,.5)` top highlight; both were Frutiger Aero
+glass trim that survived the dark-chrome rewrite, and against ten pieces of real
+painted cover art they read as a sticker border round each poster rather than as
+a frame. Both are gone, from the resting and the hover state. **The gold ring on
+hover stays** (`0 0 0 2px var(--xyellow)`) — that is an affordance, not chrome.
+Removing the border cost no layout, because `box-sizing:border-box` is global.
 
 What a cover changes, beyond the picture:
 - **the emblem is dropped** on that subject's poster, Continue thumbnail and
@@ -594,6 +618,7 @@ second pass after the first render clipped something.
 | daredevil | 11% | the head, with the full moon behind it |
 | silver-surfer | 39% | the brow, eyes and nose bridge, star field either side |
 | captain-america | 26% | the mask, the A and the shield edge — 32% clipped the head |
+| iron-man | 11% | the gold faceplate, the shoulders and the chest repulsor |
 
 Silver Surfer's is the clearest illustration of why this is rendered rather
 than reasoned about. The poster is a chrome head against black; the obvious
@@ -654,6 +679,7 @@ back to the old navy, so the field is optional and nothing breaks without it.
 | daredevil | red, run deep | see below |
 | silver-surfer | dark stone grey-blue | the user's call; see below |
 | captain-america | deep blue | the poster's foot is pale sky, so the plate has to be dark; the logo is white |
+| iron-man | red, run deep | the user's call; see below |
 
 **Silver Surfer's plate was black for a day and is now dark stone grey-blue**
 (`74,86,102` → `28,34,44`), at the user's request. The black version did work,
@@ -663,6 +689,16 @@ mode the Hulk's purple plate exists to avoid, and it left two of the eight
 subjects with the same near-black band. The grey-blue reads as a band again
 while still belonging to the art, and it is the only plate on the wall that is
 a neutral rather than a hue. Moon Knight keeps the one true black.
+
+**Iron Man's plate is red because the user asked for red**, and it is run deep
+for the reason the next paragraph gives. The logo is the one case on the wall
+where the two halves pull opposite ways: the letters are **gold**, which wants a
+deep ground to sit on, but their extrusion is **red**, which disappears if the
+plate is as red as the letters' shadow. `150,24,18` is brighter than Daredevil's
+`124,14,20` — gold on red carries its own contrast, so it can afford to be — and
+warm enough that the two red plates on row two read as different subjects rather
+than as a repeat. They are two apart on the wall, with Captain America's blue
+between them.
 
 **Wolverine's and Daredevil's plates are noticeably deeper than the other
 five**, and that is the one non-obvious thing here. Both logos are the same hue
@@ -1225,7 +1261,7 @@ catalog — and the run exits loudly if a pinned id is not in it.
 
 ### What is left, and why
 
-**4310 of 4372 unique issues across the eight shelves resolve (99%).** The 61
+**4649 of 4712 unique issues across the nine shelves resolve (99%).** The 62
 that do not were each checked against the catalog: they are not on marvel.com
 at all — plus one standing rejection, `tta3-1`, which is in the catalog but
 deliberately not linked (see "An unmapped series is derived, not dropped").
@@ -1414,7 +1450,7 @@ ambiguous or rejected; no hit means Marvel does not have it.
 - `omnibus_contents_raw.json`, `hulk_contents_raw.json`, `ff_contents_raw.json`,
   `wolverine_contents_raw.json`, `moonknight_contents_raw.json`,
   `daredevil_contents_raw.json`, `silversurfer_contents_raw.json`,
-  `captainamerica_contents_raw.json` — the raw
+  `captainamerica_contents_raw.json`, `ironman_contents_raw.json` — the raw
   ReprintOf lists pulled from the Marvel Database, one entry per omnibus, one
   file per hero. Regenerate only if a volume's contents change.
 - `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
@@ -1424,7 +1460,7 @@ ambiguous or rejected; no hit means Marvel does not have it.
 - `omnibus_meta.py` (Spider-Man), `hulk_meta.py` (Hulk), `ff_meta.py` (Fantastic
   Four), `wolverine_meta.py` (Wolverine), `moonknight_meta.py` (Moon Knight),
   `daredevil_meta.py` (Daredevil), `silversurfer_meta.py` (Silver Surfer),
-  `captainamerica_meta.py` (Captain America) — the hand-written half,
+  `captainamerica_meta.py` (Captain America), `ironman_meta.py` (Iron Man) — the hand-written half,
   and **the only place shelf metadata should be edited**: `ORDER` (wiki-backed
   volumes; each key must exist in that hero's raw-contents file or `gen()`
   KeyErrors), `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF`
@@ -1514,8 +1550,10 @@ python3 tools/build_omnibus_data.py --check --hero hulk   # confirm it round-tri
 ```
 
 Note that a harvest touches **every** hero, not one: `marvel_ids.json` is
-shared, so `link_issues.py --write` means regenerating all eight trackers, not
-just the shelf you were working on.
+shared, so `link_issues.py --write` means regenerating all nine trackers, not
+just the shelf you were working on. The Iron Man harvest was a clean
+demonstration: 288 ids written, all of them Iron Man's, and every other shelf
+still needed a regenerate because `MARVEL` is spliced in whole.
 
 All of these take `--hero <key>`; without one they act on Spider-Man.
 
@@ -2723,6 +2761,172 @@ Also note the SC block in a tracker ends with a bare `}` on its own line, not
 `build_omnibus_data.py` reporting "substring not found".
 
 
+## The Iron Man tracker (omnibus shelf)
+
+Same code as the other eight shelf pages, same tooling, different data: 9
+volumes, 341 issue slots, 340 unique issues, all 9 with contents and cover art.
+No placeholders, and nothing unreleased. `tools/ironman_meta.py` is the
+hand-written half; run everything with `--hero iron-man`.
+
+Like Moon Knight and Silver Surfer it is **complete**: the Marvel Database lists
+exactly nine Iron Man omnibuses and all nine are on the shelf.
+
+### Scope call — there wasn't one, and the absences are Marvel's
+
+Nothing here needed the judgement call the other shelves needed. Every one of
+the nine is Tony Stark's own solo book, there is no family character with an
+omnibus to rule out (War Machine, Ironheart and Superior Iron Man have none),
+there is no team book to argue about, and nothing is unreleased — the most
+recent volume shipped in **May 2026**, three months before this shelf was built.
+
+**The runs people will ask about are missing because they have no omnibus, not
+because of a scope call.** This is worth stating plainly, because their absence
+looks like an editorial decision and is not:
+
+| Run | What exists |
+|---|---|
+| Fraction & Larroca (2008–2012) | `Invincible Iron Man by Fraction & Larroca HC` and a Complete Collection TPB — no omnibus |
+| Ellis's Extremis (2005) | `Iron Man: Extremis TPB` — no omnibus |
+| Gerry Duggan (2022) | three `Invincible Iron Man by Gerry Duggan TPB` volumes — no omnibus |
+
+Searching the storyline as well as the character — the Captain America lesson —
+turned up nothing the `apprefix` sweep had missed.
+
+`SHELF` is a reading order that here is also publication order, so nothing is
+resequenced. Four numbered volumes carry 1963–1978, then the creator books.
+
+**Four gaps are Marvel's, not ours:**
+
+- **Iron Man #113–114** — two issues, and the most annoying kind. Vol. 4's own
+  solicit says it collects `#68-112`, and the Michelinie volume is a "by"
+  collection starting at #115, so Bill Mantlo's last two issues fall down the
+  crack between a numbered volume and a creator one.
+- **#158–218** — 61 issues, the big one: the end of Michelinie's first run, the
+  whole Denny O'Neil stretch, and the run-up to Armor Wars.
+- **#233–257** — the material *between* the two Armor Wars stories. Not an
+  omission: `armor-o1` is a storyline book, not a run.
+- **#267–332 plus the whole Heroes Reborn year** — everything between 1991 and
+  the 1998 relaunch, and then everything between 2002 and 2018.
+
+### Contents
+
+Pulled the same way as the other shelves (the `ReprintOf<N>` MediaWiki call
+above), into `tools/ironman_contents_raw.json`. As clean a pull as Moon
+Knight's, and cleaner than most:
+
+- **Not one ReprintOf entry was missing from the rendered gallery**, on any of
+  the nine — so nothing of the Fantastic Four #171 / Wolverine #55 shape.
+- **Every page writes the full form** (`Iron Man Vol 1 1`), so no gallery
+  cross-reference was needed to disambiguate — and there are seven volumes of a
+  series called "Iron Man" for it to have gone wrong on.
+- **No doubled spaces, no subtitles after the issue number, no short-form
+  entries.** Nothing needed repairing.
+
+**One volume's order was corrected by hand, and it is the `inc-o1` hazard
+again.** The wiki's ReprintOf fields for `iim-o2` group by series and so put
+**Iron Man and Sub-Mariner #1 last**, after Iron Man #25. It belongs between
+Tales of Suspense #99 and Iron Man #1: it is the April 1968 one-shot that exists
+only because the shared book was splitting in two, and it was published between
+them. The rendered gallery agreed with the fields, so this is a judgement call
+against both wiki sources rather than a repair of one — but a book that prints
+its own bridging issue as an appendix after the run it bridges into is not a
+book anyone has made. **Re-apply this if `iim-o2` is ever re-pulled.**
+
+**The solicit audit could check only two of the nine**, and both matched the
+shelf exactly: Vol. 3 (`IRON MAN (1968) #26-67 and DAREDEVIL (1964) #73`) and
+Vol. 4 (`#68-112 and ANNUAL (1970) #3-4`). The other seven carry no explicit
+range, so the shelf-wide gap check did the rest — and every gap it found is one
+of the four above, confirmed by creator credits (#113–114 Mantlo, #158 O'Neil
+and Infantino, #233 Michelinie and Guice inside a storyline book).
+
+One entry that looks wrong and is not: **the Slott volume ends on Iron Man
+(1998) #25**, a 1999 Busiek issue at the back of a 2018–2020 book. That is
+backmatter, printed there deliberately — #25 is where Arno Stark was set up, and
+Iron Man 2020 is Arno's story. It is also the shelf's only overlap.
+
+### Chaptering
+
+Eight volumes take the automatic per-series chapters. Only `busiek-o1` carries
+`chapterby="series"`, and it is the closest call on the project: it scores
+**3.27**, just under the 3.5 threshold, because 25 issues of Busiek's run are
+followed by nine single crossover issues and then a two-issue mini. Those nine
+are each a named book from "The Eighth Day", so one chapter per book names them
+where "Part N" would not — the same call the Hulk anthologies take.
+
+`mlr-o1` comes out as a single 43-issue chapter, which looks wrong and is not:
+the volume is Iron Man #115–157 and nothing else.
+
+### Issue ids and the one overlap
+
+341 issue slots against 340 unique — one overlap, **Iron Man (1998) #25**, in
+both `busiek-o1` (which collects #1–25) and `tsim-o1` (which reprints it as
+backmatter). It shares its id across both on purpose, as on every other shelf,
+and the UI flags it with the gold "in 2 omnibuses" pill.
+
+`im` was already the code for Iron Man (1968) on four other shelves, and `tos`,
+`tta`, `dd`, `cap3`, `ff3` and `imcaann` were likewise already owned. All seven
+are repeated verbatim in this module's `SERIES_EXTRA` — the id store is shared
+and the same comic has to key the same way everywhere.
+
+### Marvel deep links
+
+**339 of 340 unique issues (100%) resolve** — joint-best on the project with
+Daredevil. The id harvest was not a step: the catalog already held everything,
+so this was `link_issues.py --write` twice with a regenerate between, 288 ids
+written, **0 ambiguous and 0 rejected on the second pass**.
+
+The 1 that marvel.com does not have is **Iron Man Annual 2001**. Re-tested
+before being believed, as the standing rule says: Marvel files each year-titled
+annual as its own one-issue series, the catalog carries `iron_man_annual_1999`
+and `iron_man_annual_2000`, and then jumps to 2021. There is no 2001.
+
+**One tool fix came out of this shelf, and it generalises.** All six Iron Man
+2020 issues came back ambiguous on the first run, and no `tiebreak()` rule could
+separate the candidates, because `norm()` was stripping a **bare** trailing
+year-shaped number:
+
+    norm("Iron Man 2020 (2020)")    -> "iron man"
+    norm("Iron Man (2020 - 2022)")  -> "iron man"
+
+Two different comics, folded to one string — and their marvel.com slugs collide
+too (`iron_man_2020_2020_1` is Iron Man 2020 #1; `iron_man_2020_1` is Iron Man
+#1 from the 2020 Cantwell ongoing). The strip ran *after* the line that removes
+a parenthesised `(1988 - 1997)`, so anything year-shaped it could still see was
+part of the NAME — Iron Man 2020, Machine Man 2020, Spider-Man 2099, Doom 2099.
+Removing it gained 6 matches across all nine shelves and lost none, and
+re-pointed **zero** existing ids. That is the Daredevil `1.50` precedent again:
+fix the matcher when the fix generalises, reach for `NUM_ALIAS`/`ISSUE_ALIAS`
+only when nothing can derive the answer. No alias entry was needed for this
+shelf.
+
+### Cover art — two jackets the wiki does not have
+
+**`fetch_covers.py` returns an issue cover, not a jacket, for two of these**, and
+it looks like a clean fetch both times. **Do not run `fetch_covers.py --hero
+iron-man --all`** — it will put them back. The detail is written down in
+`tools/ironman_meta.py` beside the volumes it affects; in short:
+
+- **`iim-o1`** — the page declares `Image1` under the omnibus's own name, but
+  that file is itself a scan of **Tales of Suspense #39**, price box and Comics
+  Code stamp and all, and `Image1_ReprintOf` says so. The jacket on the shelf is
+  the **Parel variant** (600x901), the only file on the page carrying omnibus
+  trade dress. Added by hand with `covers.py add`.
+- **`iim-o2`** — the page declares `Image1 = Iron Man Vol 1 1.jpg` outright; the
+  wiki has no jacket for this book. Left as fetched, because three independent
+  sources — that file, the Larroca variant, and Amazon's image keyed to the
+  book's own ISBN — all show the same Iron Man #1 artwork. The printed jacket
+  really does reproduce the 1968 cover, so the art is right for the book even
+  though the scan is an issue.
+
+Worth knowing for the next shelf: **the flat-jacket-by-ISBN endpoints are not a
+reliable rescue.** Penguin Random House returned a "Cover Coming Soon"
+placeholder for both of these ISBNs, and Amazon returned the same issue art the
+wiki had. They worked on Silver Surfer and Captain America; they did nothing
+here.
+
+Five of the nine covers are `soft` (under 500px). That is what the Marvel
+Database stores.
+
 ## The X-Men tracker (a shelf of books that don't exist)
 
 ### What it does
@@ -3008,7 +3212,7 @@ cannot currently do is the opposite: make two devices agree.
 ## Open items — C.O.M.I.C.S.
 
 1. ~~One of seven subjects has no reading list yet.~~ **Done Aug 2026** — all
-   nine subjects now have one: Daredevil shipped as the sixth omnibus shelf,
+   ten subjects now have one (Iron Man was the tenth): Daredevil shipped as the sixth omnibus shelf,
    Silver Surfer as the seventh and Captain America as the eighth. Both of the last two shipped that way rather than as curated
    chronologies, and both **dropped part of their old `HEROES` brief on
    purpose**: Moon Knight's because Lemire's run has no omnibus, Daredevil's
@@ -3019,7 +3223,7 @@ cannot currently do is the opposite: make two devices agree.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Forty-eight covers are low-res** (~225–500px wide). For all but one that
+3. **Fifty-three covers are low-res** (~225–500px wide). For all but one that
    is because it is all the Marvel Database stores; `gauntlet-o1` is the
    exception, at 340x500 because the book is not out and the only flat jacket
    anywhere is a retailer's thumbnail — replace it with the wiki's scan after 3
@@ -3030,7 +3234,8 @@ cannot currently do is the opposite: make two devices agree.
    twelve on the Captain America shelf (six of them flat jackets taken from
    booksellers because the wiki has only issue covers for those volumes) and
    seven on the Daredevil shelf (`bendis-o1`, `bendis-o2`, `bru-o1`, `bru-o2`,
-   `shadow-o1`, `waid-o2`, `soule-o1`); see "Cover art". Replacing them needs a
+   `shadow-o1`, `waid-o2`, `soule-o1`) and five on the Iron Man shelf
+   (`iim-o2`, `mlr-o1`, `busiek-o1`, `mask-o1`, `tsim-o1`); see "Cover art". Replacing them needs a
    scan from somewhere else; everything else is 600–700px. Daredevil is the
    worst-served shelf — four of its seven are 225–334px, the smallest originals
    on the project. Now that the artifact is retired **and the covers are no
@@ -3069,10 +3274,10 @@ cannot currently do is the opposite: make two devices agree.
     hidden homescreen gear, the ASCII pass — went with `comics-mobile.html`
     itself. See "The mobile build is retired".
 11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the
-    seven shelves are at 93–99% (Spider-Man 600/606, Hulk 652/659, Fantastic
+    nine shelves are at 93–100% (Spider-Man 600/606, Hulk 652/659, Fantastic
     Four 671/688, Wolverine 658/665, Moon Knight 243/260, Daredevil 630/633,
-    Silver Surfer 140/141, Captain America 721/725). The
-    remaining 61 are not on marvel.com at all;
+    Silver Surfer 140/141, Captain America 721/725, Iron Man 339/340). The
+    remaining 62 are not on marvel.com at all;
     `tools/unlinked.json` names every one. What closed it was sweeping
     marvel.com's open JSON catalog rather than searching per series — see
     "Linking issues" and "How the links used to be missed". The last nine came
@@ -3106,11 +3311,13 @@ cannot currently do is the opposite: make two devices agree.
     the shelf count, and "never printed" in each volume's banner. That is the
     floor, and preserving it is the thing to watch if the shelf is ever edited —
     see "A shelf holds books whose tile is finished".
-14. **Moon Knight is the one banner still under-size.** All nine files are in,
-    and seven were replaced in Aug 2026 with the user's own upscales — 4096px
-    sources, normalised to the new 2400px target. `moon-knight.jpg` was not in
-    that batch and is still the original 1200px, which `banners.py audit` flags
-    `soft`. Note `wolverine.jpg` is 2398px and deliberately unresized: its
+14. **Moon Knight and Iron Man are the two banners still under-size.** All ten
+    files are in, and seven were replaced in Aug 2026 with the user's own upscales
+    — 4096px sources, normalised to the new 2400px target. `moon-knight.jpg` was
+    not in that batch and is still the original 1200px; `iron-man.jpg` arrived
+    later at 1966px, which misses the threshold by a little. `banners.py audit`
+    flags both `soft`. Both are the user's own art, so replacing them means
+    asking for a bigger source, not fetching one. Note `wolverine.jpg` is 2398px and deliberately unresized: its
     source was two pixels under the target, which is why the soft threshold is
     90% of `WIDTH` rather than `WIDTH` itself.
 
@@ -3194,6 +3401,7 @@ python3 tools/build_omnibus_data.py --check --hero moon-knight
 python3 tools/build_omnibus_data.py --check --hero daredevil
 python3 tools/build_omnibus_data.py --check --hero silver-surfer
 python3 tools/build_omnibus_data.py --check --hero captain-america
+python3 tools/build_omnibus_data.py --check --hero iron-man
 
 # Every shelf issue that can be linked, is.
 # Expect: 0 matched, 0 ambiguous, and one standing rejection (tta3-1, which is
@@ -3219,6 +3427,7 @@ python3 tools/covers.py audit --hero moon-knight
 python3 tools/covers.py audit --hero daredevil
 python3 tools/covers.py audit --hero silver-surfer
 python3 tools/covers.py audit --hero captain-america
+python3 tools/covers.py audit --hero iron-man
 
 # Data integrity (counts, duplicate ids, ARC_SUMS coverage) — see git history
 # or re-derive: eval the data section and assert every chapter has a digest.
@@ -3242,6 +3451,7 @@ issues**; the Moon Knight shelf **7 volumes / 260 issue slots / 260 unique
 issues**; the Daredevil shelf **18 volumes / 634 issue slots / 633 unique
 issues**; the Silver Surfer shelf **4 volumes / 141 issue slots / 141 unique
 issues**; the Captain America shelf **22 volumes / 727 issue slots / 725 unique
+issues**; the Iron Man shelf **9 volumes / 341 issue slots / 340 unique
 issues**; the X-Men shelf **4 volumes / 174 issue slots / 174 unique issues**.
 If a change moves those numbers without meaning to, something is wrong.
 

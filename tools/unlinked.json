@@ -704,6 +704,22 @@
   "sid": null
  },
  {
+  "hero": "iron-man",
+  "vol": "mask-o1",
+  "id": "imann-2001",
+  "t": "Iron Man Annual (1970) #2001",
+  "s": "Iron Man Annual (1970)",
+  "pfx": "imann",
+  "num": "2001",
+  "link": null,
+  "year": 1970,
+  "era": [
+   2000,
+   2002
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",

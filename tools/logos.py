@@ -34,7 +34,7 @@ MIN_TIGHT = 220        # below this the source was too small to look clean
 
 HERO_IDS = ["spider-man", "wolverine", "hulk", "xmen",
             "fantastic-four", "moon-knight", "daredevil", "silver-surfer",
-            "captain-america"]
+            "captain-america", "iron-man"]
 
 
 def save_logo(im, hid):

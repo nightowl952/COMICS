@@ -63,6 +63,7 @@ KEYS = {
     "daredevil":      ["daredevil", "dare devil", "matt murdock"],
     "silver-surfer":  ["silver-surfer", "silversurfer", "silver surfer", "surfer", "norrin"],
     "captain-america": ["captain-america", "captainamerica", "captain america", "cap", "steve rogers"],
+    "iron-man":       ["iron-man", "ironman", "iron man", "tony stark", "shellhead"],
 }
 # No extension whitelist. Anything Pillow can open is an image; anything it
 # cannot is reported by name rather than dropped. See add_folder().

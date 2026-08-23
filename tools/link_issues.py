@@ -69,7 +69,14 @@ def norm(s):
     s = re.sub(r"[^a-z0-9]+", " ", s)
     s = " ".join(ABBREV.get(w, NUMWORD.get(w, w)) for w in s.split())
     s = NOISE.sub(" ", s)
-    s = re.sub(r"\b(19|20)\d\d\b", " ", s)
+    # NB: no bare-year strip here. Line 68 has already removed a parenthesised
+    # "(1988 - 1997)", so anything year-shaped still left is part of the NAME --
+    # Iron Man 2020, Machine Man 2020, Spider-Man 2099, Doom 2099. Folding it
+    # away made "Iron Man 2020" and "Iron Man (2020 - 2022)" the same string,
+    # which is two different comics whose slugs also collide
+    # (iron_man_2020_2020_1 vs iron_man_2020_1), and left all six Iron Man 2020
+    # issues ambiguous with no rule able to separate them. Dropping the strip
+    # gained 6 matches across the shelves and lost none.
     # singularise: the two sources disagree on "Strange Encounter(s)"
     s = " ".join(w[:-1] if len(w) > 4 and w.endswith("s") and
                  not w.endswith("ss") else w for w in s.split())

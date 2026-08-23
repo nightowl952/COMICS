@@ -65,6 +65,10 @@ PICKS = {
                        "Romita, 1969 -- Cap and the Falcon, the partnership the "
                        "shelf's second volume is named for. A fallback only; the "
                        "poster on the wall is the user's own art."),
+    "iron-man":       ("Iron Man Vol 1 128",
+                       "Romita Jr. and Layton, 1979 -- 'Demon in a Bottle', Tony "
+                       "slumped in the armour with the helmet off. A fallback "
+                       "only; the poster on the wall is the user's own art."),
     "silver-surfer":  ("Silver Surfer Vol 1 4",
                        "Buscema, 1969 -- the Surfer against Thor, and the only "
                        "cover of that run people can picture. Inside the shelf's "

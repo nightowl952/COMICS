@@ -300,11 +300,15 @@
   .cell{position:relative;transition:transform .22s cubic-bezier(.2,.8,.3,1);}
   .cell:hover,.cell:focus-within{transform:translateY(-8px) scale(1.03);z-index:5;}
   .poster{position:relative;aspect-ratio:2/3;border-radius:16px;overflow:hidden;cursor:pointer;padding:0;display:block;width:100%;
-    font-family:inherit;text-align:left;color:#fff;border:1px solid rgba(255,255,255,.55);
-    box-shadow:0 10px 26px rgba(5,25,60,.45), inset 0 1px 0 rgba(255,255,255,.5);
+    font-family:inherit;text-align:left;color:#fff;border:0;
+    /* No white edge and no inset top highlight: both were Frutiger Aero glass
+       trim, and against real painted cover art they read as a sticker border
+       round the poster rather than as a frame. The gold ring on hover stays --
+       that is an affordance, not chrome. */
+    box-shadow:0 10px 26px rgba(5,25,60,.45);
     transition:box-shadow .22s;}
   .cell:hover .poster,.cell:focus-within .poster{
-    box-shadow:0 22px 44px rgba(5,25,60,.6), 0 0 0 2px var(--xyellow), inset 0 1px 0 rgba(255,255,255,.6);}
+    box-shadow:0 22px 44px rgba(5,25,60,.6), 0 0 0 2px var(--xyellow);}
   .poster:focus-visible{outline:3px solid var(--xyellow);outline-offset:2px;}
   /* Art layers are reused by the poster, the Continue thumb and the modal banner,
      so they must not be scoped to .poster — they fill whichever box contains them. */
@@ -354,6 +358,7 @@
   .a-daredevil{background:linear-gradient(163deg,#e8353a 0%,#9d0f16 38%,#4a060c 68%,#120306 100%);}
   .a-surfer{background:linear-gradient(163deg,#eef4fb 0%,#9fb3cc 30%,#3b4a6b 62%,#0a0a12 100%);}
   .a-cap{background:linear-gradient(163deg,#bfe0ff 0%,#3a6fd8 34%,#8f1016 70%,#160308 100%);}
+  .a-ironman{background:linear-gradient(163deg,#ffe9a8 0%,#e8a52c 30%,#a8161a 66%,#180305 100%);}
 
   /* ---------- hero textures ---------- */
   .tex-web{background:
@@ -400,6 +405,10 @@
     radial-gradient(circle at 12% 44%, rgba(255,255,255,.7) 0 1px, transparent 1.5px),
     radial-gradient(circle at 79% 62%, rgba(255,255,255,.6) 0 1.1px, transparent 1.6px),
     radial-gradient(circle at 37% 84%, rgba(255,255,255,.55) 0 1px, transparent 1.5px);}
+  .tex-circuit{background:
+    radial-gradient(circle,rgba(255,255,255,.16) 1.6px,transparent 2.3px) 12px 12px/24px 24px,
+    repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 1px,transparent 1px 24px),
+    repeating-linear-gradient(90deg,rgba(0,0,0,.13) 0 1px,transparent 1px 24px);}
   .tex-radar{background:
     radial-gradient(circle at 50% 33%, transparent 0 9%, rgba(255,255,255,.16) 9% 9.9%, transparent 9.9% 19%,
       rgba(255,255,255,.14) 19% 19.9%, transparent 19.9% 31%, rgba(255,255,255,.11) 31% 31.9%, transparent 31.9% 45%,
@@ -414,6 +423,7 @@
   .a-daredevil.wide{background:linear-gradient(104deg,#e8353a 0%,#9d0f16 44%,#4a060c 74%,#120306 100%);}
   .a-surfer.wide{background:linear-gradient(104deg,#eef4fb 0%,#9fb3cc 36%,#3b4a6b 70%,#0a0a12 100%);}
   .a-cap.wide{background:linear-gradient(104deg,#bfe0ff 0%,#3a6fd8 40%,#8f1016 74%,#160308 100%);}
+  .a-ironman.wide{background:linear-gradient(104deg,#ffe9a8 0%,#e8a52c 36%,#a8161a 70%,#180305 100%);}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
   @media (max-width:600px){
@@ -466,7 +476,7 @@
     <div class="hb-in">
       <div class="hb-name">C.O.M.I.C.S.</div>
       <div class="hb-sub">Caleb&rsquo;s Online Marvel Intractable Comic Shelf</div>
-      <div class="hb-blurb">Nine subjects, every one of them a shelf of omnibus volumes with the issue list
+      <div class="hb-blurb">Ten subjects, every one of them a shelf of omnibus volumes with the issue list
         each printed book actually holds. Pick up wherever you left off &mdash; or start something new.</div>
     </div>
   </div>
@@ -583,6 +593,14 @@ const EMBLEMS = {
     '<circle cx="50" cy="50" r="12" fill="url(#g$)" opacity=".3"/>' +
     '<path fill="url(#g$)" d="M50,35 l4,8.7 9.5,1.1 -7.1,6.5 1.9,9.4 -8.3,-4.8 -8.3,4.8 1.9,-9.4 -7.1,-6.5 9.5,-1.1 z"/>',
 
+  mask: '<path fill="url(#g$)" fill-rule="evenodd" d="'+
+    'M50,13 C64,13 73,21 75,34 L77,51 C77,63 70,73 62,78.5 L58,85 L42,85 L38,78.5'+
+    ' C30,73 23,63 23,51 L25,34 C27,21 36,13 50,13 Z'+
+    ' M32,43 L45.5,40 L45.5,49 L33,49.5 Z'+
+    ' M68,43 L54.5,40 L54.5,49 L67,49.5 Z'+
+    ' M38,62 L62,62 L62,65.5 L38,65.5 Z'+
+    ' M39.5,69.5 L60.5,69.5 L60.5,73 L39.5,73 Z"/>',
+
   dd: '<g fill="none" stroke="url(#g$)" stroke-width="6"><circle cx="50" cy="50" r="39"/></g>' +
     '<text x="50" y="52" text-anchor="middle" dominant-baseline="central" fill="url(#g$)"' +
     ' font-family="Trebuchet MS, Segoe UI, sans-serif" font-size="44" font-weight="900" font-style="italic"' +
@@ -634,6 +652,10 @@ const HEROES = [
   { id:"captain-america", name:"Captain America", art:"a-cap", tex:"tex-stripes", emblem:"star", cover:"Art/Heroes/captain-america.jpg", pos:"26%", plate:["30,58,132","7,14,42"], logo:"Art/Logos/captain-america.png",
     era:"Omnibus Shelf · 1941–2021", file:"captainamerica-reading-tracker.html", total:725,
     desc:"Twenty-two omnibuses of Steve Rogers' own book, 725 issues, reproducing exactly what each printed volume holds. It starts where he does — Simon and Kirby in 1941, punching Hitler a year before America entered the war — then the thaw in Tales of Suspense, Englehart's Secret Empire, Kirby's return, ten years of Gruenwald, Waid, Jurgens, and the eight years of Brubaker that reset the character and killed him in the middle of it. Spencer's Secret Empire and Coates close it out. The Invaders are a team book and are not here; the Jack Kirby omnibus is not either, because Omnibus Vol. 4 holds every issue of it and one more." },
+
+  { id:"iron-man", name:"Iron Man", art:"a-ironman", tex:"tex-circuit", emblem:"mask", cover:"Art/Heroes/iron-man.jpg", pos:"11%", plate:["150,24,18","38,5,4"], logo:"Art/Logos/iron-man.png",
+    era:"Omnibus Shelf \u00b7 1963\u20132020", file:"ironman-reading-tracker.html", total:340,
+    desc:"Every Iron Man omnibus Marvel has printed \u2014 nine volumes, 340 issues, reproducing exactly what each printed book holds. Four numbered volumes carry Tales of Suspense #39 through 1978, taking in the origin, the armour becoming red and gold, and the single issue that quietly introduced Thanos; then the creator books. Michelinie, Layton and Romita Jr. write Demon in a Bottle and Doomquest; Armor Wars is Tony stealing his own technology back; Busiek relaunches him for Heroes Return, Quesada wakes the armour up, and Slott hands the book to Arno Stark. The gaps are Marvel\u2019s, not ours \u2014 #158\u2013218, #233\u2013257 and everything between 2002 and 2018 have no omnibus. Fraction, Ellis and Duggan are not here because none of those runs has one either."},
 
   { id:"silver-surfer", name:"Silver Surfer", art:"a-surfer", tex:"tex-wake", emblem:"board", cover:"Art/Heroes/silver-surfer.jpg", pos:"39%", plate:["74,86,102","28,34,44"], logo:"Art/Logos/silver-surfer.png",
     era:"Omnibus Shelf · 1967–2017", file:"silversurfer-reading-tracker.html", total:141,
@@ -688,6 +710,7 @@ const PROGRESS_KEYS = {
   "daredevil":      "daredevil-omni-progress-v1",
   "silver-surfer":  "silversurfer-omni-progress-v1",
   "captain-america":"captainamerica-omni-progress-v1",
+  "iron-man":       "ironman-omni-progress-v1",
   "xmen":           "xmen-saga-progress-v2"
 };
 /* Read straight from the X-Men tracker's own progress key as a fallback, so the
