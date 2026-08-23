@@ -2,6 +2,7 @@ import importlib
 import json,re,collections,os,sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+YEARS_PATH = os.path.join(HERE, "marvel_years.json")
 ROOT = os.path.dirname(HERE)
 # Paths are per-hero now and come from tools/heroes.py; these are rebound in
 # main() once --hero is parsed. They stay module-level so gen() can read RAW.
@@ -320,6 +321,35 @@ def splice_ids(html, ids_path):
             + json.dumps(ids, indent=0, ensure_ascii=False) + html[e0 + 2:])
 
 
+MARK_YEARS = "const YEARS = {"
+
+
+def splice_years(html, ids_path, years_path):
+    """Write the per-issue publication year into the tracker as the YEARS map.
+
+    Two stores are joined here rather than one: marvel_ids.json is keyed by
+    shelf issue id, marvel_years.json by marvel's own comic id. Keeping the
+    dates keyed marvel-side is deliberate -- the id store is shared across
+    every hero, so the same comic dates the same way on all of them, and a
+    re-link that repoints an issue picks up the right date for free.
+
+    Spliced whole like MARVEL, unused keys and all, for the same reason: an
+    entry the shelf does not use costs nothing, and trimming means re-running
+    tools/years.py when a volume comes back.
+    """
+    ids = json.load(open(ids_path, encoding="utf-8"))
+    dates = json.load(open(years_path, encoding="utf-8"))
+    years = {}
+    for iid, path in ids.items():
+        d = dates.get(path.split("/", 1)[0])
+        if d and d[:4].isdigit():
+            years[iid] = int(d[:4])
+    s0 = html.index(MARK_YEARS)
+    e0 = html.index("\n};", s0)
+    return (html[:s0] + MARK_YEARS[:-1]
+            + json.dumps(years, indent=0, ensure_ascii=False) + html[e0 + 2:])
+
+
 def check_spine_colors(html, arr):
     """Every .o-* ramp a volume uses needs a SPINE_C entry.
 
@@ -348,6 +378,7 @@ def main():
     html = open(TRACKER, encoding="utf-8").read()
     check_spine_colors(html, arr)
     new = splice_ids(splice(html, arr), h["ids_path"])
+    new = splice_years(new, h["ids_path"], YEARS_PATH)
 
     print("[%s] %s" % (h["key"], h["tracker"]))
     slots = sum(len(c["issues"]) for o in arr for c in o["chapters"])
@@ -369,6 +400,11 @@ def main():
                   for i in c["issues"]} & set(ids))
     print("%d/%d unique issues (%d%%) have a marvel.com link | MARVEL carries %d ids"
           % (linked, uniq, round(linked * 100 / uniq) if uniq else 0, len(ids)))
+    dates = json.load(open(YEARS_PATH, encoding="utf-8"))
+    dated = len({i["id"] for o in arr for c in o["chapters"] for i in c["issues"]
+                 if ids.get(i["id"], "/").split("/", 1)[0] in dates})
+    print("%d/%d unique issues (%d%%) carry a publication year"
+          % (dated, uniq, round(dated * 100 / uniq) if uniq else 0))
 
     if check:
         print("in sync" if new == html else "OUT OF SYNC -- run without --check to rewrite")
