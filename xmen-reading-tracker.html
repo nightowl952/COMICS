@@ -268,6 +268,32 @@
   .issue-info{flex:1;min-width:0;}
   .issue-info .t{font-size:13px;font-weight:600;color:var(--txt);}
   .issue-info .a{font-size:10.5px;color:var(--dim2);margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  /* ---- era bands ----
+     Eight ages, each a material: gold, silver, bronze, copper, chrome,
+     plastic, and then two that are not metals at all. The hue is carried by
+     --e1 (and --e2 where a book straddles two), set inline by eraTag(), so
+     the same variable paints the shelf placard and the year chip on a row.
+     A year chip is the point of the whole thing: scrolling one chapter you
+     watch the colour change under you when the book crosses an age. */
+  .yrpill{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.6px;
+    padding:2px 7px;border-radius:9px;white-space:nowrap;
+    color:var(--e1,var(--dim));background:color-mix(in srgb,var(--e1,#8fa4bd) 15%,transparent);
+    border:1px solid color-mix(in srgb,var(--e1,#8fa4bd) 42%,transparent);}
+  .issue.read .yrpill,.issue.skipped .yrpill{opacity:.5;}
+  /* The placard sits UNDER the book, not on it. The plate is printed trade
+     dress and a UI pill inside it reads as a sticker on the jacket -- the
+     progress bar came off for that reason and this is not putting one back. */
+  .eratag{margin-top:22px;display:flex;align-items:center;justify-content:center;gap:7px;
+    font-size:9px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+    color:var(--dim);opacity:.92;pointer-events:none;}
+  .eradots{display:inline-flex;align-items:center;gap:3px;flex:0 0 auto;}
+  .eradot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;
+    background:var(--d,#8fa4bd);box-shadow:0 0 0 1px rgba(0,0,0,.5),0 0 7px var(--d,#8fa4bd);}
+  .eratag .elabel{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  @media(max-width:600px){
+    .eratag{margin-top:14px;font-size:8px;letter-spacing:.7px;gap:5px;}
+    .eradot{width:6px;height:6px;}
+  }
   .arcpill{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
     padding:2px 7px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--dim);}
   .arcpill.dup,.arcpill.key{background:rgba(255,210,63,.14);border-color:rgba(255,210,63,.42);color:var(--xyellow);}
@@ -745,6 +771,190 @@ const ARC_SUMS = {
 "c-sc":"Cable and Hope return to the present and every anti-mutant force on Earth converges. Bastion has assembled a council of resurrected human supremacists and encases San Francisco in an impenetrable dome, cutting the X-Men off. The deaths are the point: Nightcrawler is killed teleporting Hope to safety, Cable burns out the last of himself to hold the time portal and dies, and Kurt's loss in particular reshapes the team for years. A Nimrod army pours through a portal from the future and X-Force is sent through on a one-way mission to shut it down \u2014 the sequence that ends the series and sets up Uncanny X-Force. Hope's powers finally manifest, spectacularly, and the arc closes with five new mutants lighting up Cerebro for the first time since M-Day. The mutant decline ends here."
 };
 
+/* Publication year per issue. The X-Men page is not in the build
+   pipeline -- there is no wiki page for a book that was never printed --
+   so this map is its own, harvested against tools/marvel_years.json's
+   source and pasted here, exactly as its MARVEL map is. */
+const YEARS = {
+
+"bs-1": 2010,
+"cab-1": 2008,
+"cab-10": 2009,
+"cab-11": 2009,
+"cab-12": 2009,
+"cab-13": 2009,
+"cab-14": 2009,
+"cab-15": 2009,
+"cab-16": 2009,
+"cab-17": 2009,
+"cab-18": 2009,
+"cab-19": 2009,
+"cab-2": 2008,
+"cab-20": 2009,
+"cab-21": 2009,
+"cab-22": 2010,
+"cab-23": 2010,
+"cab-24": 2010,
+"cab-25": 2010,
+"cab-3": 2008,
+"cab-4": 2008,
+"cab-5": 2008,
+"cab-6": 2008,
+"cab-7": 2008,
+"cab-8": 2008,
+"cab-9": 2008,
+"cab-ks": 2008,
+"da-7": 2009,
+"da-8": 2009,
+"hb-1": 2010,
+"hb-2": 2010,
+"hb-3": 2010,
+"lb-1": 2009,
+"lb-2": 2009,
+"lb-3": 2009,
+"leg-208": 2008,
+"leg-209": 2008,
+"leg-210": 2008,
+"leg-211": 2008,
+"leg-212": 2008,
+"leg-213": 2008,
+"leg-214": 2008,
+"leg-215": 2008,
+"leg-216": 2008,
+"leg-217": 2008,
+"leg-218": 2008,
+"leg-219": 2008,
+"leg-220": 2009,
+"leg-221": 2009,
+"leg-222": 2009,
+"leg-223": 2009,
+"leg-224": 2009,
+"leg-225": 2009,
+"leg-226": 2009,
+"leg-227": 2009,
+"leg-228": 2009,
+"leg-229": 2009,
+"leg-230": 2009,
+"leg-231": 2009,
+"leg-232": 2010,
+"leg-233": 2010,
+"leg-234": 2010,
+"leg-235": 2010,
+"leg-236": 2010,
+"leg-237": 2010,
+"mw-0": 2009,
+"nec-1": 2009,
+"nec-g": 2009,
+"nm-12": 2010,
+"nm-13": 2010,
+"nm-14": 2010,
+"nm-6": 2009,
+"nm-7": 2009,
+"nm-8": 2009,
+"os-1": 2008,
+"sc-1": 2010,
+"sc-2": 2010,
+"sc-hope": 2010,
+"sc-prep": 2010,
+"sv-1": 2010,
+"sv-2": 2010,
+"sv-3": 2010,
+"unc-495": 2008,
+"unc-496": 2008,
+"unc-497": 2008,
+"unc-498": 2008,
+"unc-499": 2008,
+"unc-500": 2008,
+"unc-501": 2008,
+"unc-502": 2008,
+"unc-503": 2008,
+"unc-504": 2008,
+"unc-505": 2008,
+"unc-506": 2009,
+"unc-507": 2009,
+"unc-508": 2009,
+"unc-509": 2009,
+"unc-510": 2009,
+"unc-511": 2009,
+"unc-512": 2009,
+"unc-513": 2009,
+"unc-514": 2009,
+"unc-515": 2009,
+"unc-516": 2009,
+"unc-517": 2009,
+"unc-518": 2009,
+"unc-519": 2009,
+"unc-520": 2010,
+"unc-521": 2010,
+"unc-522": 2010,
+"unc-523": 2010,
+"unc-524": 2010,
+"unc-525": 2010,
+"unc-ann2": 2009,
+"uto-0": 2009,
+"uto-x": 2009,
+"xfa-200": 2009,
+"xfa-201": 2010,
+"xfa-202": 2010,
+"xfa-203": 2010,
+"xfa-204": 2010,
+"xfa-205": 2010,
+"xfa-206": 2010,
+"xfa-28": 2008,
+"xfa-29": 2008,
+"xfa-30": 2008,
+"xfa-31": 2008,
+"xfa-32": 2008,
+"xfa-33": 2008,
+"xfa-34": 2008,
+"xfa-35": 2008,
+"xfa-36": 2008,
+"xfa-37": 2008,
+"xfa-38": 2008,
+"xfa-39": 2009,
+"xfa-40": 2009,
+"xfa-41": 2009,
+"xfa-42": 2009,
+"xfa-43": 2009,
+"xfa-44": 2009,
+"xfa-45": 2009,
+"xfa-46": 2009,
+"xfa-47": 2009,
+"xfa-48": 2009,
+"xfa-49": 2009,
+"xfa-50": 2009,
+"xfo-1": 2008,
+"xfo-10": 2008,
+"xfo-11": 2009,
+"xfo-12": 2009,
+"xfo-13": 2009,
+"xfo-14": 2009,
+"xfo-15": 2009,
+"xfo-16": 2009,
+"xfo-17": 2009,
+"xfo-18": 2009,
+"xfo-19": 2009,
+"xfo-2": 2008,
+"xfo-20": 2009,
+"xfo-21": 2009,
+"xfo-22": 2009,
+"xfo-23": 2010,
+"xfo-24": 2010,
+"xfo-25": 2010,
+"xfo-26": 2010,
+"xfo-27": 2010,
+"xfo-28": 2010,
+"xfo-3": 2008,
+"xfo-4": 2008,
+"xfo-5": 2008,
+"xfo-6": 2008,
+"xfo-7": 2008,
+"xfo-8": 2008,
+"xfo-9": 2008
+
+};
+
+
 
 /* ============ STATE ============
    Keys are unchanged from the six-act version of this page on purpose: the four
@@ -901,10 +1111,59 @@ function buildShelf(){
             '<div class="ometa">'+esc(o.era)+'</div>'+
           '</div>'+
         '</div>'+
-      '</button></div></div>';
+      '</button>'+eraTag(o.era)+'</div></div>';
   }).join("");
   document.getElementById("shelfCount").textContent =
     OMNI.length+" volumes · "+flat.length+" issues · 0 in print";
+}
+
+/* ============ ERAS ============
+   Eight bands, the shelf's own -- not the textbook ones. Golden runs back to
+   1880 so nothing on any shelf can fall off the front, Copper and Chromium
+   split the 80s/90s where the direct market and then the Image aesthetic
+   actually changed the books, and the last three are named for what the
+   comics were made of rather than for a publishing initiative.
+
+   A volume's tag comes from its own `era` string ("1962-1968"), so there is
+   no new data behind this -- and a book that straddles a boundary says so
+   with both dots and both names rather than picking the bigger half. */
+const ERAS=[
+  ["Golden",      1880,1960,"#e0a72e"],
+  ["Silver",      1961,1969,"#c3cfdd"],
+  ["Bronze",      1970,1984,"#b0703a"],
+  ["Copper",      1985,1991,"#d95c46"],
+  ["Chromium",    1992,1999,"#8fd8ee"],
+  ["Plastic",     2000,2009,"#9d7bf0"],
+  ["Modern",      2010,2020,"#3fb98f"],
+  ["Contemporary",2021,2029,"#ec5f9e"]
+];
+function eraOf(y){
+  y=+y; if(!y) return null;
+  for(const e of ERAS) if(y>=e[1]&&y<=e[2]) return e;
+  return y<ERAS[0][1] ? ERAS[0] : ERAS[ERAS.length-1];
+}
+/* "1962-1968" -> the span of bands it touches. Takes any string with years in
+   it, so a volume era, a chapter era and a bare year all work. */
+function eraSpan(s){
+  const ys=(String(s||"").match(/\d{4}/g)||[]).map(Number);
+  if(!ys.length) return [];
+  const a=eraOf(Math.min.apply(null,ys)), b=eraOf(Math.max.apply(null,ys));
+  if(!a||!b) return [];
+  const i=ERAS.indexOf(a), j=ERAS.indexOf(b);
+  return i===j ? [a] : [a,b];
+}
+function eraTag(s){
+  const sp=eraSpan(s); if(!sp.length) return "";
+  const dots=sp.map(e=>'<span class="eradot" style="--d:'+e[3]+'"></span>').join("");
+  const name=sp.length===1 ? sp[0][0]+" Age" : sp[0][0]+" &ndash; "+sp[1][0]+" Age";
+  return '<div class="eratag" style="--e1:'+sp[0][3]+'"><span class="eradots">'+dots+
+         '</span><span class="elabel">'+name+'</span></div>';
+}
+/* The year chip on an issue row, tinted by the age that year belongs to. */
+function yearPill(iss){
+  const y=YEARS[iss.id]; if(!y) return "";
+  const e=eraOf(y);
+  return '<span class="yrpill"'+(e?' style="--e1:'+e[3]+'" title="'+e[0]+' Age"':'')+'>'+y+'</span>';
 }
 
 /* ============ VOLUME DETAIL ============ */
@@ -943,7 +1202,7 @@ function buildOmni(o){
             coverHTML(iss)+
             '<div class="issue-info" data-toggle="'+iss.id+'">'+
               '<div class="t">'+esc(iss.t)+'</div>'+
-              '<div class="a">'+(iss.arc?'<span class="arcpill'+(iss.key?' key':'')+'">'+esc(iss.arc)+'</span>':'')+'</div></div>'+
+              '<div class="a">'+yearPill(iss)+(iss.arc?'<span class="arcpill'+(iss.key?' key':'')+'">'+esc(iss.arc)+'</span>':'')+'</div></div>'+
             '<div class="issue-acts">'+
               '<a class="mini read-link'+(MARVEL[iss.id]?'':' approx')+'" target="_blank" rel="noopener" href="'+marvelURL(iss)+'" title="'+(MARVEL[iss.id]?'Open on Marvel':'Search Marvel for this issue')+'">Read</a>'+
               '<button class="mini" data-sum="'+iss.id+'">Summary</button>'+

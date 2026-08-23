@@ -413,6 +413,68 @@ not change and no route fires, so the click handler does the jump itself —
 view and flashes it. Crossing from the homescreen loses `pendingJump` (different
 document); the volume view opens the right chapter anyway.
 
+### The eight ages, and the year on every row
+
+Two things landed together in Aug 2026 because they are the same idea seen at
+two scales: **a shelf tile says which age its book belongs to, and an issue row
+says which year it came out**, both tinted by the same palette. Scrolling one
+chapter you watch the colour shift under you when the book crosses an age,
+which is the whole point of reading a shelf historically.
+
+`ERAS` is duplicated in all ten pages like the rest of the chrome. The bands are
+**the user's own, not the textbook ones**, and re-deriving them from a standard
+reference is the wrong move:
+
+| Age | Years | Dot |
+|---|---|---|
+| Golden | 1880–1960 | `#e0a72e` gold |
+| Silver | 1961–1969 | `#c3cfdd` silver |
+| Bronze | 1970–1984 | `#b0703a` bronze |
+| Copper | 1985–1991 | `#d95c46` copper |
+| Chromium | 1992–1999 | `#8fd8ee` foil cyan |
+| Plastic | 2000–2009 | `#9d7bf0` violet |
+| Modern | 2010–2020 | `#3fb98f` teal |
+| Contemporary | 2021–2029 | `#ec5f9e` magenta |
+
+Golden runs back to 1880 so nothing on any shelf can fall off the front. An
+eleven-band variant was considered and rejected: it only adds seven multi-era
+tiles across the 131 volumes and turns most of the modern half of every shelf
+into a hyphenated two-era label. Its finer distinctions — 1992 as the Image
+line, 2000 as decompression, 2005 as the event era — live in the guided tour
+prose instead, which is where they read as history rather than as a label.
+
+**The era tag needs no new data.** `eraSpan()` reads the years out of a
+volume's own `era` string, so a book that straddles a boundary shows both dots
+and both names ("Copper – Chromium Age") rather than picking the bigger half.
+40 of the 131 volumes are two-era.
+
+**The placard sits under the book, not on it.** `.eratag` is a sibling of
+`.book` inside `.cell`, which reads as a museum placard under an exhibit. Do
+not move it into `.plate` — the plate is printed trade dress, which is why the
+progress bar came off it, and a UI pill in there is the same mistake.
+
+**The year is generated, like `MARVEL`.** `YEARS` maps shelf issue id to a
+four-digit year and is spliced by `build_omnibus_data.py` — do not hand-edit
+it. The join is two stores deep: `marvel_ids.json` is keyed by shelf issue id,
+`marvel_years.json` by marvel's own comic id. Keeping the dates keyed
+marvel-side is deliberate — the id store is shared, so the same comic dates the
+same way on every shelf, and a re-link that repoints an issue redates it for
+free.
+
+The source is one field nobody had looked at: `bifrost.marvel.com/catalog/
+comics/<id>` returns **`published_date`**, and `tools/years.py` probes only the
+~6,100 ids already linked rather than the 140,000-id space `catalog.py sweep`
+walks. It came back **6130 of 6130**, so every shelf carries years at exactly
+its link coverage (93–100%). The dates are cover dates — Incredible Hulk #1
+answers 1962-05-01 — which is what a reader means by "what year is this".
+
+That endpoint also carries **per-issue creators**, which is open item 15 and is
+suddenly cheap. Not done; worth knowing it is one field away.
+
+**X-Men has its own `YEARS`**, hand-built and pasted, exactly as its `MARVEL`
+map is, because that page is deliberately not in the build pipeline. All 174
+issues are dated, 2008–2010.
+
 ### The dark chrome
 
 The palette is one block of variables at the top of every page's `<style>`,
