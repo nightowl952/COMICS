@@ -640,6 +640,70 @@
   "sid": null
  },
  {
+  "hero": "captain-america",
+  "vol": "ca-o4",
+  "id": "foom-11",
+  "t": "FOOM #11",
+  "s": "FOOM",
+  "pfx": "foom",
+  "num": "11",
+  "link": null,
+  "year": null,
+  "era": [
+   1976,
+   1977
+  ],
+  "sid": null
+ },
+ {
+  "hero": "captain-america",
+  "vol": "waid-o1",
+  "id": "capsolrc-1",
+  "t": "Captain America: Sentinel of Liberty Rough Cut #1",
+  "s": "Captain America: Sentinel of Liberty Rough Cut",
+  "pfx": "capsolrc",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1998
+  ],
+  "sid": null
+ },
+ {
+  "hero": "captain-america",
+  "vol": "waid-o1",
+  "id": "caprwb-1",
+  "t": "Captain America: Red, White & Blue #1",
+  "s": "Captain America: Red, White & Blue",
+  "pfx": "caprwb",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1998
+  ],
+  "sid": null
+ },
+ {
+  "hero": "captain-america",
+  "vol": "coates-o1",
+  "id": "fcbd18-1",
+  "t": "Free Comic Book Day 2018 (Avengers/Captain America) #1",
+  "s": "Free Comic Book Day 2018 (Avengers/Captain America)",
+  "pfx": "fcbd18",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2018,
+   2021
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",

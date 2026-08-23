@@ -84,6 +84,18 @@ HEROES = {
         # twice.
         ids     = "marvel_ids.json",
     ),
+    "captain-america": dict(
+        name    = "Captain America",
+        tracker = "captainamerica-reading-tracker.html",
+        art     = os.path.join("Art", "Captain-America"),
+        meta    = "captainamerica_meta",
+        raw     = "captainamerica_contents_raw.json",
+        # the same shared store again -- this shelf collects Amazing
+        # Spider-Man, Incredible Hulk, Iron Man, Daredevil Annual, Marvel
+        # Fanfare, Marvel Premiere, What If? and Not Brand Echh issues the
+        # other seven shelves already reach for.
+        ids     = "marvel_ids.json",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",

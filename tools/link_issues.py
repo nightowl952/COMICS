@@ -115,6 +115,11 @@ NUM_ALIAS = {
     # plain #1 in the same run, so folding the suffix away would link those to
     # the wrong comic. This is the only .NOW on any shelf.
     "anmpo-1.NOW": "1",
+    # Two more of the same shape from the Captain America shelf. Both are
+    # ".NOW" cover branding on an issue marvel.com numbers plainly, and both
+    # are pinned per-issue for the reason above rather than folded away.
+    "cap7-16.NOW": "16",
+    "wsolbm-1.NOW": "1",
 }
 
 

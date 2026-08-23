@@ -59,12 +59,17 @@ ORDER = [
   creators="Mark Millar, John Romita Jr. & Steve McNiven", era="2004–2009", released="Jul 2013",
   art="o-millar", tex="tex-steel", spine="By Mark Millar",
  cover="Art/Wolverine/millar-o1.jpg",
-  note="Two runs in one book. Enemy of the State turns him into HYDRA's weapon and points him at everyone he knows; Old Man Logan, five years later, is the western about the version of him who quit.")),
+  note="Two runs in one book. Enemy of the State turns him into HYDRA's weapon and points him at everyone he knows; Old Man Logan, five years later, is the western about the version of him who quit — those seven issues are in the Old Man Logan omnibus too, which is where the overlap pill on them comes from.")),
 ("Wolverine by Jason Aaron Omnibus Vol 1 1", dict(id="aaron-o1", title="Wolverine by Jason Aaron Omnibus", vol="",
   creators="Jason Aaron, Ron Garney & Adam Kubert", era="2007–2010", released="Oct 2011",
   art="o-aaron", tex="tex-stripe", spine="By Jason Aaron",
  cover="Art/Wolverine/aaron-o1.jpg",
   note="Get Mystique, Manifest Destiny, and all sixteen issues of Wolverine: Weapon X — the run where Aaron works out that the character is funniest and worst when he is certain he deserves what is coming.")),
+("Wolverine: Old Man Logan Omnibus Vol 1 1", dict(id="oml-o1", title="Wolverine: Old Man Logan Omnibus", vol="",
+  creators="Mark Millar, Jeff Lemire & Andrea Sorrentino", era="2008–2018", released="Dec 2026",
+  art="o-bone", tex="tex-crosshatch", spine="Old Man Logan",
+ cover="Art/Wolverine/oml-o1.jpg",
+  note="Ships 15 December 2026 \u2014 on the shelf ahead of that because its contents, links and jacket are all real. Millar and McNiven's original story is here again (the Millar volume has it too, so those seven issues carry the overlap pill), and then the part that was missing: Lemire and Sorrentino's ongoing, which drops the old man into the present day and lets him try to stop his own future from happening."),),
 ("Wolverine Goes to Hell Omnibus Vol 1 1", dict(id="hell-o1", title="Wolverine Goes to Hell Omnibus", vol="",
   creators="Jason Aaron, Renato Guedes & Jason Latour", era="2010–2011", released="May 2018",
   art="o-hell", tex="tex-slash", spine="Goes to Hell",
@@ -108,7 +113,7 @@ SHELF = [
   "wolv-o1", "wolv-o2", "wolv-o3", "wolv-o4", "wolv-o5", "wolv-o6",
   "ndy-o1",
   "millar-o1", "aaron-o1", "hell-o1", "xforce-o1",
-  "death-o1", "return-o1", "sabre-o1",
+  "death-o1", "oml-o1", "return-o1", "sabre-o1",
 ]
 
 PLACEHOLDER_PAGES = {}
@@ -118,6 +123,9 @@ PLACEHOLDER_PAGES = {}
 # absent -- hulk_meta.py already maps it as ("wolv3", "Wolverine (2003)"), and
 # the marvel.com id store is shared, so the same series must key the same way.
 SERIES_EXTRA = {
+ "Old Man Logan Vol 1":                                ("oml",    "Old Man Logan (2015)"),
+ "Old Man Logan Vol 2":                                ("oml2",   "Old Man Logan (2016)"),
+ "Wolverine: Old Man Logan Giant-Size Vol 1":          ("omlgs",  "Wolverine: Old Man Logan Giant-Size"),
  "Wolverine Vol 1":                                    ("wolv1",  "Wolverine (1982)"),
  "Wolverine Vol 2":                                    ("wolv2",  "Wolverine"),
  "Wolverine Vol 4":                                    ("wolv4",  "Wolverine (2010)"),
