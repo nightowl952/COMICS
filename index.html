@@ -173,13 +173,19 @@
   .brand{font-size:12px;font-weight:900;font-style:italic;letter-spacing:2.4px;text-transform:uppercase;
     color:var(--txt);text-decoration:none;text-shadow:0 2px 8px rgba(0,0,0,.8);}
   .brand:hover{color:var(--xyellow);}
+  /* The bar sits over the banner, so the gear needs a ground of its own -- a
+     white wash alone disappears against a bright plate. Hence the dark disc
+     and the shadow under the glyph, the same trick the banner type uses.
+     22.5deg on hover is half a tooth: at 45 the gear would look untouched. */
   .gear{width:32px;height:32px;flex:0 0 32px;border-radius:50%;cursor:pointer;
     display:flex;align-items:center;justify-content:center;font-family:inherit;
-    background:rgba(255,255,255,.07);border:1px solid var(--line);
+    background:rgba(10,14,21,.42);border:1px solid var(--line);
     transition:transform .25s cubic-bezier(.2,.8,.3,1), background .15s;}
-  .gear:hover{background:rgba(255,255,255,.15);transform:rotate(40deg);}
+  .gear:hover{background:rgba(10,14,21,.62);transform:rotate(22.5deg);}
+  .gear:hover svg{fill:var(--txt);}
   .gear:focus-visible{outline:2px solid var(--xyellow);outline-offset:2px;}
-  .gear svg{width:17px;height:17px;fill:var(--dim);}
+  .gear svg{width:17px;height:17px;fill:var(--dim);
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.65));transition:fill .15s;}
 
   /* ---- the homescreen banner's fallback ----
      Every other page falls back to its subject's poster scan; the homescreen
@@ -378,7 +384,11 @@
   <a class="brand" href="#">C.O.M.I.C.S.</a>
   <span class="spacer"></span>
   <button class="gear" id="gearBtn" aria-label="Settings" title="Settings">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/><path d="M19.4 13a7.8 7.8 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.7 7.7 0 0 0-1.7-1L14.9 3H9.1l-.4 2.6c-.6.2-1.2.6-1.7 1l-2.4-1-2 3.4L2.6 11a7.8 7.8 0 0 0 0 2l-2 1.6 2 3.4 2.4-1c.5.4 1.1.8 1.7 1l.4 2.6h5.8l.4-2.6c.6-.2 1.2-.6 1.7-1l2.4 1 2-3.4-2-1.6z" opacity=".55"/></svg>
+    <!-- One path, eight teeth on a 45deg pitch, the hub cut out with
+         fill-rule:evenodd. The old icon was two overlapping paths at
+         different opacities and its teeth were uneven, which read as a
+         broken cog at 17px. -->
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.33 10.01L22.08 10.43A10.2 10.2 0 0 1 22.08 13.57L19.33 13.99A7.6 7.6 0 0 1 18.59 15.78L20.24 18.01A10.2 10.2 0 0 1 18.01 20.24L15.78 18.59A7.6 7.6 0 0 1 13.99 19.33L13.57 22.08A10.2 10.2 0 0 1 10.43 22.08L10.01 19.33A7.6 7.6 0 0 1 8.22 18.59L5.99 20.24A10.2 10.2 0 0 1 3.76 18.01L5.41 15.78A7.6 7.6 0 0 1 4.67 13.99L1.92 13.57A10.2 10.2 0 0 1 1.92 10.43L4.67 10.01A7.6 7.6 0 0 1 5.41 8.22L3.76 5.99A10.2 10.2 0 0 1 5.99 3.76L8.22 5.41A7.6 7.6 0 0 1 10.01 4.67L10.43 1.92A10.2 10.2 0 0 1 13.57 1.92L13.99 4.67A7.6 7.6 0 0 1 15.78 5.41L18.01 3.76A10.2 10.2 0 0 1 20.24 5.99L18.59 8.22A7.6 7.6 0 0 1 19.33 10.01ZM12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg>
   </button>
 </nav>
 
