@@ -108,6 +108,20 @@ HEROES = {
         # own Iron Man run is already keyed `im` by four of them.
         ids     = "marvel_ids.json",
     ),
+    "black-panther": dict(
+        name    = "Black Panther",
+        tracker = "blackpanther-reading-tracker.html",
+        art     = os.path.join("Art", "Black-Panther"),
+        meta    = "blackpanther_meta",
+        raw     = "blackpanther_contents_raw.json",
+        # the same shared store again -- this shelf collects Fantastic Four,
+        # Avengers, Daredevil, Captain America, Tales of Suspense, Marvel
+        # Team-Up, Marvel Two-In-One, Marvel Comics Presents, Defenders and
+        # X-Men issues the other nine shelves already reach for, and two of its
+        # own Black Panther series are already keyed `bp98` and `bp16` by the
+        # Moon Knight and Wolverine shelves.
+        ids     = "marvel_ids.json",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",

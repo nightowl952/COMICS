@@ -510,7 +510,7 @@
     <div class="hb-in">
       <div class="hb-name">C.O.M.I.C.S.</div>
       <div class="hb-sub">Caleb&rsquo;s Online Marvel Intractable Comic Shelf</div>
-      <div class="hb-blurb">Ten subjects, every one of them a shelf of omnibus volumes with the issue list
+      <div class="hb-blurb">Eleven subjects, every one of them a shelf of omnibus volumes with the issue list
         each printed book actually holds. Pick up wherever you left off &mdash; or start something new.</div>
     </div>
   </div>
@@ -743,18 +743,21 @@ const HEROES = [
     era:"Omnibus Shelf · 1967–2017", file:"silversurfer-reading-tracker.html", total:141,
     desc:"Every Silver Surfer omnibus there is — four volumes, 141 issues, reproducing exactly what each printed book holds. Lee and Buscema's eighteen double-sized issues under Galactus's barrier; Return to the Spaceways for the 1980s, when Englehart and Rogers finally let him off Earth, with Stan Lee's two graphic novels and Moebius's Parable in the tail of it; Starlin's Infinity Gauntlet, where the book stops being about the Surfer's conscience and becomes about Thanos; then Slott and Allred's thirty issues of him and Dawn Greenwood loose in time. The Gauntlet volume ships in November and is on the shelf ahead of that, because its contents, links and cover are all real. What is still missing is Marvel's doing, not ours — Silver Surfer (1987) #67–146, the 2003 series and the 2011 one have no omnibus at all." },
 
-  /* ---- Row three: placeholders. Poster art is in, nothing else is.
-     No `logo` yet, so the plate falls back to the subject name as text -- that
-     is the degrade path posterHTML() already has, not a bug. No banner either,
-     which only matters once one of these gets a tracker page. ---- */
+  /* ---- Row three. Four placeholders and, since Aug 2026, one live shelf:
+     Black Panther was curated in place rather than moved, because HEROES order
+     is the user's and a live subject is not a reason to reorder it.
+     The other four have poster art and a printed logo and nothing else. None
+     of the five has a banner; that only matters once one gets a tracker page,
+     and Black Panther's now does -- its hbFallback() degrades to the poster
+     scan, which is the second rung of that chain working as designed. ---- */
 
   { id:"avengers", name:"The Avengers", art:"a-avengers", tex:"tex-assemble", emblem:"avengers", cover:"Art/Heroes/avengers.jpg", pos:"39%", plate:["22,92,186","5,20,58"], logo:"Art/Logos/avengers.png",
     era:"Shelf in curation", file:null, total:0,
     desc:"Earth's Mightiest Heroes, and the largest shelf on the site if it is ever built \u2014 the 1963 founding, Thomas and Buscema's Kree/Skrull War, Englehart, Shooter's Korvac Saga, Stern and Buscema, Busiek and P\u00e9rez, Bendis's New Avengers and Hickman's run into Secret Wars. The scope call is the whole problem: Avengers omnibuses run to dozens of volumes and the spin-off teams have their own. Nothing is decided yet." },
 
   { id:"black-panther", name:"Black Panther", art:"a-panther", tex:"tex-weave", emblem:"panther", cover:"Art/Heroes/black-panther.jpg", pos:"30%", plate:["74,34,146","14,5,40"], logo:"Art/Logos/black-panther.png",
-    era:"Shelf in curation", file:null, total:0,
-    desc:"T'Challa, from his first appearance in Fantastic Four #52 through the Jungle Action run, Priest's Marvel Knights years, Hudlin, and Coates's five-year reimagining of Wakanda as a country with politics. Shuri's and Killmonger's books are the obvious scope question. Nothing is decided yet." },
+    era:"Omnibus Shelf \u00b7 1966\u20132021", file:"blackpanther-reading-tracker.html", total:350,
+    desc:"Every Black Panther omnibus Marvel has printed \u2014 seven volumes, 350 issues, reproducing exactly what each printed book holds. The Early Marvel Years is ten years of him being the best character in other people's comics and then Don McGregor's Jungle Action, which serialised one story across thirteen issues when nobody serialised anything. Panther's Prey picks up Kirby's own pulp run and the scattered 1980s; Priest reinvents him twice over in two volumes; Hudlin writes the version the films drew on; Coates spends fifty issues asking whether a hereditary king can be a hero. Wakanda: World of Black Panther is the odd one \u2014 an anthology of the books that grew up around the country, Shuri and Killmonger and the Dora Milaje included. The gaps are Marvel's: the 2011 Liss run and everything from 2021 on have no omnibus." },
 
   { id:"ghost-rider", name:"Ghost Rider", art:"a-ghost", tex:"tex-flame", emblem:"skull", cover:"Art/Heroes/ghost-rider.jpg", pos:"28%", plate:["176,66,10","44,12,2"], logo:"Art/Logos/ghost-rider.png",
     era:"Shelf in curation", file:null, total:0,
@@ -818,6 +821,7 @@ const PROGRESS_KEYS = {
   "silver-surfer":  "silversurfer-omni-progress-v1",
   "captain-america":"captainamerica-omni-progress-v1",
   "iron-man":       "ironman-omni-progress-v1",
+  "black-panther":  "blackpanther-omni-progress-v1",
   "xmen":           "xmen-saga-progress-v2"
 };
 /* Read straight from the X-Men tracker's own progress key as a fallback, so the

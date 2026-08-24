@@ -720,6 +720,118 @@
   "sid": null
  },
  {
+  "hero": "black-panther",
+  "vol": "early-o1",
+  "id": "astt-7",
+  "t": "Astonishing Tales #7",
+  "s": "Astonishing Tales",
+  "pfx": "astt",
+  "num": "7",
+  "link": null,
+  "year": null,
+  "era": [
+   1966,
+   1976
+  ],
+  "sid": null
+ },
+ {
+  "hero": "black-panther",
+  "vol": "prey-o1",
+  "id": "bpprey-1",
+  "t": "Black Panther: Panther's Prey #1",
+  "s": "Black Panther: Panther's Prey",
+  "pfx": "bpprey",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1977,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "black-panther",
+  "vol": "prey-o1",
+  "id": "bpprey-2",
+  "t": "Black Panther: Panther's Prey #2",
+  "s": "Black Panther: Panther's Prey",
+  "pfx": "bpprey",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   1977,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "black-panther",
+  "vol": "prey-o1",
+  "id": "bpprey-3",
+  "t": "Black Panther: Panther's Prey #3",
+  "s": "Black Panther: Panther's Prey",
+  "pfx": "bpprey",
+  "num": "3",
+  "link": null,
+  "year": null,
+  "era": [
+   1977,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "black-panther",
+  "vol": "prey-o1",
+  "id": "bpprey-4",
+  "t": "Black Panther: Panther's Prey #4",
+  "s": "Black Panther: Panther's Prey",
+  "pfx": "bpprey",
+  "num": "4",
+  "link": null,
+  "year": null,
+  "era": [
+   1977,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "black-panther",
+  "vol": "prey-o1",
+  "id": "wthe-9",
+  "t": "What The--?! #9",
+  "s": "What The--?!",
+  "pfx": "wthe",
+  "num": "9",
+  "link": null,
+  "year": null,
+  "era": [
+   1977,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "black-panther",
+  "vol": "hudlin-o1",
+  "id": "bpsaga-1",
+  "t": "Black Panther Saga #1",
+  "s": "Black Panther Saga",
+  "pfx": "bpsaga",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2005,
+   2010
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",
