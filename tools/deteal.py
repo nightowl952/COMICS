@@ -47,7 +47,7 @@ ROOT = os.path.dirname(HERE)
 
 LO, HI  = -18.0, 2.0     # max(G,B)-R ramp: warm subject -> cool background
 GATE    = (160.0, 60.0)  # dim only pixels whose brightest channel is below this
-DARK    = 0.50           # what a fully cool, fully dark pixel is scaled to
+DARK    = 0.22           # what a fully cool, fully dark pixel is scaled to
 
 
 def deteal(im, dark=DARK):

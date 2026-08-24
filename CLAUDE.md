@@ -1025,6 +1025,15 @@ put the teal straight back** — re-run `deteal.py` instead:
 python3 tools/deteal.py ghost-rider "Art/covers/Ghost Rider.jpg"
 ```
 
+**`DARK` in that tool is the shelf's setting, not a suggestion** — it is what a
+fully cool, fully dark pixel is scaled to, and the command above reproduces the
+poster that is on the wall. It went to `0.22` on a second pass, at the user's
+request for a darker background; `0.50` was the first version. Four values were
+rendered on the real tile before picking, which is the only way to choose one:
+below about `0.15` the smoke stops being smoke and the top of the poster reads
+as a flat cutout, and above `0.5` the plate starts to look like a separate
+panel again. `1.0` desaturates without dimming at all.
+
 **Silver Surfer's plate was black for a day and is now dark stone grey-blue**
 (`74,86,102` → `28,34,44`), at the user's request. The black version did work,
 in the sense that the poster is chrome on deep space and the plate read as more
