@@ -136,6 +136,20 @@ HEROES = {
         # keyed `gr6`.
         ids     = "marvel_ids.json",
     ),
+    "doctor-strange": dict(
+        name    = "Doctor Strange",
+        tracker = "doctorstrange-reading-tracker.html",
+        art     = os.path.join("Art", "Doctor-Strange"),
+        meta    = "doctorstrange_meta",
+        raw     = "doctorstrange_contents_raw.json",
+        # the same shared store again -- this shelf collects Avengers, Tales of
+        # Suspense, Incredible Hulk, Marvel Two-In-One, Marvel Premiere, Marvel
+        # Comics Presents, Amazing Spider-Man Annual, Silver Surfer, Morbius,
+        # Ghost Rider (1990) and Midnight Sons Unlimited issues the other
+        # eleven shelves already reach for, and Doctor Strange, Sorcerer
+        # Supreme is already keyed `dsss` by the Ghost Rider shelf.
+        ids     = "marvel_ids.json",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",

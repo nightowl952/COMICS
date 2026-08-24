@@ -510,7 +510,7 @@
     <div class="hb-in">
       <div class="hb-name">C.O.M.I.C.S.</div>
       <div class="hb-sub">Caleb&rsquo;s Online Marvel Intractable Comic Shelf</div>
-      <div class="hb-blurb">Eleven subjects, every one of them a shelf of omnibus volumes with the issue list
+      <div class="hb-blurb">Twelve subjects, every one of them a shelf of omnibus volumes with the issue list
         each printed book actually holds. Pick up wherever you left off &mdash; or start something new.</div>
     </div>
   </div>
@@ -768,8 +768,8 @@ const HEROES = [
     desc:"Eddie Brock and the symbiote, from Lethal Protector through the Venomnibus volumes to Cates and Stegman's King in Black. Note the Spider-Man shelf already carries Spider-Man vs. Venom, and the two Venomnibus volumes were on that shelf briefly and came off as Venom's books rather than Peter's \u2014 which is exactly the material this subject would take. Nothing is decided yet." },
 
   { id:"doctor-strange", name:"Doctor Strange", art:"a-strange", tex:"tex-mandala", emblem:"eye", cover:"Art/Heroes/doctor-strange.jpg", pos:"31%", plate:["18,114,86","3,27,21"], logo:"Art/Logos/doctor-strange.png",
-    era:"Shelf in curation", file:null, total:0,
-    desc:"The Sorcerer Supreme, starting in the back of Strange Tales in 1963 with Ditko drawing geometry nobody had drawn before, then Englehart and Brunner, Stern and Rogers, the long Defenders overlap, and Aaron's 2015 relaunch. Nothing is decided yet." }
+    era:"1963–2024 · 10 omnibuses", file:"doctorstrange-reading-tracker.html", total:348,
+    desc:"The Sorcerer Supreme, from Ditko's five-page backup strip at the back of Strange Tales to Clea running the Sanctum. Ten volumes: the two Strange Tales books, Master of the Mystic Arts for the Englehart and Brunner run, three Sorcerer Supreme volumes, Aaron and Bachalo, and Jed MacKay — plus both Defenders omnibuses, because he founds the non-team in the last thing he does in his own book. Two runs are missing and both are Marvel's doing: Doctor Strange (1974) #23–81, and everything between 1996 and 2015, which is where The Oath falls." }
 ];
 
 /* ============ STORAGE (dual-mode, same contract as the trackers) ============ */
@@ -823,6 +823,7 @@ const PROGRESS_KEYS = {
   "iron-man":       "ironman-omni-progress-v1",
   "black-panther":  "blackpanther-omni-progress-v1",
   "ghost-rider":    "ghostrider-omni-progress-v1",
+  "doctor-strange": "doctorstrange-omni-progress-v1",
   "xmen":           "xmen-saga-progress-v2"
 };
 /* Read straight from the X-Men tracker's own progress key as a fallback, so the

@@ -1072,6 +1072,102 @@
   "sid": null
  },
  {
+  "hero": "doctor-strange",
+  "vol": "def-o2",
+  "id": "mystales-21",
+  "t": "Mystery Tales #21",
+  "s": "Mystery Tales",
+  "pfx": "mystales",
+  "num": "21",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1976
+  ],
+  "sid": null
+ },
+ {
+  "hero": "doctor-strange",
+  "vol": "def-o2",
+  "id": "wof-11",
+  "t": "World of Fantasy #11",
+  "s": "World of Fantasy",
+  "pfx": "wof",
+  "num": "11",
+  "link": null,
+  "year": null,
+  "era": [
+   1975,
+   1976
+  ],
+  "sid": null
+ },
+ {
+  "hero": "doctor-strange",
+  "vol": "sss-o2",
+  "id": "smds-1",
+  "t": "Spider-Man/Doctor Strange: The Way to Dusty Death #1",
+  "s": "Spider-Man/Doctor Strange: The Way to Dusty Death",
+  "pfx": "smds",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "doctor-strange",
+  "vol": "sss-o2",
+  "id": "namorann-2",
+  "t": "Namor, the Sub-Mariner Annual #2",
+  "s": "Namor, the Sub-Mariner Annual",
+  "pfx": "namorann",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "doctor-strange",
+  "vol": "sss-o3",
+  "id": "dsssash-1",
+  "t": "Doctor Strange, Sorcerer Supreme Ashcan #1",
+  "s": "Doctor Strange, Sorcerer Supreme Ashcan",
+  "pfx": "dsssash",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1998
+  ],
+  "sid": null
+ },
+ {
+  "hero": "doctor-strange",
+  "vol": "sss-o3",
+  "id": "grmsmag-1",
+  "t": "Ghost Rider and the Midnight Sons Magazine #1",
+  "s": "Ghost Rider and the Midnight Sons Magazine",
+  "pfx": "grmsmag",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1998
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",
