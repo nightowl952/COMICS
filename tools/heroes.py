@@ -165,6 +165,21 @@ HEROES = {
         # in front of it.
         ids     = "marvel_ids.json",
     ),
+    "venom": dict(
+        name    = "Venom",
+        tracker = "venom-reading-tracker.html",
+        art     = os.path.join("Art", "Venom"),
+        meta    = "venom_meta",
+        raw     = "venom_contents_raw.json",
+        # the same shared store again -- this shelf collects Amazing
+        # Spider-Man, Web of Spider-Man, Spectacular Spider-Man, Spider-Man
+        # (1990), Marvel Comics Presents, Daredevil, Iron Man, Immortal Hulk,
+        # Fantastic Four (2018) and Avengers (2018) issues the other thirteen
+        # shelves already reach for -- and it shares a whole VOLUME with the
+        # Spider-Man shelf, Spider-Man vs. Venom, whose fifty issue ids have to
+        # resolve identically on both.
+        ids     = "marvel_ids.json",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",

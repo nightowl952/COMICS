@@ -156,6 +156,14 @@ SERIES_EXTRA = {
  "Thanos Vol 2":                                       ("thanos2",   "Thanos (2016)"),
  "Thanos Annual Vol 2":                                ("thanosann2","Thanos Annual (2018)"),
  "Thanos Legacy Vol 1":                                ("thanosleg", "Thanos Legacy"),
- "Guardians of the Galaxy Vol 6":                      ("gotg6",     "Guardians of the Galaxy (2020)"),
+ # The wiki's Vol 6 is DONNY CATES's 2019 series; Vol 7 is Al Ewing's 2020
+ # one, and marvel.com files them as separate series. This said "(2020)"
+ # until Aug 2026, which pointed all six of this shelf's issues at Ewing's
+ # run -- a whole-prefix mislink of the shape CLAUDE.md describes under
+ # "Two shelf issues on one marvel.com comic is a mislink", invisible to
+ # both audits because there was no dissenting minority and nothing else
+ # claimed those ids. It surfaced only when the Venom shelf asked for Vol 7
+ # and was refused.
+ "Guardians of the Galaxy Vol 6":                      ("gotg6",     "Guardians of the Galaxy (2019)"),
  "Wolverine: Black, White & Blood Vol 1":              ("wbwb",      "Wolverine: Black, White & Blood"),
 }

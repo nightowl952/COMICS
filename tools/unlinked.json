@@ -1600,6 +1600,102 @@
   "sid": null
  },
  {
+  "hero": "venom",
+  "vol": "venom-o1",
+  "id": "ssable-18",
+  "t": "Silver Sable and the Wild Pack #18",
+  "s": "Silver Sable and the Wild Pack",
+  "pfx": "ssable",
+  "num": "18",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "venom",
+  "vol": "venom-o1",
+  "id": "ssable-19",
+  "t": "Silver Sable and the Wild Pack #19",
+  "s": "Silver Sable and the Wild Pack",
+  "pfx": "ssable",
+  "num": "19",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1995
+  ],
+  "sid": null
+ },
+ {
+  "hero": "venom",
+  "vol": "venom-o2",
+  "id": "vsod--1",
+  "t": "Venom: Seed of Darkness #-1",
+  "s": "Venom: Seed of Darkness",
+  "pfx": "vsod",
+  "num": "-1",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1998
+  ],
+  "sid": null
+ },
+ {
+  "hero": "venom",
+  "vol": "venom-o2",
+  "id": "hs-1995",
+  "t": "Spider-Man Holiday Special #1995",
+  "s": "Spider-Man Holiday Special",
+  "pfx": "hs",
+  "num": "1995",
+  "link": null,
+  "year": null,
+  "era": [
+   1995,
+   1998
+  ],
+  "sid": null
+ },
+ {
+  "hero": "venom",
+  "vol": "cates-o1",
+  "id": "fcbd19-1",
+  "t": "Free Comic Book Day 2019 (Spider-Man/Venom) #1",
+  "s": "Free Comic Book Day 2019 (Spider-Man/Venom)",
+  "pfx": "fcbd19",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2018,
+   2021
+  ],
+  "sid": null
+ },
+ {
+  "hero": "venom",
+  "vol": "cates-o1",
+  "id": "fcbd20-1",
+  "t": "Free Comic Book Day 2020 (Spider-Man/Venom) #1",
+  "s": "Free Comic Book Day 2020 (Spider-Man/Venom)",
+  "pfx": "fcbd20",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2018,
+   2021
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",
