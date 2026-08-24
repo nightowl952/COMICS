@@ -155,6 +155,23 @@ ISSUE_ALIAS = {
     # tiebreak() has two candidates that are one issue. 84188 is the copy
     # flagged as being on Marvel Unlimited; the other is not.
     "mvoi-1": "84188",   # Marvel's Voices (2020) #1
+    # A third shape: bonus material that PREDATES the volume it is printed in.
+    # Avengers by Jonathan Hickman Omnibus Vol. 1 is a 2012-2013 book, and in
+    # the back of it are six 2008 Astonishing Tales digital chapters and a 2009
+    # Shang-Chi one-shot. era_fits() refuses all seven -- correctly, by its own
+    # rule, since the candidate series is not running in the volume's years --
+    # and there is no date rule that can tell reprinted backmatter from the
+    # wrong comic, which is exactly what era_fits() exists to catch (see the
+    # Strange Tales (1987)/(1994) case on the Doctor Strange shelf). Widening
+    # the volume's `era` instead would put a Plastic-Age dot on a Modern-Age
+    # Hickman book for the sake of seven issues, so these are pinned.
+    "atm-1": "23555",    # Astonishing Tales: Mojoworld Digital Comic (2008) #1
+    "atm-2": "23556",
+    "atm-3": "23557",
+    "atm-4": "23558",
+    "atm-5": "23559",
+    "atm-6": "23560",
+    "scmokf2-1": "28594",  # Shang-Chi: Master of Kung Fu (2009) #1
 }
 
 

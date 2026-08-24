@@ -150,6 +150,21 @@ HEROES = {
         # Supreme is already keyed `dsss` by the Ghost Rider shelf.
         ids     = "marvel_ids.json",
     ),
+    "avengers": dict(
+        name    = "The Avengers",
+        tracker = "avengers-reading-tracker.html",
+        art     = os.path.join("Art", "Avengers"),
+        meta    = "avengers_meta",
+        raw     = "avengers_contents_raw.json",
+        # the same shared store again, and by a wide margin the shelf that
+        # leans on it hardest -- Avengers (1963), Iron Man, Captain America,
+        # Thor, Daredevil, Fantastic Four, Incredible Hulk, Defenders, X-Men,
+        # Uncanny X-Men, Wolverine & the X-Men, Marvel Premiere, Marvel
+        # Two-In-One Annual, Marvel Treasury Edition, What If?, Not Brand Echh
+        # and West Coast Avengers are all already keyed by the twelve shelves
+        # in front of it.
+        ids     = "marvel_ids.json",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",

@@ -85,10 +85,15 @@ Keep replies short and plain. This is a hobby project, not a code review.
   `tools/ghostrider_meta.py`. It is the only shelf that does not open on its own
   title character — Johnny Blaze's 1972 run has never been collected in
   omnibus, so it starts in 1990 with Danny Ketch.
+- `avengers-reading-tracker.html` — the Avengers omnibus shelf. Same shape and
+  tooling again (`--hero avengers`); **27 volumes, the biggest shelf on the
+  site**, and the only one whose scope was settled by putting four named
+  questions to the user. Its `OMNI` array is generated from
+  `tools/avengers_meta.py`.
 - `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/`,
   `Art/Moon-Knight/`, `Art/Daredevil/`, `Art/Silver-Surfer/`,
   `Art/Captain-America/`, `Art/Iron-Man/`, `Art/Black-Panther/`,
-  `Art/Ghost-Rider/`, `Art/Doctor-Strange/`, `Art/X-Men/` — cover scans, committed so
+  `Art/Ghost-Rider/`, `Art/Doctor-Strange/`, `Art/Avengers/`, `Art/X-Men/` — cover scans, committed so
   GitHub Pages can serve them. Every page references them by relative path.
   `Art/X-Men/` is the odd one: its four books were never printed, so each file is
   the cover of the issue that volume is named after — see "Cover art for books
@@ -124,14 +129,14 @@ a file boundary is the small storage record described under "Homescreen" below.
 
 ## One tracker shape, two ways of filling it
 
-**All thirteen subjects are omnibus shelves** (Aug 2026): a shelf of volumes
+**All fourteen subjects are omnibus shelves** (Aug 2026): a shelf of volumes
 rendered as CSS-3D hardcover books, each opening into its own chapter list. Two
 views in one file, hash-routed (`#/omni/<id>`). What differs is where a shelf's
 data comes from:
 
 - **Wiki-backed** (Spider-Man, Hulk, Fantastic Four, Wolverine, Moon Knight,
   Daredevil, Silver Surfer, Captain America, Iron Man, Black Panther, Ghost
-  Rider, Doctor Strange) — each
+  Rider, Doctor Strange, the Avengers) — each
   volume reproduces exactly
   what the printed book collects, in
   print order, pulled from the Marvel Database. `OMNI` is **generated** from a
@@ -266,7 +271,7 @@ Every page is one of three levels, and they now share the same top:
 
 | Level | Page | Banner shows | Keep Reading shows |
 |---|---|---|---|
-| 1 | `index.html` | `Art/Banners/index.jpg` + the C.O.M.I.C.S. wordmark | every volume open across all thirteen subjects |
+| 1 | `index.html` | `Art/Banners/index.jpg` + the C.O.M.I.C.S. wordmark | every volume open across all fourteen subjects |
 | 2 | a tracker's shelf view | `Art/Banners/<hero>.jpg` + that subject's printed logo | every volume open on that shelf |
 | 3 | a tracker's volume view | that volume's own cover | one tile — the next issue in the volume |
 
@@ -415,12 +420,13 @@ way a deep link does (shelf issue id → marvel id → asset) and nothing is
 hand-sourced. Art lands in `Art/Tours/<hero>/<issue id>.jpg` at the usual
 700px/q82.
 
-**All thirteen shelves have one** (Aug 2026) — 155 volume tours plus thirteen
-character tours, about **80,300 words and 223 issue covers**. Hulk was written
+**All fourteen shelves have one** (Aug 2026) — 182 volume tours plus fourteen
+character tours, about **94,000 words and 268 issue covers**. Hulk was written
 first on purpose so the voice could be checked before the rest.
 
 | Hero | Volume tours | Words |
 |---|---:|---:|
+| The Avengers | 27 | 13,700 |
 | Hulk | 17 | 9,700 |
 | Black Panther | 7 | 6,700 |
 | Captain America | 22 | 8,000 |
@@ -689,12 +695,11 @@ Aug 2026 it is:
 | 3 | The Avengers, Black Panther, Ghost Rider, Venom, Doctor Strange |
 
 Row three was **five placeholders** (Aug 2026), added in the order the user
-named them. **Black Panther, Ghost Rider and Doctor Strange are all live as of
-Aug 2026 and all three stayed where they were** — curating a subject is not a
-reason to move it, and the order rule below applies to a promotion exactly as it
-does to an insertion. So the wall now has three live shelves scattered through
-row three, with The Avengers and Venom still in curation between them, which is
-correct. Those two still have real poster art, a printed logo and a plate colour
+named them. **Four of the five are now live — The Avengers, Black Panther,
+Ghost Rider and Doctor Strange — and every one of them stayed where it was**:
+curating a subject is not a reason to move it, and the order rule below applies
+to a promotion exactly as it does to an insertion. **Venom is the last one in
+curation**, and it still has real poster art, a printed logo and a plate colour
 the user picked, with `file:null` and `total:0` — no reading list, no tracker
 file, no banner. See "The placeholder row" below.
 
@@ -734,6 +739,38 @@ out to matter for this particular job: no logo, no barcode strip and no trade
 dress fighting the poster plate, so the subject name sits on clean art on every
 one of them. Keep that property in mind when swapping one — a scan of a printed
 cover will put a logo where the plate goes.
+
+**Avengers, Fantastic Four and Venom were all replaced in Aug 2026**, in one
+batch, and all three are *different pictures* rather than bigger scans — so all
+three `pos` values had to be re-derived from scratch by rendering the band and
+looking, exactly as the Daredevil note above warns. Avengers 39% → 45%, Fantastic
+Four 45% → 70%, Venom 40% → 32%.
+
+**The Fantastic Four one is the instructive one.** The user asked for the plate
+to "sit as high as possible so that the Thing is as visible as possible", and
+70% is as far down the picture as the band can go while keeping Sue Storm's
+head in frame — it puts the Thing's whole face in the middle of the band, where
+45% gave only his brow. Note the *poster tile* cannot be tuned this way at all:
+the scan is 0.668 and the tile is 0.642, so `object-fit:cover` fits it by
+height and crops the width, which makes the `Y` half of `object-position` inert
+there. The same aspect trap as the X-Men banner — check the aspect before
+reaching for the crop.
+
+**The Venom scan needed its background taken out, and `tools/knockout.py` does
+it.** As supplied it is an Alex Ross figure on a flat pale-cyan studio field,
+with Marvel's logo box in one corner and the artist's signature in the other —
+all three of which fought the near-black plate under it and made the poster read
+as a sticker on the wall. The method is written up in the tool, and the part
+worth knowing here is that it finds the **figure**, not the background: a
+colour-distance mask alone eats Venom's white eye patches, his teeth and the
+chest spider, which are the same value as the field. Everything that is not the
+largest connected island is background, so the logo box and the signature are
+removed with no rectangle hand-placed anywhere.
+
+`Art/covers/Venom.jpg` is still the untouched original, because that folder is
+the archive — so **`fetch_hero_art.py adopt venom` on it would put the white
+background straight back**. Re-run `knockout.py` instead, exactly as the Ghost
+Rider poster needs `deteal.py`.
 
 #### Artwork the user supplies — do not source these three
 
@@ -812,12 +849,14 @@ know). So the only thing missing for those subjects is the art itself.
 #### The placeholder row
 
 Five subjects added at the user's request (Aug 2026) to see them on the wall
-before any of them was curated. **Black Panther, Ghost Rider and Doctor Strange
-are no longer among them** — all three were built out later the same month and
-are live shelves — but their rows are left in the table below, because their
-ramps, textures, emblems and `pos` values are all still the ones chosen here. Only one thing
-changed on the way: **Ghost Rider's plate went from orange to pitch black**, at
-the user's request, when the new logo landed. See the plate table below.
+before any of them was curated. **Only Venom is still one** — The Avengers,
+Black Panther, Ghost Rider and Doctor Strange were all built out later the same
+month and are live shelves — but their rows are left in the table below, because
+their ramps, textures, emblems and plate colours are all still the ones chosen
+here. Two things changed on the way: **Ghost Rider's plate went from orange to
+pitch black** at the user's request when the new logo landed, and **the Avengers
+and Venom posters were both replaced** with new art, which moved both their
+`pos` values. See the plate table below and "Artwork" above.
 
 | Subject | id | Plate | Ramp / texture / emblem |
 |---|---|---|---|
@@ -840,37 +879,38 @@ Four things about them worth not relearning:
   the picture* rather than duplicating another subject. It is lifted to
   `34,44,36`, with a faint green cast so it still reads as its own black.
 - **All five have their printed logo** (Aug 2026, a day after the posters), so
-  row three reads as one set with the ten above it. **None needed `logow`**,
+  row three reads as one set with the ten above it. **Ghost Rider later needed
+  `logoh`**, which is the other knob and is described under "The plate" below.
+  **None needed `logow`**,
   which is worth knowing because four of the five are wide single-line marks
   and that is exactly the shape the field exists for: they are 2.0–2.6:1, so
   the 56px `max-height` binds before the width does and Avengers lands at
   almost exactly the width Spider-Man reaches at `logow:"84%"`. Reach for
   `logow` only after rendering — the two knobs pull against each other.
-- **No banners, and Black Panther and Ghost Rider have now both proved what
-  that costs.** A banner is only ever read by a *tracker* page, so for the three
-  still in curation it costs nothing. Both live ones fall through
-  `hbFallback()` to their poster scan — Black Panther at
-  `objectPosition:"50% 30%"`, Ghost Rider at `"50% 28%"` — and both happen to
-  look good, because each poster is a head-on face that fills a 2.4:1 band. It
-  is still the fallback rather than the intended art. See open item 19.
+- **No banners, and four of the five now prove what that costs.** A banner is
+  only ever read by a *tracker* page, so for Venom it still costs nothing. The
+  four live ones fall through `hbFallback()` to their poster scan — The Avengers
+  at `objectPosition:"50% 46%"`, Black Panther at `"50% 30%"`, Ghost Rider at
+  `"50% 28%"` and Doctor Strange at `"50% 26%"` — and all four happen to look
+  good. It is still the fallback rather than the intended art. See open item 19.
 - **Every `pos` was rendered and looked at**, the same as the ten above. The
   Avengers plate is the one to remember: it is a crowd, so the band has to land
-  on the face row (`39%`) or it is a picture of torsos. Black Panther went
+  on a face row or it is a picture of torsos. That was `39%` on the old art; the
+  Alex Ross plate that replaced it needed `45%`, which centres the Hulk's roar
+  with Thor and Luke Cage to the right and Captain America's shield to the left.
+  Black Panther went
   26% → 30% because 34% clipped the ear tips and 26% clipped the big panther
   eyes behind him into a smear along the top edge — 30% drops them and keeps
   the mask whole, which is the better trade.
 
-The remaining three `desc` strings are **briefs, not specs** — each one ends
-"Nothing is decided yet", because the scope call on every one of them is the
-user's. Black Panther's and Ghost Rider's said the same until they were built,
-and both briefs turned out to be right about the hard part: "Shuri's and
-Killmonger's books are the obvious scope question" and "two characters and a
-scope call before a single issue is picked" are exactly the calls the user had
-to make. The Avengers is the hard one (omnibuses run to dozens of volumes plus
-the spin-off teams); Venom overlaps the Spider-Man shelf, which already carries
-Spider-Man vs. Venom and briefly carried both Venomnibus volumes; Doctor
-Strange starts in the back of Strange Tales and has no numbered run to anchor
-on.
+Venom's `desc` is a **brief, not a spec** — it ends "Nothing is decided yet",
+because the scope call is the user's. The three that have since been built all
+had briefs that turned out to be right about the hard part: "Shuri's and
+Killmonger's books are the obvious scope question", "two characters and a scope
+call before a single issue is picked", and the Avengers brief's "the scope call
+is the whole problem" were each exactly the call the user had to make. Venom's
+names its own: the subject overlaps the Spider-Man shelf, which already carries
+Spider-Man vs. Venom and briefly carried both Venomnibus volumes.
 
 `fetch_hero_art.py` keeps its wiki `PICKS` table for every subject including new
 ones, but only as the fallback it has been since Aug 2026 — `SUPPLIED` lists
@@ -1108,6 +1148,18 @@ Three things about how it is sized and placed:
   subject width, emitted as `--lw` by `plateStyle()`, defaulting to 100%. The
   two knobs pull against each other: `max-height` sets the tall logos, `logow`
   brings the wide ones back to match.
+- **`logoh` is what makes one logo BIGGER, and `logow` cannot** (Aug 2026, at
+  the user's request for a larger Ghost Rider mark). `logow` only ever trims
+  down from 100%, so on a near-square logo — where the shared 56px `max-height`
+  binds long before the width does — it does nothing at all. `logoh` is the
+  per-subject height cap, emitted as `--lh`, defaulting to 56px; Ghost Rider is
+  the only subject that sets it, at `84px`. Its logo is 1.66:1, the third
+  squarest on the wall after Moon Knight and Iron Man, and at the shared cap it
+  was rendering about half the width of Hulk's.
+
+  The 600px breakpoint scales off `--lh` (`calc(var(--lh,56px) * .79)`) rather
+  than the flat 44px it used to carry, so a subject that lifts its cap keeps the
+  lift on a phone instead of snapping back to the shared size.
 - **The logo floats, it does not sit on the foot.** `padding-bottom` on the
   plate is 34px against 13px of side padding, which is what lifts it clear of
   the poster edge. That number was the progress bar's space before the bar came
@@ -1924,7 +1976,7 @@ rule on any future run, so the bad links cannot come back.
   `daredevil_contents_raw.json`, `silversurfer_contents_raw.json`,
   `captainamerica_contents_raw.json`, `ironman_contents_raw.json`,
   `blackpanther_contents_raw.json`, `ghostrider_contents_raw.json`,
-  `doctorstrange_contents_raw.json` — the raw
+  `doctorstrange_contents_raw.json`, `avengers_contents_raw.json` — the raw
   ReprintOf lists pulled from the Marvel Database, one entry per omnibus, one
   file per hero. Regenerate only if a volume's contents change.
 - `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
@@ -1936,7 +1988,7 @@ rule on any future run, so the bad links cannot come back.
   `daredevil_meta.py` (Daredevil), `silversurfer_meta.py` (Silver Surfer),
   `captainamerica_meta.py` (Captain America), `ironman_meta.py` (Iron Man),
   `blackpanther_meta.py` (Black Panther), `ghostrider_meta.py` (Ghost Rider),
-  `doctorstrange_meta.py` (Doctor Strange)
+  `doctorstrange_meta.py` (Doctor Strange), `avengers_meta.py` (the Avengers)
   — the hand-written half,
   and **the only place shelf metadata should be edited**: `ORDER` (wiki-backed
   volumes; each key must exist in that hero's raw-contents file or `gen()`
@@ -1962,6 +2014,17 @@ rule on any future run, so the bad links cannot come back.
   cover and why, `SUPPLIED` lists every subject and it will not overwrite one
   without `--replace`. Nothing is generated from it — the `cover` field in
   `HEROES` is hand-written — so a new poster is an edit in both places.
+- `knockout.py` — takes a flat studio background out of a poster and puts a dark
+  ground behind the figure, writing the result into `Art/Heroes/<id>.jpg` through
+  the same downscale `adopt` uses. Written for the Venom poster, whose scan is a
+  figure on a pale-cyan field with Marvel's logo box and the artist's signature
+  on it. It finds the **figure** rather than the background — the largest
+  connected island of everything the border flood-fill did not reach — because a
+  colour-distance mask alone eats white eye patches, teeth and a chest emblem;
+  everything else is background, so the logo box and the signature go without a
+  rectangle being hand-placed. `--bite` erodes the figure a pixel or two to kill
+  the antialiasing halo, `--flat` drops the pool of light, `--out` writes
+  full-size. Needs Pillow, numpy and scipy.
 - `deteal.py` — takes the cool colour cast out of a poster and writes the
   result into `Art/Heroes/<id>.jpg` through the same `covers.save_cover`
   downscale `adopt` uses. Written for the Ghost Rider poster's teal background;
@@ -2048,8 +2111,8 @@ python3 tools/build_omnibus_data.py --check --hero hulk   # confirm it round-tri
 ```
 
 Note that a harvest touches **every** hero, not one: `marvel_ids.json` is
-shared, so `link_issues.py --write` means regenerating all twelve trackers, not
-just the shelf you were working on. The Iron Man harvest was a clean
+shared, so `link_issues.py --write` means regenerating all thirteen trackers,
+not just the shelf you were working on. The Iron Man harvest was a clean
 demonstration: 288 ids written, all of them Iron Man's, and every other shelf
 still needed a regenerate because `MARVEL` is spliced in whole. Black Panther
 did the same with 293, and Ghost Rider with 196.
@@ -4052,6 +4115,12 @@ One process note worth keeping: **do not pipe `link_issues.py --write` to
 printed looked exactly like a successful write. The tell was the build still
 reporting 3% coverage afterwards.
 
+**The same trap caught `build_omnibus_data.py` on the Avengers shelf**, and it
+is worse there because the failure is silent in a different way: piping the
+build to `head -3` kills it after the summary line and *before* it writes the
+tracker, so the next command reads a stale `OMNI` and the whole run's
+conclusions are about the previous state. Redirect to a file and `tail` it.
+
 The 6 that marvel.com does not have, all re-tested against a fully-swept catalog
 before being believed: **Mystery Tales #21** (1954) and **World of Fantasy #11**
 (1958), two pre-Code horror shorts reprinted as backmatter in `def-o2`;
@@ -4110,6 +4179,295 @@ at 18%, 26% and 34% and looked at: 18% cuts the face at the eyes and 34% crowds
 the hair against the top edge, so 26% is the one that keeps the whole head with
 the eyes centred in the band. It is still the fallback, not the intended art.
 See open item 19.
+
+## The Avengers tracker (omnibus shelf)
+
+Same code as the other twelve shelf pages, same tooling, different data: **27
+volumes, 1041 issue slots, 1021 unique issues**, all 27 with contents and cover
+art. No placeholders. `tools/avengers_meta.py` is the hand-written half; run
+everything with `--hero avengers`.
+
+It is the **biggest shelf on the site by a distance** — 27 volumes against
+Captain America's 22, and a thousand issues against the next largest shelf's 725
+— and it is the fourth row-three placeholder to be curated. It stayed where it
+was on the wall.
+
+### Scope call — the one that actually had to be asked
+
+CLAUDE.md had been calling this "the hard one" for months and it was right. Two
+things make the Avengers different from every other subject here: there are more
+Avengers-family omnibuses than for anyone else, and roughly half the Marvel
+universe has been an Avenger, so "the character's own book" does not narrow
+anything on its own.
+
+**The spine needed no judgement.** The team's own title, start to finish, is 21
+volumes: Avengers Omnibus Vol. 1–6, Byrne, The Gathering, The Crossing, Busiek &
+Pérez Vol. 1–2, Johns & Coipel, New Avengers Vol. 1–3, Hickman Vol. 1–2, Uncanny
+Avengers, No Surrender/No Road Home, Jason Aaron, Avengers Forever and Jed
+MacKay. Nobody would argue about any of those.
+
+**The four calls that were genuinely arguable were put to the user as a
+question, with the issue counts, and all four came back ON:**
+
+| Book | Why it was a question | Answer |
+|---|---|---|
+| West Coast Avengers Vol. 1–2 | a second Avengers team with its own title | **on** |
+| Ultimates by Millar & Hitch | a different universe | **on** |
+| Secret Invasion by Bendis | 29 of its 34 issues are Avengers books | **on** |
+| Avengers: The Crossing | only **6 of 29** issues are Avengers | **on** |
+| Avengers vs. X-Men | 74 issues, most of them X-books | **on** |
+
+The last two are the shape that keeps Heroes Reborn off the Fantastic Four shelf
+and Devil's Reign off Daredevil's, and the user was shown exactly that and put
+them on anyway. That is what makes this shelf a complete run of the team's line
+rather than a selection from it — and it is why **the West Coast volumes
+matter**: the Byrne omnibus is half West Coast material, so without them it reads
+as an orphan.
+
+**Offered and declined**, all for the reason that keeps She-Hulk off the Hulk
+shelf: Young Avengers (both volumes), Squadron Supreme (both), Hawkeye by
+Fraction & Aja, and Black Widow Strikes. Different characters, or a member's
+solo book.
+
+**Also deliberately off, and worth naming because they turn up in any Avengers
+enumeration**: Heroes Reborn and Heroes Reborn: The Return (already recorded as
+off the FF and Captain America shelves), Secret Wars, Secret Wars II, House of M
+and Acts of Vengeance (line-wide events), and the Infinity Gauntlet / War /
+Crusade omnibuses, which are Thanos's.
+
+`SHELF` is a reading order that runs close to publication order of the
+*material*. Four placements are deliberate and are written out in the meta
+module: **si-o1 after nav-o2** (the run first, then the crossover assembled in
+reading order, which duplicates part of it); **hick-o1 and hick-o2 kept together
+with unc-o1 after them**, though Uncanny Avengers is concurrent with both;
+**nsnrh-o1 before aaron-o1**; and **ult-o1 last**, as the cross-universe outsider,
+which is the slot the Ultimate volumes take on the FF shelf.
+
+**Three volumes have not shipped** — New Avengers Vol. 3 (Nov 2026), Jason Aaron
+(Mar 2027) and Jed MacKay (May 2027) — and all three clear the three gates, so
+all three are on with a badge that retires itself.
+
+**The gaps are Marvel's and they are small**, which is unusual here: the only
+real one is **1980–1984**, between Avengers Omnibus Vol. 6 and the West Coast
+mini, covering the end of the Shooter run and the whole of Roger Stern's
+celebrated stretch including Under Siege. Nothing else on this shelf has a hole
+of consequence.
+
+### Two enumeration traps, both already recorded and both fired again
+
+- **`apprefix=Avengers` does not see ULTIMATES, HEROES REBORN or SECRET
+  INVASION.** The Captain America lesson exactly. The sweep had to run across
+  three dozen prefixes and then be checked by search.
+- **There is no global Omnibus category to enumerate instead.** Worth knowing
+  because it is the obvious next idea: the only categories on an omnibus page
+  are its own and its reprints', so prefix enumeration plus search is still the
+  only way in.
+
+### Contents, and two hand fixes
+
+Pulled the same way as every other shelf, into
+`tools/avengers_contents_raw.json`. It was a clean pull in the ways that matter:
+every page writes the full form (`Avengers Vol 1 1`), which matters here because
+the catalog carries **eight** series simply called "Avengers" and five called
+"New Avengers"; and the ReprintOf order matched the rendered gallery on all 27
+volumes once the cover-credit link is discounted.
+
+**That discount is not optional on this shelf — it fires on eleven of the 27
+pages.** An `Image1_ReprintOf`/`Image2_ReprintOf` names the issue whose cover the
+jacket or its DM variant reproduces, and it renders *ahead of* the reprint
+gallery, so a naive "every issue link in order" check comes back shifted and
+looks like a mass reordering. Same hazard as Marvel Fanfare #45 on the Daredevil
+shelf.
+
+**Two fixes are in the raw file and a re-pull will undo both:**
+
+- **`busiek-o2` was missing Avengers (1998) #55, #56 and #1½.** Its own solicit
+  says `Collecting AVENGERS (1998) #24-56, #1½ and ANNUAL 2000-2001` where the
+  ReprintOf fields and the gallery both stop at #54. Same shape as Fantastic
+  Four #171 and Incredible Hulk (2000) #75–76, and **invisible for the same
+  reason**: `johns-o1` opens at #57, so the hole fell exactly on a volume
+  boundary and nothing on the shelf looked short. Only a shelf-wide gap check
+  catches that.
+
+  The half issue is the 1999 Wizard mail-away. **The wiki has no page for it at
+  all** — not under `Avengers Vol 3 1½` and not under `1.5`; a full enumeration
+  of `Avengers Vol 3` returns 89 pages and none of them is it — and marvel.com
+  has no record of it either. It is on the shelf with a grey Read button, which
+  is the honest answer for a comic that exists and is not catalogued anywhere.
+- **`unc-o1` listed `Uncanny Avengers #8AU`** in the short form, which the
+  `<series>`/`<issue>` split on the last space cannot survive. Rewritten long.
+
+Nothing else needed repairing — no doubled spaces, no subtitles after an issue
+number.
+
+**The solicit audit covered nine of the 27**, the best coverage of any shelf,
+and eight matched exactly. The ninth is the `busiek-o2` fix above. The remaining
+eighteen carry no explicit range, so the shelf-wide gap check did the rest.
+
+One entry that looks wrong and is not: **`nav-o3` lists eleven of its issues
+twice in the ReprintOf fields** (New Avengers (2010) #1–11, each as two
+`ReprintOfStory` entries). That is the double-length issues' two stories, not a
+duplicate; `gen()` dedupes globally and the volume comes out at 46.
+
+### Chaptering
+
+Twenty-three volumes take the automatic per-series chapters. Four carry
+`chapterby="series"`: `wca-o1` (3.44), `nav-o1` (3.07), `si-o1` (2.83) and
+`forever-o1` (2.08).
+
+**`si-o1` is the interesting one, because it is a genuine month-by-month
+crossover** — which is exactly what the "parts" strategy exists for. It is
+overridden anyway, and the reason is the one the Ghost Rider shelf gives for
+`dk-o2`: the whole point of that book is that it is assembled in *reading
+order*, rotating New Avengers, Mighty Avengers and Secret Invasion, so a chapter
+that says "Mighty Avengers #12–19" tells you where you are and "Part 3" does
+not.
+
+`nav-o3` and `hick-o2` each come out as two long chapters, which looks wrong and
+is not — each is two series and nothing else.
+
+### Issue ids and the overlaps
+
+1041 slots against 1021 unique — **20 overlaps, and every one of them is
+`si-o1`** doubling back across the New Avengers run it was printed alongside.
+Drop that one volume and the shelf has no overlap at all. They share ids on
+purpose, as on every other shelf, and the UI flags them with the gold "in 2
+omnibuses" pill.
+
+**Three series codes had to be adopted or renamed, and one of them was a bug I
+introduced:**
+
+- **`Avengers West Coast Vol 1` takes `wca`**, the code the Fantastic Four shelf
+  already uses for `West Coast Avengers Vol 2`. The wiki splits the 1985 run at
+  its retitling (#1–41, then #48–102) where marvel.com keeps one *West Coast
+  Avengers (1985 - 1994)* across the whole thing. Two wiki keys, one marvel.com
+  series — the case CLAUDE.md says needs a person, and `link_issues.py` refuses
+  every issue until it gets the line.
+- **`X-Men Vol 1` takes `uxm`**, for the same reason, and CLAUDE.md had
+  *predicted this exact one*: "the Avengers pages say `X-Men Vol 1` where the FF
+  and Wolverine modules say `Uncanny X-Men Vol 1`".
+- **`Mighty Avengers Vol 1` is `mtyav`, NOT `mav`.** `mav` is Maverick on the
+  Wolverine shelf, and unlike the two above **those are different comics**. This
+  was pinned wrong on the first pass and the shelf carried ten Mighty Avengers
+  ids under a Maverick prefix before the stray audit caught it. The lesson is
+  cheap and generalises: **before pinning a code, check it against every other
+  shelf's table**, because `autocode()` only protects you when it derives a code,
+  not when you write one by hand.
+
+### Marvel deep links
+
+**994 of 1021 unique issues (97%) resolve.** The id harvest was not a step — the
+catalog already held everything — so this was `link_issues.py --write` with a
+regenerate between passes, 901 ids matched on the first run with **0 ambiguous**.
+
+**Four link repairs came out of this shelf and three of them were to OTHER
+shelves**, which is the more useful result:
+
+- **`wax14-10` and `wax14-11` pointed at Wolverine & the X-Men (2011)** where
+  the Death of Wolverine omnibus collects the **2014** series. A pre-existing
+  mislink of exactly the shape "Two shelf issues on one marvel.com comic"
+  describes, and it surfaced only because this shelf wanted the 2011 issues and
+  was refused.
+- **`nail-1` and `nail2-1` had the Illuminati books the wrong way round** — the
+  wiki's Vol 1 is the 2006 one-shot and Vol 2 is the 2007 five-issue mini, and
+  marvel.com files them as two series.
+- **`mav-*`**, above.
+
+**Seven issues are pinned in `ISSUE_ALIAS`, and they are a new shape**:
+`atm-1`–`atm-6` (Astonishing Tales: Mojoworld, 2008) and `scmokf2-1` (Shang-Chi:
+Master of Kung Fu, 2009) are **bonus material that predates the volume it is
+printed in** — they are in the back of Hickman's 2012–13 book. `era_fits()`
+refuses all seven, correctly by its own rule, and there is no date rule that can
+tell reprinted backmatter from the wrong comic without giving up the guard that
+caught the Strange Tales (1987)/(1994) error on the Doctor Strange shelf. So
+these are pinned rather than derived, and `hick-o1`'s `era` is left at 2012–2013
+rather than widened — seven issues out of fifty are not worth a Plastic-Age dot
+on a Modern-Age book.
+
+The 27 that marvel.com does not have are dominated by **FOOM (5)**, the Marvel
+fanzine printed as backmatter in `av-o5`, plus the Avengers Forever Infinity
+Comic (4), the Avengers vs. X-Men: Infinite chapters (3), both Free Comic Book
+Day issues, the AAFES military giveaway, the Avengers Anniversary Magazine, and
+Avengers (1998) #1½.
+
+**Three new standing strays** — `avann-1999`, `avann-2000` and `avann-2001` —
+are the year-titled-annual shape marvel.com files as its own one-issue series,
+exactly like `caan1-2000` and `caan1-2001` on the Captain America shelf. They are
+correct.
+
+### Cover art — the contact sheet earned its keep
+
+`fetch_covers.py --hero avengers --all` reported **"27 fetched, 0 failed" and
+was wrong about eight of them.** Every one was caught by putting the shelf on a
+contact sheet and looking, which is the check CLAUDE.md asks for and the only
+thing that would have found these.
+
+- **Five of the six numbered volumes declare an issue cover as their jacket
+  outright.** `Avengers Omnibus Vol 1 2`–`5` set `Image1` to
+  `Avengers Annual Vol 1 2.jpg`, `Avengers Vol 1 80.jpg` and so on; the wiki has
+  no jacket for them at all. All were replaced by hand from the flat-jacket ISBN
+  endpoints.
+- **`aaron-o1` and `mackay-o1` answered with a gallery image**, because their
+  `Image1` files are redlinks. `prop=pageimages` returned the Free Comic Book Day
+  2019 cover and Timeless #1 respectively.
+- **`av-o1` and `av-o6` are genuine**, even though both look like issue covers.
+  Their pages declare a real omnibus file with `Image1_ReprintOf` naming the
+  issue it reproduces, and both flat-jacket sources agree — the printed jackets
+  really do reproduce Avengers #1 and #160.
+
+**So do not run `fetch_covers.py --hero avengers --all`** — it will put seven
+issue covers back.
+
+Two things this shelf added to the ISBN routine:
+
+- **Neither unshipped volume has an ISBN on its wiki page**, so a web search was
+  needed to get them (9781302970895 and 9781302970970). That search also
+  returned MacKay's full collecting line, which independently confirmed the
+  contents including the 2021 Mech Strike mini.
+- **Amazon pads some flat jackets with a white margin**, and `av-o2` and `av-o5`
+  came back with one on all four sides — which renders as a white frame round
+  the book on the shelf. Trim to the ink bounding box before running
+  `covers.py add`.
+
+Seventeen of the 27 are `soft`, the highest count of any shelf, which is the
+price of taking flat jackets from booksellers for a third of the shelf.
+
+### The page itself
+
+Built from `captainamerica-reading-tracker.html`, which is the one to copy for a
+large shelf. What changed beyond the identity sweep:
+
+- **Fourteen `.o-*` ramps**, all with `SPINE_C` entries and all single-quoted:
+  `o-assemble` (Kirby primaries), `o-kree` (the Kree/Skrull cosmos), `o-madonna`
+  (Englehart's Bronze Age), `o-korvac` (godlight), `o-sunset` (California),
+  `o-byrne` (hard, clean, primary), `o-gathering` (90s cold teal),
+  `o-heroesreturn` (Pérez gold and blue), `o-bendis` (grit and blood),
+  `o-hickman` (white, black, no colour), `o-clash` (red versus blue),
+  `o-worldtree` (Aaron's prehistory), `o-mackay` and `o-ultimate` (Hitch's
+  steel).
+- **Four new textures**: `tex-krackle` (three offset dot grids at different
+  sizes, which is what Kirby crackle actually looks like — coarser and less
+  regular than a halftone), `tex-shatter` (two fans of long thin shards from
+  opposite corners at odd angles, so it reads as breakage rather than as
+  stripes), `tex-grid` (a fine engineering grid with a heavier rule every fifth
+  line, which is what Hickman's data pages look like) and `tex-widescreen` (wide
+  flat bands, for the book drawn six letterbox panels to a page).
+  `tex-halftone`, `tex-crosshatch` and `tex-starfield` are kept.
+- **The glyph is the Avengers A** — a circle and a triangle with the arrow bar
+  and the counter punched out by an SVG `<mask>` so the ramp shows through, plus
+  the arrowhead breaking the circle on the right. Same trick as the Black
+  Panther mask and the Ghost Rider skull. Fresh gradient id per call, prefix
+  `av`.
+- **`SC`** rewritten for the 109 series these 27 books collect — the largest
+  such map on the site, and grouped by era rather than by title so a chapter list
+  shifts colour as the shelf moves through the decades.
+
+**There is no banner file**, so `hbFallback()` drops to
+`Art/Heroes/avengers.jpg` at `objectPosition:"50% 46%"`. That was rendered and
+looked at: it lands the band on the Hulk's roar with Thor and Luke Cage right
+and Captain America's shield left, which is the only strip of that plate that
+reads as a team rather than as a wall of torsos. It is still the fallback rather
+than the intended art. See open item 19.
 
 ## The X-Men tracker (a shelf of books that don't exist)
 
@@ -4396,9 +4754,10 @@ cannot currently do is the opposite: make two devices agree.
 ## Open items — C.O.M.I.C.S.
 
 1. ~~One of seven subjects has no reading list yet.~~ **Done Aug 2026** — all
-   thirteen subjects that are not still placeholders now have one (Black Panther
-   was the eleventh, Ghost Rider the twelfth and Doctor Strange the thirteenth,
-   the first three row-three placeholders to be curated): Daredevil shipped as the sixth omnibus shelf,
+   fourteen subjects that are not still placeholders now have one (Black Panther
+   was the eleventh, Ghost Rider the twelfth, Doctor Strange the thirteenth and
+   **the Avengers the fourteenth**, which leaves Venom as the only subject on
+   the wall still in curation): Daredevil shipped as the sixth omnibus shelf,
    Silver Surfer as the seventh and Captain America as the eighth. Both of the last two shipped that way rather than as curated
    chronologies, and both **dropped part of their old `HEROES` brief on
    purpose**: Moon Knight's because Lemire's run has no omnibus, Daredevil's
@@ -4409,8 +4768,13 @@ cannot currently do is the opposite: make two devices agree.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Sixty-one covers are low-res** (~225–500px wide). Black Panther is the
-   one shelf with none — its smallest is 600x883. For all but three that
+3. **Seventy-eight covers are low-res** (~225–500px wide). Black Panther is
+   still the one shelf with none — its smallest is 600x883, and **the Avengers
+   shelf is now the worst at seventeen**, which is the price of taking flat
+   jackets from booksellers for a third of it: the wiki has no jacket at all for
+   five of the six numbered volumes, and the two unshipped creator books have
+   none anywhere. Refetch `aaron-o1` after March 2027 and `mackay-o1` after May
+   2027. For all but three that
    is because it is all the Marvel Database stores; the exceptions are the
    **unshipped** volumes, where the only flat jacket anywhere is a retailer's
    thumbnail: `gauntlet-o1` at 340x500 (replace after 3 November 2026),
@@ -4465,7 +4829,7 @@ cannot currently do is the opposite: make two devices agree.
     hidden homescreen gear, the ASCII pass — went with `comics-mobile.html`
     itself. See "The mobile build is retired".
 11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the
-    twelve shelves are at 92–100% (Spider-Man 600/606, Hulk 652/659, Fantastic
+    thirteen shelves are at 92–100% (the Avengers shelf at 994/1021, 97%) (Spider-Man 600/606, Hulk 652/659, Fantastic
     Four 671/688, Wolverine 658/665, Moon Knight 239/260, Daredevil 630/633,
     Silver Surfer 140/141, Captain America 720/725, Iron Man 339/340, Black
     Panther 343/350, Ghost Rider 272/288, Doctor Strange 342/348). The
@@ -4576,33 +4940,56 @@ cannot currently do is the opposite: make two devices agree.
     retailer thumbnail, the smallest on the shelf, and the Marvel Database will
     have a proper scan once the jacket is photographed.
 
-19. **Row three still has no banner art, and three of its subjects now need
+19. **Row three still has no banner art, and four of its five subjects now need
     theirs.** All five posters landed in Aug 2026 and their printed logos the
     day after, so the wall itself is finished — fifteen logo plates, no text
     fallbacks. What is missing is `Art/Banners/<id>.jpg` for all five.
 
-    **Black Panther, Ghost Rider and Doctor Strange are the three that have
-    stopped being free.** All were curated later the same month, so all have a
-    tracker page, and a banner is only ever read by a tracker page. Each falls
+    **The Avengers, Black Panther, Ghost Rider and Doctor Strange have all
+    stopped being free.** All four were curated later the same month, so all have
+    a tracker page, and a banner is only ever read by a tracker page. Each falls
     through `hbFallback()` to its own poster scan on both its shelf view and
-    every volume view: `Art/Heroes/black-panther.jpg` at
-    `objectPosition:"50% 30%"`, `Art/Heroes/ghost-rider.jpg` at `"50% 28%"`, and
+    every volume view: `Art/Heroes/avengers.jpg` at `objectPosition:"50% 46%"`,
+    `Art/Heroes/black-panther.jpg` at `"50% 30%"`,
+    `Art/Heroes/ghost-rider.jpg` at `"50% 28%"`, and
     `Art/Heroes/doctor-strange.jpg` at `"50% 26%"`.
 
-    That degrade is working exactly as designed and all three look good — a
-    head-on panther mask, a burning skull in profile, and Strange's face against
-    a magic burst — and each fills a 2.4:1 band well, which is luckier than it
-    sounds. So this is "the intended art is missing", not "the page is broken".
-    Confirmed by driving all three pages: the only 404 anywhere on any of them is
-    its own `Art/Banners/<id>.jpg`.
+    That degrade is working exactly as designed and all four look good — the
+    Alex Ross crowd piece cropped to the Hulk's roar, a head-on panther mask, a
+    burning skull in profile, and Strange's face against a magic burst — and
+    each fills a 2.4:1 band well, which is luckier than it sounds. So this is
+    "the intended art is missing", not "the page is broken". Confirmed by driving
+    all four pages: the only 404 anywhere on any of them is its own
+    `Art/Banners/<id>.jpg`.
 
     They are the user's to supply (see "Artwork the user supplies") — do not go
-    looking for one. `banners.py add <id> <file>` already accepts all three ids,
+    looking for one. `banners.py add <id> <file>` already accepts all four ids,
     and the `<img class="hb-art">` in each tracker already points at the path, so
     dropping the file in is the whole fix with no code change.
 
-    The other two cost nothing until one of them is curated.
+    Venom costs nothing until it is curated.
 
+
+20. **A shelf can hold reprinted backmatter that no date rule can link.** Seven
+    issues on the Avengers shelf are pinned in `ISSUE_ALIAS` for a reason none
+    of the earlier pins share: they are 2008–09 comics printed in the back of a
+    2012–13 volume, so `era_fits()` refuses them correctly and there is no rule
+    that separates "reprinted backmatter" from "the wrong comic with the same
+    name" — which is the exact thing that guard exists to catch. Pinning is the
+    right answer today. If a third shelf hits this shape, the fix worth trying is
+    giving a volume an optional second era for its backmatter rather than
+    letting the table grow.
+
+21. **Nothing checks a hand-pinned series code against the other shelves.**
+    `autocode()` reuses a code another shelf already owns, so a *derived* code
+    can never collide — but a code written by hand into `SERIES_EXTRA` can, and
+    one did: `mav` was pinned for Mighty Avengers on the Avengers shelf when the
+    Wolverine shelf already used it for Maverick, and ten ids went into the
+    shared store under the wrong prefix before `audit_strays()` reported it.
+    The check is about fifteen lines — walk every meta module's `SERIES_EXTRA`
+    plus the shared `SERIES`, and fail the build when two different wiki keys
+    claim one code — and it belongs in `build_omnibus_data.py` beside
+    `check_spine_colors()`. Not written yet; the scan was run by hand this time.
 
 ## Testing
 
@@ -4634,6 +5021,7 @@ python3 tools/build_omnibus_data.py --check --hero iron-man
 python3 tools/build_omnibus_data.py --check --hero black-panther
 python3 tools/build_omnibus_data.py --check --hero ghost-rider
 python3 tools/build_omnibus_data.py --check --hero doctor-strange
+python3 tools/build_omnibus_data.py --check --hero avengers
 
 # Every shelf issue that can be linked, is.
 # Expect: 0 matched, 0 ambiguous, SEVEN standing rejections (tta3-1, cap8-25,
@@ -4641,9 +5029,10 @@ python3 tools/build_omnibus_data.py --check --hero doctor-strange
 # dropped", "Two shelf issues on one marvel.com comic" and the Ghost Rider
 # shelf's link section), exactly ONE collision (Marvel Graphic Novel #67 /
 # Wolverine: The Jungle Adventure #1, which really are the same comic under two
-# names) and NINE strays -- the seven annuals and half/zero issues marvel.com
-# files as their own series, plus xm2-175/176, where the wiki files one X-Men
-# volume across a renumbering marvel.com splits. More of either is a bug.
+# names) and TWELVE strays -- the annuals and half/zero issues marvel.com files
+# as their own series (including avann-1999/2000/2001 from the Avengers shelf),
+# plus xm2-175/176, where the wiki files one X-Men volume across a renumbering
+# marvel.com splits. More of either is a bug.
 python3 tools/link_issues.py
 
 # Guided tour content round-trips, and every chip/figure it names exists
@@ -4653,10 +5042,10 @@ python3 tools/build_tours.py --all --check
 # without one renders as a box.
 python3 tools/logos.py audit
 
-# Banner art. Expect 11 of 16 in (index plus ten of the thirteen subjects that
-# have a shelf); the five row-three placeholders are blank, which is open item
-# 19, not a regression -- but black-panther, ghost-rider AND doctor-strange are
-# now LIVE shelves with no banner, so all three pages fall back to their poster
+# Banner art. Expect 11 of 16 in (index plus ten of the fourteen subjects that
+# have a shelf); the five row-three ids are blank, which is open item 19, not a
+# regression -- but avengers, black-panther, ghost-rider AND doctor-strange are
+# now LIVE shelves with no banner, so all four pages fall back to their poster
 # scan. iron-man and moon-knight are soft.
 python3 tools/banners.py audit
 
@@ -4677,6 +5066,7 @@ python3 tools/covers.py audit --hero iron-man
 python3 tools/covers.py audit --hero black-panther
 python3 tools/covers.py audit --hero ghost-rider
 python3 tools/covers.py audit --hero doctor-strange
+python3 tools/covers.py audit --hero avengers
 
 # Every volume's era string agrees with the years its issues actually carry.
 # This is how a whole mislinked PREFIX gets caught -- neither audit in
@@ -4716,6 +5106,7 @@ issues**; the Iron Man shelf **9 volumes / 341 issue slots / 340 unique
 issues**; the Black Panther shelf **7 volumes / 354 issue slots / 350 unique
 issues**; the Ghost Rider shelf **7 volumes / 288 issue slots / 288 unique
 issues**; the Doctor Strange shelf **10 volumes / 349 issue slots / 348 unique
+issues**; the Avengers shelf **27 volumes / 1041 issue slots / 1021 unique
 issues**; the X-Men shelf **4 volumes / 174 issue slots / 174 unique issues**.
 If a change moves those numbers without meaning to, something is wrong.
 

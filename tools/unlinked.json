@@ -1168,6 +1168,438 @@
   "sid": null
  },
  {
+  "hero": "avengers",
+  "vol": "av-o5",
+  "id": "foom-6",
+  "t": "FOOM #6",
+  "s": "FOOM",
+  "pfx": "foom",
+  "num": "6",
+  "link": null,
+  "year": null,
+  "era": [
+   1974,
+   1976
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "av-o5",
+  "id": "foom-7",
+  "t": "FOOM #7",
+  "s": "FOOM",
+  "pfx": "foom",
+  "num": "7",
+  "link": null,
+  "year": null,
+  "era": [
+   1974,
+   1976
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "av-o5",
+  "id": "foom-12",
+  "t": "FOOM #12",
+  "s": "FOOM",
+  "pfx": "foom",
+  "num": "12",
+  "link": null,
+  "year": null,
+  "era": [
+   1974,
+   1976
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "av-o6",
+  "id": "mtales-100",
+  "t": "Marvel Tales #100",
+  "s": "Marvel Tales",
+  "pfx": "mtales",
+  "num": "100",
+  "link": null,
+  "year": null,
+  "era": [
+   1976,
+   1979
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "gather-o1",
+  "id": "avstrike-1",
+  "t": "Avengers: Strikefile #1",
+  "s": "Avengers: Strikefile",
+  "pfx": "avstrike",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   1996
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "gather-o1",
+  "id": "aam-1",
+  "t": "Avengers Anniversary Magazine #1",
+  "s": "Avengers Anniversary Magazine",
+  "pfx": "aam",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   1996
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "busiek-o1",
+  "id": "arc-1",
+  "t": "Avengers Rough Cut #1",
+  "s": "Avengers Rough Cut",
+  "pfx": "arc",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1998,
+   2000
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "busiek-o2",
+  "id": "av3-1\u00bd",
+  "t": "Avengers (1998) #1\u00bd",
+  "s": "Avengers (1998)",
+  "pfx": "av3",
+  "num": "10.5",
+  "link": null,
+  "year": 1998,
+  "era": [
+   2000,
+   2002
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "nav-o1",
+  "id": "aafes-1",
+  "t": "AAFES #1",
+  "s": "AAFES",
+  "pfx": "aafes",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2004,
+   2007
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "nav-o2",
+  "id": "fcbd2a-1",
+  "t": "Free Comic Book Day 2009 Avengers #1",
+  "s": "Free Comic Book Day 2009 Avengers",
+  "pfx": "fcbd2a",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2006,
+   2010
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "si-o1",
+  "id": "mssi-1",
+  "t": "Marvel Spotlight: Secret Invasion #1",
+  "s": "Marvel Spotlight: Secret Invasion",
+  "pfx": "mssi",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2006,
+   2009
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "si-o1",
+  "id": "mssia-1",
+  "t": "Marvel Spotlight: Secret Invasion Aftermath #1",
+  "s": "Marvel Spotlight: Secret Invasion Aftermath",
+  "pfx": "mssia",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2006,
+   2009
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "avx-o1",
+  "id": "avxvs-2",
+  "t": "Avengers Vs. X-Men: Versus #2",
+  "s": "Avengers Vs. X-Men: Versus",
+  "pfx": "avxvs",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   2011,
+   2012
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "avx-o1",
+  "id": "avxinf-1",
+  "t": "Avengers Vs. X-Men: Infinite #1",
+  "s": "Avengers Vs. X-Men: Infinite",
+  "pfx": "avxinf",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2011,
+   2012
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "avx-o1",
+  "id": "avxinf-6",
+  "t": "Avengers Vs. X-Men: Infinite #6",
+  "s": "Avengers Vs. X-Men: Infinite",
+  "pfx": "avxinf",
+  "num": "6",
+  "link": null,
+  "year": null,
+  "era": [
+   2011,
+   2012
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "avx-o1",
+  "id": "avxinf-10",
+  "t": "Avengers Vs. X-Men: Infinite #10",
+  "s": "Avengers Vs. X-Men: Infinite",
+  "pfx": "avxinf",
+  "num": "10",
+  "link": null,
+  "year": null,
+  "era": [
+   2011,
+   2012
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "hick-o1",
+  "id": "fcbd2i-1",
+  "t": "Free Comic Book Day 2013 (Infinity) #1",
+  "s": "Free Comic Book Day 2013 (Infinity)",
+  "pfx": "fcbd2i",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2012,
+   2013
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "hick-o2",
+  "id": "av5-24.NOW",
+  "t": "Avengers (2012) #24.NOW",
+  "s": "Avengers (2012)",
+  "pfx": "av5",
+  "num": "24.NOW",
+  "link": null,
+  "year": 2012,
+  "era": [
+   2013,
+   2015
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "hick-o2",
+  "id": "nav3-16.NOW",
+  "t": "New Avengers (2013) #16.NOW",
+  "s": "New Avengers (2013)",
+  "pfx": "nav3",
+  "num": "16.NOW",
+  "link": null,
+  "year": 2013,
+  "era": [
+   2013,
+   2015
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "unc-o1",
+  "id": "uav-8AU",
+  "t": "Uncanny Avengers (2012) #8AU",
+  "s": "Uncanny Avengers (2012)",
+  "pfx": "uav",
+  "num": "8AU",
+  "link": null,
+  "year": 2012,
+  "era": [
+   2012,
+   2014
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "unc-o1",
+  "id": "uav-18.NOW",
+  "t": "Uncanny Avengers (2012) #18.NOW",
+  "s": "Uncanny Avengers (2012)",
+  "pfx": "uav",
+  "num": "18.NOW",
+  "link": null,
+  "year": 2012,
+  "era": [
+   2012,
+   2014
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "aaron-o1",
+  "id": "fcbd18-1",
+  "t": "Free Comic Book Day 2018 (Avengers/Captain America) #1",
+  "s": "Free Comic Book Day 2018 (Avengers/Captain America)",
+  "pfx": "fcbd18",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2018,
+   2021
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "aaron-o1",
+  "id": "fcbd2asa-1",
+  "t": "Free Comic Book Day 2019 (Avengers/Savage Avengers) #1",
+  "s": "Free Comic Book Day 2019 (Avengers/Savage Avengers)",
+  "pfx": "fcbd2asa",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2018,
+   2021
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "forever-o1",
+  "id": "avforic-1",
+  "t": "Avengers Forever Infinity Comic #1",
+  "s": "Avengers Forever Infinity Comic",
+  "pfx": "avforic",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   2021,
+   2023
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "forever-o1",
+  "id": "avforic-2",
+  "t": "Avengers Forever Infinity Comic #2",
+  "s": "Avengers Forever Infinity Comic",
+  "pfx": "avforic",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   2021,
+   2023
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "forever-o1",
+  "id": "avforic-3",
+  "t": "Avengers Forever Infinity Comic #3",
+  "s": "Avengers Forever Infinity Comic",
+  "pfx": "avforic",
+  "num": "3",
+  "link": null,
+  "year": null,
+  "era": [
+   2021,
+   2023
+  ],
+  "sid": null
+ },
+ {
+  "hero": "avengers",
+  "vol": "forever-o1",
+  "id": "avforic-4",
+  "t": "Avengers Forever Infinity Comic #4",
+  "s": "Avengers Forever Infinity Comic",
+  "pfx": "avforic",
+  "num": "4",
+  "link": null,
+  "year": null,
+  "era": [
+   2021,
+   2023
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",
