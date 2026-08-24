@@ -746,15 +746,30 @@ three `pos` values had to be re-derived from scratch by rendering the band and
 looking, exactly as the Daredevil note above warns. Avengers 39% → 45%, Fantastic
 Four 45% → 70%, Venom 40% → 32%.
 
-**The Fantastic Four one is the instructive one.** The user asked for the plate
-to "sit as high as possible so that the Thing is as visible as possible", and
-70% is as far down the picture as the band can go while keeping Sue Storm's
-head in frame — it puts the Thing's whole face in the middle of the band, where
-45% gave only his brow. Note the *poster tile* cannot be tuned this way at all:
-the scan is 0.668 and the tile is 0.642, so `object-fit:cover` fits it by
-height and crops the width, which makes the `Y` half of `object-position` inert
-there. The same aspect trap as the X-Men banner — check the aspect before
-reaching for the crop.
+**The Fantastic Four one is the instructive one, and it has now been replaced a
+second time.** The first version was a 0.668 scan cropped to 70% for the banner,
+after the user asked for the plate to "sit as high as possible so that the Thing
+is as visible as possible". That is when the answer was still "the tile cannot be
+tuned at all", because at 0.668 against a 0.642 tile the vertical crop is inert.
+
+**The user then recomposed the picture and re-uploaded it at 0.545** — the four
+figures restacked so the Thing sits lower — which changes the geometry rather
+than just the framing, and both crops had to be redone from scratch:
+
+- the tile now genuinely crops vertically, so it needed the new `tpos` knob
+  described below, at **70%** — all four faces in frame, the Thing dominant and
+  clear of the plate;
+- the banner went **70% → 50%**, because the old value on the new aspect is
+  nothing but the Thing's fists and empty cloud. 50% is Sue's whole face, the
+  Thing's whole head and the Torch's flame.
+
+The lesson to carry: **a replacement poster can change the aspect, not just the
+picture, and an aspect change moves which knobs are even live.** Check the
+aspect against 0.642 before assuming the tile takes care of itself.
+
+`covers.save_cover` warns on anything outside 0.60–0.75 and it warned on this
+one; that warning is information, not an error to suppress — the file is kept as
+the user composed it.
 
 **The Venom scan needed its background taken out, and `tools/knockout.py` does
 it.** As supplied it is an Alex Ross figure on a flat pale-cyan studio field,
@@ -957,10 +972,31 @@ What a cover changes, beyond the picture:
 
 The modal banner is a 2.8:1 slot cut out of a 2:3 page, so **where to crop is
 per-cover**: optional `pos` on a `HEROES` entry sets `object-position` on the
-banner only (the poster is the same aspect as the cover and crops almost
-nothing). **All seven now set it** and none of them landed on a guess: every
+banner. **All seven now set it** and none of them landed on a guess: every
 value below was arrived at by rendering `#mArt` and looking, and four needed a
 second pass after the first render clipped something.
+
+**`pos` used to be banner-only, and since Aug 2026 there is a second knob**,
+because the premise underneath the old rule broke. The rule was that the poster
+tile needs no crop of its own — the tile is 0.642 and every scan was ~0.667, so
+`object-fit:cover` fitted them by height and the `Y` half of `object-position`
+was inert there. **The Fantastic Four poster is now 0.545**, tall enough to crop
+vertically, which made the *shared* `50% 46%` on `.art.cover` suddenly live for
+exactly one subject — a value nobody had chosen for it.
+
+So `tpos` sets `object-position` on the **tile**, `pos` on the **banner**, and
+they do not share a value: they are different crops of different shapes, and on
+Fantastic Four they are 70% and 50%. Fantastic Four is the only subject that
+sets `tpos`, and checking whether a new poster needs one is one line:
+
+```bash
+python3 -c "
+from PIL import Image
+import glob,os
+for f in sorted(glob.glob('Art/Heroes/*.jpg')):
+    im=Image.open(f); a=im.size[0]/im.size[1]
+    print('%-24s %.3f %s'%(os.path.basename(f),a,'<-- crops vertically' if a<0.642 else ''))"
+```
 
 | Subject | `pos` | What the band is framed on |
 |---|---|---|
@@ -968,7 +1004,7 @@ second pass after the first render clipped something.
 | wolverine | 13% | the mask — 19% clipped the ear tips |
 | hulk | 41% | the roaring head — 45% clipped the hair |
 | xmen | 33% | the Jean / Cyclops / Storm face row |
-| fantastic-four | 45% | Reed, the Torch, the Thing's fist |
+| fantastic-four | 50% | Sue's face, the Thing's whole head, the Torch's flame — and `tpos:"70%"` for the tile |
 | moon-knight | 7% | the crescent and fist against the moon |
 | daredevil | 27% | the shouting head, horns and the light burst |
 | silver-surfer | 39% | the brow, eyes and nose bridge, star field either side |
