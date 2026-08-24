@@ -68,12 +68,17 @@ Keep replies short and plain. This is a hobby project, not a code review.
   tooling again (`--hero iron-man`); 9 volumes, which is *every* Iron Man
   omnibus in print. Its `OMNI` array is generated from `tools/ironman_meta.py`.
 - `silversurfer-reading-tracker.html` — the Silver Surfer omnibus shelf. Same
-  shape and tooling again (`--hero silver-surfer`); 3 volumes, the smallest
+  shape and tooling again (`--hero silver-surfer`); 4 volumes, the smallest
   shelf on the site. Its `OMNI` array is generated from
   `tools/silversurfer_meta.py`.
+- `blackpanther-reading-tracker.html` — the Black Panther omnibus shelf. Same
+  shape and tooling again (`--hero black-panther`); 7 volumes, and the first
+  row-three placeholder to be curated. Its `OMNI` array is generated from
+  `tools/blackpanther_meta.py`.
 - `Art/Spider-Man/`, `Art/Hulk/`, `Art/Fantastic-Four/`, `Art/Wolverine/`,
   `Art/Moon-Knight/`, `Art/Daredevil/`, `Art/Silver-Surfer/`,
-  `Art/Captain-America/`, `Art/Iron-Man/`, `Art/X-Men/` — cover scans, committed so
+  `Art/Captain-America/`, `Art/Iron-Man/`, `Art/Black-Panther/`,
+  `Art/X-Men/` — cover scans, committed so
   GitHub Pages can serve them. Every page references them by relative path.
   `Art/X-Men/` is the odd one: its four books were never printed, so each file is
   the cover of the issue that volume is named after — see "Cover art for books
@@ -82,8 +87,11 @@ Keep replies short and plain. This is a hobby project, not a code review.
   id (the last five are the row-three placeholders).
   See "Artwork" below.
 - `Art/Banners/` — the wide above-the-fold art, eleven files: `index.jpg` for the
-  homescreen and `<hero id>.jpg` for each subject that has a shelf. The five
-  placeholders have none and do not need one until they get a tracker page. Hand-picked, never
+  homescreen and `<hero id>.jpg` for ten of the eleven subjects that have a
+  shelf. **Black Panther is the exception and is the first one that actually
+  costs something** — it has a tracker page and no banner, so its `hbFallback()`
+  degrades to the poster scan. The other four row-three placeholders have none
+  and do not need one until they get a tracker page. Hand-picked, never
   fetched; `tools/banners.py` normalises them. A missing one is not a broken
   page — see "The banner" below.
 - `Art/covers/` — the original hand-supplied scans the `Art/Heroes/`
@@ -105,13 +113,14 @@ a file boundary is the small storage record described under "Homescreen" below.
 
 ## One tracker shape, two ways of filling it
 
-**All ten subjects are omnibus shelves** (Aug 2026): a shelf of volumes
+**All eleven subjects are omnibus shelves** (Aug 2026): a shelf of volumes
 rendered as CSS-3D hardcover books, each opening into its own chapter list. Two
 views in one file, hash-routed (`#/omni/<id>`). What differs is where a shelf's
 data comes from:
 
 - **Wiki-backed** (Spider-Man, Hulk, Fantastic Four, Wolverine, Moon Knight,
-  Daredevil, Silver Surfer, Captain America, Iron Man) — each volume reproduces exactly
+  Daredevil, Silver Surfer, Captain America, Iron Man, Black Panther) — each
+  volume reproduces exactly
   what the printed book collects, in
   print order, pulled from the Marvel Database. `OMNI` is **generated** from a
   `tools/<hero>_meta.py`; the whole pipeline behind it is hero-agnostic — see
@@ -245,7 +254,7 @@ Every page is one of three levels, and they now share the same top:
 
 | Level | Page | Banner shows | Keep Reading shows |
 |---|---|---|---|
-| 1 | `index.html` | `Art/Banners/index.jpg` + the C.O.M.I.C.S. wordmark | every volume open across all ten subjects |
+| 1 | `index.html` | `Art/Banners/index.jpg` + the C.O.M.I.C.S. wordmark | every volume open across all eleven subjects |
 | 2 | a tracker's shelf view | `Art/Banners/<hero>.jpg` + that subject's printed logo | every volume open on that shelf |
 | 3 | a tracker's volume view | that volume's own cover | one tile — the next issue in the volume |
 
@@ -391,13 +400,14 @@ way a deep link does (shelf issue id → marvel id → asset) and nothing is
 hand-sourced. Art lands in `Art/Tours/<hero>/<issue id>.jpg` at the usual
 700px/q82.
 
-**All ten shelves have one** (Aug 2026) — 131 volume tours plus ten character
-tours, about **56,000 words and 150 issue covers**. Hulk was written first on
-purpose so the voice could be checked before the rest.
+**All eleven shelves have one** (Aug 2026) — 138 volume tours plus eleven
+character tours, about **67,000 words and 177 issue covers**. Hulk was written
+first on purpose so the voice could be checked before the rest.
 
 | Hero | Volume tours | Words |
 |---|---:|---:|
 | Hulk | 17 | 9,700 |
+| Black Panther | 7 | 6,700 |
 | Captain America | 22 | 8,000 |
 | Spider-Man | 16 | 7,900 |
 | Daredevil | 18 | 7,600 |
@@ -481,7 +491,7 @@ the rail (Aug 2026). Three things about it:
   `touch`. So marking anything in the volume brings the tile straight back, and
   nothing is ever hidden for good. That behaviour is stated on the page in both
   empty states — do not turn it into a permanent hide.
-- **One key, shared by all ten pages**, read and written through each page's
+- **One key, shared by all eleven pages**, read and written through each page's
   own `store` — the same origin-wide pattern as `comics-anthropic-key`. It has
   to be shared: the homescreen rail is cross-subject and a tracker's is not, so
   an X in one place has to mean what an X means in the other. The trackers
@@ -525,7 +535,7 @@ says which year it came out**, both tinted by the same palette. Scrolling one
 chapter you watch the colour shift under you when the book crosses an age,
 which is the whole point of reading a shelf historically.
 
-`ERAS` is duplicated in all ten pages like the rest of the chrome. The bands are
+`ERAS` is duplicated in all eleven pages like the rest of the chrome. The bands are
 **the user's own, not the textbook ones**, and re-deriving them from a standard
 reference is the wrong move:
 
@@ -542,7 +552,7 @@ reference is the wrong move:
 
 Golden runs back to 1880 so nothing on any shelf can fall off the front. An
 eleven-band variant was considered and rejected: it only adds seven multi-era
-tiles across the 131 volumes and turns most of the modern half of every shelf
+tiles across the 138 volumes and turns most of the modern half of every shelf
 into a hyphenated two-era label. Its finer distinctions — 1992 as the Image
 line, 2000 as decompression, 2005 as the event era — live in the guided tour
 prose instead, which is where they read as history rather than as a label.
@@ -550,7 +560,7 @@ prose instead, which is where they read as history rather than as a label.
 **The era tag needs no new data.** `eraSpan()` reads the years out of a
 volume's own `era` string, so a book that straddles a boundary shows both dots
 and both names ("Copper – Chromium Age") rather than picking the bigger half.
-40 of the 131 volumes are two-era.
+46 of the 138 volumes are two-era.
 
 **The placard sits under the book, not on it.** `.eratag` is a sibling of
 `.book` inside `.cell`, which reads as a museum placard under an exhibit. Do
@@ -603,7 +613,7 @@ What went: the sky gradient, the four floating `.bubble`s, every glass panel
 with a white inner highlight, the glossy orb buttons, and the gradient-clipped
 italic headings.
 
-The chrome is duplicated in all ten files on purpose — same portability rule
+The chrome is duplicated in all eleven files on purpose — same portability rule
 as the summary engine. Change one, change the others.
 
 ## Homescreen (`index.html`)
@@ -642,9 +652,13 @@ Aug 2026 it is:
 | 2 | Moon Knight, Daredevil, Captain America, Iron Man, Silver Surfer |
 | 3 | The Avengers, Black Panther, Ghost Rider, Venom, Doctor Strange |
 
-Row three is **five placeholders** (Aug 2026), added in the order the user named
-them. Each has real poster art and a plate colour the user picked, `file:null`
-and `total:0` — no reading list, no tracker file, no `logo`, no banner. See
+Row three was **five placeholders** (Aug 2026), added in the order the user
+named them. **Black Panther is live as of Aug 2026 and stayed where it was** —
+curating a subject is not a reason to move it, and the order rule below applies
+to a promotion exactly as it does to an insertion. So the wall now has a live
+shelf in the middle of row three, which is correct. The other four still have
+real poster art, a printed logo and a plate colour the user picked, with
+`file:null` and `total:0` — no reading list, no tracker file, no banner. See
 "The placeholder row" below.
 
 **Do not reorder it, and do not insert a new subject into the middle of it.**
@@ -676,13 +690,13 @@ cover. That is a *different picture*, not a bigger scan of the same one, so its
 put a band of empty black across the modal banner. Expect the same whenever a
 poster is genuinely replaced rather than upscaled.
 
-**All ten are hand-supplied art, not wiki scans** (Aug 2026). The user
+**All fifteen are hand-supplied art, not wiki scans** (Aug 2026). The user
 dropped the originals into `Art/covers/` and they replaced the fetched covers
 outright. They are painted pieces rather than printed covers, and that turns
 out to matter for this particular job: no logo, no barcode strip and no trade
-dress fighting the poster plate, so the subject name sits on clean art on all
-ten. Keep that property in mind when swapping one — a scan of a printed cover
-will put a logo where the plate goes.
+dress fighting the poster plate, so the subject name sits on clean art on every
+one of them. Keep that property in mind when swapping one — a scan of a printed
+cover will put a logo where the plate goes.
 
 #### Artwork the user supplies — do not source these three
 
@@ -752,8 +766,11 @@ know). So the only thing missing for those subjects is the art itself.
 
 #### The placeholder row
 
-Five subjects with poster art and nothing else (Aug 2026), added at the user's
-request to see them on the wall before any of them is curated:
+Five subjects added at the user's request (Aug 2026) to see them on the wall
+before any of them was curated. **Black Panther is no longer one of them** — it
+was built out later the same month and is a live shelf — but its row is left in
+the table below, because its plate, ramp, texture, emblem and `pos` are all
+still the ones chosen here and nothing about them changed when it went live:
 
 | Subject | id | Plate | Ramp / texture / emblem |
 |---|---|---|---|
@@ -781,10 +798,12 @@ Four things about them worth not relearning:
   the 56px `max-height` binds before the width does and Avengers lands at
   almost exactly the width Spider-Man reaches at `logow:"84%"`. Reach for
   `logow` only after rendering — the two knobs pull against each other.
-- **No banners, and that is the one piece still outstanding.** It costs
-  nothing today: a banner is only ever read by a *tracker* page, and none of
-  these has one. It becomes a blocker the moment one of them is curated. See
-  open item 19.
+- **No banners, and Black Panther has now proved what that costs.** A banner is
+  only ever read by a *tracker* page, so for the four still in curation it
+  costs nothing. Black Panther has a tracker page and no banner, so its
+  `hbFallback()` drops to the poster scan at `objectPosition:"50% 30%"` — which
+  looks good, because the poster is a head-on mask that fills the band, but it
+  is the fallback rather than the intended art. See open item 19.
 - **Every `pos` was rendered and looked at**, the same as the ten above. The
   Avengers plate is the one to remember: it is a crowd, so the band has to land
   on the face row (`39%`) or it is a picture of torsos. Black Panther went
@@ -792,8 +811,11 @@ Four things about them worth not relearning:
   eyes behind him into a smear along the top edge — 30% drops them and keeps
   the mask whole, which is the better trade.
 
-The five `desc` strings are **briefs, not specs** — each one ends "Nothing is
-decided yet", because the scope call on every one of them is the user's. The
+The remaining four `desc` strings are **briefs, not specs** — each one ends
+"Nothing is decided yet", because the scope call on every one of them is the
+user's. Black Panther's said the same until it was built, and the brief turned
+out to be right about the hard part: "Shuri's and Killmonger's books are the
+obvious scope question" is exactly the call the user had to make. The
 Avengers is the hard one (omnibuses run to dozens of volumes plus the spin-off
 teams); Venom overlaps the Spider-Man shelf, which already carries Spider-Man
 vs. Venom and briefly carried both Venomnibus volumes; Ghost Rider is two
@@ -861,6 +883,7 @@ second pass after the first render clipped something.
 | silver-surfer | 39% | the brow, eyes and nose bridge, star field either side |
 | captain-america | 26% | the mask, the A and the shield edge — 32% clipped the head |
 | iron-man | 11% | the gold faceplate, the shoulders and the chest repulsor |
+| black-panther | 30% | the mask, the eyes and the shoulder ribbing — 34% clipped the ear tips, 26% smeared the big panther eyes behind him along the top edge |
 
 Silver Surfer's is the clearest illustration of why this is rendered rather
 than reasoned about. The poster is a chrome head against black; the obvious
@@ -922,6 +945,7 @@ back to the old navy, so the field is optional and nothing breaks without it.
 | silver-surfer | dark stone grey-blue | the user's call; see below |
 | captain-america | deep blue | the poster's foot is pale sky, so the plate has to be dark; the logo is white |
 | iron-man | red, run deep | the user's call; see below |
+| black-panther | purple | set when it was a placeholder and kept — the poster is a purple-lit night piece and the logo is gold, so the plate had to be deeper than the art rather than a different hue |
 
 **Silver Surfer's plate was black for a day and is now dark stone grey-blue**
 (`74,86,102` → `28,34,44`), at the user's request. The black version did work,
@@ -1494,8 +1518,11 @@ already thrown it away** — a raw-contents entry must end in the issue number o
 the `<series>`/`<issue>` split fails, so the subtitle repair strips exactly the
 information the matcher would need. No rule can recover that, hence a pin.
 
-Four are pinned (`mgn-49`, `-65`, `-67`, `-68`); only `mgn-50` is genuinely
-absent from the catalog. All four had been recorded as "not on marvel.com" for
+Four Graphic Novels are pinned (`mgn-49`, `-65`, `-67`, `-68`); only `mgn-50`
+is genuinely absent from the catalog. A fifth pin, `mvoi-1`, is a different
+problem entirely and is described under "The Black Panther tracker" — one comic
+filed under two series ids, so there was nothing for `tiebreak()` to choose
+between. All four had been recorded as "not on marvel.com" for
 months, which is the same lesson as the naming pass: **re-test a "not in the
 catalog" verdict before believing it.** `catalog.py find "<story title>"` is the
 whole check. The pin stores the id only — the slug is read back out of the
@@ -1503,9 +1530,9 @@ catalog — and the run exits loudly if a pinned id is not in it.
 
 ### What is left, and why
 
-**4649 of 4712 unique issues across the nine shelves resolve (99%).** The 62
-that do not were each checked against the catalog: they are not on marvel.com
-at all — plus one standing rejection, `tta3-1`, which is in the catalog but
+**4992 of 5067 unique issues across the ten registered shelves resolve (99%).**
+The 74 that do not were each checked against the catalog: they are not on
+marvel.com at all — plus one standing rejection, `tta3-1`, which is in the catalog but
 deliberately not linked (see "An unmapped series is derived, not dropped").
 `tools/unlinked.json` is the written record, refreshed by
 `link_issues.py --dump`.
@@ -1729,7 +1756,7 @@ rule on any future run, so the bad links cannot come back.
 - `link_issues.py` — matches every shelf issue against that catalog and writes
   `marvel_ids.json`. No table of series prefixes to maintain; reports ambiguity
   instead of guessing. Its three last-resort tables (`ALIAS`, `NUM_ALIAS`,
-  `ISSUE_ALIAS`) hold thirteen entries between them and cannot grow silently,
+  `ISSUE_ALIAS`) hold fourteen entries between them and cannot grow silently,
   because every run reports what it could not match. `--write` to commit,
   `--dump` to refresh `unlinked.json`.
 - `marvel_catalog.json`, `marvel_series.json`, `marvel_catalog_probed.json` —
@@ -1743,7 +1770,8 @@ rule on any future run, so the bad links cannot come back.
 - `omnibus_contents_raw.json`, `hulk_contents_raw.json`, `ff_contents_raw.json`,
   `wolverine_contents_raw.json`, `moonknight_contents_raw.json`,
   `daredevil_contents_raw.json`, `silversurfer_contents_raw.json`,
-  `captainamerica_contents_raw.json`, `ironman_contents_raw.json` — the raw
+  `captainamerica_contents_raw.json`, `ironman_contents_raw.json`,
+  `blackpanther_contents_raw.json` — the raw
   ReprintOf lists pulled from the Marvel Database, one entry per omnibus, one
   file per hero. Regenerate only if a volume's contents change.
 - `heroes.py` — the hero registry. One entry per omnibus-shelf subject, holding
@@ -1753,7 +1781,8 @@ rule on any future run, so the bad links cannot come back.
 - `omnibus_meta.py` (Spider-Man), `hulk_meta.py` (Hulk), `ff_meta.py` (Fantastic
   Four), `wolverine_meta.py` (Wolverine), `moonknight_meta.py` (Moon Knight),
   `daredevil_meta.py` (Daredevil), `silversurfer_meta.py` (Silver Surfer),
-  `captainamerica_meta.py` (Captain America), `ironman_meta.py` (Iron Man) — the hand-written half,
+  `captainamerica_meta.py` (Captain America), `ironman_meta.py` (Iron Man),
+  `blackpanther_meta.py` (Black Panther) — the hand-written half,
   and **the only place shelf metadata should be edited**: `ORDER` (wiki-backed
   volumes; each key must exist in that hero's raw-contents file or `gen()`
   KeyErrors), `PLACEHOLDERS` (shelf tiles with no contents), and `SHELF`
@@ -1841,7 +1870,7 @@ rule on any future run, so the bad links cannot come back.
   `series_harvest.py` has banked: issue slug → marvel id, series id → title, and
   which issue ids `scan` has already probed (dead ones included). Resumable
   caches, so a rerun costs nothing.
-- `marvel_ids.json` — id → marvel.com path fragment, **shared by all three heroes**.
+- `marvel_ids.json` — id → marvel.com path fragment, **shared by every hero**.
   `build_omnibus_data.py` splices it in as `MARVEL`, so a harvest lands by
   regenerating, not by editing the HTML.
 **`OMNI` and `MARVEL` in the HTML are generated — do not hand-edit them.** Change
@@ -1858,12 +1887,25 @@ python3 tools/build_omnibus_data.py --check --hero hulk   # confirm it round-tri
 ```
 
 Note that a harvest touches **every** hero, not one: `marvel_ids.json` is
-shared, so `link_issues.py --write` means regenerating all nine trackers, not
+shared, so `link_issues.py --write` means regenerating all ten trackers, not
 just the shelf you were working on. The Iron Man harvest was a clean
 demonstration: 288 ids written, all of them Iron Man's, and every other shelf
-still needed a regenerate because `MARVEL` is spliced in whole.
+still needed a regenerate because `MARVEL` is spliced in whole. Black Panther
+did the same with 293.
+
+**`years.py` is the same trap one step later**, and it is easy to skip because
+the build does not fail on it: a harvest that adds links leaves every shelf's
+`YEARS` map short until `years.py` runs, and the first Black Panther build
+reported **14%** year coverage until it did. Read the coverage line the build
+prints; that is what it is there for.
 
 All of these take `--hero <key>`; without one they act on Spider-Man.
+
+`link_issues.py`'s three last-resort tables now hold fourteen entries between
+them. The newest, `ISSUE_ALIAS["mvoi-1"]`, is not the Marvel Graphic Novel shape
+the other four are: marvel.com carries **one comic under two series ids**, so
+the matcher had two candidates that were the same issue and no rule could pick
+between them.
 
 ### Adding an omnibus hero
 
@@ -3235,6 +3277,203 @@ here.
 Five of the nine covers are `soft` (under 500px). That is what the Marvel
 Database stores.
 
+## The Black Panther tracker (omnibus shelf)
+
+Same code as the other nine shelf pages, same tooling, different data: 7
+volumes, 354 issue slots, 350 unique issues, all 7 with contents and cover art.
+No placeholders, and nothing unreleased. `tools/blackpanther_meta.py` is the
+hand-written half; run everything with `--hero black-panther`.
+
+It is the **first row-three placeholder to be curated**, and it stayed where it
+was on the wall — see "The order of the wall is fixed".
+
+### Scope call — six obvious books and one argument
+
+The Marvel Database lists seven Black Panther omnibuses and all seven are on the
+shelf. Six needed no judgement at all: The Early Marvel Years, Panther's Prey,
+both Priest volumes, Hudlin and Coates are either a numbered run collection or a
+"by <creator>" book, there is no family character with an omnibus to rule out
+(Shuri and Killmonger have minis, not omnibuses), and nothing is unreleased —
+the most recent, Panther's Prey, shipped in February 2026.
+
+**The one call was WAKANDA: WORLD OF BLACK PANTHER, and the user put it ON.**
+It is an anthology rather than a run: sixty-five issues of minis set in Wakanda,
+roughly two-thirds of them T'Challa's (Rise of the Black Panther, Long Live the
+King, the three Wakanda Forever one-shots, Black Panther vs. Deadpool, Agents of
+Wakanda, King in Black: Black Panther) and the rest other people's — World of
+Wakanda, Shuri, Killmonger, The Crew. It is the only volume here that is not a
+Black Panther title, and it is the reason the shelf has any overlap at all.
+
+**Two enumeration traps, both the Captain America lesson repeating:**
+
+- **`apprefix=Black Panther` never sees Wakanda: World of Black Panther.** A
+  wiki *search* for "Wakanda Omnibus" does. Search as well as enumerate, and
+  search on the storyline as well as the character.
+- **"Black Panther: Revenge of the Black Panther Omnibus Vol 1 1" is a live wiki
+  page and is a `#REDIRECT`.** The book was retitled to Panther's Prey before it
+  shipped. Its ReprintOf pull comes back empty, which looks like a solicited
+  book with no contents and is actually one book counted twice. Fetch the
+  wikitext before concluding a page has no issue list.
+
+`SHELF` is a reading order that on the first six volumes is also publication
+order. **wakanda-o1 sits last** rather than beside the Coates run it grew out
+of: it is a cross-era anthology, which is the placement the Doom and Ultimate
+volumes take at the end of the FF shelf, and reading it in sequence would mean
+stopping the Coates run twice.
+
+**Two gaps are Marvel's, not ours**, and unusually both are at the modern end:
+
+- **Black Panther (2009) #7–12 and the whole #513–529 run** — David Liss's
+  *The Man Without Fear* / *The Most Dangerous Man Alive*, 2011–12, which put
+  T'Challa in Hell's Kitchen with no money and no country. No omnibus.
+- **Black Panther (2021) #1–15 and (2023) #1–10** — John Ridley's spymaster run
+  and Eve Ewing's after it. No omnibus, which is why the shelf stops in 2021.
+
+The tile notes and the guided tour both say so.
+
+### Contents
+
+Pulled the same way as the other shelves (the `ReprintOf<N>` MediaWiki call
+above), into `tools/blackpanther_contents_raw.json`. It is the cleanest pull on
+the project so far in one respect and the messiest in another:
+
+- **Every page writes the full form** (`Black Panther Vol 1 1`), so no gallery
+  cross-reference was needed to disambiguate — and there are **seven** volumes
+  of a series called "Black Panther" for it to have gone wrong on.
+- **The ReprintOf fields matched the rendered gallery exactly on all seven
+  volumes**, in content and in order, once filename punctuation is folded (a
+  wiki image cannot hold a `:` or a `/`, so `Black Panther: Long Live The King
+  Vol 1 1` is stored as `Black Panther Long Live The King Vol 1 1` — that is
+  not a disagreement).
+- **No doubled spaces, no subtitles after the issue number, no short-form
+  entries.** None of the three repairs the other shelves needed applies here.
+
+**Two hand fixes are in the raw file and a re-pull will undo both:**
+
+- **`early-o1`'s order is corrected.** The wiki's ReprintOf fields *and* its
+  gallery both put **Jungle Action #6–24 first**, grouped by series. Marvel's
+  own solicit puts it last, and the blurb says why — "Then, Don McGregor
+  launched T'Challa's first solo series". Moved to the end; everything else in
+  the wiki's order is the solicit's order exactly. This is the `inc-o1` hazard
+  from the Hulk shelf, and here it is a 19-issue block, not one issue.
+- **Fantastic Four #54 is restored by hand.** It is in neither the ReprintOf
+  fields nor the gallery. The official collecting line reads
+  `THE FANTASTIC FOUR (1961) #52-53, and #56, #119 and material from #54`, which
+  settles it — the same shape as Fantastic Four #171 and Wolverine #55, and the
+  same lesson: the solicit is the independent source, and here it was not even
+  on the wiki page, it was on the retail listing.
+
+**The solicit audit covered two of the seven** and both matched exactly:
+Panther's Prey (`Black Panther (1977) #1-15, Marvel Two-in-One (1974) #40-41,
+…`) and Hudlin (`Black Panther (2005) 1-41, X-Men (1991) 175-176, …`). The
+other five carry no explicit range, so the shelf-wide gap check did the rest,
+and every gap it found is one of the two above.
+
+### Chaptering
+
+Six volumes take the automatic per-series chapters. Only `wakanda-o1` carries
+`chapterby="series"`, and it is the closest call on the project after
+`busiek-o1`: nineteen runs across sixty-five issues scores **3.42**, just under
+the 3.5 threshold, so the heuristic would have chunked an anthology of eleven
+named minis into "Part 1"–"Part 11". One chapter per mini names Shuri,
+Killmonger and World of Wakanda where "Part N" would not.
+
+Two volumes look wrong at a glance and are not:
+
+- **`coates-o1` comes out as two chapters of twenty-five issues.** The book is
+  two series and nothing else, and `spanlabel()` correctly renders the Legacy
+  renumbering as `#1–18, #166–172` rather than claiming 172 issues.
+- **`hudlin-o1` splits Black Panther (2005) into three chapters** around two
+  single-issue X-Men chapters. That is the *Wild Kingdom* crossover printed in
+  reading order — BP #7, X-Men #175, BP #8, X-Men #176, BP #9 — which is how
+  the book prints it. Same shape as `mackay-o1` on the Moon Knight shelf.
+
+### Issue ids and the overlaps
+
+354 issue slots against 350 unique — four overlaps, and all four are
+`wakanda-o1` doubling back:
+
+| Overlap | Volumes |
+|---|---|
+| Black Panther Annual (2018) #1 | `hudlin-o1` + `wakanda-o1` |
+| Black Panther (2018) #23–25 | `coates-o1` + `wakanda-o1` |
+
+They share ids on purpose, exactly as on every other shelf, and the UI flags
+them with the gold "in 2 omnibuses" pill. Drop `wakanda-o1` and the shelf has
+no overlap at all.
+
+Two Black Panther series were **already coded by other shelves** and are
+repeated verbatim in this module's `SERIES_EXTRA`: `bp98` (Moon Knight's, for
+the Priest run T'Challa and Marc Spector share) and `bp16` (Wolverine's). The
+id store is shared and the same comic has to key the same way everywhere.
+`bp` on its own is deliberately unused — there is no single Black Panther
+series to give it to, and a bare code would read as if there were.
+
+### Marvel deep links
+
+**343 of 350 unique issues (98%) resolve.** The rest fall back to
+`marvel.com/search?query=` and a grey Read button, same convention as the other
+trackers. Complete: Jungle Action all 19 on the shelf, Black Panther (1977),
+(1988), (1998) all 62, (2005) all 41, (2009), (2016) and (2018), plus Rise of
+the Black Panther, World of Wakanda, Shuri, Killmonger, Agents of Wakanda, The
+Crew and every guest appearance.
+
+**The id harvest was not a step** — the catalog already held everything, so this
+was `link_issues.py --write` twice with a regenerate between: 292 matched on the
+first pass with **1 ambiguous and 0 rejected**, and 0 of either on the second.
+That is the "what a brand-new hero actually gets" number holding up again.
+
+The one ambiguity is a new shape and is worth knowing: **`mvoi-1` had two
+candidate series ids, 29653 and 31412, and both hold the same comic** —
+`marvels_voices_2020_1`, filed twice by marvel.com. `tiebreak()` genuinely
+could not choose because there was nothing to choose between. It is the fifth
+entry in `ISSUE_ALIAS`, pinned to 84188, which is the copy flagged as being on
+Marvel Unlimited.
+
+The 7 that marvel.com does not have, all re-tested against a fully-swept catalog
+before being believed: **Black Panther: Panther's Prey #1–4** (the 1991 prestige
+mini — the catalog has no Panther's Prey at all), **Black Panther Saga #1** (a
+2008 free primer one-shot), **Astonishing Tales #6** (that series is confirmed
+short at source — see the FF shelf) and **What The--?! #9** (the catalog holds
+exactly one issue of it, #20).
+
+### Cover art — the cleanest fetch on the project
+
+`fetch_covers.py --hero black-panther --all` returned **7 fetched, 0 failed**,
+and unlike Captain America and Iron Man **every one of them is a real jacket**.
+Checked on a contact sheet, as the rule requires: all seven carry omnibus trade
+dress and a creator credit block, none has a price box or a Comics Code stamp.
+Nothing needed hand-fetching by ISBN.
+
+None is `soft` either — the smallest is 600x883 — which makes this the only
+shelf on the site with no low-resolution cover on it.
+
+### The page itself
+
+Built from `moonknight-reading-tracker.html`, which is still the one to copy for
+a small shelf. What changed beyond the identity sweep:
+
+- **Seven `.o-*` ramps**, all with `SPINE_C` entries and all single-quoted:
+  `o-savannah` (ochre into deep olive-black, for the Jungle Action years),
+  `o-kirby` (Kirby magenta and orange), `o-attache` (cool slate — Priest's
+  political-thriller register), `o-frog`, `o-royal` (gold into purple-black),
+  `o-empire` (violet into indigo) and `o-nation`.
+- **Four new textures**: `tex-kente` (two crossing chevron bands over a fine
+  warp — woven cloth, which is what the Wakandan trade dress is built on in
+  every era), `tex-krackle` (coarse Kirby dots, for the volume Kirby drew),
+  `tex-vibranium` (an isometric weave) and `tex-nanite` (a fine circuit grid).
+  `tex-halftone` and `tex-crosshatch` are kept from the template.
+- **The glyph is a panther mask** — one silhouette with two ears, two eye slits
+  and a muzzle cut out of it by an SVG `<mask>`, so the ramp behind shows
+  through the eyes. Same `split("GID").join(...)` fresh-id mechanism, prefix
+  `bp`.
+- **`SC`** rewritten for the fifty-five series these seven books collect.
+
+**There is no banner file**, so `hbFallback()` drops to `Art/Heroes/black-panther.jpg`
+at `objectPosition:"50% 30%"`. That was rendered and looked at rather than
+guessed, and it happens to work very well — the poster is a head-on mask that
+fills the band — but it is the fallback, not the intended art. See open item 19.
+
 ## The X-Men tracker (a shelf of books that don't exist)
 
 ### What it does
@@ -3520,7 +3759,8 @@ cannot currently do is the opposite: make two devices agree.
 ## Open items — C.O.M.I.C.S.
 
 1. ~~One of seven subjects has no reading list yet.~~ **Done Aug 2026** — all
-   ten subjects now have one (Iron Man was the tenth): Daredevil shipped as the sixth omnibus shelf,
+   eleven subjects now have one (Black Panther was the eleventh, and the first
+   of the row-three placeholders to be curated): Daredevil shipped as the sixth omnibus shelf,
    Silver Surfer as the seventh and Captain America as the eighth. Both of the last two shipped that way rather than as curated
    chronologies, and both **dropped part of their old `HEROES` brief on
    purpose**: Moon Knight's because Lemire's run has no omnibus, Daredevil's
@@ -3531,7 +3771,9 @@ cannot currently do is the opposite: make two devices agree.
 2. **`total` for a new hero is a hardcoded fallback.** It is only used before
    that tracker has ever been opened; after that the published record wins. Keep
    them in sync anyway, or a first visit reports the wrong percentage.
-3. **Fifty-three covers are low-res** (~225–500px wide). For all but one that
+3. **Fifty-three covers are low-res** (~225–500px wide). Black Panther is the
+   one shelf with none — its smallest is 600x883 — so the count did not move
+   when it shipped. For all but one that
    is because it is all the Marvel Database stores; `gauntlet-o1` is the
    exception, at 340x500 because the book is not out and the only flat jacket
    anywhere is a retailer's thumbnail — replace it with the wiki's scan after 3
@@ -3582,10 +3824,11 @@ cannot currently do is the opposite: make two devices agree.
     hidden homescreen gear, the ASCII pass — went with `comics-mobile.html`
     itself. See "The mobile build is retired".
 11. ~~Deep links are a long tail on every shelf.~~ **Done Aug 2026** — the
-    nine shelves are at 93–100% (Spider-Man 600/606, Hulk 652/659, Fantastic
-    Four 671/688, Wolverine 658/665, Moon Knight 243/260, Daredevil 630/633,
-    Silver Surfer 140/141, Captain America 721/725, Iron Man 339/340). The
-    remaining 62 are not on marvel.com at all;
+    ten shelves are at 92–100% (Spider-Man 600/606, Hulk 652/659, Fantastic
+    Four 671/688, Wolverine 658/665, Moon Knight 239/260, Daredevil 630/633,
+    Silver Surfer 140/141, Captain America 720/725, Iron Man 339/340, Black
+    Panther 343/350). The
+    remaining 74 are not on marvel.com at all;
     `tools/unlinked.json` names every one. What closed it was sweeping
     marvel.com's open JSON catalog rather than searching per series — see
     "Linking issues" and "How the links used to be missed". The last nine came
@@ -3620,7 +3863,8 @@ cannot currently do is the opposite: make two devices agree.
     floor, and preserving it is the thing to watch if the shelf is ever edited —
     see "A shelf holds books whose tile is finished".
 14. **Moon Knight and Iron Man are the two banners still under-size.** All ten
-    files are in, and seven were replaced in Aug 2026 with the user's own upscales
+    that exist are in — Black Panther has a shelf and no banner at all, which is
+    open item 19, not this one — and seven were replaced in Aug 2026 with the user's own upscales
     — 4096px sources, normalised to the new 2400px target. `moon-knight.jpg` was
     not in that batch and is still the original 1200px; `iron-man.jpg` arrived
     later at 1966px, which misses the threshold by a little. `banners.py audit`
@@ -3682,21 +3926,29 @@ cannot currently do is the opposite: make two devices agree.
     retailer thumbnail, the smallest on the shelf, and the Marvel Database will
     have a proper scan once the jacket is photographed.
 
-19. **The five placeholders still have no banner.** Their posters landed in
-    Aug 2026 and their printed logos the day after, so the wall itself is
-    finished — fifteen logo plates, no text fallbacks. What is missing is
-    `Art/Banners/<id>.jpg` for all five.
+19. **Row three still has no banner art, and Black Panther now needs its one.**
+    All five posters landed in Aug 2026 and their printed logos the day after,
+    so the wall itself is finished — fifteen logo plates, no text fallbacks.
+    What is missing is `Art/Banners/<id>.jpg` for all five.
 
-    That blocks nothing right now, because a banner is only ever read by a
-    tracker page and none of these has one; it becomes a hard requirement the
-    moment any of them is curated. It is the user's to supply (see "Artwork the
-    user supplies") — do not go looking for one. `banners.py add <id> <file>`
-    already accepts all five ids, and `hbFallback()` in the new tracker then
-    needs the path wiring in.
+    **Black Panther is the one that has stopped being free.** It was curated
+    later the same month, so it has a tracker page, and a banner is only ever
+    read by a tracker page. `blackpanther-reading-tracker.html` therefore falls
+    through `hbFallback()` to `Art/Heroes/black-panther.jpg` at
+    `objectPosition:"50% 30%"` on both its shelf view and every volume view.
 
-    Note the poster scan is the second rung of that fallback chain, so a
-    tracker built before its banner arrives degrades to the subject's poster
-    rather than to a bare ramp.
+    That degrade is working exactly as designed and it looks good — the poster
+    is a head-on panther mask that fills a 2.4:1 band well, which is luckier
+    than it sounds — so this is a "the intended art is missing", not a "the
+    page is broken". Confirmed by driving the page: the only 404 anywhere on it
+    is `Art/Banners/black-panther.jpg`.
+
+    It is the user's to supply (see "Artwork the user supplies") — do not go
+    looking for one. `banners.py add black-panther <file>` already accepts the
+    id, and the `<img class="hb-art">` in the tracker already points at the
+    path, so dropping the file in is the whole fix with no code change.
+
+    The other four cost nothing until one of them is curated.
 
 
 ## Testing
@@ -3726,6 +3978,7 @@ python3 tools/build_omnibus_data.py --check --hero daredevil
 python3 tools/build_omnibus_data.py --check --hero silver-surfer
 python3 tools/build_omnibus_data.py --check --hero captain-america
 python3 tools/build_omnibus_data.py --check --hero iron-man
+python3 tools/build_omnibus_data.py --check --hero black-panther
 
 # Every shelf issue that can be linked, is.
 # Expect: 0 matched, 0 ambiguous, six standing rejections (tta3-1, cap8-25 and
@@ -3743,9 +3996,10 @@ python3 tools/build_tours.py --all --check
 # without one renders as a box.
 python3 tools/logos.py audit
 
-# Banner art. Expect 11 of 16 in (index plus the ten subjects that have a
-# shelf); the five row-three placeholders are blank, which is open item 19,
-# not a regression. iron-man and moon-knight are soft.
+# Banner art. Expect 11 of 16 in (index plus ten of the eleven subjects that
+# have a shelf); the five row-three placeholders are blank, which is open item
+# 19, not a regression -- but black-panther is now a LIVE shelf with no banner,
+# so that page falls back to its poster scan. iron-man and moon-knight are soft.
 python3 tools/banners.py audit
 
 # Nothing on any page still draws a completion figure. Expect no matches:
@@ -3762,6 +4016,7 @@ python3 tools/covers.py audit --hero daredevil
 python3 tools/covers.py audit --hero silver-surfer
 python3 tools/covers.py audit --hero captain-america
 python3 tools/covers.py audit --hero iron-man
+python3 tools/covers.py audit --hero black-panther
 
 # Data integrity (counts, duplicate ids, ARC_SUMS coverage) — see git history
 # or re-derive: eval the data section and assert every chapter has a digest.
@@ -3786,6 +4041,7 @@ issues**; the Daredevil shelf **18 volumes / 634 issue slots / 633 unique
 issues**; the Silver Surfer shelf **4 volumes / 141 issue slots / 141 unique
 issues**; the Captain America shelf **22 volumes / 727 issue slots / 725 unique
 issues**; the Iron Man shelf **9 volumes / 341 issue slots / 340 unique
+issues**; the Black Panther shelf **7 volumes / 354 issue slots / 350 unique
 issues**; the X-Men shelf **4 volumes / 174 issue slots / 174 unique issues**.
 If a change moves those numbers without meaning to, something is wrong.
 

@@ -150,6 +150,11 @@ ISSUE_ALIAS = {
     "mgn-65": "65023",   # Wolverine: Bloodlust
     "mgn-67": "65025",   # Wolverine: The Jungle Adventure
     "mgn-68": "67091",   # Avengers: Death Trap, The Vault
+    # Not the Marvel Graphic Novel shape: marvel.com carries the SAME comic
+    # (slug marvels_voices_2020_1) under two series ids, 29653 and 31412, so
+    # tiebreak() has two candidates that are one issue. 84188 is the copy
+    # flagged as being on Marvel Unlimited; the other is not.
+    "mvoi-1": "84188",   # Marvel's Voices (2020) #1
 }
 
 
