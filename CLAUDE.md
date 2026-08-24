@@ -978,12 +978,33 @@ Silver Surfer plate below exists to state.** It was a deep orange
 user asked for pitch black when they uploaded the new logo. That is normally
 the wrong instinct — Moon Knight already owns the one true black, and Venom had
 to be lifted *off* black for the opposite reason — but this logo settles it:
-**the letters are black brushwork knocked out of a solid amber flame**, so the
+**the letters are black brushwork knocked out of a solid flame field**, so the
 mark carries its own light and needs a ground with none. `14,11,10` → `0,0,0`
 is darker than any other plate on the wall, and against a poster whose lower
 third is dark smoke the band reads as the poster continuing rather than as a
 panel. The logo needs no `logow` — it is 1.66:1, so the 56px `max-height`
 binds first.
+
+**The flame in that logo is recoloured, and a re-upload will undo it.** As
+supplied it was a flat amber `#F8C000` with no gradient at all, which read as
+*yellow* rather than as fire — the user's word — and sat on the wall as a cool
+yellow object against a poster and a banner that are both orange. It now
+carries a vertical fire ramp, `#FF9A1F` → `#F0600F` → `#C22406` top to bottom.
+
+The recolour is worth writing down because a naive one leaves a fringe: the
+mark is two-tone, black letters knocked out of the flame, and every
+antialiased pixel sits on the straight line between those two colours. So a
+flame pixel is identified by **saturation** — which stays near 1.0 the whole
+way down that line, where value does not — and is recoloured by substituting
+the ramp's hue and saturation while scaling the pixel's own value by
+`target_V / 0.973`. Black brushwork (`S < 0.25` or `V < 0.10`) is left alone,
+and the alpha channel is never touched. Four candidates were rendered on the
+real plate at real size before picking: flat orange was clean but dead, and the
+two ramps that kept yellow in them still read as the old logo at 56px.
+
+The original amber file is not kept beside it — `Art/Logos/` holds one file per
+subject — but git history has it, and so does the commit that first normalised
+it.
 
 **Silver Surfer's plate was black for a day and is now dark stone grey-blue**
 (`74,86,102` → `28,34,44`), at the user's request. The black version did work,
