@@ -1,0 +1,746 @@
+# -*- coding: utf-8 -*-
+"""The Venom guided tour.  See tools/tours/hulk.py for the field list."""
+
+A = "Art/Tours/venom/"
+
+OVERVIEW = {
+    "kicker": "Guided tour",
+    "title": "Venom, decade by decade",
+    "lede": (
+        "Venom is the only major Marvel character who <b>started as a costume</b>. The black "
+        "suit was a design problem &mdash; Jim Shooter wanted a new look for Spider-Man to sell "
+        "<i>Secret Wars</i> &mdash; and the concept was bought from a reader, <b>Randy "
+        "Schueller</b>, for $220. Everything since is people finding out what was inside it: "
+        "first a costume that turns out to be alive, then a stalker with a grudge, then a "
+        "1990s anti-hero who outsold the book he came from, then a soldier, then a god. No "
+        "other character on this site changes species this often, and the shelf is a record of "
+        "an idea being repeatedly re-explained by whoever had it next."),
+    "sections": [
+        {
+            "era": "Copper", "years": "1984–1988",
+            "h": "A costume, and then a man inside it",
+            "body": [
+                "Spider-Man comes home from <i>Secret Wars</i> in a black suit in May 1984, and "
+                "for four years the story is entirely about the <b>suit</b>. <b>Mike Zeck</b> "
+                "drew the final design; the white spider stretched across the whole chest, no "
+                "webbing lines, no red &mdash; and it is a genuinely great piece of costume "
+                "design, which is the reason any of this happened.",
+                "<i>Amazing Spider-Man</i> #258 is where Reed Richards tells Peter it is alive, "
+                "and #300 &mdash; May 1988, the anniversary issue &mdash; is where it finds "
+                "somebody who wants it. <b>David Michelinie</b> invents <b>Eddie Brock</b>, a "
+                "disgraced journalist who blames Spider-Man for his career, and puts him in a "
+                "church with a costume that blames Spider-Man for everything else.",
+                "<b>Todd McFarlane</b> draws it, and the drawing is the character. The printed "
+                "suit was a neat, tight bodysuit; McFarlane draws it as something that does not "
+                "fit &mdash; too much of it, hanging in folds, with a mouth that is wider than "
+                "the head it is on and a tongue nobody asked for. Marvel's own model sheets "
+                "spent years catching up to what he did on the page.",
+                "What makes it work as horror is <b>scale</b>. Venom is drawn bigger than "
+                "Spider-Man in every panel of #300, and he knows where Peter lives, which no "
+                "other villain did."],
+            "fig": {"src": [A + "asm-252.jpg", A + "asm-300.jpg"],
+                    "cap": "<b>Left:</b> <i>Amazing Spider-Man</i> #252, May 1984 &mdash; the "
+                           "suit comes home and nobody knows it is alive. <b>Right:</b> #300, "
+                           "May 1988, McFarlane's first full Venom."},
+            "makers": [
+                {"n": "Todd McFarlane", "r": "Pencils, 1988–1990",
+                 "b": "Look at the <b>slack</b>. Every earlier artist drew the black suit "
+                      "skin-tight; McFarlane gives it too much material, so it pools at the "
+                      "wrists and pulls in long diagonal creases across the chest. That one "
+                      "decision is what turns a costume into something wearing a person."},
+                {"n": "David Michelinie", "r": "Writer, 1988–1994",
+                 "b": "Watch what he refuses to do: <b>Venom never fights Spider-Man first</b>. "
+                      "He turns up in Peter's flat, talks to Mary Jane, waits on the ceiling. "
+                      "The threat is domestic before it is physical, which is why the character "
+                      "landed."}],
+            "shelf": ["vsvenom-o1"],
+        },
+        {
+            "era": "Chromium", "years": "1993–1998",
+            "h": "The lethal protector, and eighteen miniseries",
+            "body": [
+                "Venom outsells the book he is a villain in, so in 1993 Marvel gives him his "
+                "own &mdash; and immediately has to make him someone you can root for. "
+                "<b><i>Lethal Protector</i></b> moves Eddie to San Francisco, gives him a "
+                "colony of homeless people living under the city to defend, and has him agree "
+                "not to eat anyone Spider-Man would mind about. It is a hairpin turn and it "
+                "worked: the first issue, with a holographic foil cover, is one of the "
+                "best-selling comics of the speculation boom.",
+                "Then comes the strangest publishing decision on this shelf. Marvel does "
+                "<b>not</b> give him an ongoing. Instead, for five years, he gets a rolling "
+                "sequence of <b>three-issue miniseries</b> &mdash; roughly eighteen of them "
+                "&mdash; each with its own #1 to sell. <i>Funeral Pyre</i>, <i>The Madness</i>, "
+                "<i>Nights of Vengeance</i>, <i>Separation Anxiety</i>, <i>Carnage "
+                "Unleashed</i>, <i>The Hunger</i>, <i>On Trial</i>, <i>License to Kill</i>.",
+                "The strategy tells you exactly what Marvel thought it had: not a character, a "
+                "<b>brand with a number one on it</b>. It also burned the character out, which "
+                "is why he vanishes almost entirely after 1998.",
+                "There is real work in there. <b><i>Sinner Takes All</i></b> puts the symbiote "
+                "on Eddie's ex-wife Anne Weying and is the only book of the era with an "
+                "emotional idea in it; <b><i>The Hunger</i></b> establishes that the suit needs "
+                "a brain chemical Eddie cannot supply and has him eating chocolate in an alley, "
+                "which is both silly and the best horror beat of the decade; <b><i>On "
+                "Trial</i></b> has <b>Matt Murdock</b> defending Eddie Brock in open court."],
+            "fig": {"src": [A + "vlp-1.jpg", A + "vsta-1.jpg"],
+                    "cap": "<b>Left:</b> <i>Lethal Protector</i> #1, 1993 &mdash; foil cover, "
+                           "a million copies, and the moment he becomes a hero. <b>Right:</b> "
+                           "<i>Sinner Takes All</i>, where the suit goes to Anne Weying."},
+            "makers": [
+                {"n": "Ron Lim", "r": "Pencils, 1993–1995",
+                 "b": "Lim draws Venom <b>clean</b>, and it is worth seeing what that costs. "
+                      "His figures are legible, well-staged and completely un-frightening; the "
+                      "same character that was a horror image under McFarlane reads here as a "
+                      "muscular action lead. That shift, more than any script, is what turns "
+                      "Venom into a hero."}],
+            "shelf": ["venom-o1", "venom-o2"],
+        },
+        {
+            "era": "Chromium", "years": "1992–1996",
+            "h": "Carnage, and the problem with a sequel",
+            "body": [
+                "<b>Cletus Kasady</b> arrives in 1992 out of the obvious idea: if the symbiote "
+                "can bond to a man with a grudge, what happens if it bonds to a man with "
+                "nothing else. <b>Mark Bagley</b> designs him as Venom without the mass &mdash; "
+                "thin, red, all tendril and no bulk &mdash; which is the right call, because it "
+                "makes him read as faster rather than stronger.",
+                "<b><i>Maximum Carnage</i></b> in 1993 is fourteen parts across four "
+                "Spider-Man titles and is the high-water mark of the era's excess. It is also "
+                "the story that forces Venom into the hero seat permanently: the only way to "
+                "make Carnage frightening is to have Venom be the one frightened of him.",
+                "That is the structural problem the character never solves. Every escalation "
+                "needs a worse thing above it, and each one pushes Venom further down the bill "
+                "&mdash; which is how you end up, twenty-five years later, with a god."],
+            "shelf": ["vsvenom-o1", "carnage-o1"], "shelfLabel": "Both ends of the Carnage story",
+        },
+        {
+            "era": "Plastic", "years": "1999–2007",
+            "h": "The ongoing at last, and then Eddie sells the suit",
+            "body": [
+                "The character disappears for a year, comes back as a Spider-Man villain, and "
+                "in 2003 finally gets the ongoing he was denied in 1993. <b>Daniel Way</b> and "
+                "<b>Francisco Herrera</b>'s <i>Venom</i> is eighteen issues about a symbiote "
+                "thawed out of Antarctic ice, and it is a much odder book than its reputation "
+                "&mdash; more body horror than action, with long stretches where nobody "
+                "understands what is happening, deliberately.",
+                "<b><i>Venom Vs. Carnage</i></b> (2004) does the escalation trick one more time "
+                "and produces <b>Toxin</b>, Carnage's offspring, bonded to a New York police "
+                "officer. <b>Clayton Crain</b> paints it digitally, and it is the first time "
+                "the symbiotes are rendered as wet rather than drawn as costume.",
+                "Then the run ends with something no other character on this site does. Eddie "
+                "Brock, dying of cancer, <b>auctions the symbiote off</b> &mdash; and Mac "
+                "Gargan, the Scorpion, buys it. The Venom that goes on to join the Thunderbolts "
+                "and the Dark Avengers is not Eddie at all, and Eddie's story is over for the "
+                "better part of a decade."],
+            "fig": {"src": [A + "venom-1.jpg", A + "vvc-1.jpg"],
+                    "cap": "<b>Left:</b> <i>Venom</i> (2003) #1 &mdash; the first ongoing, ten "
+                           "years after the first miniseries. <b>Right:</b> <i>Venom Vs. "
+                           "Carnage</i>, painted by Clayton Crain."},
+            "shelf": ["venom-o3"],
+        },
+        {
+            "era": "Modern", "years": "2011–2016",
+            "h": "Flash Thompson, and the best premise the character ever had",
+            "body": [
+                "<b>Rick Remender</b> takes the piece nobody had used &mdash; the symbiote is "
+                "an <b>addiction</b> &mdash; and builds a whole book on it. Flash Thompson, "
+                "Peter Parker's high-school bully turned Army sergeant, has lost both legs in "
+                "Iraq. The government offers him the symbiote for fifty missions, and the suit "
+                "gives him his legs back for the length of the mission and no longer.",
+                "Flash is the son of an alcoholic and is a drinker himself, and the book never "
+                "once has to say so out loud: the thing that makes him whole is on a hard clock "
+                "and he will do anything for one more hour of it. It is the cleanest metaphor "
+                "any Venom comic has had.",
+                "<b>Tony Moore</b> draws the launch, and the design is the other good decision "
+                "&mdash; a black tactical suit with white markings and a helmet, so the horror "
+                "only comes out when Flash loses control. <b>Cullen Bunn</b> takes over, moves "
+                "him to Philadelphia, and then <i>Space Knight</i> sends him into the galaxy as "
+                "a cosmic hero with the symbiote cleansed and calm.",
+                "That last turn is where the run splits readers: it is a genuinely well-made "
+                "book about a Venom nobody was asking for."],
+            "fig": {"src": [A + "venom2-1.jpg", A + "vsk-1.jpg"],
+                    "cap": "<b>Left:</b> <i>Venom</i> (2011) #1 &mdash; Flash Thompson, fifty "
+                           "missions. <b>Right:</b> <i>Space Knight</i>, the same character four "
+                           "years later and a galaxy away."},
+            "makers": [
+                {"n": "Tony Moore", "r": "Pencils, 2011",
+                 "b": "Look at the <b>seams</b>. Moore draws Agent Venom as equipment &mdash; "
+                      "panel lines, buckles, a visor with a hard edge &mdash; so the moments "
+                      "when the suit goes feral and the mouth opens land as a machine failing "
+                      "rather than as a monster arriving."}],
+            "shelf": ["agent-o1"],
+        },
+        {
+            "era": "Modern", "years": "2018–2021",
+            "h": "Cates and Stegman: the run that rebuilt him",
+            "body": [
+                "<b>Donny Cates</b> and <b>Ryan Stegman</b> open in 2018 with Eddie back, "
+                "broke, hearing things, and then do the single most consequential thing anyone "
+                "has done with the property: they give the symbiotes a <b>god</b>. <b>Knull</b> "
+                "existed before light, made the symbiotes as weapons, and was worshipped as a "
+                "dragon in Viking-age Scandinavia. It is a mythology retrofitted onto a "
+                "costume, and it is executed with enough conviction that it stuck instantly.",
+                "Stegman is the reason. His Venom is not a bodybuilder &mdash; he is "
+                "<b>elongated, wet and asymmetrical</b>, drawn with a scratchy contour and a "
+                "silhouette that changes shape between panels, so the suit reads as a liquid "
+                "with opinions. JP Mayer's inks keep it from turning to mud and Frank Martin's "
+                "colour keeps the black readable, which is a harder job than it sounds on a "
+                "character who is entirely black.",
+                "The other thing the run does is give Eddie a <b>son</b>. Dylan Brock turns the "
+                "book from a horror comic into a story about inheritance, which is why the "
+                "ending &mdash; Eddie ascending and leaving the suit to the boy &mdash; carries "
+                "weight it has no business carrying.",
+                "It runs straight through two events, <b><i>Absolute Carnage</i></b> and "
+                "<b><i>King in Black</i></b>, both of which are on this shelf twice: the core "
+                "minis inside the Cates volume, and the tie-in halves in their own books."],
+            "fig": {"src": [A + "venom4-1.jpg", A + "kib-1.jpg"],
+                    "cap": "<b>Left:</b> <i>Venom</i> (2018) #1, Stegman. <b>Right:</b> "
+                           "<i>King in Black</i> #1 &mdash; three years later, the same idea "
+                           "arrives with a fleet."},
+            "makers": [
+                {"n": "Ryan Stegman", "r": "Pencils, 2018–2021",
+                 "b": "Compare a Stegman Venom to a Ron Lim one. Lim's has a <b>consistent</b> "
+                      "silhouette from panel to panel; Stegman's does not &mdash; the shoulders "
+                      "move, the head lengthens, the tendrils redistribute mass. The "
+                      "inconsistency is deliberate and it is the whole modern look of the "
+                      "character."},
+                {"n": "Frank Martin", "r": "Colour, 2018–2021",
+                 "b": "Watch how much of the black is actually <b>deep blue and violet</b>. "
+                      "Martin almost never uses true black on the figure, saving it for the "
+                      "background, which is what keeps a black character legible against a dark "
+                      "page. It is the least visible and most necessary craft on the book."}],
+            "shelf": ["cates-o1", "abscarn-o1", "kib-o1"],
+        },
+        {
+            "era": "Contemporary", "years": "2021–2025",
+            "h": "Ewing, Ram V, and a war over a father and a son",
+            "body": [
+                "<b>Al Ewing</b> and <b>Ram V</b> follow Cates in 2021 and take the book "
+                "somewhere nobody expected: a <b>time-travel structure</b> in which Eddie is "
+                "scattered across his own future, a symbiote hive politics of many Venoms, and "
+                "a villain called Meridius who is Eddie himself at the end of history. It is "
+                "the most formally ambitious Venom comic there has been.",
+                "<b>None of that run is collected in omnibus.</b> The shelf jumps from 2021 to "
+                "<i>Venom War</i> in 2024, which is a real hole and Marvel's doing rather than "
+                "a curation call.",
+                "<i><b>Venom War</b></i> is where it lands: Eddie and Dylan both have a claim "
+                "on the symbiote, the symbiote has to choose, and a dozen tie-ins hand a "
+                "symbiote to everybody else in the building for three issues each. As events "
+                "go it has an unusually good hook &mdash; the fight is a custody dispute &mdash;"
+                " and an unusually large number of tie-ins about Jeff the Land Shark."],
+            "fig": {"src": [A + "venomwar-1.jpg"],
+                    "cap": "<i>Venom War</i> #1, 2024. Iban Coello, and the book is on the "
+                           "shelf a year before it is on a shelf in a shop."},
+            "shelf": ["venomwar-o1"],
+        },
+    ],
+    "tone": {
+        "h": "The tone map",
+        "sub": "Ten books that disagree completely about whether this is a horror comic, a war "
+               "comic, a family drama or a joke.",
+        "modes": [
+            {"l": "Most frightening",
+             "b": "The origin volume. McFarlane draws Venom bigger than Spider-Man, standing in "
+                  "his flat, talking to his wife. Nothing later on the shelf is this "
+                  "uncomfortable.",
+             "vols": ["vsvenom-o1"]},
+            {"l": "Most 1993",
+             "b": "Venomnibus Vol. 1. Foil covers, a million-copy first issue, and eighteen "
+                  "months of three-issue miniseries about a man who lives in a sewer and eats "
+                  "criminals. It is not good and it is completely irreplaceable.",
+             "vols": ["venom-o1"]},
+            {"l": "Best written",
+             "b": "Agent Venom. Remender puts the symbiote on a double amputee who is also the "
+                  "son of an alcoholic, and never explains the metaphor once.",
+             "vols": ["agent-o1"]},
+            {"l": "Best drawn",
+             "b": "Cates and Stegman. A Venom whose silhouette changes between panels, in "
+                  "colour that is almost never actually black. The modern look of the character "
+                  "starts here.",
+             "vols": ["cates-o1"]},
+            {"l": "Most horrifying",
+             "b": "The Conway Carnage. A serial killer, a cult, an elder god and an FBI agent "
+                  "who cannot sleep &mdash; the only book here that reads as horror rather than "
+                  "as a superhero comic wearing horror.",
+             "vols": ["carnage-o1"]},
+            {"l": "Biggest",
+             "b": "King in Black. Sixty-three issues, symbiote dragons over every city on "
+                  "Earth, and a tie-in for almost everybody Marvel publishes.",
+             "vols": ["kib-o1"]},
+            {"l": "Strangest",
+             "b": "Venomnibus Vol. 3. An eighteen-issue ongoing about a symbiote in Antarctic "
+                  "ice that nobody liked in 2003 and a lot of people defend now, ending with "
+                  "Eddie selling the suit at auction.",
+             "vols": ["venom-o3"]},
+        ],
+    },
+}
+
+
+def _v(k, t, l, s, v):
+    return {"kicker": k, "title": t, "lede": l, "sections": s, "verdict": v}
+
+
+VOLUMES = {
+
+"vsvenom-o1": _v("Volume 01 · 1984–1994", "Spider-Man vs. Venom Omnibus",
+    "The costume, the man who put it on, and every appearance up to Maximum Carnage &mdash; the "
+    "only book that is on two shelves on this site.",
+    [{"era": "Copper", "years": "1984–1988",
+      "h": "Four years about a suit",
+      "body": [
+          "The black costume comes back from <i>Secret Wars</i> in May 1984 and for four years "
+          "the story is entirely about the clothing. The design was bought from a reader, "
+          "<b>Randy Schueller</b>, for $220 and finished by <b>Mike Zeck</b>; the stretched "
+          "white spider with no webbing lines is still the best costume redesign Marvel has "
+          "done.",
+          "<i>Amazing Spider-Man</i> #258 is where Reed Richards works out it is alive. #300 is "
+          "where it finds Eddie Brock, and the thing to notice about that issue is how little "
+          "fighting is in it &mdash; Venom is in Peter's flat, on his ceiling, talking to Mary "
+          "Jane, and the horror is entirely about <b>knowing where he lives</b>.",
+          "<b>Todd McFarlane</b> is drawing Spider-Man at this point and the character is "
+          "essentially his invention as an image: the excess fabric, the impossible mouth, the "
+          "tongue. Every Venom since is a response to those pages."],
+      "makers": [{"n": "Todd McFarlane", "r": "Pencils",
+                  "b": "The <b>size difference</b>. McFarlane draws Venom a head and a half "
+                       "taller than Spider-Man in almost every shared panel, and stages him "
+                       "above the camera. The threat is blocked before it is written."}],
+      "fig": {"src": [A + "asm-252.jpg", A + "asm-300.jpg"],
+              "cap": "<b>Left:</b> #252 &mdash; the suit, four years before it has a face. "
+                     "<b>Right:</b> #300."}},
+     {"era": "Chromium", "years": "1990–1994",
+      "h": "Larsen, Bagley, and Maximum Carnage",
+      "body": [
+          "<b>Erik Larsen</b> and then <b>Mark Bagley</b> follow McFarlane and each keeps one "
+          "thing: Larsen the sheer bulk, Bagley the readability. Bagley's Venom is the one most "
+          "readers of the decade actually saw, and his <b>Carnage</b> design &mdash; the same "
+          "shape with all the mass taken out &mdash; is the smartest piece of visual sequel "
+          "logic on the shelf.",
+          "The book ends on <b><i>Maximum Carnage</i></b>, fourteen parts rotating <i>Amazing</i>"
+          ", <i>Web</i>, <i>Spider-Man</i> and <i>Spectacular</i> month by month, printed here "
+          "in crossover order rather than by title. It is the story that permanently moves "
+          "Venom to the hero side of the board.",
+          "Note the tail of the volume: <i>Marvel Comics Presents</i> #117&ndash;122 is a "
+          "six-part Venom serial, and the Darkhawk and <i>Spirits of Vengeance</i> issues are "
+          "here because a 1993 crossover could not be contained."],
+      "fig": {"src": [A + "vlp-1.jpg"],
+              "cap": "Where he goes next: <i>Lethal Protector</i> #1, and the next tile."}}],
+    {"standing": "The origin, and a duplicate", "cls": "",
+     "body": ["This volume is <b>also on the Spider-Man shelf</b>, and that is deliberate: the "
+              "issue ids are shared across the site, so <i>Amazing Spider-Man</i> #300 marked "
+              "read here is marked read there. Both tiles carry the gold \"in 2 omnibuses\" "
+              "pill on every issue in it.",
+              "It is here because without it the Venom shelf opens in 1993 with a character who "
+              "already exists, already lives in San Francisco and already has a moral code &mdash;"
+              " which is exactly the wrong place to meet him.",
+              "As a reading experience it is uneven by design: it is an <b>appearance "
+              "chronology</b>, not a run, so it doubles back across Michelinie's two Spider-Man "
+              "omnibuses and skips whatever Venom is not in. The first hundred pages and the "
+              "Maximum Carnage stretch are the reasons to have it."]}),
+
+"venom-o1": _v("Volume 02 · 1993–1995", "Venomnibus Vol. 1",
+    "The turn from monster to anti-hero, and the beginning of the strangest publishing plan in "
+    "1990s Marvel: eighteen miniseries instead of one ongoing.",
+    [{"era": "Chromium", "years": "1993",
+      "h": "Lethal Protector",
+      "body": [
+          "Six issues, a holographic foil cover, and one of the best-selling comics of the "
+          "speculation boom. Eddie moves to <b>San Francisco</b>, finds a colony of homeless "
+          "people living in tunnels under the city, and becomes their protector &mdash; on the "
+          "condition, negotiated with Spider-Man, that he stops eating people Spider-Man would "
+          "object to.",
+          "It is an absurd hairpin turn from #300 and it is executed with total conviction, "
+          "which is why it worked. The character had been a horror image for five years; he "
+          "spends this issue rescuing a child from a burning building."],
+      "fig": {"src": [A + "vlp-1.jpg"],
+              "cap": "The foil cover, 1993. A million copies, and the moment the character "
+                     "stops being a villain."}},
+     {"era": "Chromium", "years": "1993–1995",
+      "h": "The treadmill starts",
+      "body": [
+          "What follows is the publishing strategy that defines this shelf's middle: "
+          "<b>three-issue miniseries, one after another, forever</b>. <i>Funeral Pyre</i> with "
+          "the Punisher. <i>The Madness</i> with the Hulk, which is genuinely deranged and has "
+          "Kelley Jones art. <i>Nights of Vengeance</i>. <i>Separation Anxiety</i>, where the "
+          "five symbiote offspring turn up. <i>Carnage Unleashed</i>.",
+          "Each one has a #1 to sell, which is the entire logic. Marvel's own explanation at the "
+          "time was that a monthly Venom would over-expose him; the miniseries did that anyway, "
+          "at a faster rate.",
+          "<b>Ron Lim</b> pencils the bulk of it and the volume is a good place to watch a "
+          "specific thing: how a clean, well-staged, entirely legible artist can defuse a "
+          "character built out of ugliness."],
+      "makers": [{"n": "Ron Lim", "r": "Pencils",
+                  "b": "Look at the <b>mouth</b>. McFarlane's Venom has a jaw that does not "
+                       "close and teeth in the wrong places; Lim's has a consistent, symmetrical "
+                       "grin that resolves the same way every panel. Legible, professional, and "
+                       "not frightening &mdash; and that is the decade in one drawing."}]}],
+    {"standing": "Divisive — and the essential 90s object", "cls": "",
+     "body": ["The recurring criticism is fair and is the one you should expect: <b>the "
+              "miniseries are repetitive</b>, most run out of story by their third issue, and "
+              "the volume as a whole is a monument to a sales strategy rather than to a run.",
+              "It is also the book most Venom readers actually mean when they talk about "
+              "Venom. <i>Lethal Protector</i> is the character's defining turn, and if you "
+              "want to understand what 1993 comics were, this is the single best artefact on "
+              "the site &mdash; foil covers, sewer colonies, guest stars and all.",
+              "Read it as an era rather than as a story and it is a pleasure. Read it "
+              "expecting the Cates volume nine tiles along and it will not survive."]}),
+
+"venom-o2": _v("Volume 03 · 1995–1998", "Venomnibus Vol. 2",
+    "The treadmill runs out. Fourteen more miniseries, one genuinely good one, and the end of "
+    "the character for a decade.",
+    [{"era": "Chromium", "years": "1995–1997",
+      "h": "The best of the minis",
+      "body": [
+          "<b><i>Sinner Takes All</i></b> is the one worth the volume. The symbiote bonds to "
+          "<b>Anne Weying</b>, Eddie's ex-wife, and <i>She-Venom</i> is the only idea in the "
+          "whole mini era with an emotional engine: a woman who has spent years afraid of what "
+          "her husband became, finding out what it feels like from the inside and liking part "
+          "of it.",
+          "<b><i>The Hunger</i></b> is the other one. The symbiote needs phenethylamine, a "
+          "chemical found in human brains and, awkwardly, in chocolate, and the book has Eddie "
+          "in an alley eating a fistful of it to keep the thing on his back from taking what it "
+          "wants. It is both faintly ridiculous and the best horror beat of the era.",
+          "<b><i>On Trial</i></b> hands Eddie a defence attorney and the attorney is <b>Matt "
+          "Murdock</b>, which produces the only Venom story that is mostly people talking in a "
+          "room."]},
+     {"era": "Chromium", "years": "1997–1998",
+      "h": "The government years, and the stop",
+      "body": [
+          "<i>Tooth and Claw</i> is Wolverine; <i>License to Kill</i> and <i>The Finale</i> put "
+          "Venom on a government payroll, which is where the 1990s put everybody eventually.",
+          "And then it stops. <i>The Finale</i> is titled honestly &mdash; there is no Venom "
+          "ongoing, no further miniseries and effectively no character for the next year. The "
+          "back of the volume is the odds and ends: the 1995 <i>Planet of the Symbiotes</i> "
+          "crossover across five Super Specials, an <i>Uncanny Origins</i> retelling, and a "
+          "Holiday Special.",
+          "The gap after this is not on the shelf and does not need to be: there was almost "
+          "nothing published."],
+      "fig": {"src": [A + "vtf-1.jpg"],
+              "cap": "<i>Venom: The Finale</i>, 1997. Accurately named."}}],
+    {"standing": "For completists", "cls": "",
+     "body": ["Readers who like the era rate this <b>below Vol. 1</b> and the reason is "
+              "structural rather than a matter of taste: Vol. 1 has a genuine turning point in "
+              "it and this one is the same formula fourteen more times, by which point the "
+              "market had noticed.",
+              "<i>Sinner Takes All</i> is the exception everyone names, and She-Venom has "
+              "outlived almost everything else here &mdash; Anne Weying is still a live "
+              "character thirty years on.",
+              "If you are reading the shelf straight through, this is the volume where the "
+              "1990s stop being fun and start being a sales chart. That is worth experiencing "
+              "once."]}),
+
+"venom-o3": _v("Volume 04 · 1999–2007", "Venomnibus Vol. 3",
+    "The ongoing he was denied in 1993, ten years late &mdash; and the only Venom story that "
+    "ends with a man selling his own symbiote at auction.",
+    [{"era": "Plastic", "years": "1999–2003",
+      "h": "Back as a villain",
+      "body": [
+          "The volume opens with Venom doing what he had stopped doing in 1993: turning up in "
+          "Spider-Man's book as the antagonist. <b>Paul Jenkins</b> on <i>Peter Parker: "
+          "Spider-Man</i> is the best of it &mdash; a quieter, sadder Eddie who is losing an "
+          "argument with the thing on his back.",
+          "It is a useful stretch to read after Vol. 2, because it shows the character being "
+          "carefully de-escalated: no sewer colony, no protector, no foil covers. Just a man "
+          "and a parasite."]},
+     {"era": "Plastic", "years": "2003–2007",
+      "h": "Antarctic ice, and Toxin",
+      "body": [
+          "<b>Daniel Way</b> and <b>Francisco Herrera</b>'s <i>Venom</i> (2003) is eighteen "
+          "issues and is the strangest thing on this shelf. A symbiote is recovered from "
+          "Antarctic ice, and the book withholds almost everything &mdash; who is in it, when "
+          "it is set, whether Eddie is involved &mdash; for a long stretch, running on body "
+          "horror and confusion rather than plot.",
+          "<b><i>Venom Vs. Carnage</i></b> (2004) is the escalation move one more time and "
+          "creates <b>Toxin</b>: Carnage's child, bonded against its will to a New York police "
+          "officer who does not want it. <b>Clayton Crain</b> paints it digitally, and it is the "
+          "first time the symbiotes look wet rather than drawn.",
+          "The end of the volume is the thing to know about. Eddie Brock, <b>dying of "
+          "cancer</b>, sells the symbiote at auction in <i>Marvel Knights: Spider-Man</i>, and "
+          "Mac Gargan &mdash; the Scorpion &mdash; buys it. Everything Venom does for the next "
+          "eight years, including the Thunderbolts and the Dark Avengers, is somebody else."],
+      "fig": {"src": [A + "venom-1.jpg", A + "vvc-1.jpg"],
+              "cap": "<b>Left:</b> the 2003 ongoing. <b>Right:</b> Crain's <i>Venom Vs. "
+                     "Carnage</i> &mdash; painted, not inked."}}],
+    {"standing": "Reappraised", "cls": "",
+     "body": ["The Way run was <b>widely panned on release</b> &mdash; the complaints were "
+              "incoherence, an unlikeable cast and art that readers found hard to follow "
+              "&mdash; and it has since acquired a real defence: that the incoherence is the "
+              "point, that it is a horror comic rather than a superhero one, and that it is the "
+              "only Venom book of its decade with an idea.",
+              "Both readings are honestly held. It is the volume on this shelf most likely to "
+              "surprise you in either direction.",
+              "<i>Venom Vs. Carnage</i> is the uncontested part: Crain's painted symbiotes are "
+              "still cited as the moment the visual language modernised. Its cover scan is one "
+              "of the two low-resolution ones on this shelf."]}),
+
+"agent-o1": _v("Volume 05 · 2011–2016", "Agent Venomnibus",
+    "The symbiote as a controlled substance, worn by a double amputee with fifty missions and a "
+    "hard clock. The best-written run on the shelf.",
+    [{"era": "Modern", "years": "2011–2013",
+      "h": "Fifty missions",
+      "body": [
+          "<b>Rick Remender</b>'s premise is the best any Venom writer has had. <b>Flash "
+          "Thompson</b> &mdash; Peter Parker's high-school bully, then an Army sergeant, then a "
+          "double amputee &mdash; is given the symbiote by the US government for fifty missions. "
+          "It gives him his legs back for the length of each one. Past a time limit it bonds "
+          "permanently.",
+          "Flash's father was an alcoholic and Flash is a drinker, and the book <b>never states "
+          "the metaphor</b>. It simply gives him something that makes him whole, puts it on a "
+          "clock, and watches him negotiate with himself about the clock.",
+          "The other thing it gets right is the design. Agent Venom is a black tactical suit "
+          "with white markings and a helmet, and the classic mouth only appears when Flash "
+          "loses control &mdash; so the horror is an event rather than a costume."],
+      "makers": [{"n": "Rick Remender", "r": "Writer, 2011–2013",
+                  "b": "Watch the <b>mission clocks</b>. Almost every early issue is structured "
+                       "around a countdown, and Remender uses it the way a heist writer uses a "
+                       "vault: the tension is never about whether Flash can win, it is about "
+                       "whether he will take the extra ten minutes."},
+                 {"n": "Tony Moore", "r": "Pencils, 2011",
+                  "b": "The <b>hard edges</b>. Moore draws the suit as equipment with seams and "
+                       "panel lines, which gives the artist somewhere to go when it fails: the "
+                       "moment the contour goes soft and organic, you know Flash has lost."}],
+      "fig": {"src": [A + "venom2-1.jpg"],
+              "cap": "<i>Venom</i> (2011) #1. A war comic with a symbiote in it."}},
+     {"era": "Modern", "years": "2013–2016",
+      "h": "Philadelphia, then space",
+      "body": [
+          "<b>Cullen Bunn</b> takes over and moves Flash to Philadelphia as its resident hero, "
+          "which is the small-scale, street-level half of the run and is generally rated the "
+          "weaker one.",
+          "Then <i><b>Space Knight</b></i> (2015) does something nobody predicted: it cleanses "
+          "the symbiote, makes it a partner rather than a parasite, and sends Flash into the "
+          "galaxy as a cosmic hero. Ariel Olivetti paints it in bright, open colour &mdash; "
+          "about as far from a horror comic as this character has been.",
+          "<i>Minimum Carnage</i> sits in the middle of the volume and crosses into "
+          "<i>Scarlet Spider</i>; those four issues are also in the Carnage omnibus, one tile "
+          "along, so they share ids."],
+      "fig": {"src": [A + "vsk-1.jpg"],
+              "cap": "<i>Space Knight</i> #1. Same man, cleansed suit, entirely different "
+                     "book."}}],
+    {"standing": "Widely held to be the best-written Venom run", "cls": "",
+     "body": ["The Remender stretch is the one readers reach for when arguing that Venom can "
+              "carry a serious book, and the addiction reading is close to consensus rather "
+              "than a stretch.",
+              "The recurring criticism is that the run <b>changes genre twice</b> &mdash; black-"
+              "ops thriller, then street-level hero book, then cosmic adventure &mdash; and "
+              "that the last turn abandons everything that made the first one work. Readers who "
+              "love <i>Space Knight</i> and readers who love the Remender issues are frequently "
+              "not the same people.",
+              "It is also, quietly, the most complete run on the shelf: all forty-two issues, "
+              "every point issue, and <i>Space Knight</i> entire."]}),
+
+"carnage-o1": _v("Volume 06 · 2004–2016", "Carnage Omnibus",
+    "Cletus Kasady's own shelf &mdash; a different character on a Venom shelf, and the volume "
+    "the user put on deliberately.",
+    [{"era": "Plastic", "years": "2004–2013",
+      "h": "The sequel problem, worked at",
+      "body": [
+          "It opens on <b><i>Venom Vs. Carnage</i></b>, which is where Toxin is born, and then "
+          "runs the whole solo line. <b>Zeb Wells</b> and <b>Clayton Crain</b>'s <i>Carnage</i> "
+          "(2010) brings Cletus back from being torn in half in orbit; <b><i>Carnage, "
+          "U.S.A.</i></b> (2012) is the strongest single story in the volume &mdash; Cletus "
+          "takes an entire Colorado town, everyone in it, at once &mdash; and <i>Superior "
+          "Carnage</i> puts the Wizard in charge of him, which goes as well as expected.",
+          "<i>Deadpool vs. Carnage</i> and <i>AXIS: Carnage</i> are the tonal outliers: the "
+          "first is a comedy, the second inverts him into a hero for three issues. Both are "
+          "symptoms of the same problem &mdash; a character with one note, being played by "
+          "people looking for a second."]},
+     {"era": "Modern", "years": "2015–2016",
+      "h": "Gerry Conway's horror comic",
+      "body": [
+          "The last sixteen issues are the reason to own this. <b>Gerry Conway</b> &mdash; who "
+          "wrote the death of Gwen Stacy in 1973 &mdash; comes back and writes <i>Carnage</i> "
+          "as a straight <b>horror serial</b>: an FBI task force chasing Cletus into a cave "
+          "system, a cult, the <i>Darkhold</i>, and the elder god <b>Chthon</b>.",
+          "<b>Mike Perkins</b> draws it in heavy blacks with almost no superhero staging, and "
+          "the book keeps its cast small and its body count personal. It is the only thing on "
+          "this shelf that reads as horror rather than as a superhero comic wearing horror.",
+          "John Jameson and Eddie Brock are both in the task force, which is how a Carnage "
+          "volume earns a place on a Venom shelf."],
+      "fig": {"src": [A + "carnage2-1.jpg"],
+              "cap": "<i>Carnage</i> (2015) #1, Conway and Perkins. Almost nobody read it."},
+      "makers": [{"n": "Mike Perkins", "r": "Pencils, 2015–2016",
+                  "b": "Count the <b>panels per page</b>. Perkins runs six and seven where a "
+                       "superhero book runs four, and shoots most of them tight on faces in "
+                       "torchlight. The claustrophobia is a layout decision before it is a "
+                       "colour one."}]}],
+    {"standing": "Underrated, and an outsider here", "cls": "",
+     "body": ["The Conway/Perkins run is the volume's real recommendation and is routinely "
+              "described as the best Carnage material there is and the least read. The middle "
+              "stretch &mdash; <i>Superior Carnage</i>, <i>AXIS</i>, the Deadpool crossover "
+              "&mdash; is where the sequel problem shows: readers generally find the character "
+              "works as a threat and not as a lead.",
+              "<b>It is on this shelf because the user put it there.</b> By the reasoning that "
+              "keeps She-Hulk off the Hulk shelf and Laura Kinney off Wolverine's, Cletus is a "
+              "different character &mdash; roughly ten of its fifty-two issues are Venom or "
+              "Spider-Man titles.",
+              "The counter-argument, and the reason it earns its place: <i>Absolute Carnage</i> "
+              "two tiles along is unreadable as anything but a sequel to this, and Toxin, "
+              "Scream and the whole symbiote family come out of it."]}),
+
+"cates-o1": _v("Volume 07 · 2018–2021", "Venomnibus by Cates & Stegman",
+    "The run that gave the symbiotes a god, gave Eddie a son, and reset what the character "
+    "looks like. The centre of the shelf.",
+    [{"era": "Modern", "years": "2018–2019",
+      "h": "Knull",
+      "body": [
+          "<b>Donny Cates</b> and <b>Ryan Stegman</b> open with Eddie broke, hallucinating and "
+          "living badly, and by the third issue have introduced a <b>god who predates light</b>. "
+          "Knull made the symbiotes as weapons, was worshipped in Viking-age Scandinavia as a "
+          "dragon, and has been imprisoned inside a planet made of the things ever since.",
+          "It is a retrofit of enormous scale onto a character who was a costume in 1984, and "
+          "the reason it stuck rather than being quietly dropped is that it explains something "
+          "that had always been unexplained: why a costume has <b>teeth</b>.",
+          "The first arc, <i>Rex</i>, is a Vietnam war story with a symbiote in it &mdash; "
+          "<i>Web of Venom: Ve'Nam</i> is printed alongside it here &mdash; and it establishes "
+          "the run's actual register, which is closer to a horror-war comic than to a "
+          "superhero book."],
+      "makers": [{"n": "Ryan Stegman", "r": "Pencils, 2018–2021",
+                  "b": "The <b>silhouette does not hold</b>. Track Venom across three "
+                       "consecutive panels and his shoulders, head length and mass all change. "
+                       "Every artist before Stegman treated the suit as a costume with a "
+                       "constant shape; he treats it as a volume of liquid, and that is why his "
+                       "Venom looks alive and everyone else's looks dressed."},
+                 {"n": "Frank Martin", "r": "Colour",
+                  "b": "Look for actual black on the figure &mdash; there is almost none. "
+                       "Martin renders the suit in deep blues and violets and saves true black "
+                       "for the background, which is the only reason a black character stays "
+                       "readable on a dark page."}],
+      "fig": {"src": [A + "venom4-1.jpg", A + "venom4-4.jpg"],
+              "cap": "<b>Left:</b> #1. <b>Right:</b> #4 &mdash; by here the book has a god in "
+                     "it and the shape of the character has already changed."}},
+     {"era": "Modern", "years": "2019–2021",
+      "h": "Dylan, and two events",
+      "body": [
+          "The second half turns the book into a story about <b>inheritance</b>. Dylan Brock is "
+          "Eddie's son, and the run's real subject becomes whether a man made of appetite can "
+          "hand anything to a child without ruining it.",
+          "Both of Cates's events run straight through here: <b><i>Absolute Carnage</i></b> "
+          "(2019) and <b><i>King in Black</i></b> (2020). This volume prints their <b>core "
+          "minis only</b> &mdash; the tie-in halves are the next two tiles, which is why the "
+          "shelf carries all three.",
+          "It ends with Eddie ascending: he takes Knull's place, becomes the god of the "
+          "symbiotes, and leaves the suit to his son. It is an enormous ending for a character "
+          "who started as a costume, and the run earns most of it."],
+      "fig": {"src": [A + "kib-1.jpg"],
+              "cap": "<i>King in Black</i> #1 &mdash; the payoff of a reveal made three years "
+                     "earlier."}}],
+    {"standing": "Modern classic", "cls": "",
+     "body": ["This is the run people mean now when they say Venom, and the consensus on it is "
+              "unusually strong: <b>the best-regarded Venom material there has been</b>, and "
+              "the one that made the character a load-bearing part of the Marvel universe "
+              "rather than a Spider-Man villain with good merchandise.",
+              "The recurring criticism is specific and worth knowing: Cates <b>retcons "
+              "constantly</b>, and readers who came in through the 1990s books find that the "
+              "history is rewritten under them &mdash; the symbiote's origin, Eddie's history, "
+              "the nature of the bond. The other complaint is that the back half runs on event "
+              "scheduling rather than on the story, and that <i>King in Black</i>'s ending "
+              "arrives faster than it earns.",
+              "Neither objection is usually offered as a reason not to read it. Start the shelf "
+              "here if you are only reading one book."]}),
+
+"abscarn-o1": _v("Volume 08 · 2019", "Absolute Carnage Omnibus",
+    "The tie-in half of the 2019 event &mdash; fourteen miniseries and one-shots around a core "
+    "the previous tile already prints.",
+    [{"era": "Modern", "years": "2019",
+      "h": "A premise built to reach everywhere",
+      "body": [
+          "Cletus comes back wanting the <b>codex</b> &mdash; a residue left in the spine of "
+          "everyone who has ever worn a symbiote &mdash; which is a plot device engineered to "
+          "give every character in the building a reason to be in the story. Roughly a third of "
+          "the Marvel line has worn one at some point.",
+          "The core five issues are here and are also in the Cates volume, so those ids are "
+          "shared. What this book adds is the fourteen tie-ins: <i>vs. Deadpool</i>, <i>Miles "
+          "Morales</i>, <i>Scream</i>, <i>Lethal Protectors</i>, <i>Immortal Hulk</i>, "
+          "<i>Captain Marvel</i>, <i>Weapon Plus</i>, <i>Separation Anxiety</i>.",
+          "<b><i>Scream</i></b> is the one to look for. Andi Benton and the Scream symbiote get "
+          "three issues of genuine character work in the middle of an event, which is more than "
+          "the format usually allows.",
+          "The tail of the volume is the lead-in: single issues from <i>Amazing Spider-Man</i>, "
+          "<i>Fantastic Four</i>, <i>Immortal Hulk</i>, <i>Avengers</i>, <i>Invaders</i> and "
+          "<i>Black Cat</i> where Carnage picks his victims off one at a time."],
+      "fig": {"src": [A + "abscarn-1.jpg", A + "acs-1.jpg"],
+              "cap": "<b>Left:</b> <i>Absolute Carnage</i> #1. <b>Right:</b> <i>Scream</i> "
+                     "&mdash; the tie-in worth the volume."}}],
+    {"standing": "Divisive — as event tie-in collections are", "cls": "",
+     "body": ["The core mini is generally well received: it is a <b>deliberate Maximum Carnage "
+              "homage</b> done thirty years later with a better artist, and readers who grew up "
+              "on the 1993 version rate it highly.",
+              "The tie-ins are the argument. The recurring criticism of this book specifically "
+              "is that a large number of them exist to hand a symbiote to a character for one "
+              "issue, and that reading fourteen of them consecutively is a different and much "
+              "worse experience than reading them monthly around the core.",
+              "The honest recommendation: this is a <b>companion volume</b>, not a starting "
+              "point. Read the Cates tile first and come here for <i>Scream</i>, <i>Lethal "
+              "Protectors</i> and the lead-in issues."]}),
+
+"kib-o1": _v("Volume 09 · 2020–2021", "King in Black Omnibus",
+    "Sixty-three issues &mdash; the widest book on the shelf, and the payoff of a reveal made "
+    "three years earlier.",
+    [{"era": "Contemporary", "years": "2020–2021",
+      "h": "The lights go out",
+      "body": [
+          "Knull arrives, blacks out the sun over Earth, and drops symbiote dragons on every "
+          "city at once. As a piece of staging it is the most striking thing Marvel has done "
+          "with the property: an entire planet in the dark, with everyone's costume being "
+          "rewritten from underneath.",
+          "The core five are also in the Cates volume. What this book adds is the whole line: "
+          "<i>Namor</i>, <i>S.W.O.R.D.</i>, <i>Black Cat</i>, <i>Savage Avengers</i>, "
+          "<i>Thunderbolts</i>, <i>Return of the Valkyries</i>, <i>Planet of the Symbiotes</i>, "
+          "<i>Gwenom vs. Carnage</i> and about twenty one-shots.",
+          "<b><i>Namor</i></b> is the standout &mdash; five issues of Atlantean prehistory that "
+          "have almost nothing to do with the event and are better than most of it. "
+          "<b><i>Return of the Valkyries</i></b> is the other one people name."],
+      "fig": {"src": [A + "kib-1.jpg"],
+              "cap": "<i>King in Black</i> #1. The sun is off for the whole book."}}],
+    {"standing": "Spectacular, and thin", "cls": "",
+     "body": ["The consensus on the core is that it <b>looks magnificent and resolves too "
+              "quickly</b>: Stegman's dragons and blacked-out cities are among the best "
+              "spectacle Marvel has printed, and the ending &mdash; which turns on a very large "
+              "power-up arriving late &mdash; is the most common complaint about the whole "
+              "Cates era.",
+              "The tie-ins split hard. Several are genuinely good books that happen to have an "
+              "event stapled to them; a larger number are one-shots in which a hero fights a "
+              "symbiote dragon for twenty pages.",
+              "It is on the shelf because the Cates volume prints the core and nothing else, so "
+              "without this the tie-in half of a story that shelf spends three years building "
+              "to is simply absent."]}),
+
+"venomwar-o1": _v("Volume 10 · 2024", "Venom War Omnibus",
+    "Ships December 2026. A father and a son with one symbiote between them &mdash; and the "
+    "book that opens three years after the run in front of it stopped being collected.",
+    [{"era": "Contemporary", "years": "2024",
+      "h": "A custody dispute",
+      "body": [
+          "<b>Not yet published.</b> It is on the shelf ahead of its December 2026 date because "
+          "its contents, its deep links and its jacket are all real, which is the bar a tile has "
+          "to clear here.",
+          "<b>Al Ewing</b> and <b>Iban Coello</b>'s hook is better than an event usually gets: "
+          "Eddie Brock and Dylan Brock both have a legitimate claim on the symbiote, the "
+          "symbiote has to choose between them, and neither of them is wrong. It is a custody "
+          "dispute fought by two people who can lift a bus.",
+          "Around it, the standard modern event architecture: eleven tie-in miniseries handing "
+          "a symbiote to Spider-Man, Wolverine, Deadpool, Daredevil, the Fantastic Four, Black "
+          "Widow &mdash; and, inevitably, <i>Venom War: It's Jeff</i>, in which the Land Shark "
+          "gets one.",
+          "Note where the volume <b>starts</b>: <i>Venom</i> (2021) #35. Al Ewing and Ram V's "
+          "#1&ndash;34 in front of it &mdash; the time-travel run with Meridius and the many "
+          "Venoms, and the best-reviewed Venom book since Cates &mdash; has no omnibus at all, "
+          "which is the largest hole on this shelf."],
+      "fig": {"src": [A + "venomwar-1.jpg"],
+              "cap": "<i>Venom War</i> #1, 2024, Iban Coello."}}],
+    {"standing": "Not yet shipped — no verdict to report", "cls": "",
+     "body": ["The comics themselves ran through 2024 and were received as a solidly built "
+              "event with an unusually strong central relationship and a very large number of "
+              "tie-ins; the recurring criticism is the one every modern event gets, which is "
+              "that the tie-in count outruns the story.",
+              "What cannot be reported is a verdict on <b>the book</b>, because it does not "
+              "exist yet. The contents here are Marvel's own solicited collecting line, which "
+              "matches the wiki's issue list exactly.",
+              "Its jacket is Iban Coello's, taken from the retailer's flat cover image rather "
+              "than from the Marvel Database, which has no scan for an unshipped book. It is "
+              "the lowest-resolution tile on the shelf and should be refetched once the book "
+              "is out."]}),
+
+}
+
+TOUR = {"overview": OVERVIEW, "volumes": VOLUMES}
