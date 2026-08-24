@@ -1006,6 +1006,25 @@ The original amber file is not kept beside it — `Art/Logos/` holds one file pe
 subject — but git history has it, and so does the commit that first normalised
 it.
 
+**The Ghost Rider poster's background is recoloured too, and the same warning
+applies.** As supplied it is a teal-green smoke field behind the burning skull,
+which fought the pitch-black plate under it — the plate read as a panel stuck
+on the bottom of a green picture rather than as the picture continuing. At the
+user's request the teal is now neutral black smoke: fire, embers and the red
+chains are untouched, and the art runs into the plate. `tools/deteal.py` does
+it, and it is written down there rather than here because the *how* is the
+interesting part — a hue band speckles where the smoke meets the flame, and a
+darkening pass that is not gated on brightness punches grey holes through the
+white-hot core.
+
+`Art/covers/Ghost Rider.jpg` is still the untouched original, because that
+folder is the archive. So **`fetch_hero_art.py adopt ghost-rider` on it would
+put the teal straight back** — re-run `deteal.py` instead:
+
+```bash
+python3 tools/deteal.py ghost-rider "Art/covers/Ghost Rider.jpg"
+```
+
 **Silver Surfer's plate was black for a day and is now dark stone grey-blue**
 (`74,86,102` → `28,34,44`), at the user's request. The black version did work,
 in the sense that the poster is chrome on deep space and the plate read as more
@@ -1904,6 +1923,12 @@ rule on any future run, so the bad links cannot come back.
   cover and why, `SUPPLIED` lists every subject and it will not overwrite one
   without `--replace`. Nothing is generated from it — the `cover` field in
   `HEROES` is hand-written — so a new poster is an edit in both places.
+- `deteal.py` — takes the cool colour cast out of a poster and writes the
+  result into `Art/Heroes/<id>.jpg` through the same `covers.save_cover`
+  downscale `adopt` uses. Written for the Ghost Rider poster's teal background;
+  `--dark` sets how far the neutralised pixels are dimmed (1.0 desaturates
+  without dimming), `--out` writes the full-size result instead. Needs Pillow
+  and numpy.
 - `banners.py` — the above-the-fold banner art. `add <key> <image>` normalises
   one to 2400px/q82 into `Art/Banners/<key>.jpg`; `add-folder <dir>` matches a
   whole folder against the keys by filename; `audit` lists what is there
