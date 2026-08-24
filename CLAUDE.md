@@ -270,6 +270,9 @@ Every page is one of three levels, and they now share the same top:
 | 2 | a tracker's shelf view | `Art/Banners/<hero>.jpg` + that subject's printed logo | every volume open on that shelf |
 | 3 | a tracker's volume view | that volume's own cover | one tile — the next issue in the volume |
 
+Keep Reading is **hidden entirely on all three until something has been marked**
+— see "Nothing started means no band at all" below.
+
 Three things went at once, and all three were the user's call:
 
 - **The HUD bar is gone from every page.** It was the rounded panel carrying the
@@ -453,9 +456,21 @@ one per place you have something open, because the reading is not linear.
 
 A **spot** is one omnibus volume with at least one issue left in it — the
 streaming metaphor's show. `spotFor()` builds one, `spots()` returns the
-touched ones newest-first, and `krCard()` draws the tile. Nothing started
-anywhere returns the first volume on the shelf instead, so a fresh browser gets
-a "Start Reading" tile rather than an empty band.
+touched ones newest-first, and `krCard()` draws the tile.
+
+**Nothing started means no band at all** (Aug 2026, the user's call). `spots()`
+returns only volumes with something marked in them, and `paintKR()` sets
+`box.hidden` when there is nothing to show — so a browser that has never read
+anything gets a banner straight into the poster wall, with no rail and no
+heading. It used to open the first volume on the shelf as a "Start Reading"
+tile, which was a suggestion of where to begin rather than a record of what was
+open. The volume view follows the same rule: the tile there is hidden until
+something in *that* volume is marked, because the next issue is already the
+first row on the page. `krCard()`'s "Start of the volume" caption went with it —
+every tile now has a position.
+
+The `Start Reading` heading is gone with the tile that needed it; the band is
+always "Keep Reading" now.
 
 **The cover is shown whole, and the tile is still one piece of art.** Those two
 pull against each other and the layering is what resolves them, so do not
@@ -519,10 +534,17 @@ gives up 20px of padding permanently rather than reflowing when the X fades in;
 that line already ellipsises at this tile width, so the cost is a couple of
 characters.
 
-An empty rail now means one of two different things — everything finished, or
-everything dismissed — so `paintKR()` asks the *unfiltered* spot list which it
-is before choosing the message. Saying the wrong one is worse than saying
-nothing.
+An empty rail means one of *three* things — never started, everything finished,
+or everything dismissed. The first is silent (above); for the other two
+`paintKR()` asks the *unfiltered* spot list which it is before choosing the
+message, because saying the wrong one is worse than saying nothing. The
+homescreen tells the same three apart from its records: no `read` or `skip`
+anywhere means never started.
+
+**The homescreen filters `done>0` again on read**, even though trackers no
+longer publish untouched spots. A `comics-hero-<id>` record is only rewritten
+when that tracker's own page is next opened, so a record written before this
+change can still carry an untouched volume in it.
 
 **Two things on the tile are approximations, and both are deliberate:**
 
@@ -4705,7 +4727,9 @@ the Moon Knight subtitle in its shelf view — a string the identity sweep had
 replaced in the markup but not in the `showShelf()` line that overwrites it.
 
 The Keep Reading rail is worth driving rather than looking at, because most of
-it only exists once something is marked: open a volume, tick three issues, go
+it only exists once something is marked — and since Aug 2026 *none* of it does:
+load a fresh profile first and check the band is absent from the homescreen, a
+shelf view and a volume view alike. Then open a volume, tick three issues, go
 back to the shelf and click the tile, and check that it opens the chapter and
 flashes the row. Then load `index.html` and check the same volume is the first
 tile there. Drive the dismiss X in the same pass — click it on a tracker and

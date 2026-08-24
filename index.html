@@ -955,32 +955,43 @@ function krCard(r){
       '<span class="kr-title">'+esc(sp.t||"")+'</span>'+
       '<span class="kr-cred">'+esc(sp.cred||"")+'</span>'+
       '<span class="kr-bar"><i style="width:'+pct+'%"></i></span>'+
-      '<span class="kr-pos">'+(sp.done?'Issue '+sp.i+' of '+sp.n:'Start of the volume')+'</span>'+
+      '<span class="kr-pos">Issue '+sp.i+' of '+sp.n+'</span>'+
     '</span></a>'+
     '<button class="kr-x" type="button" data-krh="'+esc(h.id)+'" data-krx="'+esc(sp.o)+'"'+
       ' title="Clear from Keep Reading"'+
       ' aria-label="Stop holding my place in '+esc(h.name)+' '+esc(sp.vol||"")+'">&#10005;</button>'+
     '</span>';
 }
+/* The band is hidden outright until something has been marked somewhere, so a
+   browser that has never read anything shows a poster wall and nothing else.
+   Once anything HAS been read, an empty rail still explains itself. */
 function paintKeepReading(){
   const box=document.getElementById("keepReading");
   const rows=[];
   HEROES.forEach(h=>{
     const p=progress[h.id];
     if(!h.file||!p||!Array.isArray(p.spots)) return;
-    p.spots.forEach(sp=>{ if(sp && sp.o && !isHidden(h.id, sp)) rows.push({h:h, sp:sp}); });
+    /* Touched volumes only. A tracker published before this rule landed can
+       still have left an untouched volume in its record, and that record is
+       only refreshed when its own page is next opened -- so filter here too
+       rather than trusting what is cached. */
+    p.spots.forEach(sp=>{ if(sp && sp.o && sp.done>0 && !isHidden(h.id, sp)) rows.push({h:h, sp:sp}); });
   });
   if(!rows.length){
+    const started = HEROES.some(h=>{ const p=progress[h.id];
+      return p && ((p.read||0)+(p.skip||0))>0; });
+    if(!started){ box.hidden=true; box.innerHTML=""; return; }
+    box.hidden=false;
     box.innerHTML='<div class="kr-head"><h2>Keep Reading</h2></div>'+
-      '<div class="kr-empty">Nothing open yet. Start anywhere below and it lands here &mdash; one tile per '+
+      '<div class="kr-empty">Nothing open right now. Start anywhere below and it lands here &mdash; one tile per '+
       'volume you have going, so you can drop back into any of them without hunting for your place. '+
       'Cleared one you were not really reading? Mark anything in it again and it comes back.</div>';
     return;
   }
   rows.sort((a,b)=>(b.sp.ts||0)-(a.sp.ts||0));
-  const live=rows.some(r=>r.sp.done>0);
   const list=rows.slice(0,14);
-  box.innerHTML='<div class="kr-head"><h2>'+(live?"Keep Reading":"Start Reading")+'</h2>'+
+  box.hidden=false;
+  box.innerHTML='<div class="kr-head"><h2>Keep Reading</h2>'+
     '<span class="n">'+list.length+(list.length===1?" volume":" volumes")+'</span></div>'+
     '<div class="kr-rail">'+list.map(krCard).join("")+'</div>';
 }

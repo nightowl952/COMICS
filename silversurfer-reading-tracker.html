@@ -16230,13 +16230,13 @@ function spotFor(o){
   }
   return {o:o, st:st, next:next, idx:idx, ts:touch[o.id]||0};
 }
-/* Every volume with something left in it, the ones actually touched first and
-   most recent first. Nothing started anywhere -> the first volume on the shelf,
-   so a fresh browser gets a "start here" tile instead of an empty band. */
+/* Every volume with something left in it, most recent first. Nothing started
+   anywhere returns nothing at all -- the rail is a record of what you have
+   open, so before the first mark there is nothing to keep reading and paintKR()
+   hides the band outright rather than suggesting somewhere to begin. */
 function spots(){
   const all=OMNI.map(spotFor).filter(s=>s&&s.next&&!isHidden(s.o));
-  const started=all.filter(s=>s.st.done>0);
-  const list=started.length?started.slice():all.slice(0,1);
+  const list=all.filter(s=>s.st.done>0);
   list.sort((a,b)=>b.ts-a.ts);
   return list;
 }
@@ -16258,18 +16258,26 @@ function krCard(s){
       '<span class="kr-title">'+esc(iss.t)+'</span>'+
       '<span class="kr-cred">'+esc(o.creators)+'</span>'+
       '<span class="kr-bar"><i style="width:'+pct+'%"></i></span>'+
-      '<span class="kr-pos">'+(s.st.done?'Issue '+(s.idx+1)+' of '+s.st.t:'Start of the volume')+'</span>'+
+      '<span class="kr-pos">Issue '+(s.idx+1)+' of '+s.st.t+'</span>'+
     '</span></a>'+
     '<button class="kr-x" type="button" data-krx="'+esc(o.id)+'" title="Clear from Keep Reading"'+
       ' aria-label="Stop holding my place in '+esc((o.spine||o.title)+(o.vol?" "+o.vol:""))+'">&#10005;</button>'+
     '</span>';
 }
+/* The whole band is hidden until something is marked, rather than opening with
+   a suggestion of where to start -- a fresh page is blank here. Once a rail HAS
+   held something, an empty one still says why, because "finished" and
+   "dismissed" are worth telling apart. */
 function paintKR(){
   const box=document.getElementById(currentOmni?"krOmni":"krShelf");
   if(!box) return;
   if(currentOmni){
     const s=spotFor(currentOmni), off=isHidden(currentOmni);
-    box.innerHTML = (s&&s.next&&!off)
+    /* Nothing marked in this volume yet -> no band at all. The next issue is
+       the first row on the page anyway, so a tile pointing at it says nothing. */
+    if(!s||!s.st.done){ box.hidden=true; box.innerHTML=""; return; }
+    box.hidden=false;
+    box.innerHTML = (s.next&&!off)
       ? '<div class="kr-head"><h2>Keep Reading</h2><span class="n">in this volume</span></div>'+
         '<div class="kr-rail">'+krCard(s)+'</div>'
       : '<div class="kr-head"><h2>Keep Reading</h2></div>'+
@@ -16279,19 +16287,24 @@ function paintKR(){
     return;
   }
   const list=spots();
-  const live=list.some(s=>s.st.done>0);
-  /* An empty rail means one of two different things -- every volume finished,
-     or every volume dismissed -- and saying the wrong one is worse than saying
-     nothing, so ask the unfiltered list which it is. */
-  const anyLeft=OMNI.map(spotFor).some(s=>s&&s.next);
-  box.innerHTML = list.length
-    ? '<div class="kr-head"><h2>'+(live?"Keep Reading":"Start Reading")+'</h2>'+
-      '<span class="n">'+list.length+(list.length===1?" volume":" volumes")+'</span></div>'+
-      '<div class="kr-rail">'+list.map(krCard).join("")+'</div>'
-    : '<div class="kr-head"><h2>Keep Reading</h2></div>'+
+  if(!list.length){
+    /* Three ways to be empty -- never started, everything finished, everything
+       dismissed. The first says nothing; ask the unfiltered list which of the
+       other two it is, because saying the wrong one is worse than saying
+       nothing. */
+    if(!readSet.size&&!skipSet.size){ box.hidden=true; box.innerHTML=""; return; }
+    const anyLeft=OMNI.map(spotFor).some(s=>s&&s.next);
+    box.hidden=false;
+    box.innerHTML='<div class="kr-head"><h2>Keep Reading</h2></div>'+
       '<div class="kr-empty">'+(anyLeft
         ? 'Nothing held here right now. Mark anything in a volume and it comes back.'
         : 'Every volume on the shelf is cleared. &#9733;')+'</div>';
+    return;
+  }
+  box.hidden=false;
+  box.innerHTML='<div class="kr-head"><h2>Keep Reading</h2>'+
+    '<span class="n">'+list.length+(list.length===1?" volume":" volumes")+'</span></div>'+
+    '<div class="kr-rail">'+list.map(krCard).join("")+'</div>';
 }
 /* A tile is an <a> to #/omni/<id>. When you are already inside that volume the
    hash does not change and no route fires, so the click does the jump itself. */
