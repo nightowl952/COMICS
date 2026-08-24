@@ -1153,9 +1153,16 @@ Three things about how it is sized and placed:
   down from 100%, so on a near-square logo — where the shared 56px `max-height`
   binds long before the width does — it does nothing at all. `logoh` is the
   per-subject height cap, emitted as `--lh`, defaulting to 56px; Ghost Rider is
-  the only subject that sets it, at `84px`. Its logo is 1.66:1, the third
+  the only subject that sets it, at `70px`. Its logo is 1.66:1, the third
   squarest on the wall after Moon Knight and Iron Man, and at the shared cap it
   was rendering about half the width of Hulk's.
+
+  **70px was arrived at by rendering it beside its neighbours, and the first
+  value was wrong.** It went in at `84px` and the user said it was a hair too
+  big — which it was: at 84 the mark is visibly the widest on row three and its
+  flame licks crowd the plate's side padding. The test that settles it is
+  optical width against Black Panther and Venom either side, not the number:
+  76px is still slightly wide, 64px goes back to reading small, 70px matches.
 
   The 600px breakpoint scales off `--lh` (`calc(var(--lh,56px) * .79)`) rather
   than the flat 44px it used to carry, so a subject that lifts its cap keeps the
