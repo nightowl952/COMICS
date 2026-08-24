@@ -757,8 +757,8 @@ const HEROES = [
      scan, which is the second rung of that chain working as designed. ---- */
 
   { id:"avengers", name:"The Avengers", art:"a-avengers", tex:"tex-assemble", emblem:"avengers", cover:"Art/Heroes/avengers.jpg", pos:"45%", plate:["22,92,186","5,20,58"], logo:"Art/Logos/avengers.png",
-    era:"Shelf in curation", file:null, total:0,
-    desc:"Earth's Mightiest Heroes, and the largest shelf on the site if it is ever built \u2014 the 1963 founding, Thomas and Buscema's Kree/Skrull War, Englehart, Shooter's Korvac Saga, Stern and Buscema, Busiek and P\u00e9rez, Bendis's New Avengers and Hickman's run into Secret Wars. The scope call is the whole problem: Avengers omnibuses run to dozens of volumes and the spin-off teams have their own. Nothing is decided yet." },
+    era:"1963\u20132026", file:"avengers-reading-tracker.html", total:1021,
+    desc:"Twenty-seven omnibuses of Earth's Mightiest Heroes \u2014 the team's own title from the 1963 founding all the way to Jed MacKay, plus both West Coast Avengers volumes and the Ultimates. The 1963\u20131979 numbered run, Byrne, The Gathering and The Crossing, Busiek and P\u00e9rez, Johns and Coipel, Bendis's New Avengers and Secret Invasion, Avengers vs. X-Men, Hickman, Remender's Uncanny Avengers, No Surrender, Jason Aaron and Avengers Forever. The biggest shelf on the site by a distance." },
 
   { id:"black-panther", name:"Black Panther", art:"a-panther", tex:"tex-weave", emblem:"panther", cover:"Art/Heroes/black-panther.jpg", pos:"30%", plate:["74,34,146","14,5,40"], logo:"Art/Logos/black-panther.png",
     era:"Omnibus Shelf \u00b7 1966\u20132021", file:"blackpanther-reading-tracker.html", total:350,
@@ -817,6 +817,7 @@ const OLD_RECORD_KEY = id => "cerebro-hero-" + id;
    but Start over has to clear the real thing, not just the cache of it, or the
    next tracker visit republishes the progress it was supposed to have wiped. */
 const PROGRESS_KEYS = {
+  "avengers":       "avengers-omni-progress-v1",
   "spider-man":     "spidey-omni-progress-v1",
   "hulk":           "hulk-omni-progress-v1",
   "fantastic-four": "ff-omni-progress-v1",
