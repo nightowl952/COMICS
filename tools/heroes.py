@@ -122,6 +122,20 @@ HEROES = {
         # Moon Knight and Wolverine shelves.
         ids     = "marvel_ids.json",
     ),
+    "ghost-rider": dict(
+        name    = "Ghost Rider",
+        tracker = "ghostrider-reading-tracker.html",
+        art     = os.path.join("Art", "Ghost-Rider"),
+        meta    = "ghostrider_meta",
+        raw     = "ghostrider_contents_raw.json",
+        # the same shared store again -- this shelf collects Spider-Man (1990),
+        # Web of Spider-Man, Marvel Comics Presents, Marvel Holiday Special,
+        # Marc Spector: Moon Knight, Punisher War Journal, X-Men (1991),
+        # Wolverine (2020) and Avengers (2018) issues the other ten shelves
+        # already reach for, and its own Ghost Rider (2006) run is already
+        # keyed `gr6`.
+        ids     = "marvel_ids.json",
+    ),
     "fantastic-four": dict(
         name    = "Fantastic Four",
         tracker = "fantasticfour-reading-tracker.html",

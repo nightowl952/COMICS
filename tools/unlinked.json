@@ -832,6 +832,246 @@
   "sid": null
  },
  {
+  "hero": "ghost-rider",
+  "vol": "dk-o2",
+  "id": "msu-2",
+  "t": "Midnight Sons Unlimited #2",
+  "s": "Midnight Sons Unlimited",
+  "pfx": "msu",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   1993
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o2",
+  "id": "mhs-1993",
+  "t": "Marvel Holiday Special #1993",
+  "s": "Marvel Holiday Special",
+  "pfx": "mhs",
+  "num": "1993",
+  "link": null,
+  "year": null,
+  "era": [
+   1992,
+   1993
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grbsov-14",
+  "t": "Ghost Rider/Blaze: Spirits of Vengeance #14",
+  "s": "Ghost Rider/Blaze: Spirits of Vengeance",
+  "pfx": "grbsov",
+  "num": "14",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grbsov-15",
+  "t": "Ghost Rider/Blaze: Spirits of Vengeance #15",
+  "s": "Ghost Rider/Blaze: Spirits of Vengeance",
+  "pfx": "grbsov",
+  "num": "15",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grbsov-16",
+  "t": "Ghost Rider/Blaze: Spirits of Vengeance #16",
+  "s": "Ghost Rider/Blaze: Spirits of Vengeance",
+  "pfx": "grbsov",
+  "num": "16",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grbsov-19",
+  "t": "Ghost Rider/Blaze: Spirits of Vengeance #19",
+  "s": "Ghost Rider/Blaze: Spirits of Vengeance",
+  "pfx": "grbsov",
+  "num": "19",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grbsov-20",
+  "t": "Ghost Rider/Blaze: Spirits of Vengeance #20",
+  "s": "Ghost Rider/Blaze: Spirits of Vengeance",
+  "pfx": "grbsov",
+  "num": "20",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grbsov-21",
+  "t": "Ghost Rider/Blaze: Spirits of Vengeance #21",
+  "s": "Ghost Rider/Blaze: Spirits of Vengeance",
+  "pfx": "grbsov",
+  "num": "21",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grbsov-22",
+  "t": "Ghost Rider/Blaze: Spirits of Vengeance #22",
+  "s": "Ghost Rider/Blaze: Spirits of Vengeance",
+  "pfx": "grbsov",
+  "num": "22",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grbsov-23",
+  "t": "Ghost Rider/Blaze: Spirits of Vengeance #23",
+  "s": "Ghost Rider/Blaze: Spirits of Vengeance",
+  "pfx": "grbsov",
+  "num": "23",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "blazelb-1",
+  "t": "Blaze: Legacy of Blood #1",
+  "s": "Blaze: Legacy of Blood",
+  "pfx": "blazelb",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "blazelb-2",
+  "t": "Blaze: Legacy of Blood #2",
+  "s": "Blaze: Legacy of Blood",
+  "pfx": "blazelb",
+  "num": "2",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "blazelb-3",
+  "t": "Blaze: Legacy of Blood #3",
+  "s": "Blaze: Legacy of Blood",
+  "pfx": "blazelb",
+  "num": "3",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "blazelb-4",
+  "t": "Blaze: Legacy of Blood #4",
+  "s": "Blaze: Legacy of Blood",
+  "pfx": "blazelb",
+  "num": "4",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
+  "hero": "ghost-rider",
+  "vol": "dk-o3",
+  "id": "grmsmag-1",
+  "t": "Ghost Rider and the Midnight Sons Magazine #1",
+  "s": "Ghost Rider and the Midnight Sons Magazine",
+  "pfx": "grmsmag",
+  "num": "1",
+  "link": null,
+  "year": null,
+  "era": [
+   1993,
+   1994
+  ],
+  "sid": null
+ },
+ {
   "hero": "fantastic-four",
   "vol": "ff-o5",
   "id": "gsss-1",

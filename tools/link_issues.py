@@ -251,6 +251,19 @@ def is_point_issue(num):
         return False
 
 
+def era_fits(sid, it, sers, slack=1):
+    """Could a series with these years appear in a volume with this era?
+
+    True when either side is unknown -- the guard only fires on a positive
+    disagreement, never on missing data.
+    """
+    yrs = series_years(sers.get(str(sid), ""))
+    if not yrs or not it["era"]:
+        return True
+    lo, hi = it["era"]
+    return yrs[0] - slack <= hi and yrs[1] + slack >= lo
+
+
 def tiebreak(hit, it, sers):
     """Narrow several same-named series down to one, or leave it ambiguous.
 
@@ -439,6 +452,23 @@ def match():
                 if c2 and (cand, it["num"]) not in taken_slots:
                     sid, cid, why = cand, c2, "point issue"
                     break
+        if cid and why == "name" and not era_fits(sid, it, sers):
+            # A name match onto a series that was not running anywhere near the
+            # volume's era is a different comic that happens to share a title
+            # and a number. This is the reused-title case tiebreak() handles,
+            # seen one step earlier: tiebreak only runs when SEVERAL candidates
+            # carry the number, and when exactly one does it was accepted with
+            # no date check at all. That read the shelf's Marvel Holiday
+            # Special #1 (1991) as Marvel Holiday Special (2005) #1 -- the only
+            # series of that name the catalog holds a plain #1 for.
+            #
+            # A year either side is allowed because a series' catalog years are
+            # its publication years and a shelf era is cover dates, so a book
+            # can legitimately straddle the edge by one.
+            mistimed.append((it, sers.get(str(sid), "?"),
+                             "not running in %s" % ("%d-%d" % it["era"] if it["era"]
+                                                    else "this volume's era")))
+            continue
         if cid and why == "name" and claimed.get(sid, it["pfx"]) != it["pfx"]:
             # Two shelf series cannot be one marvel.com series. The shelf keeps
             # the wiki's volumes apart (`tta` is Tales to Astonish Vol 1, `tta3`
@@ -446,7 +476,7 @@ def match():
             # series, a second prefix matching it by name is a different comic
             # that merely shares a title and an issue number.
             mistimed.append((it, sers.get(str(sid), "?"),
-                             claimed[sid]))
+                             "already linked as '%s'" % claimed[sid]))
             continue
         if not cid:
             unmatched.append((it, sid))
@@ -562,11 +592,10 @@ def main(argv):
                   % (_cat.get(cid, ["?"])[0], ", ".join(sorted(who))))
         print("     (two ids on one comic is a mislink unless the comic really "
               "was published twice under different names)")
-    print("  %d rejected: that series already belongs to another shelf series"
+    print("  %d rejected: that series is a different comic sharing the name"
           % len(mistimed))
-    for it, t, owner in mistimed[:15]:
-        print("    rejected:  %-14s %-34s already linked as '%s'"
-              % (it["id"], t, owner))
+    for it, t, why in mistimed[:15]:
+        print("    rejected:  %-14s %-34s %s" % (it["id"], t, why))
     for it, hit in ambiguous[:25]:
         print("    ambiguous: %-34s %-30s -> series %s"
               % (it["id"], it["s"], hit))
