@@ -91,8 +91,8 @@ Keep replies short and plain. This is a hobby project, not a code review.
   so a poster can be re-cropped without re-sourcing the art, and since Aug 2026
   it is also the **drop box the user delivers new poster art into** — see
   "Artwork the user supplies" below.
-- `Art/Logos/` — one printed logo per homescreen subject, ten of them against
-  fifteen subjects — the row-three placeholders have none yet. `<hero id>.png`,
+- `Art/Logos/` — one printed logo per homescreen subject, fifteen of them,
+  `<hero id>.png`,
   cropped to its artwork and alpha-backed. See "The plate" below. The
   source-named originals the user supplied are not kept; git history has them.
 
@@ -774,13 +774,17 @@ Four things about them worth not relearning:
   black sewer, so at Moon Knight's depth (`26,28,34`) the band vanished *into
   the picture* rather than duplicating another subject. It is lifted to
   `34,44,36`, with a faint green cast so it still reads as its own black.
-- **No logos, so the plate falls back to the name as text.** `posterHTML()`
-  renders `.pname` when a subject has no `logo`, which is the existing
-  degrade-don't-vanish path, not a bug — but the five read as a visibly
-  different set from the ten above them until logos arrive. See open item 19.
-- **No banners either.** That costs nothing today: a banner is only ever read
-  by a *tracker* page, and none of these has one. It becomes a blocker the
-  moment one of them is curated.
+- **All five have their printed logo** (Aug 2026, a day after the posters), so
+  row three reads as one set with the ten above it. **None needed `logow`**,
+  which is worth knowing because four of the five are wide single-line marks
+  and that is exactly the shape the field exists for: they are 2.0–2.6:1, so
+  the 56px `max-height` binds before the width does and Avengers lands at
+  almost exactly the width Spider-Man reaches at `logow:"84%"`. Reach for
+  `logow` only after rendering — the two knobs pull against each other.
+- **No banners, and that is the one piece still outstanding.** It costs
+  nothing today: a banner is only ever read by a *tracker* page, and none of
+  these has one. It becomes a blocker the moment one of them is curated. See
+  open item 19.
 - **Every `pos` was rendered and looked at**, the same as the ten above. The
   Avengers plate is the one to remember: it is a crowd, so the band has to land
   on the face row (`39%`) or it is a picture of torsos. Black Panther went
@@ -3678,22 +3682,21 @@ cannot currently do is the opposite: make two devices agree.
     retailer thumbnail, the smallest on the shelf, and the Marvel Database will
     have a proper scan once the jacket is photographed.
 
-19. **Five subjects have a poster and nothing else.** The row-three
-    placeholders (Avengers, Black Panther, Ghost Rider, Venom, Doctor Strange)
-    are missing **both** their printed logo and their banner — the user's
-    upload carried the five poster scans only. Neither blocks anything today:
-    the plate falls back to the subject name as text, and a banner is only read
-    by a tracker page, which none of them has. But the wall shows ten logo
-    plates and five text ones, which reads as unfinished rather than as
-    deliberate.
+19. **The five placeholders still have no banner.** Their posters landed in
+    Aug 2026 and their printed logos the day after, so the wall itself is
+    finished — fifteen logo plates, no text fallbacks. What is missing is
+    `Art/Banners/<id>.jpg` for all five.
 
-    Both are the user's to supply (see "Artwork the user supplies") — do not go
-    looking for them. When they land, the two commands are already wired:
-    `logos.py add <id> <file>` and `banners.py add <id> <file>` both accept all
-    five ids, and the `HEROES` entry then needs a `logo:` field adding. Check
-    `logow` at the same time: a wide single-line logo reads oversized at full
-    width, which is what that field is for.
+    That blocks nothing right now, because a banner is only ever read by a
+    tracker page and none of these has one; it becomes a hard requirement the
+    moment any of them is curated. It is the user's to supply (see "Artwork the
+    user supplies") — do not go looking for one. `banners.py add <id> <file>`
+    already accepts all five ids, and `hbFallback()` in the new tracker then
+    needs the path wiring in.
 
+    Note the poster scan is the second rung of that fallback chain, so a
+    tracker built before its banner arrives degrades to the subject's poster
+    rather than to a bare ramp.
 
 
 ## Testing
@@ -3736,13 +3739,13 @@ python3 tools/link_issues.py
 # Guided tour content round-trips, and every chip/figure it names exists
 python3 tools/build_tours.py --all --check
 
-# Homescreen logos. Expect 10/15 -- the five row-three placeholders have none,
-# which is open item 19, not a regression. Every logo that IS there needs an
-# alpha channel or it renders as a box.
+# Homescreen logos. Expect 15/15, every one with an alpha channel -- a logo
+# without one renders as a box.
 python3 tools/logos.py audit
 
-# Banner art. Expect 11 of 16 in (index plus the ten live subjects); the five
-# placeholders are blank for the same reason. iron-man and moon-knight are soft.
+# Banner art. Expect 11 of 16 in (index plus the ten subjects that have a
+# shelf); the five row-three placeholders are blank, which is open item 19,
+# not a regression. iron-man and moon-knight are soft.
 python3 tools/banners.py audit
 
 # Nothing on any page still draws a completion figure. Expect no matches:
