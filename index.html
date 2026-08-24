@@ -315,6 +315,10 @@
   .art,.tex{position:absolute;inset:0;}
   /* A cover is the same 2:3 as the poster, so it fits it exactly; the modal banner
      is short and wide, so it crops to the upper third where the figure usually is. */
+  /* The poster tile is 0.642 and almost every scan is ~0.667, so `cover` fits
+     them by height and this Y is inert -- which is why it was a shared number
+     for a year. Fantastic Four's is 0.545, tall enough to crop vertically, so
+     for that one it is live and `tpos` overrides it. */
   .art.cover{width:100%;height:100%;object-fit:cover;object-position:50% 46%;}
   .art.cover.wide{object-position:50% 26%;}   /* overridden per subject by `pos` */
   .gloss{position:absolute;inset:0 52% 0 0;pointer-events:none;
@@ -724,7 +728,7 @@ const HEROES = [
     era:"Omnibus Shelf · 2008–2010", file:"xmen-reading-tracker.html", total:174,
     desc:"Four omnibuses Marvel never printed. The Messiah trilogy has no collected edition, so this shelf is a mock-up: the same researched chronological read — 174 issues across 27 arcs, Divided We Stand through Second Coming — cut into the four hardcovers it would take. Marvel deep links, per-arc spoiler digests that work offline, and optional arcs still foldable out of the way." },
 
-  { id:"fantastic-four", name:"Fantastic Four", art:"a-ff", tex:"tex-cosmic", emblem:"four", cover:"Art/Heroes/fantastic-four.jpg", pos:"70%", plate:["22,96,146","5,26,44"], logo:"Art/Logos/fantastic-four.png",
+  { id:"fantastic-four", name:"Fantastic Four", art:"a-ff", tex:"tex-cosmic", emblem:"four", cover:"Art/Heroes/fantastic-four.jpg", pos:"50%", tpos:"70%", plate:["22,96,146","5,26,44"], logo:"Art/Logos/fantastic-four.png",
     era:"Omnibus Shelf · 1961–2022", file:"fantasticfour-reading-tracker.html", total:688,
     desc:"Eighteen omnibuses on a shelf, from Fantastic Four #1 to the end of the Griever arc — 660 issues reproducing exactly what each printed book holds. Lee and Kirby carry six volumes, then Byrne, Waid & Wieringo, Millar & Hitch, Hickman, Fraction and Slott. The Thing's solo omnibus sits between the two Byrne books, where it was published; Doctor Doom's Book of Doom and both Ultimate volumes close the shelf. One gap is Marvel's, not ours: Fantastic Four #296–488 has never been collected." },
 
@@ -886,7 +890,12 @@ function artHTML(h, banner){
          '<div class="tex ' + h.tex + '"></div>' +
          (h.cover ? '<img class="art cover' + (banner ? " wide" : "") + '" src="' +
                     esc(h.cover) + '" alt="" loading="lazy"' +
-                    (banner && h.pos ? ' style="object-position:50% ' + esc(h.pos) + '"' : '') +
+                    (function(){
+                      /* `pos` frames the 2.8:1 banner, `tpos` the 2:3 tile. They are
+                         different crops of different shapes and do not share a value. */
+                      const y = banner ? h.pos : h.tpos;
+                      return y ? ' style="object-position:50% ' + esc(y) + '"' : '';
+                    })() +
                     '>' : '') +
          /* The banner is short and wide — the poster vignette would crush it to near-black. */
          (banner ? '' : '<div class="vig"></div>') +
