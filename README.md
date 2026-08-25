@@ -12,6 +12,8 @@ works opened straight off disk.
 | File | What it is |
 |---|---|
 | `index.html` | The homescreen. Banner, Keep Reading rail, poster wall of subjects, per-subject dossiers. |
+| `ask-ai.js` / `ask-index.json` | Homepage Ask AI panel and its generated 15-shelf knowledge index. |
+| `ask-tours/` | Generated full guided tours loaded only when Ask AI requests deeper context. |
 | `xmen-reading-tracker.html` | X-Men: the Messiah Saga. 174 issues, 27 arcs, shelved as four omnibuses Marvel never printed. |
 | `spiderman-reading-tracker.html` | Spider-Man: a 16-volume omnibus shelf, each volume opening into what the printed book actually collects. |
 | `hulk-reading-tracker.html` | Hulk: 17 mainline Bruce Banner omnibuses, same shape. |

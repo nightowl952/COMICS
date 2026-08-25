@@ -34,6 +34,13 @@ Keep replies short and plain. This is a hobby project, not a code review.
 - `index.html` — the C.O.M.I.C.S. homescreen. Above-the-fold banner, Keep Reading
   rail, poster grid,
   per-subject dossier modal, filters.
+- `ask-ai.js` — the homepage-only Ask AI panel. It loads `ask-index.json`, calls
+  the Claude API with structured output, and implements the client-side
+  `read_tour(hero_id)` tool. Keep this shared; do not copy it into every tracker.
+- `ask-index.json`, `ask-context.txt` and `ask-tours/*.json` — generated Ask AI knowledge. Rebuild
+  both with `python3 tools/build_ask_index.py`; never edit them by hand. Use
+  `--check` in verification. The token-friendly text context is sent on every question and a
+  full tour is fetched only when Claude requests it.
 - `xmen-reading-tracker.html` — the X-Men Messiah Saga protocol. Same omnibus
   shelf shape as the other six, but the four books on it were **never printed**
   — see "The X-Men tracker". Its `OMNI` array is hand-written in the page, not
@@ -127,6 +134,11 @@ Keep replies short and plain. This is a hobby project, not a code review.
 
 No build step, no package.json, no dependencies, no server. Open any of these
 files directly in a browser.
+
+Ask AI is the one network-loaded feature and deliberately hides its button if
+`ask-index.json` cannot be fetched, so opening the site offline still leaves the
+rest of the homescreen intact. Add `?ask-mock=1` while serving the repo locally
+to exercise its complete UI without an API key or a paid request.
 
 Every file is individually self-contained (data, styles, logic, artwork) on
 purpose. Keep it that way — portability is the point. The only thing that crosses
