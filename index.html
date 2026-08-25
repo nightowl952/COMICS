@@ -230,6 +230,57 @@
   .gear svg{width:17px;height:17px;fill:var(--dim);
     filter:drop-shadow(0 1px 2px rgba(0,0,0,.65));transition:fill .15s;}
 
+  /* ---- Ask AI: homepage-only proof of concept, implemented in ask-ai.js. ---- */
+  .ask-open{cursor:pointer;font-family:inherit;font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--ink);padding:8px 14px;border-radius:18px;background:var(--xyellow);border:1px solid var(--xyellow);
+    box-shadow:0 4px 16px rgba(0,0,0,.3);transition:background .15s,transform .15s;}
+  .ask-open:hover{background:#ffdf74;transform:translateY(-1px);}
+  .ask-open:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  #askScrim{position:fixed;inset:0;z-index:80;display:none;background:rgba(3,6,11,.7);backdrop-filter:blur(5px);}
+  #askScrim.show{display:block;}
+  .ask-panel{position:fixed;z-index:81;top:0;right:0;width:min(560px,100vw);height:100vh;display:flex;flex-direction:column;
+    background:#1b2434;border-left:1px solid var(--line-hi);box-shadow:-24px 0 64px rgba(0,0,0,.6);
+    transform:translateX(104%);transition:transform .24s cubic-bezier(.2,.8,.3,1);}
+  .ask-panel.show{transform:translateX(0);}
+  .ask-head{position:relative;padding:20px 58px 17px 22px;border-bottom:1px solid var(--line);}
+  .ask-kicker{font-size:9px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--xyellow);}
+  .ask-head h2{font-size:25px;font-style:italic;text-transform:uppercase;margin-top:3px;}
+  .ask-close{position:absolute;right:17px;top:20px;width:32px;height:32px;border-radius:50%;cursor:pointer;font-family:inherit;
+    color:var(--txt);background:rgba(255,255,255,.06);border:1px solid var(--line-hi);}
+  .ask-body{flex:1;overflow:auto;padding:20px 22px 28px;}
+  .ask-intro{font-size:12.5px;line-height:1.65;color:var(--dim);}
+  .ask-prompts{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 18px;}
+  .ask-prompt{font-family:inherit;font-size:10.5px;line-height:1.35;text-align:left;cursor:pointer;color:#cbd8e7;
+    padding:8px 11px;border-radius:12px;background:rgba(255,255,255,.045);border:1px solid var(--line);}
+  .ask-prompt:hover{background:rgba(255,255,255,.1);border-color:var(--line-hi);}
+  .ask-answer{display:none;margin:2px 0 18px;padding:16px;border-radius:13px;background:rgba(255,255,255,.045);border:1px solid var(--line);}
+  .ask-answer.show{display:block;}
+  .ask-answer-text{font-size:13px;line-height:1.72;color:#dce6f1;white-space:pre-wrap;}
+  .ask-loading{font-size:12px;color:var(--dim);display:flex;align-items:center;gap:9px;}
+  .ask-spin{width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,255,255,.18);border-top-color:var(--xyellow);
+    animation:askspin .8s linear infinite;} @keyframes askspin{to{transform:rotate(360deg)}}
+  .ask-error{font-size:12px;line-height:1.6;color:#ffd5d5;}
+  .ask-cards{display:grid;gap:9px;margin-top:14px;}
+  .ask-card{display:grid;grid-template-columns:48px 1fr;gap:11px;min-height:72px;padding:8px;border-radius:11px;text-decoration:none;
+    color:inherit;background:rgba(0,0,0,.2);border:1px solid var(--line);transition:border-color .15s,transform .15s;}
+  .ask-card:hover{border-color:var(--xyellow);transform:translateY(-1px);}
+  .ask-card img{width:48px;height:72px;object-fit:cover;border-radius:6px;background:var(--bg);}
+  .ask-card-title{font-size:11.5px;font-weight:900;line-height:1.3;color:#fff;margin-top:2px;}
+  .ask-card-reason{font-size:10.5px;line-height:1.45;color:var(--dim);margin-top:4px;}
+  .ask-sources{font-size:10px;line-height:1.5;color:var(--dim2);margin-top:13px;}
+  .ask-sources a{color:#b9cbe0;}
+  .ask-usage{font-size:9px;line-height:1.5;color:var(--dim2);margin-top:11px;}
+  .ask-form{padding:15px 22px 20px;border-top:1px solid var(--line);background:#182130;}
+  .ask-form textarea{display:block;width:100%;min-height:78px;max-height:180px;resize:vertical;font-family:inherit;font-size:13px;
+    line-height:1.45;color:var(--txt);padding:11px 12px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid var(--line-hi);}
+  .ask-form textarea:focus{outline:2px solid var(--xyellow);outline-offset:1px;}
+  .ask-actions{display:flex;align-items:center;gap:10px;margin-top:9px;}
+  .ask-submit{cursor:pointer;font-family:inherit;font-size:10px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--ink);padding:8px 16px;border-radius:18px;background:var(--xyellow);border:1px solid var(--xyellow);}
+  .ask-submit[disabled]{cursor:wait;opacity:.5;}
+  .ask-hint{font-size:9.5px;color:var(--dim2);}
+  @media (max-width:560px){.ask-open{padding:8px 11px}.ask-open span{display:none}.ask-panel{width:100vw}}
+
   /* ---- the homescreen banner's fallback ----
      Every other page falls back to its subject's poster scan; the homescreen
      has no poster of its own, so it falls back to all eight of them in a row.
@@ -501,6 +552,7 @@
 <nav class="topbar">
   <a class="brand" href="#">C.O.M.I.C.S.</a>
   <span class="spacer"></span>
+  <button class="ask-open hidden" id="askOpen" aria-haspopup="dialog">Ask <span>AI</span></button>
   <button class="gear" id="gearBtn" aria-label="Settings" title="Settings">
     <!-- One path, eight teeth on a 45deg pitch, the hub cut out with
          fill-rule:evenodd. The old icon was two overlapping paths at
@@ -537,6 +589,31 @@
   <footer>Works offline &middot; each subject is its own file &middot; progress saved in this browser</footer>
 </div>
 
+<div id="askScrim"></div>
+<aside class="ask-panel" id="askPanel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="askTitle">
+  <div class="ask-head">
+    <div class="ask-kicker">Your fifteen shelves</div>
+    <h2 id="askTitle">Ask AI</h2>
+    <button class="ask-close" id="askClose" aria-label="Close Ask AI">&#10005;</button>
+  </div>
+  <div class="ask-body" id="askBody">
+    <div class="ask-intro">Ask about a run, a mood, a creator, or what to read next. Answers stay grounded in books on these shelves and can search the web when current reception matters.</div>
+    <div class="ask-prompts">
+      <button class="ask-prompt">What is the highest-rated Captain America run?</button>
+      <button class="ask-prompt">What goes closest to eldritch horror?</button>
+      <button class="ask-prompt">What should I read after Christopher Priest&rsquo;s Black Panther?</button>
+    </div>
+    <div class="ask-answer" id="askAnswer" aria-live="polite"></div>
+  </div>
+  <form class="ask-form" id="askForm">
+    <textarea id="askQuestion" placeholder="Ask about the collection…" maxlength="1200" required></textarea>
+    <div class="ask-actions">
+      <button class="ask-submit" id="askSubmit" type="submit">Ask</button>
+      <span class="ask-hint">Uses your Anthropic API key</span>
+    </div>
+  </form>
+</aside>
+
 <div class="scrim" id="scrim">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <button class="modal-close" id="mClose" aria-label="Close">&#10005;</button>
@@ -566,6 +643,7 @@
         <button class="chip-btn" id="clearKey">Remove</button>
       </div>
       <div class="modal-note" id="keyState"></div>
+      <div class="modal-note">Use a dedicated, spending-limited key. Remove deletes it from this browser when you are done.</div>
       <div class="modal-note">Keys come from console.anthropic.com. The X-Men tracker&rsquo;s 27 arc digests are written into that page and keep working with no key at all.</div>
 
       <div class="mera" style="margin-top:26px;">Start over</div>
@@ -1215,5 +1293,6 @@ const setScrim = document.getElementById("setScrim");
   paintKeepReading();
 })();
 </script>
+<script src="ask-ai.js"></script>
 </body>
 </html>
