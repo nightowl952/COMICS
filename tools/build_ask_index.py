@@ -211,11 +211,6 @@ def prompt_context(data):
                 (" " + volume["volume"]) if volume["volume"] else "",
                 volume["creators"], volume["era"], volume["issue_count"]))
             lines.append("ABOUT " + volume["note"])
-            lines.append("TOUR " + volume["lede"])
-            lines.append("RECEPTION %s%s | %s" % (
-                volume["standing"],
-                ("/" + volume["standing_class"]) if volume["standing_class"] else "",
-                volume["verdict"]))
             lines.append("CHAPTERS " + " ; ".join(volume["chapters"]))
     return "\n".join(lines) + "\n"
 
