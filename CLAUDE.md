@@ -37,9 +37,9 @@ Keep replies short and plain. This is a hobby project, not a code review.
 - `ask-ai.js` — the homepage-only Ask AI panel. It loads `ask-index.json`, calls
   the Claude API with structured output, and implements the client-side
   `read_tour(hero_id)` tool. Keep this shared; do not copy it into every tracker.
-- `ask-index.json` and `ask-tours/*.json` — generated Ask AI knowledge. Rebuild
+- `ask-index.json`, `ask-context.txt` and `ask-tours/*.json` — generated Ask AI knowledge. Rebuild
   both with `python3 tools/build_ask_index.py`; never edit them by hand. Use
-  `--check` in verification. The compact index is sent on every question and a
+  `--check` in verification. The token-friendly text context is sent on every question and a
   full tour is fetched only when Claude requests it.
 - `xmen-reading-tracker.html` — the X-Men Messiah Saga protocol. Same omnibus
   shelf shape as the other six, but the four books on it were **never printed**

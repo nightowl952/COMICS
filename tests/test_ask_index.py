@@ -46,6 +46,16 @@ class AskIndexTest(unittest.TestCase):
                 shelf["id"],
             )
 
+    def test_prompt_context_keeps_every_volume(self):
+        with open(os.path.join(ROOT, "ask-context.txt"), encoding="utf-8") as handle:
+            context = handle.read()
+        self.assertNotIn("<b>", context)
+        for shelf in self.data["shelves"]:
+            self.assertIn("SHELF %s |" % shelf["id"], context)
+            section = context.split("SHELF %s |" % shelf["id"], 1)[1].split("\nSHELF ", 1)[0]
+            for volume in shelf["volumes"]:
+                self.assertEqual(1, section.count("VOLUME %s |" % volume["id"]), (shelf["id"], volume["id"]))
+
 
 if __name__ == "__main__":
     unittest.main()

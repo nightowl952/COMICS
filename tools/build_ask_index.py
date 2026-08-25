@@ -20,6 +20,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "ask-index.json")
+CONTEXT_OUT = os.path.join(ROOT, "ask-context.txt")
 TOURS_OUT = os.path.join(ROOT, "ask-tours")
 
 sys.path.insert(0, HERE)
@@ -183,10 +184,36 @@ def build():
     }
 
 
+def prompt_context(data):
+    """Render the same knowledge as token-friendly text instead of repeated JSON keys."""
+    lines = ["C.O.M.I.C.S. SHELF INDEX", "Recommend only exact shelf and volume ids listed here."]
+    for shelf in data["shelves"]:
+        lines.extend(("", "SHELF %s | %s" % (shelf["id"], shelf["name"])))
+        for mode in shelf["tone_modes"]:
+            lines.append("TONE %s | %s | volumes %s" % (
+                mode["label"], mode["description"], ",".join(mode["volume_ids"])))
+        for volume in shelf["volumes"]:
+            lines.append("VOLUME %s | %s%s | %s | %s | %d issues" % (
+                volume["id"], volume["title"],
+                (" " + volume["volume"]) if volume["volume"] else "",
+                volume["creators"], volume["era"], volume["issue_count"]))
+            lines.append("ABOUT " + volume["note"])
+            lines.append("TOUR " + volume["lede"])
+            lines.append("RECEPTION %s%s | %s" % (
+                volume["standing"],
+                ("/" + volume["standing_class"]) if volume["standing_class"] else "",
+                volume["verdict"]))
+            lines.append("CHAPTERS " + " ; ".join(volume["chapters"]))
+    return "\n".join(lines) + "\n"
+
+
 def main():
     check = "--check" in sys.argv[1:]
-    rendered = json.dumps(build(), ensure_ascii=False, separators=(",", ":")) + "\n"
+    data = build()
+    rendered = json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n"
+    context_rendered = prompt_context(data)
     current = open(OUT, encoding="utf-8").read() if os.path.exists(OUT) else None
+    context_current = open(CONTEXT_OUT, encoding="utf-8").read() if os.path.exists(CONTEXT_OUT) else None
     tours = {key: tour_for(key) for key in heroes.HEROES}
     tours["xmen"] = tour_for("xmen")
     tour_rendered = {
@@ -199,7 +226,7 @@ def main():
         for key in tours
     }
     if check:
-        if current != rendered or tours_current != tour_rendered:
+        if current != rendered or context_current != context_rendered or tours_current != tour_rendered:
             print("ask-index.json is out of date; run tools/build_ask_index.py")
             return 1
         print("ask-index.json is in sync")
@@ -210,15 +237,19 @@ def main():
         with open(OUT, "w", encoding="utf-8") as handle:
             handle.write(rendered)
         print("wrote ask-index.json")
+    if context_current != context_rendered:
+        with open(CONTEXT_OUT, "w", encoding="utf-8") as handle:
+            handle.write(context_rendered)
+        print("wrote ask-context.txt")
     os.makedirs(TOURS_OUT, exist_ok=True)
     for key, value in tour_rendered.items():
         path = os.path.join(TOURS_OUT, key + ".json")
         if tours_current[key] != value:
             with open(path, "w", encoding="utf-8") as handle:
                 handle.write(value)
-    data = json.loads(rendered)
     volumes = sum(len(s["volumes"]) for s in data["shelves"])
-    print("%d shelves | %d volumes | %d bytes" % (len(data["shelves"]), volumes, len(rendered.encode("utf-8"))))
+    print("%d shelves | %d volumes | %d JSON bytes | %d prompt bytes" % (
+        len(data["shelves"]), volumes, len(rendered.encode("utf-8")), len(context_rendered.encode("utf-8"))))
     return 0
 
 
