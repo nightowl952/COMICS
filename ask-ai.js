@@ -26,7 +26,7 @@
     properties:{
       answer:{type:"string",description:"The complete answer in readable plain prose."},
       recommendations:{
-        type:"array",maxItems:6,
+        type:"array",
         items:{
           type:"object",
           properties:{
