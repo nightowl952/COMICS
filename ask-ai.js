@@ -6,7 +6,7 @@
 
   const MODEL = "claude-sonnet-5";
   const API = "https://api.anthropic.com/v1/messages";
-  const ASSET_VERSION = "20260825-6";
+  const ASSET_VERSION = "20260825-7";
   const mock = new URLSearchParams(location.search).get("ask-mock") === "1";
   const openBtn = document.getElementById("askOpen");
   const closeBtn = document.getElementById("askClose");
@@ -38,7 +38,7 @@
             volume_id:{type:"string"},
             issue_id:{type:["string","null"],description:"Exact issue id returned by find_issues, or null for a whole-volume recommendation."},
             issue_label:{type:["string","null"],description:"Human-readable issue title, or null."},
-            discussion:{type:"string",description:"A substantive paragraph that discusses this storyline and directly answers the user's intent. It is displayed immediately before its recommendation card."},
+            discussion:{type:"string",description:"A substantive paragraph that discusses this storyline and directly answers the user's intent. It appears immediately before the recommendation."},
             reason:{type:"string"}
           },
           required:["hero_id","volume_id","issue_id","issue_label","discussion","reason"],
@@ -54,8 +54,8 @@
   };
 
   const RULES = `You are the Ask AI guide inside C.O.M.I.C.S., Caleb's curated Marvel omnibus shelf.
-The supplied shelf index is authoritative about which books are present. Recommend only volumes in that index. If the best answer is absent, say so plainly and name it, but do not fabricate a shelf recommendation.
-Keep answer to a brief opening that directly frames the response. Put the substantive discussion of each recommended storyline in that recommendation's discussion field so its card appears immediately after the relevant explanation; do not repeat all recommendations in answer and then pile cards at the bottom.
+The supplied shelf index is authoritative about which books are present. Recommend only volumes in that index. First identify the user's actual goal, constraints, and emphasis, then make every part of the answer serve that intent rather than merely matching prominent keywords. If the best answer is absent, say so plainly and naturally—for example, “That isn't anywhere on your shelf”—then offer the strongest relevant shelf alternative when one exists.
+Never mention cards, the shelf index, tools, schemas, IDs, validation, internal rules, or what you are permitted to fabricate; speak only as a knowledgeable guide discussing the collection. Keep answer to a brief opening that directly frames the response. Put the substantive discussion of each recommended storyline in that recommendation's discussion field so its recommendation appears immediately after the relevant explanation; do not repeat all recommendations in answer and then collect them again at the bottom.
 Use exact hero_id and volume_id values in recommendations. When your answer names a particular story, issue, or starting spot, call find_issues and include its exact issue_id and issue_label; use null only when the whole omnibus is genuinely the recommendation. If a user asks about a character relationship or dynamic, prioritize stories where those characters actually interact in that requested way. A first appearance may be useful context, but do not substitute an antagonist debut or a vaguely similar tone for stories that demonstrate the requested teammate dynamic. For adaptation questions, clearly separate documented film inspirations from useful comics read-alikes; never call a read-alike an inspiration without evidence.
 Report reception as reception, never as objective fact. Use read_tour only when craft, history, or evidence beyond the distilled fields is needed. Use web search only when the question requires current or external reception; shelf facts and tone questions should not search.
 Before answering, reconcile every collection claim against the shelf index: never say a story is absent if a listed volume contains it. Do not recommend a nearby or chronological volume when it omits the cited story; prefer the volume that actually contains the source issue, and identify the single best starting issue rather than an unnecessarily broad range.
