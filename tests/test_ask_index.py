@@ -53,6 +53,8 @@ class AskIndexTest(unittest.TestCase):
         with open(os.path.join(ROOT, "ask-context.txt"), encoding="utf-8") as handle:
             context = handle.read()
         self.assertNotIn("<b>", context)
+        self.assertNotIn("\nTOUR ", context)
+        self.assertNotIn("\nRECEPTION ", context)
         for shelf in self.data["shelves"]:
             self.assertIn("SHELF %s |" % shelf["id"], context)
             section = context.split("SHELF %s |" % shelf["id"], 1)[1].split("\nSHELF ", 1)[0]
