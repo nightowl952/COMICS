@@ -29,6 +29,9 @@ class AskIndexTest(unittest.TestCase):
                 self.assertTrue(os.path.isfile(os.path.join(ROOT, volume["cover"])), key)
                 self.assertGreater(volume["issue_count"], 0, key)
                 self.assertTrue(volume["chapters"], key)
+                self.assertEqual(volume["issue_count"], len(volume["issues"]), key)
+                self.assertEqual(len(volume["issues"]), len({issue["id"] for issue in volume["issues"]}), key)
+                self.assertTrue(all(issue["id"] and issue["title"] for issue in volume["issues"]), key)
                 self.assertNotRegex(json.dumps(volume), r"</?(?:b|i|em|strong|br)\b")
             for mode in shelf["tone_modes"]:
                 self.assertTrue(set(mode["volume_ids"]).issubset(ids), (shelf["id"], mode["label"]))

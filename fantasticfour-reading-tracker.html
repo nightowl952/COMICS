@@ -23627,7 +23627,8 @@ function showOmni(id){
 }
 function route(){
   const h=location.hash.replace(/^#\/?/,"");
-  if(h.startsWith("omni/")) showOmni(h.slice(5));
+  const parts=h.split("/");
+  if(parts[0]==="omni"&&parts[1]){ pendingJump=parts[2]==="issue"?decodeURIComponent(parts[3]||""):null; showOmni(decodeURIComponent(parts[1])); }
   else showShelf();
   trSyncBtn();
 }

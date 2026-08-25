@@ -71,6 +71,10 @@ def generated_shelf(key, config):
             "note": plain(volume.get("note", "")),
             "issue_count": sum(len(ch.get("issues") or []) for ch in chapters),
             "chapters": [plain(ch.get("title", "")) for ch in chapters],
+            "issues": [
+                {"id": issue["id"], "title": plain(issue.get("t", "")), "chapter": plain(ch.get("title", ""))}
+                for ch in chapters for issue in (ch.get("issues") or [])
+            ],
             "cover": volume.get("cover", ""),
             **distilled(tour, volume["id"]),
         }
@@ -132,6 +136,14 @@ def xmen_shelf():
         if not volume_id.startswith("xm-o"):
             continue
         chapter_titles = re.findall(r"\{\s*id\s*:\s*[\"']c-[^\"']+[\"']\s*,\s*title\s*:\s*[\"']([^\"']+)", block)
+        issues = [
+            {"id": match[0], "title": js_unescape(match[1]), "chapter": ""}
+            for match in re.findall(r"\{\s*id:\"([^\"]+)\",\s*t:\"([^\"]+)\"", block)
+        ]
+        for title, first, last, prefix in re.findall(r'seq\("([^"]+)",(\d+),(\d+),"([^"]+)"', block):
+            issues.extend({"id": "%s-%d" % (prefix, number), "title": "%s #%d" % (title, number), "chapter": ""}
+                          for number in range(int(first), int(last) + 1))
+        issues = list({issue["id"]: issue for issue in issues}.values())
         volumes.append({
             "id": volume_id,
             "title": js_string(block, "title"),
@@ -142,6 +154,7 @@ def xmen_shelf():
             "note": plain(js_string(block, "note")),
             "issue_count": known_counts[volume_id],
             "chapters": [plain(js_unescape(t)) for t in chapter_titles],
+            "issues": issues,
             "cover": js_string(block, "cover"),
             **distilled(tour, volume_id),
         })
