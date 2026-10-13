@@ -4981,8 +4981,8 @@ Emerald Twilight and Kyle Rayner's whole decade.
 both Venditti books are in on-sale order from DCUI's catalog, because no source
 gives their printed table of contents. If DC Database gains pages for them,
 prefer the pages. **That order was claimed before it was true**: the raw lists
-were grouped by series until Oct 2026, when they were re-sorted by the same
-date logic the reading order below uses. A fresh pull from DCUI by series will
+were grouped by series until Oct 2026, when they were re-sorted by on-sale date
+with `issue_dates()` in `build_omnibus_data.py`. A fresh pull from DCUI by series will
 group them again -- re-sort it.
 
 **Linked: 458 of 507 (90%)**, the lowest coverage on the site and honest. The 49
@@ -5006,23 +5006,38 @@ outline keeps it off the green plate, which is why this is not the Hulk problem.
 **Still missing: `Art/Banners/index-dc.jpg`**, the DC homescreen banner, which
 falls back to the one DC poster stretched behind the scrim until it arrives.
 
-**The reading order view** (Oct 2026, the user's request after asking how Johns
-and the Corps interweave). A "Reading order" chip on the shelf opens
-`#/omni/order`: the whole shelf, deduped, sorted by on-sale date, one chapter per
-year, each row naming the volume(s) that print it. It is a pseudo-volume
-(`ORDER_VOL`) built from a generated `READING` array, not an entry in `OMNI`, so
-the volume view, chapter tools and Keep Reading reuse unchanged -- and because it
-holds the shelf's own issue ids, a mark there is the same mark in the omnibus.
-Marking from it touches the real volumes, so the shelf rail keeps their place.
+**Collections** (Oct 2026, the user's design). A **Collections** chip under
+the shelf heading (`#/collections`) swaps the shelf for seven custom omnibuses
+DC never printed: the Geoff Johns run -- Johns Vol. 1-3 plus both Tomasi &
+Gleason Corps books, Brightest Day left out -- regrouped one book per arc
+(Rebirth, Sinestro Corps War, Secret Origin & the Red Lanterns, Blackest Night,
+War of the Green Lanterns, New 52 Sinestro, Third Army & Wrath of the First
+Lantern). 201 issues; Showcase '95 #7-8 and the 80th Anniversary Special are
+left out because they are back matter, not the run. The user approved the
+split before it was built.
 
-It is generic: any meta module that sets `READING_ORDER = True` gets `READING`
-spliced by `build_omnibus_data.py`, provided the page carries the
-`const READING = [` marker and the view code (copy both from this page). Dates
-come from the shelf's year store; an unlinked issue is interpolated from its
-dated neighbours in the same series, and `DATE_FIX` in the meta module corrects
-a catalog date that is just wrong -- DCUI dates Blackest Night #0 (the May 2009
-Free Comic Book Day prologue) to July 2010. The last chapter is 2020 because the
-Venditti Vol. 2 back matter prints Green Lantern 80th Anniversary #1.
+- **It replaced the reading order view**, which wove all twelve volumes
+  together and which the user did not want. `READING`/`ORDER_VOL` are gone.
+- **`COLLECTIONS` in the meta module is the source**; `build_omnibus_data.py`
+  splices it as `COLL`, fails on an id that is not on the shelf or is collected
+  twice, and sorts each chapter by on-sale date (`issue_dates()`, with
+  `DATE_FIX` for catalog dates that are wrong -- DCUI dates Blackest Night #0 a
+  year late). A chapter is listed by contents, not in order.
+- **Chapters are named for the Green Lantern arc of the moment**, and Corps
+  issues sit in whichever chapter their months fall in. No invented arc names.
+- **Marks are shared, places are not.** Issue ids are the shelf's, so reading
+  in a collection marks the omnibus too; but a mark made inside a collection
+  touches only the collection, and `spots()` now needs a touch as well as a
+  mark, so the omnibus does not grow a Keep Reading tile nobody opened.
+- **It says it was never printed**, the X-Men rule: a bold note above the
+  shelf, "0 in print" in the count, "Never printed" in each banner, and
+  COLLECTION on the spine band.
+- **Covers are the signature issue's**, fetched from DCUI into
+  `Art/Green-Lantern/collections/<id>.jpg` and checked on a contact sheet. The
+  builder wires one in only if the file exists.
+
+Any shelf can have collections: add `COLLECTIONS` to its meta module and copy
+the `const COLL = [` marker plus the view code from this page.
 
 **The guided tour** is 12 volume tours plus the character tour, about 5,100
 words and 23 issue covers.
