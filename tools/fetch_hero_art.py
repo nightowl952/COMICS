@@ -94,6 +94,13 @@ PICKS = {
                        "Ditko-descended cover from Stern's run, 1982 -- the "
                        "Sanctum and the Eye. A fallback only; the poster on the "
                        "wall is the user's own art."),
+    # DC. `adopt` validates against this table, so the first DC subject needs
+    # a line here before the user's poster can be normalised. The wiki fetch
+    # cannot reach it -- PICKS titles are Marvel Database pages -- so this is
+    # recorded only so adopt accepts the id.
+    "green-lantern":  ("Green Lantern Vol 2 76",
+                       "O'Neil and Adams's first issue. Recorded for adopt only; "
+                       "the poster on the wall is the user's own art."),
 }
 
 

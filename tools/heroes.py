@@ -191,6 +191,22 @@ HEROES = {
         # reach for, so an overlap resolves without being harvested twice.
         ids     = "marvel_ids.json",
     ),
+    # ---- DC ------------------------------------------------------------
+    # `pub="dc"` is what every tool branches on. A DC shelf takes its links
+    # from DC Universe Infinite (dc_link.py, not link_issues.py), keeps them in
+    # its own store, and dates them from DCUI's catalog rather than marvel's.
+    # The two stores are deliberately separate: they are keyed by issue id, and
+    # a DC `gl2-76` has nothing to do with any Marvel comic.
+    "green-lantern": dict(
+        name    = "Green Lantern",
+        tracker = "greenlantern-reading-tracker.html",
+        art     = os.path.join("Art", "Green-Lantern"),
+        meta    = "greenlantern_meta",
+        raw     = "greenlantern_contents_raw.json",
+        ids     = "dc_ids.json",
+        years   = "dc_years.json",
+        pub     = "dc",
+    ),
 }
 
 DEFAULT = "spider-man"
@@ -206,6 +222,8 @@ def resolve(key=None):
     h["art_path"]     = os.path.join(ROOT, h["art"])
     h["raw_path"]     = os.path.join(HERE, h["raw"])
     h["ids_path"]     = os.path.join(HERE, h["ids"])
+    h.setdefault("pub", "marvel")
+    h["years_path"]   = os.path.join(HERE, h.get("years", "marvel_years.json"))
     return h
 
 

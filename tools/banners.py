@@ -51,6 +51,9 @@ QUALITY = 82
 # key -> the words a filename can carry to mean it. Order matters only for the
 # report; matching requires exactly one key to hit.
 KEYS = {
+    # The DC side of the homescreen has its own banner. It sits BEFORE "index"
+    # so a file named for it is not swallowed by the plain "index" match.
+    "index-dc":       ["index-dc", "index dc", "dc index", "dc-home", "dc home", "homescreen-dc", "indexdc"],
     "index":          ["index", "home", "comics", "homescreen", "main"],
     "spider-man":     ["spider-man", "spiderman", "spidey", "spider"],
     "wolverine":      ["wolverine", "logan"],
@@ -71,6 +74,8 @@ KEYS = {
     # has a Spider-Man vs. Venom volume, so a stray file can match both.
     "venom":          ["venom", "eddie brock", "symbiote"],
     "doctor-strange": ["doctor-strange", "doctorstrange", "doctor strange", "dr strange", "strange", "sorcerer supreme"],
+    # ---- DC ----
+    "green-lantern":  ["green-lantern", "greenlantern", "green lantern", "hal jordan", "lantern"],
 }
 # No extension whitelist. Anything Pillow can open is an image; anything it
 # cannot is reported by name rather than dropped. See add_folder().
@@ -125,10 +130,14 @@ def match(name):
                     out.append(k); break
         return out
 
-    whole = hits(lambda w: re.search(r"(^|-)" + re.escape(w) + r"($|-)", stem))
+    def narrow(found):
+        # "index-dc" contains "index"; the more specific key wins
+        return [k for k in found if not (k == "index" and "index-dc" in found)]
+
+    whole = narrow(hits(lambda w: re.search(r"(^|-)" + re.escape(w) + r"($|-)", stem)))
     if whole:
         return whole
-    return hits(lambda w: len(w) >= 4 and w.replace("-", "") in stem.replace("-", ""))
+    return narrow(hits(lambda w: len(w) >= 4 and w.replace("-", "") in stem.replace("-", "")))
 
 
 def add_folder(folder):

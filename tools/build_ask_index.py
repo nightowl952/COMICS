@@ -21,6 +21,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, "ask-index.json")
 CONTEXT_OUT = os.path.join(ROOT, "ask-context.txt")
+# The homescreen shows one publisher at a time, and Ask AI only answers about
+# the side that is showing, so each publisher gets its own prompt context.
+# Marvel keeps the original filename so nothing that already reads it breaks.
+CONTEXT_FILES = {"marvel": CONTEXT_OUT, "dc": os.path.join(ROOT, "ask-context-dc.txt")}
 TOURS_OUT = os.path.join(ROOT, "ask-tours")
 
 sys.path.insert(0, HERE)
@@ -79,7 +83,8 @@ def generated_shelf(key, config):
             **distilled(tour, volume["id"]),
         }
         volumes.append(item)
-    return shelf_record(key, config["name"], config["tracker"], tour, volumes)
+    return shelf_record(key, config["name"], config["tracker"], tour, volumes,
+                        config.get("pub", "marvel"))
 
 
 def balanced_objects(source):
@@ -163,7 +168,7 @@ def xmen_shelf():
     return shelf_record("xmen", "X-Men", "xmen-reading-tracker.html", tour, volumes)
 
 
-def shelf_record(key, name, tracker, tour, volumes):
+def shelf_record(key, name, tracker, tour, volumes, publisher="marvel"):
     tone = ((tour.get("overview") or {}).get("tone") or {})
     modes = []
     for mode in tone.get("modes") or []:
@@ -176,6 +181,7 @@ def shelf_record(key, name, tracker, tour, volumes):
         "id": key,
         "name": name,
         "tracker": tracker,
+        "publisher": publisher,
         "tone_modes": modes,
         "volumes": volumes,
     }
@@ -197,10 +203,13 @@ def build():
     }
 
 
-def prompt_context(data):
+def prompt_context(data, publisher="marvel"):
     """Render the same knowledge as token-friendly text instead of repeated JSON keys."""
-    lines = ["C.O.M.I.C.S. SHELF INDEX", "Recommend only exact shelf and volume ids listed here."]
+    lines = ["C.O.M.I.C.S. %s SHELF INDEX" % ("DC" if publisher == "dc" else "MARVEL"),
+             "Recommend only exact shelf and volume ids listed here."]
     for shelf in data["shelves"]:
+        if shelf.get("publisher", "marvel") != publisher:
+            continue
         lines.extend(("", "SHELF %s | %s" % (shelf["id"], shelf["name"])))
         for mode in shelf["tone_modes"]:
             lines.append("TONE %s | %s | volumes %s" % (
@@ -219,9 +228,11 @@ def main():
     check = "--check" in sys.argv[1:]
     data = build()
     rendered = json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n"
-    context_rendered = prompt_context(data)
+    contexts = {pub: prompt_context(data, pub) for pub in CONTEXT_FILES}
+    context_rendered = contexts["marvel"]
     current = open(OUT, encoding="utf-8").read() if os.path.exists(OUT) else None
-    context_current = open(CONTEXT_OUT, encoding="utf-8").read() if os.path.exists(CONTEXT_OUT) else None
+    contexts_current = {pub: (open(path, encoding="utf-8").read() if os.path.exists(path) else None)
+                        for pub, path in CONTEXT_FILES.items()}
     tours = {key: tour_for(key) for key in heroes.HEROES}
     tours["xmen"] = tour_for("xmen")
     tour_rendered = {
@@ -234,7 +245,7 @@ def main():
         for key in tours
     }
     if check:
-        if current != rendered or context_current != context_rendered or tours_current != tour_rendered:
+        if current != rendered or contexts_current != contexts or tours_current != tour_rendered:
             print("ask-index.json is out of date; run tools/build_ask_index.py")
             return 1
         print("ask-index.json is in sync")
@@ -245,10 +256,11 @@ def main():
         with open(OUT, "w", encoding="utf-8") as handle:
             handle.write(rendered)
         print("wrote ask-index.json")
-    if context_current != context_rendered:
-        with open(CONTEXT_OUT, "w", encoding="utf-8") as handle:
-            handle.write(context_rendered)
-        print("wrote ask-context.txt")
+    for pub, path in CONTEXT_FILES.items():
+        if contexts_current[pub] != contexts[pub]:
+            with open(path, "w", encoding="utf-8") as handle:
+                handle.write(contexts[pub])
+            print("wrote " + os.path.basename(path))
     os.makedirs(TOURS_OUT, exist_ok=True)
     for key, value in tour_rendered.items():
         path = os.path.join(TOURS_OUT, key + ".json")
