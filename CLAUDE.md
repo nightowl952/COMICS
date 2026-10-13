@@ -4997,15 +4997,14 @@ by ISBN. All twelve were put on a contact sheet: every one is a real jacket.
 Six are `soft`. `fetch_covers.py` cannot fetch DC covers — its pages are Marvel
 Database titles — so `covers.py add` is the route.
 
-**The art the user supplies is not here yet**: no poster, no banner, no logo,
-and no DC homescreen banner. The `HEROES` entry therefore has no `cover` or
-`logo` — the ramp, texture and new `lantern` emblem stand in — and the
-tracker's `hbFallback()` degrades to its green ramp. When they land: `adopt`,
-`banners.py add green-lantern`, `logos.py add green-lantern`, `banners.py add
-index-dc`, then wire `cover`/`logo`/`pos` into the entry. All four tools already
-accept the ids. The plate colour (`16,74,40` → `3,18,9`) was chosen without the
-logo in hand; re-check it when the logo arrives, since a green logo on a green
-plate is the Hulk problem.
+**The user's art landed in Oct 2026** — poster (Alex Ross, Hal in flight),
+banner (Ross's Corps group: Hal, Kilowog, Tomar-Re) and logo, all normalised by
+the usual three commands. The dossier `pos` is **44%**, rendered against 38%
+and 50%: it frames the mask and the ring-beam. The poster is 0.655, so no
+`tpos`. The plate colour (`16,74,40` → `3,18,9`) held up: the logo's thick black
+outline keeps it off the green plate, which is why this is not the Hulk problem.
+**Still missing: `Art/Banners/index-dc.jpg`**, the DC homescreen banner, which
+falls back to the one DC poster stretched behind the scrim until it arrives.
 
 **The reading order view** (Oct 2026, the user's request after asking how Johns
 and the Corps interweave). A "Reading order" chip on the shelf opens
@@ -5560,14 +5559,11 @@ cannot currently do is the opposite: make two devices agree.
     that every pinned `(code, "Name (YYYY)")` year falls inside the era of some
     volume that collects it.
 
-22. **The DC side has no supplied art yet.** Green Lantern has no poster scan,
-    banner or printed logo, and the DC homescreen has no `Art/Banners/index-dc.jpg`.
-    Every one degrades as designed — ramp, texture and `lantern` emblem on the
-    poster, the green ramp on the tracker banner, a blue ramp on the DC
-    homescreen — so this is "the intended art is missing", not a broken page.
-    They are the user's to supply (see "Artwork the user supplies"); all four
-    tools already accept the ids. Re-check the Green Lantern plate colour once
-    the logo is in.
+22. **The DC homescreen banner is the one piece of DC art still missing.**
+    Green Lantern's poster, banner and logo are in (Oct 2026);
+    `Art/Banners/index-dc.jpg` is not, so the DC side's banner falls back to its
+    one poster stretched behind the scrim. It is the user's to supply;
+    `banners.py add index-dc <file>` is the whole fix.
 
 ## Testing
 
