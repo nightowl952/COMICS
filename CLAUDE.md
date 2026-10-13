@@ -4980,7 +4980,10 @@ Emerald Twilight and Kyle Rayner's whole decade.
 **Ordering, for the five volumes with no wiki page:** Hard Travelin' Heroes and
 both Venditti books are in on-sale order from DCUI's catalog, because no source
 gives their printed table of contents. If DC Database gains pages for them,
-prefer the pages.
+prefer the pages. **That order was claimed before it was true**: the raw lists
+were grouped by series until Oct 2026, when they were re-sorted by the same
+date logic the reading order below uses. A fresh pull from DCUI by series will
+group them again -- re-sort it.
 
 **Linked: 458 of 507 (90%)**, the lowest coverage on the site and honest. The 49
 were re-tested by search and are not on DCUI under any name: Green Lantern
@@ -5003,6 +5006,24 @@ index-dc`, then wire `cover`/`logo`/`pos` into the entry. All four tools already
 accept the ids. The plate colour (`16,74,40` → `3,18,9`) was chosen without the
 logo in hand; re-check it when the logo arrives, since a green logo on a green
 plate is the Hulk problem.
+
+**The reading order view** (Oct 2026, the user's request after asking how Johns
+and the Corps interweave). A "Reading order" chip on the shelf opens
+`#/omni/order`: the whole shelf, deduped, sorted by on-sale date, one chapter per
+year, each row naming the volume(s) that print it. It is a pseudo-volume
+(`ORDER_VOL`) built from a generated `READING` array, not an entry in `OMNI`, so
+the volume view, chapter tools and Keep Reading reuse unchanged -- and because it
+holds the shelf's own issue ids, a mark there is the same mark in the omnibus.
+Marking from it touches the real volumes, so the shelf rail keeps their place.
+
+It is generic: any meta module that sets `READING_ORDER = True` gets `READING`
+spliced by `build_omnibus_data.py`, provided the page carries the
+`const READING = [` marker and the view code (copy both from this page). Dates
+come from the shelf's year store; an unlinked issue is interpolated from its
+dated neighbours in the same series, and `DATE_FIX` in the meta module corrects
+a catalog date that is just wrong -- DCUI dates Blackest Night #0 (the May 2009
+Free Comic Book Day prologue) to July 2010. The last chapter is 2020 because the
+Venditti Vol. 2 back matter prints Green Lantern 80th Anniversary #1.
 
 **The guided tour** is 12 volume tours plus the character tour, about 5,100
 words and 23 issue covers.

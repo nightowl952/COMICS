@@ -189,6 +189,7 @@
   .act-head .yr{font-size:9.5px;letter-spacing:2px;color:var(--dim2);text-transform:uppercase;white-space:nowrap;}
   .controls{display:flex;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
   .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
+  a.order-btn{text-decoration:none;display:inline-flex;align-items:center;border-color:rgba(95,224,143,.55);color:#bdf5cf;}
   .chip-btn{cursor:pointer;font-family:inherit;font-size:10px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
     color:var(--dim);padding:7px 14px;border-radius:18px;background:rgba(255,255,255,.05);
     border:1px solid var(--line);transition:background .15s,color .15s,border-color .15s;}
@@ -624,6 +625,7 @@
         <button class="chip-btn" data-filter="unread">Not started</button>
         <button class="chip-btn" data-filter="done">Finished</button>
       </div>
+      <a class="chip-btn order-btn" id="orderBtn" href="#/omni/order" hidden>Reading order &rarr;</a>
     </div>
 
     <div class="shelf" id="shelf"></div>
@@ -1984,8 +1986,8 @@ const OMNI = [
 "chapters": [
 {
 "id": "hth-o1-c1",
-"title": "Green Lantern (1960) #76–87, #89–123",
-"era": "1970–1979",
+"title": "Part 1",
+"era": "Green Lantern (1960) #76 → Green Lantern (1960) #81",
 "issues": [
 {
 "id": "gl2-76",
@@ -2016,11 +2018,23 @@ const OMNI = [
 "id": "gl2-81",
 "t": "Green Lantern (1960) #81",
 "s": "Green Lantern (1960)"
+}
+]
 },
+{
+"id": "hth-o1-c2",
+"title": "Part 2",
+"era": "Green Lantern (1960) #82 → Green Lantern (1960) #86",
+"issues": [
 {
 "id": "gl2-82",
 "t": "Green Lantern (1960) #82",
 "s": "Green Lantern (1960)"
+},
+{
+"id": "wfc-201",
+"t": "World's Finest Comics (1941) #201",
+"s": "World's Finest Comics (1941)"
 },
 {
 "id": "gl2-83",
@@ -2041,6 +2055,18 @@ const OMNI = [
 "id": "gl2-86",
 "t": "Green Lantern (1960) #86",
 "s": "Green Lantern (1960)"
+}
+]
+},
+{
+"id": "hth-o1-c3",
+"title": "Part 3",
+"era": "World's Finest Comics (1941) #210 → The Flash (1959) #218",
+"issues": [
+{
+"id": "wfc-210",
+"t": "World's Finest Comics (1941) #210",
+"s": "World's Finest Comics (1941)"
 },
 {
 "id": "gl2-87",
@@ -2048,240 +2074,32 @@ const OMNI = [
 "s": "Green Lantern (1960)"
 },
 {
+"id": "bab-100",
+"t": "The Brave and the Bold (1955) #100",
+"s": "The Brave and the Bold (1955)"
+},
+{
+"id": "dcss-1",
+"t": "DC Special Series (1977) #1",
+"s": "DC Special Series (1977)"
+},
+{
 "id": "gl2-89",
 "t": "Green Lantern (1960) #89",
 "s": "Green Lantern (1960)"
 },
 {
-"id": "gl2-90",
-"t": "Green Lantern (1960) #90",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-91",
-"t": "Green Lantern (1960) #91",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-92",
-"t": "Green Lantern (1960) #92",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-93",
-"t": "Green Lantern (1960) #93",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-94",
-"t": "Green Lantern (1960) #94",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-95",
-"t": "Green Lantern (1960) #95",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-96",
-"t": "Green Lantern (1960) #96",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-97",
-"t": "Green Lantern (1960) #97",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-98",
-"t": "Green Lantern (1960) #98",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-99",
-"t": "Green Lantern (1960) #99",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-100",
-"t": "Green Lantern (1960) #100",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-101",
-"t": "Green Lantern (1960) #101",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-102",
-"t": "Green Lantern (1960) #102",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-103",
-"t": "Green Lantern (1960) #103",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-104",
-"t": "Green Lantern (1960) #104",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-105",
-"t": "Green Lantern (1960) #105",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-106",
-"t": "Green Lantern (1960) #106",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-107",
-"t": "Green Lantern (1960) #107",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-108",
-"t": "Green Lantern (1960) #108",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-109",
-"t": "Green Lantern (1960) #109",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-110",
-"t": "Green Lantern (1960) #110",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-111",
-"t": "Green Lantern (1960) #111",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-112",
-"t": "Green Lantern (1960) #112",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-113",
-"t": "Green Lantern (1960) #113",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-114",
-"t": "Green Lantern (1960) #114",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-115",
-"t": "Green Lantern (1960) #115",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-116",
-"t": "Green Lantern (1960) #116",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-117",
-"t": "Green Lantern (1960) #117",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-118",
-"t": "Green Lantern (1960) #118",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-119",
-"t": "Green Lantern (1960) #119",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-120",
-"t": "Green Lantern (1960) #120",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-121",
-"t": "Green Lantern (1960) #121",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-122",
-"t": "Green Lantern (1960) #122",
-"s": "Green Lantern (1960)"
-},
-{
-"id": "gl2-123",
-"t": "Green Lantern (1960) #123",
-"s": "Green Lantern (1960)"
-}
-]
-},
-{
-"id": "hth-o1-c2",
-"title": "World's Finest Comics (1941) #201",
-"era": "1970–1979",
-"issues": [
-{
-"id": "wfc-201",
-"t": "World's Finest Comics (1941) #201",
-"s": "World's Finest Comics (1941)"
-}
-]
-},
-{
-"id": "hth-o1-c3",
-"title": "The Brave and the Bold (1955) #100",
-"era": "1970–1979",
-"issues": [
-{
-"id": "bab-100",
-"t": "The Brave and the Bold (1955) #100",
-"s": "The Brave and the Bold (1955)"
+"id": "fl-218",
+"t": "The Flash (1959) #218",
+"s": "The Flash (1959)"
 }
 ]
 },
 {
 "id": "hth-o1-c4",
-"title": "DC Special Series (1977) #1",
-"era": "1970–1979",
+"title": "Part 4",
+"era": "The Flash (1959) #219 → The Flash (1959) #224",
 "issues": [
-{
-"id": "dcss-1",
-"t": "DC Special Series (1977) #1",
-"s": "DC Special Series (1977)"
-}
-]
-},
-{
-"id": "hth-o1-c5",
-"title": "DC Super-Stars (1976) #17",
-"era": "1970–1979",
-"issues": [
-{
-"id": "dcsst-17",
-"t": "DC Super-Stars (1976) #17",
-"s": "DC Super-Stars (1976)"
-}
-]
-},
-{
-"id": "hth-o1-c6",
-"title": "The Flash (1959) #218–224, #226–228, #230–231, #233–234, #237–238, #240–246",
-"era": "1970–1979",
-"issues": [
-{
-"id": "fl-218",
-"t": "The Flash (1959) #218",
-"s": "The Flash (1959)"
-},
 {
 "id": "fl-219",
 "t": "The Flash (1959) #219",
@@ -2311,7 +2129,14 @@ const OMNI = [
 "id": "fl-224",
 "t": "The Flash (1959) #224",
 "s": "The Flash (1959)"
+}
+]
 },
+{
+"id": "hth-o1-c5",
+"title": "Part 5",
+"era": "The Flash (1959) #226 → The Flash (1959) #233",
+"issues": [
 {
 "id": "fl-226",
 "t": "The Flash (1959) #226",
@@ -2341,6 +2166,18 @@ const OMNI = [
 "id": "fl-233",
 "t": "The Flash (1959) #233",
 "s": "The Flash (1959)"
+}
+]
+},
+{
+"id": "hth-o1-c6",
+"title": "Part 6",
+"era": "World's Finest Comics (1941) #255 → Green Lantern (1960) #91",
+"issues": [
+{
+"id": "wfc-255",
+"t": "World's Finest Comics (1941) #255",
+"s": "World's Finest Comics (1941)"
 },
 {
 "id": "fl-234",
@@ -2358,9 +2195,31 @@ const OMNI = [
 "s": "The Flash (1959)"
 },
 {
+"id": "gl2-90",
+"t": "Green Lantern (1960) #90",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-91",
+"t": "Green Lantern (1960) #91",
+"s": "Green Lantern (1960)"
+}
+]
+},
+{
+"id": "hth-o1-c7",
+"title": "Part 7",
+"era": "The Flash (1959) #240 → Green Lantern (1960) #94",
+"issues": [
+{
 "id": "fl-240",
 "t": "The Flash (1959) #240",
 "s": "The Flash (1959)"
+},
+{
+"id": "gl2-92",
+"t": "Green Lantern (1960) #92",
+"s": "Green Lantern (1960)"
 },
 {
 "id": "fl-241",
@@ -2368,9 +2227,31 @@ const OMNI = [
 "s": "The Flash (1959)"
 },
 {
+"id": "gl2-93",
+"t": "Green Lantern (1960) #93",
+"s": "Green Lantern (1960)"
+},
+{
 "id": "fl-242",
 "t": "The Flash (1959) #242",
 "s": "The Flash (1959)"
+},
+{
+"id": "gl2-94",
+"t": "Green Lantern (1960) #94",
+"s": "Green Lantern (1960)"
+}
+]
+},
+{
+"id": "hth-o1-c8",
+"title": "Part 8",
+"era": "Green Lantern (1960) #95 → Green Lantern (1960) #98",
+"issues": [
+{
+"id": "gl2-95",
+"t": "Green Lantern (1960) #95",
+"s": "Green Lantern (1960)"
 },
 {
 "id": "fl-243",
@@ -2378,14 +2259,56 @@ const OMNI = [
 "s": "The Flash (1959)"
 },
 {
+"id": "gl2-96",
+"t": "Green Lantern (1960) #96",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-97",
+"t": "Green Lantern (1960) #97",
+"s": "Green Lantern (1960)"
+},
+{
 "id": "fl-244",
 "t": "The Flash (1959) #244",
 "s": "The Flash (1959)"
 },
 {
+"id": "gl2-98",
+"t": "Green Lantern (1960) #98",
+"s": "Green Lantern (1960)"
+}
+]
+},
+{
+"id": "hth-o1-c9",
+"title": "Part 9",
+"era": "Green Lantern (1960) #99 → The Flash (1959) #246",
+"issues": [
+{
+"id": "gl2-99",
+"t": "Green Lantern (1960) #99",
+"s": "Green Lantern (1960)"
+},
+{
 "id": "fl-245",
 "t": "The Flash (1959) #245",
 "s": "The Flash (1959)"
+},
+{
+"id": "gl2-100",
+"t": "Green Lantern (1960) #100",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "dcsst-17",
+"t": "DC Super-Stars (1976) #17",
+"s": "DC Super-Stars (1976)"
+},
+{
+"id": "gl2-101",
+"t": "Green Lantern (1960) #101",
+"s": "Green Lantern (1960)"
 },
 {
 "id": "fl-246",
@@ -2395,31 +2318,145 @@ const OMNI = [
 ]
 },
 {
-"id": "hth-o1-c7",
-"title": "Green Lantern 80th Anniversary Special (2020) #1",
-"era": "1970–1979",
+"id": "hth-o1-c10",
+"title": "Part 10",
+"era": "Green Lantern (1960) #102 → Green Lantern (1960) #107",
 "issues": [
 {
-"id": "gl80-1",
-"t": "Green Lantern 80th Anniversary Special (2020) #1",
-"s": "Green Lantern 80th Anniversary Special (2020)"
+"id": "gl2-102",
+"t": "Green Lantern (1960) #102",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-103",
+"t": "Green Lantern (1960) #103",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-104",
+"t": "Green Lantern (1960) #104",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-105",
+"t": "Green Lantern (1960) #105",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-106",
+"t": "Green Lantern (1960) #106",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-107",
+"t": "Green Lantern (1960) #107",
+"s": "Green Lantern (1960)"
 }
 ]
 },
 {
-"id": "hth-o1-c8",
-"title": "World's Finest Comics (1941) #210, #255",
-"era": "1970–1979",
+"id": "hth-o1-c11",
+"title": "Part 11",
+"era": "Green Lantern (1960) #108 → Green Lantern (1960) #113",
 "issues": [
 {
-"id": "wfc-210",
-"t": "World's Finest Comics (1941) #210",
-"s": "World's Finest Comics (1941)"
+"id": "gl2-108",
+"t": "Green Lantern (1960) #108",
+"s": "Green Lantern (1960)"
 },
 {
-"id": "wfc-255",
-"t": "World's Finest Comics (1941) #255",
-"s": "World's Finest Comics (1941)"
+"id": "gl2-109",
+"t": "Green Lantern (1960) #109",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-110",
+"t": "Green Lantern (1960) #110",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-111",
+"t": "Green Lantern (1960) #111",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-112",
+"t": "Green Lantern (1960) #112",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-113",
+"t": "Green Lantern (1960) #113",
+"s": "Green Lantern (1960)"
+}
+]
+},
+{
+"id": "hth-o1-c12",
+"title": "Part 12",
+"era": "Green Lantern (1960) #114 → Green Lantern (1960) #119",
+"issues": [
+{
+"id": "gl2-114",
+"t": "Green Lantern (1960) #114",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-115",
+"t": "Green Lantern (1960) #115",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-116",
+"t": "Green Lantern (1960) #116",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-117",
+"t": "Green Lantern (1960) #117",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-118",
+"t": "Green Lantern (1960) #118",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-119",
+"t": "Green Lantern (1960) #119",
+"s": "Green Lantern (1960)"
+}
+]
+},
+{
+"id": "hth-o1-c13",
+"title": "Part 13",
+"era": "Green Lantern (1960) #120 → Green Lantern 80th Anniversary Special (2020) #1",
+"issues": [
+{
+"id": "gl2-120",
+"t": "Green Lantern (1960) #120",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-121",
+"t": "Green Lantern (1960) #121",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-122",
+"t": "Green Lantern (1960) #122",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl2-123",
+"t": "Green Lantern (1960) #123",
+"s": "Green Lantern (1960)"
+},
+{
+"id": "gl80-1",
+"t": "Green Lantern 80th Anniversary Special (2020) #1",
+"s": "Green Lantern 80th Anniversary Special (2020)"
 }
 ]
 }
@@ -4507,8 +4544,8 @@ const OMNI = [
 "chapters": [
 {
 "id": "ven-o1-c1",
-"title": "Green Lantern (2011) #21–34, #23.1",
-"era": "2013–2014",
+"title": "Part 1",
+"era": "Green Lantern (2011) #21 → Green Lantern Corps (2011) #23",
 "issues": [
 {
 "id": "gl5-21",
@@ -4516,13 +4553,45 @@ const OMNI = [
 "s": "Green Lantern (2011)"
 },
 {
+"id": "glc3-21",
+"t": "Green Lantern Corps (2011) #21",
+"s": "Green Lantern Corps (2011)"
+},
+{
 "id": "gl5-22",
 "t": "Green Lantern (2011) #22",
 "s": "Green Lantern (2011)"
 },
 {
+"id": "glc3-22",
+"t": "Green Lantern Corps (2011) #22",
+"s": "Green Lantern Corps (2011)"
+},
+{
 "id": "gl5-23",
 "t": "Green Lantern (2011) #23",
+"s": "Green Lantern (2011)"
+},
+{
+"id": "glc3-23",
+"t": "Green Lantern Corps (2011) #23",
+"s": "Green Lantern Corps (2011)"
+}
+]
+},
+{
+"id": "ven-o1-c2",
+"title": "Part 2",
+"era": "Green Lantern: New Guardians (2011) #23 → Red Lanterns (2011) #24",
+"issues": [
+{
+"id": "glng-23",
+"t": "Green Lantern: New Guardians (2011) #23",
+"s": "Green Lantern: New Guardians (2011)"
+},
+{
+"id": "gl5-23.1",
+"t": "Green Lantern (2011) #23.1",
 "s": "Green Lantern (2011)"
 },
 {
@@ -4531,86 +4600,36 @@ const OMNI = [
 "s": "Green Lantern (2011)"
 },
 {
-"id": "gl5-25",
-"t": "Green Lantern (2011) #25",
-"s": "Green Lantern (2011)"
+"id": "glc3-24",
+"t": "Green Lantern Corps (2011) #24",
+"s": "Green Lantern Corps (2011)"
 },
 {
-"id": "gl5-26",
-"t": "Green Lantern (2011) #26",
-"s": "Green Lantern (2011)"
+"id": "glng-24",
+"t": "Green Lantern: New Guardians (2011) #24",
+"s": "Green Lantern: New Guardians (2011)"
 },
 {
-"id": "gl5-27",
-"t": "Green Lantern (2011) #27",
-"s": "Green Lantern (2011)"
-},
-{
-"id": "gl5-28",
-"t": "Green Lantern (2011) #28",
-"s": "Green Lantern (2011)"
-},
-{
-"id": "gl5-29",
-"t": "Green Lantern (2011) #29",
-"s": "Green Lantern (2011)"
-},
-{
-"id": "gl5-30",
-"t": "Green Lantern (2011) #30",
-"s": "Green Lantern (2011)"
-},
-{
-"id": "gl5-31",
-"t": "Green Lantern (2011) #31",
-"s": "Green Lantern (2011)"
-},
-{
-"id": "gl5-32",
-"t": "Green Lantern (2011) #32",
-"s": "Green Lantern (2011)"
-},
-{
-"id": "gl5-33",
-"t": "Green Lantern (2011) #33",
-"s": "Green Lantern (2011)"
-},
-{
-"id": "gl5-34",
-"t": "Green Lantern (2011) #34",
-"s": "Green Lantern (2011)"
-},
-{
-"id": "gl5-23.1",
-"t": "Green Lantern (2011) #23.1",
-"s": "Green Lantern (2011)"
+"id": "rl-24",
+"t": "Red Lanterns (2011) #24",
+"s": "Red Lanterns (2011)"
 }
 ]
 },
 {
-"id": "ven-o1-c2",
-"title": "Green Lantern Corps (2011) #21–34",
-"era": "2013–2014",
+"id": "ven-o1-c3",
+"title": "Part 3",
+"era": "Green Lantern Annual (2011) #2 → Green Lantern (2011) #27",
 "issues": [
 {
-"id": "glc3-21",
-"t": "Green Lantern Corps (2011) #21",
-"s": "Green Lantern Corps (2011)"
+"id": "gl5ann-2",
+"t": "Green Lantern Annual (2011) #2",
+"s": "Green Lantern Annual (2011)"
 },
 {
-"id": "glc3-22",
-"t": "Green Lantern Corps (2011) #22",
-"s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-23",
-"t": "Green Lantern Corps (2011) #23",
-"s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-24",
-"t": "Green Lantern Corps (2011) #24",
-"s": "Green Lantern Corps (2011)"
+"id": "gl5-25",
+"t": "Green Lantern (2011) #25",
+"s": "Green Lantern (2011)"
 },
 {
 "id": "glc3-25",
@@ -4618,14 +4637,41 @@ const OMNI = [
 "s": "Green Lantern Corps (2011)"
 },
 {
+"id": "gl5-26",
+"t": "Green Lantern (2011) #26",
+"s": "Green Lantern (2011)"
+},
+{
 "id": "glc3-26",
 "t": "Green Lantern Corps (2011) #26",
 "s": "Green Lantern Corps (2011)"
 },
 {
+"id": "gl5-27",
+"t": "Green Lantern (2011) #27",
+"s": "Green Lantern (2011)"
+}
+]
+},
+{
+"id": "ven-o1-c4",
+"title": "Part 4",
+"era": "Green Lantern Corps (2011) #27 → Green Lantern Corps (2011) #29",
+"issues": [
+{
 "id": "glc3-27",
 "t": "Green Lantern Corps (2011) #27",
 "s": "Green Lantern Corps (2011)"
+},
+{
+"id": "glc3ann-2",
+"t": "Green Lantern Corps Annual (2011) #2",
+"s": "Green Lantern Corps Annual (2011)"
+},
+{
+"id": "gl5-28",
+"t": "Green Lantern (2011) #28",
+"s": "Green Lantern (2011)"
 },
 {
 "id": "glc3-28",
@@ -4633,9 +4679,26 @@ const OMNI = [
 "s": "Green Lantern Corps (2011)"
 },
 {
+"id": "gl5-29",
+"t": "Green Lantern (2011) #29",
+"s": "Green Lantern (2011)"
+},
+{
 "id": "glc3-29",
 "t": "Green Lantern Corps (2011) #29",
 "s": "Green Lantern Corps (2011)"
+}
+]
+},
+{
+"id": "ven-o1-c5",
+"title": "Part 5",
+"era": "Green Lantern (2011) #30 → Green Lantern Corps (2011) #32",
+"issues": [
+{
+"id": "gl5-30",
+"t": "Green Lantern (2011) #30",
+"s": "Green Lantern (2011)"
 },
 {
 "id": "glc3-30",
@@ -4643,72 +4706,31 @@ const OMNI = [
 "s": "Green Lantern Corps (2011)"
 },
 {
+"id": "gl5-31",
+"t": "Green Lantern (2011) #31",
+"s": "Green Lantern (2011)"
+},
+{
 "id": "glc3-31",
 "t": "Green Lantern Corps (2011) #31",
 "s": "Green Lantern Corps (2011)"
 },
 {
+"id": "gl5-32",
+"t": "Green Lantern (2011) #32",
+"s": "Green Lantern (2011)"
+},
+{
 "id": "glc3-32",
 "t": "Green Lantern Corps (2011) #32",
 "s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-33",
-"t": "Green Lantern Corps (2011) #33",
-"s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-34",
-"t": "Green Lantern Corps (2011) #34",
-"s": "Green Lantern Corps (2011)"
-}
-]
-},
-{
-"id": "ven-o1-c3",
-"title": "Green Lantern: New Guardians (2011) #23–24",
-"era": "2013–2014",
-"issues": [
-{
-"id": "glng-23",
-"t": "Green Lantern: New Guardians (2011) #23",
-"s": "Green Lantern: New Guardians (2011)"
-},
-{
-"id": "glng-24",
-"t": "Green Lantern: New Guardians (2011) #24",
-"s": "Green Lantern: New Guardians (2011)"
-}
-]
-},
-{
-"id": "ven-o1-c4",
-"title": "Green Lantern Annual (2011) #2",
-"era": "2013–2014",
-"issues": [
-{
-"id": "gl5ann-2",
-"t": "Green Lantern Annual (2011) #2",
-"s": "Green Lantern Annual (2011)"
-}
-]
-},
-{
-"id": "ven-o1-c5",
-"title": "Green Lantern Corps Annual (2011) #2",
-"era": "2013–2014",
-"issues": [
-{
-"id": "glc3ann-2",
-"t": "Green Lantern Corps Annual (2011) #2",
-"s": "Green Lantern Corps Annual (2011)"
 }
 ]
 },
 {
 "id": "ven-o1-c6",
-"title": "Secret Origins (2014) #3, #9",
-"era": "2013–2014",
+"title": "Part 6",
+"era": "Secret Origins (2014) #3 → Secret Origins (2014) #9",
 "issues": [
 {
 "id": "so3-3",
@@ -4716,21 +4738,29 @@ const OMNI = [
 "s": "Secret Origins (2014)"
 },
 {
+"id": "gl5-33",
+"t": "Green Lantern (2011) #33",
+"s": "Green Lantern (2011)"
+},
+{
+"id": "glc3-33",
+"t": "Green Lantern Corps (2011) #33",
+"s": "Green Lantern Corps (2011)"
+},
+{
+"id": "gl5-34",
+"t": "Green Lantern (2011) #34",
+"s": "Green Lantern (2011)"
+},
+{
+"id": "glc3-34",
+"t": "Green Lantern Corps (2011) #34",
+"s": "Green Lantern Corps (2011)"
+},
+{
 "id": "so3-9",
 "t": "Secret Origins (2014) #9",
 "s": "Secret Origins (2014)"
-}
-]
-},
-{
-"id": "ven-o1-c7",
-"title": "Red Lanterns (2011) #24",
-"era": "2013–2014",
-"issues": [
-{
-"id": "rl-24",
-"t": "Red Lanterns (2011) #24",
-"s": "Red Lanterns (2011)"
 }
 ]
 }
@@ -4751,13 +4781,55 @@ const OMNI = [
 "chapters": [
 {
 "id": "ven-o2-c1",
-"title": "Green Lantern (2011) #35–52",
-"era": "2014–2016",
+"title": "Part 1",
+"era": "Green Lantern: Futures End (2014) #1 → Green Lantern: New Guardians (2011) #35",
 "issues": [
+{
+"id": "glfe-1",
+"t": "Green Lantern: Futures End (2014) #1",
+"s": "Green Lantern: Futures End (2014)"
+},
+{
+"id": "glcfe-1",
+"t": "Green Lantern Corps: Futures End (2014) #1",
+"s": "Green Lantern Corps: Futures End (2014)"
+},
 {
 "id": "gl5-35",
 "t": "Green Lantern (2011) #35",
 "s": "Green Lantern (2011)"
+},
+{
+"id": "glgod-1",
+"t": "Green Lantern/New Gods: Godhead (2014) #1",
+"s": "Green Lantern/New Gods: Godhead (2014)"
+},
+{
+"id": "glc3-35",
+"t": "Green Lantern Corps (2011) #35",
+"s": "Green Lantern Corps (2011)"
+},
+{
+"id": "glng-35",
+"t": "Green Lantern: New Guardians (2011) #35",
+"s": "Green Lantern: New Guardians (2011)"
+}
+]
+},
+{
+"id": "ven-o2-c2",
+"title": "Part 2",
+"era": "Red Lanterns (2011) #35 → Red Lanterns (2011) #36",
+"issues": [
+{
+"id": "rl-35",
+"t": "Red Lanterns (2011) #35",
+"s": "Red Lanterns (2011)"
+},
+{
+"id": "sin-6",
+"t": "Sinestro (2014) #6",
+"s": "Sinestro (2014)"
 },
 {
 "id": "gl5-36",
@@ -4765,9 +4837,68 @@ const OMNI = [
 "s": "Green Lantern (2011)"
 },
 {
+"id": "glc3-36",
+"t": "Green Lantern Corps (2011) #36",
+"s": "Green Lantern Corps (2011)"
+},
+{
+"id": "glng-36",
+"t": "Green Lantern: New Guardians (2011) #36",
+"s": "Green Lantern: New Guardians (2011)"
+},
+{
+"id": "rl-36",
+"t": "Red Lanterns (2011) #36",
+"s": "Red Lanterns (2011)"
+}
+]
+},
+{
+"id": "ven-o2-c3",
+"title": "Part 3",
+"era": "Green Lantern (2011) #37 → Green Lantern Annual (2011) #3",
+"issues": [
+{
 "id": "gl5-37",
 "t": "Green Lantern (2011) #37",
 "s": "Green Lantern (2011)"
+},
+{
+"id": "sin-7",
+"t": "Sinestro (2014) #7",
+"s": "Sinestro (2014)"
+},
+{
+"id": "glc3-37",
+"t": "Green Lantern Corps (2011) #37",
+"s": "Green Lantern Corps (2011)"
+},
+{
+"id": "glng-37",
+"t": "Green Lantern: New Guardians (2011) #37",
+"s": "Green Lantern: New Guardians (2011)"
+},
+{
+"id": "rl-37",
+"t": "Red Lanterns (2011) #37",
+"s": "Red Lanterns (2011)"
+},
+{
+"id": "gl5ann-3",
+"t": "Green Lantern Annual (2011) #3",
+"s": "Green Lantern Annual (2011)"
+}
+]
+},
+{
+"id": "ven-o2-c4",
+"title": "Part 4",
+"era": "Sinestro (2014) #8 → Green Lantern (2011) #40",
+"issues": [
+{
+"id": "sin-8",
+"t": "Sinestro (2014) #8",
+"s": "Sinestro (2014)"
 },
 {
 "id": "gl5-38",
@@ -4775,14 +4906,36 @@ const OMNI = [
 "s": "Green Lantern (2011)"
 },
 {
+"id": "glc3-38",
+"t": "Green Lantern Corps (2011) #38",
+"s": "Green Lantern Corps (2011)"
+},
+{
 "id": "gl5-39",
 "t": "Green Lantern (2011) #39",
 "s": "Green Lantern (2011)"
 },
 {
+"id": "glc3-39",
+"t": "Green Lantern Corps (2011) #39",
+"s": "Green Lantern Corps (2011)"
+},
+{
 "id": "gl5-40",
 "t": "Green Lantern (2011) #40",
 "s": "Green Lantern (2011)"
+}
+]
+},
+{
+"id": "ven-o2-c5",
+"title": "Part 5",
+"era": "Green Lantern Corps (2011) #40 → Green Lantern Annual (2011) #4",
+"issues": [
+{
+"id": "glc3-40",
+"t": "Green Lantern Corps (2011) #40",
+"s": "Green Lantern Corps (2011)"
 },
 {
 "id": "gl5-41",
@@ -4804,6 +4957,18 @@ const OMNI = [
 "t": "Green Lantern (2011) #44",
 "s": "Green Lantern (2011)"
 },
+{
+"id": "gl5ann-4",
+"t": "Green Lantern Annual (2011) #4",
+"s": "Green Lantern Annual (2011)"
+}
+]
+},
+{
+"id": "ven-o2-c6",
+"title": "Part 6",
+"era": "Green Lantern (2011) #45 → Green Lantern (2011) #50",
+"issues": [
 {
 "id": "gl5-45",
 "t": "Green Lantern (2011) #45",
@@ -4833,7 +4998,14 @@ const OMNI = [
 "id": "gl5-50",
 "t": "Green Lantern (2011) #50",
 "s": "Green Lantern (2011)"
+}
+]
 },
+{
+"id": "ven-o2-c7",
+"title": "Part 7",
+"era": "Green Lantern (2011) #51 → Green Lantern (2011) #52",
+"issues": [
 {
 "id": "gl5-51",
 "t": "Green Lantern (2011) #51",
@@ -4843,162 +5015,6 @@ const OMNI = [
 "id": "gl5-52",
 "t": "Green Lantern (2011) #52",
 "s": "Green Lantern (2011)"
-}
-]
-},
-{
-"id": "ven-o2-c2",
-"title": "Green Lantern Corps (2011) #35–40",
-"era": "2014–2016",
-"issues": [
-{
-"id": "glc3-35",
-"t": "Green Lantern Corps (2011) #35",
-"s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-36",
-"t": "Green Lantern Corps (2011) #36",
-"s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-37",
-"t": "Green Lantern Corps (2011) #37",
-"s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-38",
-"t": "Green Lantern Corps (2011) #38",
-"s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-39",
-"t": "Green Lantern Corps (2011) #39",
-"s": "Green Lantern Corps (2011)"
-},
-{
-"id": "glc3-40",
-"t": "Green Lantern Corps (2011) #40",
-"s": "Green Lantern Corps (2011)"
-}
-]
-},
-{
-"id": "ven-o2-c3",
-"title": "Red Lanterns (2011) #35–37",
-"era": "2014–2016",
-"issues": [
-{
-"id": "rl-35",
-"t": "Red Lanterns (2011) #35",
-"s": "Red Lanterns (2011)"
-},
-{
-"id": "rl-36",
-"t": "Red Lanterns (2011) #36",
-"s": "Red Lanterns (2011)"
-},
-{
-"id": "rl-37",
-"t": "Red Lanterns (2011) #37",
-"s": "Red Lanterns (2011)"
-}
-]
-},
-{
-"id": "ven-o2-c4",
-"title": "Green Lantern: New Guardians (2011) #35–37",
-"era": "2014–2016",
-"issues": [
-{
-"id": "glng-35",
-"t": "Green Lantern: New Guardians (2011) #35",
-"s": "Green Lantern: New Guardians (2011)"
-},
-{
-"id": "glng-36",
-"t": "Green Lantern: New Guardians (2011) #36",
-"s": "Green Lantern: New Guardians (2011)"
-},
-{
-"id": "glng-37",
-"t": "Green Lantern: New Guardians (2011) #37",
-"s": "Green Lantern: New Guardians (2011)"
-}
-]
-},
-{
-"id": "ven-o2-c5",
-"title": "Green Lantern Annual (2011) #3–4",
-"era": "2014–2016",
-"issues": [
-{
-"id": "gl5ann-3",
-"t": "Green Lantern Annual (2011) #3",
-"s": "Green Lantern Annual (2011)"
-},
-{
-"id": "gl5ann-4",
-"t": "Green Lantern Annual (2011) #4",
-"s": "Green Lantern Annual (2011)"
-}
-]
-},
-{
-"id": "ven-o2-c6",
-"title": "Sinestro (2014) #6–8",
-"era": "2014–2016",
-"issues": [
-{
-"id": "sin-6",
-"t": "Sinestro (2014) #6",
-"s": "Sinestro (2014)"
-},
-{
-"id": "sin-7",
-"t": "Sinestro (2014) #7",
-"s": "Sinestro (2014)"
-},
-{
-"id": "sin-8",
-"t": "Sinestro (2014) #8",
-"s": "Sinestro (2014)"
-}
-]
-},
-{
-"id": "ven-o2-c7",
-"title": "Green Lantern: Futures End (2014) #1",
-"era": "2014–2016",
-"issues": [
-{
-"id": "glfe-1",
-"t": "Green Lantern: Futures End (2014) #1",
-"s": "Green Lantern: Futures End (2014)"
-}
-]
-},
-{
-"id": "ven-o2-c8",
-"title": "Green Lantern Corps: Futures End (2014) #1",
-"era": "2014–2016",
-"issues": [
-{
-"id": "glcfe-1",
-"t": "Green Lantern Corps: Futures End (2014) #1",
-"s": "Green Lantern Corps: Futures End (2014)"
-}
-]
-},
-{
-"id": "ven-o2-c9",
-"title": "Green Lantern/New Gods: Godhead (2014) #1",
-"era": "2014–2016",
-"issues": [
-{
-"id": "glgod-1",
-"t": "Green Lantern/New Gods: Godhead (2014) #1",
-"s": "Green Lantern/New Gods: Godhead (2014)"
 }
 ]
 }
@@ -5928,6 +5944,3321 @@ const YEARS = {
 "wfc-201": 1971
 };
 
+/* The whole shelf as one list in on-sale order -- generated, like OMNI. A
+   chapter is a year; an issue carries `v`, the volume(s) that print it. */
+const READING = [
+{
+"id": "rd-c1",
+"title": "1959",
+"era": "The Silver Age Vol. 1",
+"issues": [
+{
+"id": "sc-22",
+"t": "Showcase (1956) #22",
+"s": "Showcase (1956)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "sc-23",
+"t": "Showcase (1956) #23",
+"s": "Showcase (1956)",
+"v": "The Silver Age Vol. 1"
+}
+]
+},
+{
+"id": "rd-c2",
+"title": "1960",
+"era": "The Silver Age Vol. 1",
+"issues": [
+{
+"id": "sc-24",
+"t": "Showcase (1956) #24",
+"s": "Showcase (1956)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-1",
+"t": "Green Lantern (1960) #1",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-2",
+"t": "Green Lantern (1960) #2",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-3",
+"t": "Green Lantern (1960) #3",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+}
+]
+},
+{
+"id": "rd-c3",
+"title": "1961",
+"era": "The Silver Age Vol. 1",
+"issues": [
+{
+"id": "gl2-4",
+"t": "Green Lantern (1960) #4",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-5",
+"t": "Green Lantern (1960) #5",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-6",
+"t": "Green Lantern (1960) #6",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-7",
+"t": "Green Lantern (1960) #7",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-8",
+"t": "Green Lantern (1960) #8",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-9",
+"t": "Green Lantern (1960) #9",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+}
+]
+},
+{
+"id": "rd-c4",
+"title": "1962",
+"era": "The Silver Age Vol. 1",
+"issues": [
+{
+"id": "gl2-10",
+"t": "Green Lantern (1960) #10",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-11",
+"t": "Green Lantern (1960) #11",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-12",
+"t": "Green Lantern (1960) #12",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-13",
+"t": "Green Lantern (1960) #13",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-14",
+"t": "Green Lantern (1960) #14",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-15",
+"t": "Green Lantern (1960) #15",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-16",
+"t": "Green Lantern (1960) #16",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-17",
+"t": "Green Lantern (1960) #17",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+}
+]
+},
+{
+"id": "rd-c5",
+"title": "1963",
+"era": "The Silver Age Vol. 1",
+"issues": [
+{
+"id": "gl2-18",
+"t": "Green Lantern (1960) #18",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-19",
+"t": "Green Lantern (1960) #19",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-20",
+"t": "Green Lantern (1960) #20",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-21",
+"t": "Green Lantern (1960) #21",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-22",
+"t": "Green Lantern (1960) #22",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-23",
+"t": "Green Lantern (1960) #23",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-24",
+"t": "Green Lantern (1960) #24",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-25",
+"t": "Green Lantern (1960) #25",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+}
+]
+},
+{
+"id": "rd-c6",
+"title": "1964",
+"era": "The Silver Age Vol. 1",
+"issues": [
+{
+"id": "gl2-26",
+"t": "Green Lantern (1960) #26",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-27",
+"t": "Green Lantern (1960) #27",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-28",
+"t": "Green Lantern (1960) #28",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-29",
+"t": "Green Lantern (1960) #29",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-30",
+"t": "Green Lantern (1960) #30",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-31",
+"t": "Green Lantern (1960) #31",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-32",
+"t": "Green Lantern (1960) #32",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-33",
+"t": "Green Lantern (1960) #33",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+}
+]
+},
+{
+"id": "rd-c7",
+"title": "1965",
+"era": "The Silver Age Vol. 1, The Silver Age Vol. 2",
+"issues": [
+{
+"id": "gl2-34",
+"t": "Green Lantern (1960) #34",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-35",
+"t": "Green Lantern (1960) #35",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 1"
+},
+{
+"id": "gl2-36",
+"t": "Green Lantern (1960) #36",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-37",
+"t": "Green Lantern (1960) #37",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-38",
+"t": "Green Lantern (1960) #38",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-39",
+"t": "Green Lantern (1960) #39",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-40",
+"t": "Green Lantern (1960) #40",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-41",
+"t": "Green Lantern (1960) #41",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+}
+]
+},
+{
+"id": "rd-c8",
+"title": "1966",
+"era": "The Silver Age Vol. 2",
+"issues": [
+{
+"id": "gl2-42",
+"t": "Green Lantern (1960) #42",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-43",
+"t": "Green Lantern (1960) #43",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-44",
+"t": "Green Lantern (1960) #44",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-45",
+"t": "Green Lantern (1960) #45",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-46",
+"t": "Green Lantern (1960) #46",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-47",
+"t": "Green Lantern (1960) #47",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-48",
+"t": "Green Lantern (1960) #48",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-49",
+"t": "Green Lantern (1960) #49",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+}
+]
+},
+{
+"id": "rd-c9",
+"title": "1967",
+"era": "The Silver Age Vol. 2",
+"issues": [
+{
+"id": "gl2-50",
+"t": "Green Lantern (1960) #50",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-51",
+"t": "Green Lantern (1960) #51",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-52",
+"t": "Green Lantern (1960) #52",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-53",
+"t": "Green Lantern (1960) #53",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-54",
+"t": "Green Lantern (1960) #54",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-55",
+"t": "Green Lantern (1960) #55",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-56",
+"t": "Green Lantern (1960) #56",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-57",
+"t": "Green Lantern (1960) #57",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+}
+]
+},
+{
+"id": "rd-c10",
+"title": "1968",
+"era": "The Silver Age Vol. 2",
+"issues": [
+{
+"id": "gl2-58",
+"t": "Green Lantern (1960) #58",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-59",
+"t": "Green Lantern (1960) #59",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-60",
+"t": "Green Lantern (1960) #60",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-61",
+"t": "Green Lantern (1960) #61",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-62",
+"t": "Green Lantern (1960) #62",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-63",
+"t": "Green Lantern (1960) #63",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-64",
+"t": "Green Lantern (1960) #64",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-65",
+"t": "Green Lantern (1960) #65",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+}
+]
+},
+{
+"id": "rd-c11",
+"title": "1969",
+"era": "The Silver Age Vol. 2",
+"issues": [
+{
+"id": "gl2-66",
+"t": "Green Lantern (1960) #66",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-67",
+"t": "Green Lantern (1960) #67",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-68",
+"t": "Green Lantern (1960) #68",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-69",
+"t": "Green Lantern (1960) #69",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-70",
+"t": "Green Lantern (1960) #70",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-71",
+"t": "Green Lantern (1960) #71",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-72",
+"t": "Green Lantern (1960) #72",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-73",
+"t": "Green Lantern (1960) #73",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+}
+]
+},
+{
+"id": "rd-c12",
+"title": "1970",
+"era": "The Silver Age Vol. 2, Hard Travelin' Heroes",
+"issues": [
+{
+"id": "gl2-74",
+"t": "Green Lantern (1960) #74",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-75",
+"t": "Green Lantern (1960) #75",
+"s": "Green Lantern (1960)",
+"v": "The Silver Age Vol. 2"
+},
+{
+"id": "gl2-76",
+"t": "Green Lantern (1960) #76",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-77",
+"t": "Green Lantern (1960) #77",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-78",
+"t": "Green Lantern (1960) #78",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-79",
+"t": "Green Lantern (1960) #79",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-80",
+"t": "Green Lantern (1960) #80",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-81",
+"t": "Green Lantern (1960) #81",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c13",
+"title": "1971",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "gl2-82",
+"t": "Green Lantern (1960) #82",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "wfc-201",
+"t": "World's Finest Comics (1941) #201",
+"s": "World's Finest Comics (1941)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-83",
+"t": "Green Lantern (1960) #83",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-84",
+"t": "Green Lantern (1960) #84",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-85",
+"t": "Green Lantern (1960) #85",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-86",
+"t": "Green Lantern (1960) #86",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "wfc-210",
+"t": "World's Finest Comics (1941) #210",
+"s": "World's Finest Comics (1941)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-87",
+"t": "Green Lantern (1960) #87",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c14",
+"title": "1972",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "bab-100",
+"t": "The Brave and the Bold (1955) #100",
+"s": "The Brave and the Bold (1955)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "dcss-1",
+"t": "DC Special Series (1977) #1",
+"s": "DC Special Series (1977)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-89",
+"t": "Green Lantern (1960) #89",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-218",
+"t": "The Flash (1959) #218",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-219",
+"t": "The Flash (1959) #219",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c15",
+"title": "1973",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "fl-220",
+"t": "The Flash (1959) #220",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-221",
+"t": "The Flash (1959) #221",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-222",
+"t": "The Flash (1959) #222",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-223",
+"t": "The Flash (1959) #223",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-224",
+"t": "The Flash (1959) #224",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c16",
+"title": "1974",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "fl-226",
+"t": "The Flash (1959) #226",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-227",
+"t": "The Flash (1959) #227",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-228",
+"t": "The Flash (1959) #228",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-230",
+"t": "The Flash (1959) #230",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c17",
+"title": "1975",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "fl-231",
+"t": "The Flash (1959) #231",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-233",
+"t": "The Flash (1959) #233",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "wfc-255",
+"t": "World's Finest Comics (1941) #255",
+"s": "World's Finest Comics (1941)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-234",
+"t": "The Flash (1959) #234",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c18",
+"title": "1976",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "fl-237",
+"t": "The Flash (1959) #237",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-238",
+"t": "The Flash (1959) #238",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-90",
+"t": "Green Lantern (1960) #90",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-91",
+"t": "Green Lantern (1960) #91",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-240",
+"t": "The Flash (1959) #240",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-92",
+"t": "Green Lantern (1960) #92",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-241",
+"t": "The Flash (1959) #241",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c19",
+"title": "1977",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "gl2-93",
+"t": "Green Lantern (1960) #93",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-242",
+"t": "The Flash (1959) #242",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-94",
+"t": "Green Lantern (1960) #94",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-95",
+"t": "Green Lantern (1960) #95",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-243",
+"t": "The Flash (1959) #243",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-96",
+"t": "Green Lantern (1960) #96",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-97",
+"t": "Green Lantern (1960) #97",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-244",
+"t": "The Flash (1959) #244",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-98",
+"t": "Green Lantern (1960) #98",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-99",
+"t": "Green Lantern (1960) #99",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-245",
+"t": "The Flash (1959) #245",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-100",
+"t": "Green Lantern (1960) #100",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "dcsst-17",
+"t": "DC Super-Stars (1976) #17",
+"s": "DC Super-Stars (1976)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-101",
+"t": "Green Lantern (1960) #101",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "fl-246",
+"t": "The Flash (1959) #246",
+"s": "The Flash (1959)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-102",
+"t": "Green Lantern (1960) #102",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c20",
+"title": "1978",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "gl2-103",
+"t": "Green Lantern (1960) #103",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-104",
+"t": "Green Lantern (1960) #104",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-105",
+"t": "Green Lantern (1960) #105",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-106",
+"t": "Green Lantern (1960) #106",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-107",
+"t": "Green Lantern (1960) #107",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-108",
+"t": "Green Lantern (1960) #108",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-109",
+"t": "Green Lantern (1960) #109",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-110",
+"t": "Green Lantern (1960) #110",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-111",
+"t": "Green Lantern (1960) #111",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-112",
+"t": "Green Lantern (1960) #112",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-113",
+"t": "Green Lantern (1960) #113",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c21",
+"title": "1979",
+"era": "Hard Travelin' Heroes",
+"issues": [
+{
+"id": "gl2-114",
+"t": "Green Lantern (1960) #114",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-115",
+"t": "Green Lantern (1960) #115",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-116",
+"t": "Green Lantern (1960) #116",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-117",
+"t": "Green Lantern (1960) #117",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-118",
+"t": "Green Lantern (1960) #118",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-119",
+"t": "Green Lantern (1960) #119",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-120",
+"t": "Green Lantern (1960) #120",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-121",
+"t": "Green Lantern (1960) #121",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-122",
+"t": "Green Lantern (1960) #122",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+},
+{
+"id": "gl2-123",
+"t": "Green Lantern (1960) #123",
+"s": "Green Lantern (1960)",
+"v": "Hard Travelin' Heroes"
+}
+]
+},
+{
+"id": "rd-c22",
+"title": "1995",
+"era": "Corps by Tomasi & Gleason Vol. 1",
+"issues": [
+{
+"id": "sc95-7",
+"t": "Showcase '95 (1995) #7",
+"s": "Showcase '95 (1995)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "sc95-8",
+"t": "Showcase '95 (1995) #8",
+"s": "Showcase '95 (1995)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+}
+]
+},
+{
+"id": "rd-c23",
+"title": "2004",
+"era": "By Geoff Johns Vol. 1",
+"issues": [
+{
+"id": "glreb-1",
+"t": "Green Lantern: Rebirth (2004) #1",
+"s": "Green Lantern: Rebirth (2004)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glreb-2",
+"t": "Green Lantern: Rebirth (2004) #2",
+"s": "Green Lantern: Rebirth (2004)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glreb-3",
+"t": "Green Lantern: Rebirth (2004) #3",
+"s": "Green Lantern: Rebirth (2004)",
+"v": "By Geoff Johns Vol. 1"
+}
+]
+},
+{
+"id": "rd-c24",
+"title": "2005",
+"era": "By Geoff Johns Vol. 1, Corps by Tomasi & Gleason Vol. 1",
+"issues": [
+{
+"id": "glreb-4",
+"t": "Green Lantern: Rebirth (2004) #4",
+"s": "Green Lantern: Rebirth (2004)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glreb-5",
+"t": "Green Lantern: Rebirth (2004) #5",
+"s": "Green Lantern: Rebirth (2004)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glreb-6",
+"t": "Green Lantern: Rebirth (2004) #6",
+"s": "Green Lantern: Rebirth (2004)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glsf-2005",
+"t": "Green Lantern Secret Files and Origins (2005) #2005",
+"s": "Green Lantern Secret Files and Origins (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-1",
+"t": "Green Lantern (2005) #1",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-2",
+"t": "Green Lantern (2005) #2",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-3",
+"t": "Green Lantern (2005) #3",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-4",
+"t": "Green Lantern (2005) #4",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glcr-1",
+"t": "Green Lantern Corps: Recharge (2005) #1",
+"s": "Green Lantern Corps: Recharge (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glcr-2",
+"t": "Green Lantern Corps: Recharge (2005) #2",
+"s": "Green Lantern Corps: Recharge (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-5",
+"t": "Green Lantern (2005) #5",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glcr-3",
+"t": "Green Lantern Corps: Recharge (2005) #3",
+"s": "Green Lantern Corps: Recharge (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-6",
+"t": "Green Lantern (2005) #6",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+}
+]
+},
+{
+"id": "rd-c25",
+"title": "2006",
+"era": "By Geoff Johns Vol. 1, Corps by Tomasi & Gleason Vol. 1",
+"issues": [
+{
+"id": "gl4-7",
+"t": "Green Lantern (2005) #7",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glcr-4",
+"t": "Green Lantern Corps: Recharge (2005) #4",
+"s": "Green Lantern Corps: Recharge (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-8",
+"t": "Green Lantern (2005) #8",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-9",
+"t": "Green Lantern (2005) #9",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glcr-5",
+"t": "Green Lantern Corps: Recharge (2005) #5",
+"s": "Green Lantern Corps: Recharge (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-10",
+"t": "Green Lantern (2005) #10",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-11",
+"t": "Green Lantern (2005) #11",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-1",
+"t": "Green Lantern Corps (2006) #1",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-12",
+"t": "Green Lantern (2005) #12",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-2",
+"t": "Green Lantern Corps (2006) #2",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glc2-3",
+"t": "Green Lantern Corps (2006) #3",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-13",
+"t": "Green Lantern (2005) #13",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-14",
+"t": "Green Lantern (2005) #14",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-15",
+"t": "Green Lantern (2005) #15",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-7",
+"t": "Green Lantern Corps (2006) #7",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+}
+]
+},
+{
+"id": "rd-c26",
+"title": "2007",
+"era": "Corps by Tomasi & Gleason Vol. 1, By Geoff Johns Vol. 1, By Geoff Johns Vol. 2",
+"issues": [
+{
+"id": "glc2-8",
+"t": "Green Lantern Corps (2006) #8",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-16",
+"t": "Green Lantern (2005) #16",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-9",
+"t": "Green Lantern Corps (2006) #9",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-17",
+"t": "Green Lantern (2005) #17",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-10",
+"t": "Green Lantern Corps (2006) #10",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-18",
+"t": "Green Lantern (2005) #18",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-11",
+"t": "Green Lantern Corps (2006) #11",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-19",
+"t": "Green Lantern (2005) #19",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-12",
+"t": "Green Lantern Corps (2006) #12",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-20",
+"t": "Green Lantern (2005) #20",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-13",
+"t": "Green Lantern Corps (2006) #13",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glscs-1",
+"t": "Green Lantern: Sinestro Corps Special (2007) #1",
+"s": "Green Lantern: Sinestro Corps Special (2007)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-21",
+"t": "Green Lantern (2005) #21",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glc2-14",
+"t": "Green Lantern Corps (2006) #14",
+"s": "Green Lantern Corps (2006)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-22",
+"t": "Green Lantern (2005) #22",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glc2-15",
+"t": "Green Lantern Corps (2006) #15",
+"s": "Green Lantern Corps (2006)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-23",
+"t": "Green Lantern (2005) #23",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glc2-16",
+"t": "Green Lantern Corps (2006) #16",
+"s": "Green Lantern Corps (2006)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-24",
+"t": "Green Lantern (2005) #24",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glc2-17",
+"t": "Green Lantern Corps (2006) #17",
+"s": "Green Lantern Corps (2006)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "tscsp-1",
+"t": "Tales of the Sinestro Corps: Superman-Prime (2007) #1",
+"s": "Tales of the Sinestro Corps: Superman-Prime (2007)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "glc2-18",
+"t": "Green Lantern Corps (2006) #18",
+"s": "Green Lantern Corps (2006)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-25",
+"t": "Green Lantern (2005) #25",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 1 / Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glc2-19",
+"t": "Green Lantern Corps (2006) #19",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glscsf-1",
+"t": "Green Lantern/Sinestro Corps Secret Files (2008) #1",
+"s": "Green Lantern/Sinestro Corps Secret Files (2008)",
+"v": "By Geoff Johns Vol. 1"
+},
+{
+"id": "gl4-26",
+"t": "Green Lantern (2005) #26",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+}
+]
+},
+{
+"id": "rd-c27",
+"title": "2008",
+"era": "Corps by Tomasi & Gleason Vol. 1, By Geoff Johns Vol. 2",
+"issues": [
+{
+"id": "glc2-20",
+"t": "Green Lantern Corps (2006) #20",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-27",
+"t": "Green Lantern (2005) #27",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-21",
+"t": "Green Lantern Corps (2006) #21",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-28",
+"t": "Green Lantern (2005) #28",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-22",
+"t": "Green Lantern Corps (2006) #22",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-29",
+"t": "Green Lantern (2005) #29",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-23",
+"t": "Green Lantern Corps (2006) #23",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-30",
+"t": "Green Lantern (2005) #30",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "dcu-0",
+"t": "DC Universe (2008) #0",
+"s": "DC Universe (2008)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-24",
+"t": "Green Lantern Corps (2006) #24",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-31",
+"t": "Green Lantern (2005) #31",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-25",
+"t": "Green Lantern Corps (2006) #25",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-32",
+"t": "Green Lantern (2005) #32",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-26",
+"t": "Green Lantern Corps (2006) #26",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-33",
+"t": "Green Lantern (2005) #33",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-27",
+"t": "Green Lantern Corps (2006) #27",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-34",
+"t": "Green Lantern (2005) #34",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-28",
+"t": "Green Lantern Corps (2006) #28",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glc2-29",
+"t": "Green Lantern Corps (2006) #29",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-35",
+"t": "Green Lantern (2005) #35",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-30",
+"t": "Green Lantern Corps (2006) #30",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "glc2-31",
+"t": "Green Lantern Corps (2006) #31",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-36",
+"t": "Green Lantern (2005) #36",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+}
+]
+},
+{
+"id": "rd-c28",
+"title": "2009",
+"era": "Corps by Tomasi & Gleason Vol. 1, By Geoff Johns Vol. 2, Corps by Tomasi & Gleason Vol. 2",
+"issues": [
+{
+"id": "glc2-32",
+"t": "Green Lantern Corps (2006) #32",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-37",
+"t": "Green Lantern (2005) #37",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-33",
+"t": "Green Lantern Corps (2006) #33",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-38",
+"t": "Green Lantern (2005) #38",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-34",
+"t": "Green Lantern Corps (2006) #34",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-39",
+"t": "Green Lantern (2005) #39",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-35",
+"t": "Green Lantern Corps (2006) #35",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-40",
+"t": "Green Lantern (2005) #40",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "bn-0",
+"t": "Blackest Night (2009) #0",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-36",
+"t": "Green Lantern Corps (2006) #36",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-41",
+"t": "Green Lantern (2005) #41",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-37",
+"t": "Green Lantern Corps (2006) #37",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-42",
+"t": "Green Lantern (2005) #42",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-38",
+"t": "Green Lantern Corps (2006) #38",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "gl4-43",
+"t": "Green Lantern (2005) #43",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "bntc-1",
+"t": "Blackest Night: Tales of the Corps (2009) #1",
+"s": "Blackest Night: Tales of the Corps (2009)",
+"v": "Corps by Tomasi & Gleason Vol. 1 / By Geoff Johns Vol. 2"
+},
+{
+"id": "bn-1",
+"t": "Blackest Night (2009) #1",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "bntc-2",
+"t": "Blackest Night: Tales of the Corps (2009) #2",
+"s": "Blackest Night: Tales of the Corps (2009)",
+"v": "Corps by Tomasi & Gleason Vol. 1 / By Geoff Johns Vol. 2"
+},
+{
+"id": "gl4-44",
+"t": "Green Lantern (2005) #44",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "bntc-3",
+"t": "Blackest Night: Tales of the Corps (2009) #3",
+"s": "Blackest Night: Tales of the Corps (2009)",
+"v": "Corps by Tomasi & Gleason Vol. 1"
+},
+{
+"id": "bn-2",
+"t": "Blackest Night (2009) #2",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-39",
+"t": "Green Lantern Corps (2006) #39",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-45",
+"t": "Green Lantern (2005) #45",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-40",
+"t": "Green Lantern Corps (2006) #40",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bn-3",
+"t": "Blackest Night (2009) #3",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "gl4-46",
+"t": "Green Lantern (2005) #46",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-41",
+"t": "Green Lantern Corps (2006) #41",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-47",
+"t": "Green Lantern (2005) #47",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "bn-4",
+"t": "Blackest Night (2009) #4",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-42",
+"t": "Green Lantern Corps (2006) #42",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-48",
+"t": "Green Lantern (2005) #48",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "bn-5",
+"t": "Blackest Night (2009) #5",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-43",
+"t": "Green Lantern Corps (2006) #43",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-49",
+"t": "Green Lantern (2005) #49",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "bn-6",
+"t": "Blackest Night (2009) #6",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2"
+}
+]
+},
+{
+"id": "rd-c29",
+"title": "2010",
+"era": "Corps by Tomasi & Gleason Vol. 2, By Geoff Johns Vol. 2, Brightest Day, By Geoff Johns Vol. 3, Corps by Tomasi & Gleason Vol. 1",
+"issues": [
+{
+"id": "glc2-44",
+"t": "Green Lantern Corps (2006) #44",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-50",
+"t": "Green Lantern (2005) #50",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "gl4-51",
+"t": "Green Lantern (2005) #51",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-45",
+"t": "Green Lantern Corps (2006) #45",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bn-7",
+"t": "Blackest Night (2009) #7",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "glc2-46",
+"t": "Green Lantern Corps (2006) #46",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-52",
+"t": "Green Lantern (2005) #52",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 2"
+},
+{
+"id": "bn-8",
+"t": "Blackest Night (2009) #8",
+"s": "Blackest Night (2009)",
+"v": "By Geoff Johns Vol. 2 / Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bd-0",
+"t": "Brightest Day (2010) #0",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-53",
+"t": "Green Lantern (2005) #53",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc2-47",
+"t": "Green Lantern Corps (2006) #47",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bd-1",
+"t": "Brightest Day (2010) #1",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "bd-2",
+"t": "Brightest Day (2010) #2",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-54",
+"t": "Green Lantern (2005) #54",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-3",
+"t": "Brightest Day (2010) #3",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "bd-4",
+"t": "Brightest Day (2010) #4",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-55",
+"t": "Green Lantern (2005) #55",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-5",
+"t": "Brightest Day (2010) #5",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "bd-6",
+"t": "Brightest Day (2010) #6",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-56",
+"t": "Green Lantern (2005) #56",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-7",
+"t": "Brightest Day (2010) #7",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "glew-1",
+"t": "Green Lantern: Emerald Warriors (2010) #1",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bd-8",
+"t": "Brightest Day (2010) #8",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "bd-9",
+"t": "Brightest Day (2010) #9",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-57",
+"t": "Green Lantern (2005) #57",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-10",
+"t": "Brightest Day (2010) #10",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "glew-2",
+"t": "Green Lantern: Emerald Warriors (2010) #2",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bd-11",
+"t": "Brightest Day (2010) #11",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "utbn-1",
+"t": "Untold Tales of Blackest Night (2010) #1",
+"s": "Untold Tales of Blackest Night (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 1 / By Geoff Johns Vol. 2 / Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "glew-3",
+"t": "Green Lantern: Emerald Warriors (2010) #3",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-58",
+"t": "Green Lantern (2005) #58",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-12",
+"t": "Brightest Day (2010) #12",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "bd-13",
+"t": "Brightest Day (2010) #13",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "glew-4",
+"t": "Green Lantern: Emerald Warriors (2010) #4",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bd-14",
+"t": "Brightest Day (2010) #14",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-59",
+"t": "Green Lantern (2005) #59",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-15",
+"t": "Brightest Day (2010) #15",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "bd-16",
+"t": "Brightest Day (2010) #16",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "glew-5",
+"t": "Green Lantern: Emerald Warriors (2010) #5",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-60",
+"t": "Green Lantern (2005) #60",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "gllarf-1",
+"t": "Green Lantern: Larfleeze Christmas Special (2010) #1",
+"s": "Green Lantern: Larfleeze Christmas Special (2010)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "gl4-61",
+"t": "Green Lantern (2005) #61",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+}
+]
+},
+{
+"id": "rd-c30",
+"title": "2011",
+"era": "Brightest Day, Corps by Tomasi & Gleason Vol. 2, By Geoff Johns Vol. 3, Red Lanterns",
+"issues": [
+{
+"id": "bd-17",
+"t": "Brightest Day (2010) #17",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "glew-6",
+"t": "Green Lantern: Emerald Warriors (2010) #6",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bd-18",
+"t": "Brightest Day (2010) #18",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "bd-19",
+"t": "Brightest Day (2010) #19",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "glew-7",
+"t": "Green Lantern: Emerald Warriors (2010) #7",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "bd-20",
+"t": "Brightest Day (2010) #20",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-62",
+"t": "Green Lantern (2005) #62",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-21",
+"t": "Brightest Day (2010) #21",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-63",
+"t": "Green Lantern (2005) #63",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-22",
+"t": "Brightest Day (2010) #22",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-64",
+"t": "Green Lantern (2005) #64",
+"s": "Green Lantern (2005)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc2-58",
+"t": "Green Lantern Corps (2006) #58",
+"s": "Green Lantern Corps (2006)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glew-8",
+"t": "Green Lantern: Emerald Warriors (2010) #8",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-23",
+"t": "Brightest Day (2010) #23",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "gl4-65",
+"t": "Green Lantern (2005) #65",
+"s": "Green Lantern (2005)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "glc2-59",
+"t": "Green Lantern Corps (2006) #59",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "bd-24",
+"t": "Brightest Day (2010) #24",
+"s": "Brightest Day (2010)",
+"v": "Brightest Day"
+},
+{
+"id": "glew-9",
+"t": "Green Lantern: Emerald Warriors (2010) #9",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "gl4-66",
+"t": "Green Lantern (2005) #66",
+"s": "Green Lantern (2005)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "glc2-60",
+"t": "Green Lantern Corps (2006) #60",
+"s": "Green Lantern Corps (2006)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "glew-10",
+"t": "Green Lantern: Emerald Warriors (2010) #10",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "glew-11",
+"t": "Green Lantern: Emerald Warriors (2010) #11",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl4-67",
+"t": "Green Lantern (2005) #67",
+"s": "Green Lantern (2005)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "glew-12",
+"t": "Green Lantern: Emerald Warriors (2010) #12",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "glew-13",
+"t": "Green Lantern: Emerald Warriors (2010) #13",
+"s": "Green Lantern: Emerald Warriors (2010)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl5-1",
+"t": "Green Lantern (2011) #1",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "rl-1",
+"t": "Red Lanterns (2011) #1",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "glc3-1",
+"t": "Green Lantern Corps (2011) #1",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-2",
+"t": "Red Lanterns (2011) #2",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-2",
+"t": "Green Lantern (2011) #2",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-2",
+"t": "Green Lantern Corps (2011) #2",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-3",
+"t": "Red Lanterns (2011) #3",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-3",
+"t": "Green Lantern (2011) #3",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-3",
+"t": "Green Lantern Corps (2011) #3",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-4",
+"t": "Red Lanterns (2011) #4",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-4",
+"t": "Green Lantern (2011) #4",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-4",
+"t": "Green Lantern Corps (2011) #4",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+}
+]
+},
+{
+"id": "rd-c31",
+"title": "2012",
+"era": "Red Lanterns, By Geoff Johns Vol. 3, Corps by Tomasi & Gleason Vol. 2",
+"issues": [
+{
+"id": "rl-5",
+"t": "Red Lanterns (2011) #5",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-5",
+"t": "Green Lantern (2011) #5",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-5",
+"t": "Green Lantern Corps (2011) #5",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-6",
+"t": "Red Lanterns (2011) #6",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-6",
+"t": "Green Lantern (2011) #6",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-6",
+"t": "Green Lantern Corps (2011) #6",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-7",
+"t": "Red Lanterns (2011) #7",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-7",
+"t": "Green Lantern (2011) #7",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-7",
+"t": "Green Lantern Corps (2011) #7",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-8",
+"t": "Red Lanterns (2011) #8",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-8",
+"t": "Green Lantern (2011) #8",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-8",
+"t": "Green Lantern Corps (2011) #8",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-9",
+"t": "Red Lanterns (2011) #9",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "sw3-9",
+"t": "Stormwatch (2011) #9",
+"s": "Stormwatch (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-9",
+"t": "Green Lantern (2011) #9",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-9",
+"t": "Green Lantern Corps (2011) #9",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-10",
+"t": "Red Lanterns (2011) #10",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-10",
+"t": "Green Lantern (2011) #10",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-10",
+"t": "Green Lantern Corps (2011) #10",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-11",
+"t": "Red Lanterns (2011) #11",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "glc3-11",
+"t": "Green Lantern Corps (2011) #11",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl5-11",
+"t": "Green Lantern (2011) #11",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "rl-12",
+"t": "Red Lanterns (2011) #12",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "glc3-12",
+"t": "Green Lantern Corps (2011) #12",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl5-12",
+"t": "Green Lantern (2011) #12",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "gl5ann-1",
+"t": "Green Lantern Annual (2011) #1",
+"s": "Green Lantern Annual (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "gl5-0",
+"t": "Green Lantern (2011) #0",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-0",
+"t": "Green Lantern Corps (2011) #0",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-0",
+"t": "Red Lanterns (2011) #0",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-13",
+"t": "Green Lantern (2011) #13",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-13",
+"t": "Green Lantern Corps (2011) #13",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-13",
+"t": "Red Lanterns (2011) #13",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-14",
+"t": "Green Lantern (2011) #14",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-14",
+"t": "Green Lantern Corps (2011) #14",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-14",
+"t": "Red Lanterns (2011) #14",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "glc3-15",
+"t": "Green Lantern Corps (2011) #15",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl5-15",
+"t": "Green Lantern (2011) #15",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+}
+]
+},
+{
+"id": "rd-c32",
+"title": "2013",
+"era": "Red Lanterns, Corps by Tomasi & Gleason Vol. 2, By Geoff Johns Vol. 3, By Robert Venditti Vol. 1",
+"issues": [
+{
+"id": "rl-15",
+"t": "Red Lanterns (2011) #15",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "glc3-16",
+"t": "Green Lantern Corps (2011) #16",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl5-16",
+"t": "Green Lantern (2011) #16",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3ann-1",
+"t": "Green Lantern Corps Annual (2011) #1",
+"s": "Green Lantern Corps Annual (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-16",
+"t": "Red Lanterns (2011) #16",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-17",
+"t": "Green Lantern (2011) #17",
+"s": "Green Lantern (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-17",
+"t": "Green Lantern Corps (2011) #17",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-17",
+"t": "Red Lanterns (2011) #17",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-18",
+"t": "Green Lantern (2011) #18",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-18",
+"t": "Green Lantern Corps (2011) #18",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-18",
+"t": "Red Lanterns (2011) #18",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-19",
+"t": "Green Lantern (2011) #19",
+"s": "Green Lantern (2011)",
+"v": "By Geoff Johns Vol. 3"
+},
+{
+"id": "glc3-19",
+"t": "Green Lantern Corps (2011) #19",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "rl-19",
+"t": "Red Lanterns (2011) #19",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "glc3-20",
+"t": "Green Lantern Corps (2011) #20",
+"s": "Green Lantern Corps (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2"
+},
+{
+"id": "gl5-20",
+"t": "Green Lantern (2011) #20",
+"s": "Green Lantern (2011)",
+"v": "Corps by Tomasi & Gleason Vol. 2 / By Geoff Johns Vol. 3 / Red Lanterns"
+},
+{
+"id": "rl-20",
+"t": "Red Lanterns (2011) #20",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-21",
+"t": "Green Lantern (2011) #21",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-21",
+"t": "Green Lantern Corps (2011) #21",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "rl-21",
+"t": "Red Lanterns (2011) #21",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-22",
+"t": "Green Lantern (2011) #22",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-22",
+"t": "Green Lantern Corps (2011) #22",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "rl-22",
+"t": "Red Lanterns (2011) #22",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-23",
+"t": "Green Lantern (2011) #23",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-23",
+"t": "Green Lantern Corps (2011) #23",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glng-23",
+"t": "Green Lantern: New Guardians (2011) #23",
+"s": "Green Lantern: New Guardians (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "rl-23",
+"t": "Red Lanterns (2011) #23",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-23.1",
+"t": "Green Lantern (2011) #23.1",
+"s": "Green Lantern (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 1"
+},
+{
+"id": "gl5-24",
+"t": "Green Lantern (2011) #24",
+"s": "Green Lantern (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-24",
+"t": "Green Lantern Corps (2011) #24",
+"s": "Green Lantern Corps (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 1"
+},
+{
+"id": "glng-24",
+"t": "Green Lantern: New Guardians (2011) #24",
+"s": "Green Lantern: New Guardians (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 1"
+},
+{
+"id": "rl-24",
+"t": "Red Lanterns (2011) #24",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 1"
+},
+{
+"id": "gl5ann-2",
+"t": "Green Lantern Annual (2011) #2",
+"s": "Green Lantern Annual (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 1"
+},
+{
+"id": "gl5-25",
+"t": "Green Lantern (2011) #25",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-25",
+"t": "Green Lantern Corps (2011) #25",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "rl-25",
+"t": "Red Lanterns (2011) #25",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-26",
+"t": "Green Lantern (2011) #26",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-26",
+"t": "Green Lantern Corps (2011) #26",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "sg6-26",
+"t": "Supergirl (2011) #26",
+"s": "Supergirl (2011)",
+"v": "Red Lanterns"
+}
+]
+},
+{
+"id": "rd-c33",
+"title": "2014",
+"era": "Red Lanterns, By Robert Venditti Vol. 1, By Robert Venditti Vol. 2",
+"issues": [
+{
+"id": "rl-26",
+"t": "Red Lanterns (2011) #26",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-27",
+"t": "Green Lantern (2011) #27",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-27",
+"t": "Green Lantern Corps (2011) #27",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "sg6-27",
+"t": "Supergirl (2011) #27",
+"s": "Supergirl (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-27",
+"t": "Red Lanterns (2011) #27",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "glc3ann-2",
+"t": "Green Lantern Corps Annual (2011) #2",
+"s": "Green Lantern Corps Annual (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "gl5-28",
+"t": "Green Lantern (2011) #28",
+"s": "Green Lantern (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-28",
+"t": "Green Lantern Corps (2011) #28",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "sg6-28",
+"t": "Supergirl (2011) #28",
+"s": "Supergirl (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-28",
+"t": "Red Lanterns (2011) #28",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-29",
+"t": "Green Lantern (2011) #29",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-29",
+"t": "Green Lantern Corps (2011) #29",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "sg6-29",
+"t": "Supergirl (2011) #29",
+"s": "Supergirl (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-29",
+"t": "Red Lanterns (2011) #29",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-30",
+"t": "Green Lantern (2011) #30",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-30",
+"t": "Green Lantern Corps (2011) #30",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "sg6-30",
+"t": "Supergirl (2011) #30",
+"s": "Supergirl (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-30",
+"t": "Red Lanterns (2011) #30",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-31",
+"t": "Green Lantern (2011) #31",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-31",
+"t": "Green Lantern Corps (2011) #31",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "sg6-31",
+"t": "Supergirl (2011) #31",
+"s": "Supergirl (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-31",
+"t": "Red Lanterns (2011) #31",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-32",
+"t": "Green Lantern (2011) #32",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-32",
+"t": "Green Lantern Corps (2011) #32",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "sg6-32",
+"t": "Supergirl (2011) #32",
+"s": "Supergirl (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-32",
+"t": "Red Lanterns (2011) #32",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "so3-3",
+"t": "Secret Origins (2014) #3",
+"s": "Secret Origins (2014)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "gl5-33",
+"t": "Green Lantern (2011) #33",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-33",
+"t": "Green Lantern Corps (2011) #33",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "sg6-33",
+"t": "Supergirl (2011) #33",
+"s": "Supergirl (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-33",
+"t": "Red Lanterns (2011) #33",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "rlann-1",
+"t": "Red Lanterns Annual (2013) #1",
+"s": "Red Lanterns Annual (2013)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-34",
+"t": "Green Lantern (2011) #34",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "glc3-34",
+"t": "Green Lantern Corps (2011) #34",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "rl-34",
+"t": "Red Lanterns (2011) #34",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "glfe-1",
+"t": "Green Lantern: Futures End (2014) #1",
+"s": "Green Lantern: Futures End (2014)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glcfe-1",
+"t": "Green Lantern Corps: Futures End (2014) #1",
+"s": "Green Lantern Corps: Futures End (2014)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "rlfe-1",
+"t": "Red Lanterns: Futures End (2014) #1",
+"s": "Red Lanterns: Futures End (2014)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-35",
+"t": "Green Lantern (2011) #35",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glgod-1",
+"t": "Green Lantern/New Gods: Godhead (2014) #1",
+"s": "Green Lantern/New Gods: Godhead (2014)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glc3-35",
+"t": "Green Lantern Corps (2011) #35",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glng-35",
+"t": "Green Lantern: New Guardians (2011) #35",
+"s": "Green Lantern: New Guardians (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "rl-35",
+"t": "Red Lanterns (2011) #35",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 2"
+},
+{
+"id": "sin-6",
+"t": "Sinestro (2014) #6",
+"s": "Sinestro (2014)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-36",
+"t": "Green Lantern (2011) #36",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glc3-36",
+"t": "Green Lantern Corps (2011) #36",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glng-36",
+"t": "Green Lantern: New Guardians (2011) #36",
+"s": "Green Lantern: New Guardians (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "imfp-5",
+"t": "Infinity Man and the Forever People (2014) #5",
+"s": "Infinity Man and the Forever People (2014)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-36",
+"t": "Red Lanterns (2011) #36",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-37",
+"t": "Green Lantern (2011) #37",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "sin-7",
+"t": "Sinestro (2014) #7",
+"s": "Sinestro (2014)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glc3-37",
+"t": "Green Lantern Corps (2011) #37",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glng-37",
+"t": "Green Lantern: New Guardians (2011) #37",
+"s": "Green Lantern: New Guardians (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "imfp-6",
+"t": "Infinity Man and the Forever People (2014) #6",
+"s": "Infinity Man and the Forever People (2014)",
+"v": "Red Lanterns"
+},
+{
+"id": "rl-37",
+"t": "Red Lanterns (2011) #37",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns / By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5ann-3",
+"t": "Green Lantern Annual (2011) #3",
+"s": "Green Lantern Annual (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "sin-8",
+"t": "Sinestro (2014) #8",
+"s": "Sinestro (2014)",
+"v": "By Robert Venditti Vol. 2"
+}
+]
+},
+{
+"id": "rd-c34",
+"title": "2015",
+"era": "By Robert Venditti Vol. 2, Red Lanterns, By Robert Venditti Vol. 1",
+"issues": [
+{
+"id": "gl5-38",
+"t": "Green Lantern (2011) #38",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glc3-38",
+"t": "Green Lantern Corps (2011) #38",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "rl-38",
+"t": "Red Lanterns (2011) #38",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "so3-9",
+"t": "Secret Origins (2014) #9",
+"s": "Secret Origins (2014)",
+"v": "By Robert Venditti Vol. 1"
+},
+{
+"id": "gl5-39",
+"t": "Green Lantern (2011) #39",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glc3-39",
+"t": "Green Lantern Corps (2011) #39",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "rl-39",
+"t": "Red Lanterns (2011) #39",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-40",
+"t": "Green Lantern (2011) #40",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "glc3-40",
+"t": "Green Lantern Corps (2011) #40",
+"s": "Green Lantern Corps (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "rl-40",
+"t": "Red Lanterns (2011) #40",
+"s": "Red Lanterns (2011)",
+"v": "Red Lanterns"
+},
+{
+"id": "gl5-41",
+"t": "Green Lantern (2011) #41",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-42",
+"t": "Green Lantern (2011) #42",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-43",
+"t": "Green Lantern (2011) #43",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-44",
+"t": "Green Lantern (2011) #44",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5ann-4",
+"t": "Green Lantern Annual (2011) #4",
+"s": "Green Lantern Annual (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-45",
+"t": "Green Lantern (2011) #45",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-46",
+"t": "Green Lantern (2011) #46",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-47",
+"t": "Green Lantern (2011) #47",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+}
+]
+},
+{
+"id": "rd-c35",
+"title": "2016",
+"era": "By Robert Venditti Vol. 2",
+"issues": [
+{
+"id": "gl5-48",
+"t": "Green Lantern (2011) #48",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-49",
+"t": "Green Lantern (2011) #49",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-50",
+"t": "Green Lantern (2011) #50",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-51",
+"t": "Green Lantern (2011) #51",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+},
+{
+"id": "gl5-52",
+"t": "Green Lantern (2011) #52",
+"s": "Green Lantern (2011)",
+"v": "By Robert Venditti Vol. 2"
+}
+]
+},
+{
+"id": "rd-c36",
+"title": "2020",
+"era": "Hard Travelin' Heroes, Corps by Tomasi & Gleason Vol. 2",
+"issues": [
+{
+"id": "gl80-1",
+"t": "Green Lantern 80th Anniversary Special (2020) #1",
+"s": "Green Lantern 80th Anniversary Special (2020)",
+"v": "Hard Travelin' Heroes / Corps by Tomasi & Gleason Vol. 2"
+}
+]
+}
+];
+
+
+/* The reading order is shown as a volume of its own, so the volume view, the
+   chapter tools and Keep Reading all work on it unchanged. It is not in OMNI:
+   it holds no issues of its own, only the shelf's, in another order, so a mark
+   here is the same mark in the book that prints the issue. */
+const ORDER_VOL = READING.length ? {
+  id:"order", spine:"Reading Order", title:"Reading Order", vol:"",
+  creators:"All twelve volumes, interleaved by on-sale date",
+  era:READING[0].title+"\u2013"+READING[READING.length-1].title,
+  released:READING.reduce((n,c)=>n+c.issues.length,0)+" issues",
+  note:"Every issue on the shelf in the order it came out, so Green Lantern and Green Lantern Corps alternate month by month instead of a volume at a time. Marking an issue here marks it in its omnibus too. Each row names the book it is printed in.",
+  art:"o-oa", tex:"", chapters:READING } : null;
+function volById(id){ return id==="order" ? ORDER_VOL : OMNI.find(x=>x.id===id); }
+/* Touch every volume an issue list lives in, so the books keep their place
+   when you mark from the reading order. */
+function touchAll(o,list){ if(o.id==="order") list.forEach(i=>touchIssue(i.id)); else touch[o.id]=Date.now(); }
 
 /* ============ STATE ============ */
 const KEY_P="greenlantern-omni-progress-v1";
@@ -6228,7 +9559,7 @@ function buildOmni(o){
             coverHTML(iss)+
             '<div class="issue-info" data-toggle="'+iss.id+'"><div class="t">'+esc(iss.t)+'</div>'+
               '<div class="a">'+yearPill(iss)+'<span class="arcpill'+(dupCount[iss.id]>1?' dup':'')+'">'+esc(iss.s)+
-              (dupCount[iss.id]>1?' &middot; in '+dupCount[iss.id]+' omnibuses':'')+'</span></div></div>'+
+              (iss.v?' &middot; '+esc(iss.v):dupCount[iss.id]>1?' &middot; in '+dupCount[iss.id]+' omnibuses':'')+'</span></div></div>'+
             '<div class="issue-acts">'+
               '<a class="mini read-link'+(known?'':' approx')+'" href="'+readURL(iss)+'" target="_blank" rel="noopener">Read</a>'+
               '<button class="mini" data-skip="'+iss.id+'">Skip</button>'+
@@ -6385,9 +9716,9 @@ document.addEventListener("click",e=>{
 function jumpToIssue(){
   const id=pendingJump; pendingJump=null;
   if(!id||!currentOmni) return;
-  const f=flat.find(x=>x.o.id===currentOmni.id&&x.issue.id===id);
-  if(!f) return;
-  toggleCh(document.getElementById("ch-"+f.ch.id),true);
+  const ch=currentOmni.chapters.find(c=>c.issues.some(i=>i.id===id));
+  if(!ch) return;
+  toggleCh(document.getElementById("ch-"+ch.id),true);
   const row=chaptersEl.querySelector('[data-row="'+id+'"]');
   if(!row) return;
   row.scrollIntoView({block:"center",behavior:"smooth"});
@@ -6547,7 +9878,7 @@ async function doSummary(id){
   const hit=issInChapter(id); if(!hit) return;
   panelLoading(el,"Spoilers");
   const prompt='SEARCH THE WEB FIRST. Look up the plot synopsis for the DC comic "'+hit.iss.t+'" ('+hit.iss.s+
-    '), collected in '+currentOmni.title+(currentOmni.vol?' '+currentOmni.vol:'')+' ('+currentOmni.era+'). '+
+    '), collected in '+(hit.iss.v||currentOmni.title+(currentOmni.vol?' '+currentOmni.vol:'')+' ('+currentOmni.era+')')+'. '+
     'Use dc.fandom.com (DC Database) or comicvine. Search again if the first result is thin.\n\n'+
     'Then write ONE OR TWO SHORT PARAGRAPHS — 120-180 words total — covering only what actually matters in that issue: '+
     'the main plot beats, any deaths or reveals, and where it leaves things. Full spoilers, no hedging.\n\n'+RULES+'\n'+
@@ -6567,7 +9898,7 @@ async function doChapterSummary(chId){
   if(sums[k]){ el.classList.add("show"); panelText(el,"Chapter digest · spoilers",sums[k]); return; }
   panelLoading(el,"Chapter digest · spoilers");
   const list=ch.issues.map(i=>i.t).join(", ");
-  const prompt='SEARCH THE WEB FIRST for these DC comics, collected in '+currentOmni.title+
+  const prompt='SEARCH THE WEB FIRST for these DC comics, collected in '+(currentOmni.id==="order"?"the Green Lantern omnibuses":currentOmni.title)+
     (currentOmni.vol?' '+currentOmni.vol:'')+': '+list+'.\n\n'+
     'Then write a SPOILER-FILLED catch-up for a reader who is SKIPPING them: what happens across the run, '+
     'who dies or changes, and what carries forward into the rest of the book. 150-220 words.\n\n'+RULES;
@@ -6718,7 +10049,7 @@ function showShelf(){
   window.scrollTo(0,0);
 }
 function showOmni(id){
-  const o=OMNI.find(x=>x.id===id);
+  const o=volById(id);
   if(!o){ showShelf(); return; }
   currentOmni=o;
   document.getElementById("viewShelf").classList.add("hidden");
@@ -6729,11 +10060,11 @@ function showOmni(id){
   buildOmni(o); refresh();
   if(pendingJump) jumpToIssue();
   else{
-    const next=flat.find(f=>f.o.id===o.id&&!readSet.has(f.issue.id)&&!skipSet.has(f.issue.id));
-    const openCh = next ? next.ch : o.chapters[0];
+    const openCh = o.chapters.find(c=>c.issues.some(i=>!readSet.has(i.id)&&!skipSet.has(i.id))) || o.chapters[0];
     if(openCh) toggleCh(document.getElementById("ch-"+openCh.id),true);
   }
 }
+if(ORDER_VOL) document.getElementById("orderBtn").hidden=false;
 function route(){
   const h=location.hash.replace(/^#\/?/,"");
   const parts=h.split("/");
@@ -6773,11 +10104,11 @@ chaptersEl.addEventListener("click", async e=>{
   if(s){ await setState(s.dataset.skip,"skip"); return; }
   const cr=e.target.closest("[data-chread]");
   if(cr){ const ch=currentOmni.chapters.find(c=>c.id===cr.dataset.chread);
-    ch.issues.forEach(i=>{skipSet.delete(i.id);readSet.add(i.id);}); touch[currentOmni.id]=Date.now();
+    ch.issues.forEach(i=>{skipSet.delete(i.id);readSet.add(i.id);}); touchAll(currentOmni,ch.issues);
     await saveState(); refresh(); return; }
   const cs=e.target.closest("[data-chskip]");
   if(cs){ const ch=currentOmni.chapters.find(c=>c.id===cs.dataset.chskip);
-    ch.issues.forEach(i=>{readSet.delete(i.id);skipSet.add(i.id);}); touch[currentOmni.id]=Date.now();
+    ch.issues.forEach(i=>{readSet.delete(i.id);skipSet.add(i.id);}); touchAll(currentOmni,ch.issues);
     await saveState(); refresh(); return; }
 });
 chaptersEl.addEventListener("keydown", async e=>{
@@ -6791,7 +10122,7 @@ document.getElementById("collapseAll").onclick=()=>document.querySelectorAll(".c
 document.getElementById("markAll").onclick=async()=>{
   if(!currentOmni) return;
   currentOmni.chapters.forEach(c=>c.issues.forEach(i=>{skipSet.delete(i.id);readSet.add(i.id);}));
-  touch[currentOmni.id]=Date.now();
+  touchAll(currentOmni,currentOmni.chapters.flatMap(c=>c.issues));
   await saveState(); refresh();
 };
 document.getElementById("clearSums").onclick=async()=>{

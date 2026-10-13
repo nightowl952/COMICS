@@ -367,6 +367,130 @@ def check_spine_colors(html, arr):
                  % (missing, os.path.basename(TRACKER)))
 
 
+# ---------------------------------------------------------------------------
+# The reading order -- every issue on the shelf, interleaved by when it first
+# came out, rather than grouped the way the omnibuses print them.
+#
+# A shelf opts in with READING_ORDER = True in its meta module (Green Lantern
+# was the first: Green Lantern and Green Lantern Corps came out side by side
+# every month, and the omnibuses split them apart again by title). The page
+# shows it as one extra view; read/skip marks are shared with the volumes,
+# because an issue id is the same key everywhere.
+# ---------------------------------------------------------------------------
+
+MARK_READING = "const READING = ["
+
+
+def issue_dates(arr, ids_path, years_path, fixes=None):
+    """Shelf issue id -> (YYYY-MM-DD, estimated?) for every issue on the shelf.
+
+    Linked issues carry their catalog date. An unlinked one is estimated from
+    the dated issues of its own series on the shelf -- interpolated between
+    the nearest dated numbers either side, or extrapolated at the series' own
+    average spacing -- and failing that takes the date of the issue before it
+    in the first volume that prints it. `fixes` (DATE_FIX in the meta module)
+    overrides a catalog date that is simply wrong.
+    """
+    import datetime as dt
+    ids = json.load(open(ids_path, encoding="utf-8"))
+    dates = json.load(open(years_path, encoding="utf-8"))
+    fixes = fixes or {}
+    known = {}
+    for o in arr:
+        for c in o["chapters"]:
+            for i in c["issues"]:
+                iid = i["id"]
+                d = fixes.get(iid) or dates.get(ids.get(iid, "/").split("/", 1)[0])
+                if d and d[:4].isdigit():
+                    known[iid] = d[:10]
+    day = lambda d: dt.date.fromisoformat(d).toordinal()
+    out = {k: (v, False) for k, v in known.items()}
+
+    def num(iid):
+        try:
+            return float(iid.rsplit("-", 1)[1])
+        except ValueError:
+            return None
+
+    series = {}
+    for iid, d in known.items():
+        n = num(iid)
+        if n is not None:
+            series.setdefault(iid.rsplit("-", 1)[0], []).append((n, day(d)))
+    for v in series.values():
+        v.sort()
+    for o in arr:
+        prev = None
+        for c in o["chapters"]:
+            for i in c["issues"]:
+                iid = i["id"]
+                if iid in out:
+                    prev = out[iid][0]
+                    continue
+                n, pts = num(iid), series.get(iid.rsplit("-", 1)[0], [])
+                est = None
+                if n is not None and pts:
+                    lo = [p for p in pts if p[0] < n]
+                    hi = [p for p in pts if p[0] > n]
+                    gap = ((pts[-1][1] - pts[0][1]) / (pts[-1][0] - pts[0][0])
+                           if len(pts) > 1 and pts[-1][0] != pts[0][0] else 30)
+                    if lo and hi:
+                        (a, da), (b, db) = lo[-1], hi[0]
+                        est = da + (db - da) * (n - a) / (b - a)
+                    elif lo:
+                        est = lo[-1][1] + gap * (n - lo[-1][0])
+                    elif hi:
+                        est = hi[0][1] - gap * (hi[0][0] - n)
+                if est is None and prev:
+                    est = day(prev)
+                if est is not None:
+                    out[iid] = (dt.date.fromordinal(int(est)).isoformat(), True)
+                    prev = out[iid][0]
+    return out
+
+
+def reading_order(arr, when):
+    """Chapters of the whole shelf in publication order, one per year."""
+    first = {}
+    where = {}
+    for vi, o in enumerate(arr):
+        label = (o.get("spine") or o["title"]) + (" " + o["vol"] if o.get("vol") else "")
+        pos = 0
+        for c in o["chapters"]:
+            for i in c["issues"]:
+                where.setdefault(i["id"], [])
+                if label not in where[i["id"]]:
+                    where[i["id"]].append(label)
+                if i["id"] not in first:
+                    first[i["id"]] = (vi, pos, i)
+                pos += 1
+    rows = sorted(first.values(),
+                  key=lambda r: (when.get(r[2]["id"], ("9999",))[0], r[0], r[1]))
+    chapters, cur = [], None
+    for vi, pos, i in rows:
+        y = when.get(i["id"], ("????",))[0][:4]
+        if not cur or cur["y"] != y:
+            cur = {"y": y, "issues": []}
+            chapters.append(cur)
+        cur["issues"].append({"id": i["id"], "t": i["t"], "s": i["s"],
+                              "v": " / ".join(where[i["id"]])})
+    out = []
+    for ci, c in enumerate(chapters):
+        out.append({"id": "rd-c%d" % (ci + 1), "title": c["y"],
+                    # the books this year is drawn from, in order of first use --
+                    # the chapter header already counts the issues
+                    "era": ", ".join(dict.fromkeys(
+                        v for i in c["issues"] for v in i["v"].split(" / "))),
+                    "issues": c["issues"]})
+    return out
+
+
+def splice_reading(html, chapters):
+    s0 = html.index(MARK_READING)
+    e0 = html.index("\n];", s0)
+    return html[:s0] + MARK_READING[:-1] + json.dumps(chapters, indent=0, ensure_ascii=False) + html[e0 + 2:]
+
+
 def main():
     global RAW, TRACKER
     import heroes
@@ -385,6 +509,16 @@ def main():
     new = splice_ids(splice(html, arr), h["ids_path"],
                      "const DCUI = {" if dc else None)
     new = splice_years(new, h["ids_path"], h["years_path"])
+    mod = heroes.meta_module(h)
+    if getattr(mod, "READING_ORDER", False):
+        if MARK_READING not in new:
+            sys.exit("%s sets READING_ORDER but the page has no `%s` to splice into"
+                     % (h["meta"], MARK_READING))
+        when = issue_dates(arr, h["ids_path"], h["years_path"], getattr(mod, "DATE_FIX", None))
+        rd = reading_order(arr, when)
+        new = splice_reading(new, rd)
+        print("reading order: %d issues in %d years, %d dates estimated"
+              % (sum(len(c["issues"]) for c in rd), len(rd), sum(1 for v in when.values() if v[1])))
 
     print("[%s] %s" % (h["key"], h["tracker"]))
     slots = sum(len(c["issues"]) for o in arr for c in o["chapters"])

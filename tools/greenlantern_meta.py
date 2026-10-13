@@ -211,3 +211,16 @@ DC_ISSUE_ALIAS = {
     # Spectacular" title the shelf's display name shortens
     "gl80-1":     "69686feb-7ee2-4bbc-b70c-e754e0dfb5bc",
 }
+
+# The shelf-wide reading order view (see "The reading order" in CLAUDE.md).
+# Green Lantern and Green Lantern Corps came out side by side every month and
+# the omnibuses split them back apart by title, so this shelf is the one that
+# needed it first.
+READING_ORDER = True
+
+# Catalog dates that are simply wrong, shelf issue id -> on-sale date. Used by
+# the reading order only. DCUI dates Blackest Night #0 to July 2010; it was
+# the Free Comic Book Day issue, 2 May 2009, and it is the event's prologue.
+DATE_FIX = {
+    "bn-0": "2009-05-02",
+}
