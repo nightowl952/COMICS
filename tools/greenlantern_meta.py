@@ -212,15 +212,108 @@ DC_ISSUE_ALIAS = {
     "gl80-1":     "69686feb-7ee2-4bbc-b70c-e754e0dfb5bc",
 }
 
-# The shelf-wide reading order view (see "The reading order" in CLAUDE.md).
-# Green Lantern and Green Lantern Corps came out side by side every month and
-# the omnibuses split them back apart by title, so this shelf is the one that
-# needed it first.
-READING_ORDER = True
-
-# Catalog dates that are simply wrong, shelf issue id -> on-sale date. Used by
-# the reading order only. DCUI dates Blackest Night #0 to July 2010; it was
-# the Free Comic Book Day issue, 2 May 2009, and it is the event's prologue.
+# Catalog dates that are simply wrong, shelf issue id -> on-sale date. Used to
+# order the issues inside a collection. DCUI dates Blackest Night #0 to July
+# 2010; it was the Free Comic Book Day issue, 2 May 2009, and it is the event's
+# prologue.
 DATE_FIX = {
     "bn-0": "2009-05-02",
 }
+
+
+# ---- Collections -----------------------------------------------------------
+# Custom omnibuses that DC never printed: the Geoff Johns run, Johns Vol. 1-3
+# plus both Tomasi & Gleason Corps books, regrouped by story arc instead of by
+# title. Brightest Day is left out, and so is the back matter that is not the
+# run (Showcase '95 #7-8, the 80th Anniversary Special). The user's call, Oct
+# 2026.
+#
+# A collection holds no issues of its own -- every id here is a shelf issue id,
+# so a mark in a collection is the same mark in the omnibus that prints it.
+# build_omnibus_data.py checks every id is on the shelf and sorts each
+# chapter by on-sale date, so a chapter is listed by what goes in it, not in
+# reading order. Chapters are named for the Green Lantern arc of the moment;
+# Corps issues sit in the chapter whose months they came out in.
+
+def rng(code, a, b):
+    return ["%s-%d" % (code, n) for n in range(a, b + 1)]
+
+
+COLLECTIONS = [
+    dict(id="coll-rebirth", spine="Rebirth", title="Green Lantern: Rebirth",
+         vol="Vol. 1", era="2004-2007", cover_issue="glreb-1",
+         creators="Geoff Johns, Ethan Van Sciver, Dave Gibbons & Patrick Gleason",
+         note="Hal Jordan comes back, and the Corps is rebuilt around him. Rebirth, "
+              "Johns's first twenty issues of Green Lantern, and the Corps book "
+              "from Recharge to the eve of the Sinestro Corps War, read month by "
+              "month. Green Lantern Corps #4-6 are not in either omnibus, so they "
+              "are not here either.",
+         chapters=[
+             ("Rebirth", rng("glreb", 1, 6) + ["glsf-2005"]),
+             ("No Fear", rng("gl4", 1, 6) + rng("glcr", 1, 3)),
+             ("Revenge of the Green Lanterns", rng("gl4", 7, 13) + rng("glcr", 4, 5) + rng("glc2", 1, 3)),
+             ("Wanted: Hal Jordan", rng("gl4", 14, 20) + rng("glc2", 7, 13)),
+         ]),
+    dict(id="coll-scw", spine="Sinestro Corps War", title="The Sinestro Corps War",
+         vol="Vol. 2", era="2007-2008", cover_issue="glscs-1",
+         creators="Geoff Johns, Dave Gibbons, Ivan Reis & Patrick Gleason",
+         note="The crossover that turned the book into an event engine: Green "
+              "Lantern and Green Lantern Corps alternating chapter by chapter, "
+              "bookended by the Special and the Secret Files.",
+         chapters=[
+             ("The Sinestro Corps War", ["glscs-1"] + rng("gl4", 21, 25) + rng("glc2", 14, 19)
+              + ["tscsp-1", "glscsf-1"]),
+         ]),
+    dict(id="coll-origin", spine="Secret Origin", title="Secret Origin & the Red Lanterns",
+         vol="Vol. 3", era="2007-2009", cover_issue="gl4-36",
+         creators="Geoff Johns, Peter J. Tomasi, Ivan Reis & Patrick Gleason",
+         note="The road to Blackest Night: the Alpha Lanterns, Hal's origin retold, "
+              "Atrocitus and the Red Lanterns, Larfleeze and Agent Orange, with "
+              "the Corps book running alongside.",
+         chapters=[
+             ("The Alpha Lanterns", rng("gl4", 26, 28) + rng("glc2", 20, 22)),
+             ("Secret Origin", rng("gl4", 29, 35) + ["dcu-0"] + rng("glc2", 23, 29)),
+             ("Rage of the Red Lanterns", rng("gl4", 36, 38) + rng("glc2", 30, 33)),
+             ("Agent Orange", rng("gl4", 39, 42) + ["bn-0"] + rng("glc2", 34, 38)),
+         ]),
+    dict(id="coll-bn", spine="Blackest Night", title="Blackest Night",
+         vol="Vol. 4", era="2009-2010", cover_issue="bn-1",
+         creators="Geoff Johns, Peter J. Tomasi, Ivan Reis & Patrick Gleason",
+         note="The event itself, read the way it came out: Blackest Night with "
+              "both Lantern books' tie-ins slotted in by week.",
+         chapters=[
+             ("Blackest Night", rng("bn", 1, 8) + rng("bntc", 1, 3) + rng("gl4", 43, 52)
+              + rng("glc2", 39, 47) + ["utbn-1"]),
+         ]),
+    dict(id="coll-war", spine="War of the Green Lanterns", title="War of the Green Lanterns",
+         vol="Vol. 5", era="2010-2011", cover_issue="gl4-64",
+         creators="Geoff Johns, Peter J. Tomasi, Doug Mahnke & Fernando Pasarin",
+         note="Green Lantern during Brightest Day and Emerald Warriors beside it, "
+              "then Krona and the war itself. Green Lantern Corps #48-57 are in "
+              "no omnibus, so the Corps strand here is Emerald Warriors.",
+         chapters=[
+             ("Brightest Day", rng("gl4", 53, 62) + rng("glew", 1, 7) + ["gllarf-1"]),
+             ("War of the Green Lanterns", rng("gl4", 63, 67) + rng("glc2", 58, 60) + rng("glew", 8, 10)),
+             ("Aftermath", rng("glew", 11, 13)),
+         ]),
+    dict(id="coll-sinestro", spine="Sinestro", title="The New 52: Sinestro",
+         vol="Vol. 6", era="2011-2012", cover_issue="gl5-1",
+         creators="Geoff Johns, Peter J. Tomasi, Doug Mahnke & Fernando Pasarin",
+         note="The 2011 relaunch: Sinestro wearing the green ring and Hal without "
+              "one, with the new Corps book alongside.",
+         chapters=[
+             ("Sinestro", rng("gl5", 1, 6) + rng("glc3", 1, 6)),
+             ("The Revenge of Black Hand", rng("gl5", 7, 12) + rng("glc3", 7, 12)),
+         ]),
+    dict(id="coll-wrath", spine="Wrath of the First Lantern",
+         title="Rise of the Third Army & Wrath of the First Lantern",
+         vol="Vol. 7", era="2012-2013", cover_issue="gl5-20",
+         creators="Geoff Johns, Peter J. Tomasi, Doug Mahnke & Fernando Pasarin",
+         note="The Guardians' Third Army, the First Lantern, and the end of the "
+              "Johns run at Green Lantern #20.",
+         chapters=[
+             ("Rise of the Third Army", ["gl5ann-1", "gl5-0", "glc3-0"] + rng("gl5", 13, 16)
+              + rng("glc3", 13, 16) + ["glc3ann-1"]),
+             ("Wrath of the First Lantern", rng("gl5", 17, 20) + rng("glc3", 17, 20)),
+         ]),
+]

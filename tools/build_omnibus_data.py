@@ -368,17 +368,15 @@ def check_spine_colors(html, arr):
 
 
 # ---------------------------------------------------------------------------
-# The reading order -- every issue on the shelf, interleaved by when it first
-# came out, rather than grouped the way the omnibuses print them.
-#
-# A shelf opts in with READING_ORDER = True in its meta module (Green Lantern
-# was the first: Green Lantern and Green Lantern Corps came out side by side
-# every month, and the omnibuses split them apart again by title). The page
-# shows it as one extra view; read/skip marks are shared with the volumes,
-# because an issue id is the same key everywhere.
+# Collections -- custom volumes that regroup issues already on the shelf, the
+# way the X-Men page's unprinted books do, but generated rather than
+# hand-written. A shelf opts in with COLLECTIONS in its meta module (Green
+# Lantern was the first: the Johns run split into arcs, with the Corps book
+# interleaved by on-sale date). Marks are shared with the omnibuses, because
+# an issue id is the same key everywhere.
 # ---------------------------------------------------------------------------
 
-MARK_READING = "const READING = ["
+MARK_COLL = "const COLL = ["
 
 
 def issue_dates(arr, ids_path, years_path, fixes=None):
@@ -449,46 +447,65 @@ def issue_dates(arr, ids_path, years_path, fixes=None):
     return out
 
 
-def reading_order(arr, when):
-    """Chapters of the whole shelf in publication order, one per year."""
-    first = {}
-    where = {}
-    for vi, o in enumerate(arr):
+def collections(arr, mod, when, art_dir):
+    """A meta module's COLLECTIONS -> custom volumes in the OMNI shape.
+
+    A collection regroups issues already on the shelf, so every id has to be
+    one; an unknown id is a typo that would render as nothing, and fails the
+    build instead. Each chapter is sorted by on-sale date (the same dates the
+    year pills use), so Green Lantern and the Corps interleave month by month.
+    Each issue carries `v`, the shelf volume(s) that print it."""
+    by_id, where, art_of = {}, {}, {}
+    for o in arr:
         label = (o.get("spine") or o["title"]) + (" " + o["vol"] if o.get("vol") else "")
-        pos = 0
         for c in o["chapters"]:
             for i in c["issues"]:
+                by_id.setdefault(i["id"], i)
+                art_of.setdefault(i["id"], (o.get("art"), o.get("tex")))
                 where.setdefault(i["id"], [])
                 if label not in where[i["id"]]:
                     where[i["id"]].append(label)
-                if i["id"] not in first:
-                    first[i["id"]] = (vi, pos, i)
-                pos += 1
-    rows = sorted(first.values(),
-                  key=lambda r: (when.get(r[2]["id"], ("9999",))[0], r[0], r[1]))
-    chapters, cur = [], None
-    for vi, pos, i in rows:
-        y = when.get(i["id"], ("????",))[0][:4]
-        if not cur or cur["y"] != y:
-            cur = {"y": y, "issues": []}
-            chapters.append(cur)
-        cur["issues"].append({"id": i["id"], "t": i["t"], "s": i["s"],
-                              "v": " / ".join(where[i["id"]])})
-    out = []
-    for ci, c in enumerate(chapters):
-        out.append({"id": "rd-c%d" % (ci + 1), "title": c["y"],
-                    # the books this year is drawn from, in order of first use --
-                    # the chapter header already counts the issues
-                    "era": ", ".join(dict.fromkeys(
-                        v for i in c["issues"] for v in i["v"].split(" / "))),
-                    "issues": c["issues"]})
+    out, seen = [], set()
+    for col in mod.COLLECTIONS:
+        chapters = []
+        for ci, (title, ids) in enumerate(col["chapters"]):
+            bad = [i for i in ids if i not in by_id]
+            if bad:
+                sys.exit("collection %s / %s names issues not on the shelf: %s"
+                         % (col["id"], title, ", ".join(bad)))
+            dup = [i for i in ids if i in seen]
+            if dup:
+                sys.exit("collection %s repeats issues already collected: %s"
+                         % (col["id"], ", ".join(dup)))
+            seen.update(ids)
+            order = sorted(range(len(ids)), key=lambda k: (when[ids[k]][0], k))
+            issues = [dict(id=by_id[ids[k]]["id"], t=by_id[ids[k]]["t"],
+                           s=by_id[ids[k]]["s"], v=" / ".join(where[ids[k]]))
+                      for k in order]
+            runs = {}
+            for i in issues:
+                runs.setdefault(i["s"], []).append(i["t"].rsplit("#", 1)[-1])
+            era = " \u00b7 ".join("%s %s" % (s_, spanlabel(n)) for s_, n in runs.items())
+            chapters.append(dict(id="%s-c%d" % (col["id"], ci + 1), title=title,
+                                 era=era, issues=issues))
+        cover = os.path.join(art_dir, "collections", col["id"] + ".jpg")
+        art, tex = art_of[col["cover_issue"]]
+        out.append(dict(
+            id=col["id"], spine=col["spine"],
+            cover=os.path.relpath(cover, ROOT).replace(os.sep, "/") if os.path.exists(cover) else None,
+            title=col["title"], vol=col["vol"], creators=col["creators"],
+            era=col["era"], released="Never printed", note=col["note"],
+            art=art, tex=tex, custom=True, chapters=chapters))
+    for o in out:
+        if not o["cover"]:
+            del o["cover"]
     return out
 
 
-def splice_reading(html, chapters):
-    s0 = html.index(MARK_READING)
+def splice_coll(html, vols):
+    s0 = html.index(MARK_COLL)
     e0 = html.index("\n];", s0)
-    return html[:s0] + MARK_READING[:-1] + json.dumps(chapters, indent=0, ensure_ascii=False) + html[e0 + 2:]
+    return html[:s0] + MARK_COLL[:-1] + json.dumps(vols, indent=0, ensure_ascii=False) + html[e0 + 2:]
 
 
 def main():
@@ -510,15 +527,16 @@ def main():
                      "const DCUI = {" if dc else None)
     new = splice_years(new, h["ids_path"], h["years_path"])
     mod = heroes.meta_module(h)
-    if getattr(mod, "READING_ORDER", False):
-        if MARK_READING not in new:
-            sys.exit("%s sets READING_ORDER but the page has no `%s` to splice into"
-                     % (h["meta"], MARK_READING))
+    if getattr(mod, "COLLECTIONS", None):
+        if MARK_COLL not in new:
+            sys.exit("%s defines COLLECTIONS but the page has no `%s` to splice into"
+                     % (h["meta"], MARK_COLL))
         when = issue_dates(arr, h["ids_path"], h["years_path"], getattr(mod, "DATE_FIX", None))
-        rd = reading_order(arr, when)
-        new = splice_reading(new, rd)
-        print("reading order: %d issues in %d years, %d dates estimated"
-              % (sum(len(c["issues"]) for c in rd), len(rd), sum(1 for v in when.values() if v[1])))
+        cv = collections(arr, mod, when, h["art_path"])
+        new = splice_coll(new, cv)
+        print("collections: %d volumes, %d issues, %d covers"
+              % (len(cv), sum(len(c["issues"]) for o in cv for c in o["chapters"]),
+                 sum(1 for o in cv if o.get("cover"))))
 
     print("[%s] %s" % (h["key"], h["tracker"]))
     slots = sum(len(c["issues"]) for o in arr for c in o["chapters"])
