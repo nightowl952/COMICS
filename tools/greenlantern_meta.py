@@ -88,13 +88,6 @@ ORDER = [
   cover="Art/Green-Lantern/johns-o2.jpg",
   note="Johns fills in the spectrum one colour at a time: Secret Origin retells Showcase #22 for a modern reader, the Red Lanterns vomit rage-blood in Rage of the Red Lanterns, Larfleeze hoards everything in Agent Orange, and then all seven Corps are on the board when the dead start to rise. Blackest Night is the event the whole run was built toward, and it is a zombie story with a rule: the Black Lanterns can see your emotions, so the only defence is to feel nothing. Ivan Reis draws the core series as wall-to-wall spectacle, every hero who ever died back in black rings. Doug Mahnke takes over the monthly from #43 and draws it uglier and better."),
 ),
-("Brightest Day Omnibus", dict(id="bd-o1",
-  title="Brightest Day Omnibus", vol="",
-  creators="Geoff Johns, Peter J. Tomasi & Ivan Reis", era="2010–2011", released="Aug 2014",
-  art="o-white", tex="tex-construct", spine="Brightest Day",
-  cover="Art/Green-Lantern/bd-o1.jpg",
-  note="Blackest Night ends with twelve people brought back to life by the white light, and this is what the White Lantern wants with them. Be warned: Hal Jordan is barely in it. The leads are Deadman, Aquaman, Martian Manhunter, Firestorm, Hawkman and Hawkgirl, and the book is a year-long biweekly mystery about why they were chosen. It is on this shelf because it is the direct sequel to the Lantern event and because the White Lantern is the spectrum's last colour. Ivan Reis, Patrick Gleason, Ardian Syaf and Scott Clark split the art, which is why the book shifts look from issue to issue; the Aquaman chapters are the best of it."),
-),
 ("Green Lantern Corps by Peter J. Tomasi and Patrick Gleason Omnibus Vol. 2", dict(id="glc-o2",
   title="Green Lantern Corps by Tomasi & Gleason Omnibus", vol="Vol. 2",
   creators="Peter J. Tomasi & Patrick Gleason", era="2009–2013", released="Nov 2024",
@@ -138,13 +131,11 @@ PLACEHOLDERS = []
 # the two Corps books slotted beside the Johns volumes they run alongside.
 #   - glc-o1 sits after johns-o1 because both print the Sinestro Corps War, and
 #     reading Johns's half first is how it was published.
-#   - bd-o1 sits straight after johns-o2 because Brightest Day opens on the
-#     last page of Blackest Night.
 #   - red-o1 sits after johns-o3 rather than earlier, though it starts in
 #     2011: it is the New 52 Red Lantern book and its chapters run into Lights
 #     Out, which is ven-o1.
 SHELF = ["sa-o1", "sa-o2", "hth-o1", "johns-o1", "glc-o1", "johns-o2",
-         "bd-o1", "glc-o2", "johns-o3", "red-o1", "ven-o1", "ven-o2"]
+         "glc-o2", "johns-o3", "red-o1", "ven-o1", "ven-o2"]
 
 PLACEHOLDER_PAGES = {}
 

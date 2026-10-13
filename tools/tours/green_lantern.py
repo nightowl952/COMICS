@@ -162,9 +162,7 @@ OVERVIEW = {
                 "Running alongside the whole time is <b>Peter Tomasi and Patrick Gleason's</b> "
                 "<i>Green Lantern Corps</i>, which writes the same story from the barracks. "
                 "Johns supplies the mythology; Tomasi supplies the casualties.",
-                "<b>Brightest Day</b> is the coda, and it is barely a Green Lantern book: "
-                "twelve characters brought back by the white light, and a year-long mystery "
-                "about why."],
+               ],
             "fig": {"src": [A + "bn-1.jpg", A + "gl4-43.jpg"],
                     "cap": "<b>Left:</b> <i>Blackest Night</i> #1. <b>Right:</b> #43, Doug "
                            "Mahnke's first issue &mdash; Black Hand at Bruce Wayne's grave."},
@@ -177,7 +175,7 @@ OVERVIEW = {
                  "b": "Look at the <b>sweat and creases</b>. Mahnke draws faces under strain "
                       "and heavy black shadow, and his Green Lantern is the grimiest the book "
                       "has ever looked."}],
-            "shelf": ["johns-o2", "glc-o1", "glc-o2", "bd-o1"],
+            "shelf": ["johns-o2", "glc-o1", "glc-o2"],
         },
         {
             "era": "Modern", "years": "2011–2013",
@@ -220,7 +218,7 @@ OVERVIEW = {
     ],
     "tone": {
         "h": "The tone map",
-        "sub": "Twelve books that agree on the ring and disagree about everything else.",
+        "sub": "Eleven books that agree on the ring and disagree about everything else.",
         "modes": [
             {"l": "Cleanest science fiction",
              "b": "Broome and Kane. Short puzzle stories with rules, gorgeous figure drawing, "
@@ -244,10 +242,6 @@ OVERVIEW = {
              "b": "Red Lanterns. A book about rage, mostly starring people who cannot speak, "
                   "until Guy Gardner joins and it becomes a book about leadership.",
              "vols": ["red-o1"]},
-            {"l": "Least Green Lantern",
-             "b": "Brightest Day. A year-long resurrection mystery where Hal is barely "
-                  "present. Read it for Aquaman and the Martian Manhunter.",
-             "vols": ["bd-o1"]},
             {"l": "Hal as leader, then outlaw",
              "b": "Venditti. The man in charge of the Corps, then the man running from it.",
              "vols": ["ven-o1", "ven-o2"]},
@@ -436,28 +430,7 @@ VOLUMES = {
               "character</b>, and that an ending which brings a dozen dead heroes back to "
               "life undercut its own premise. Readers split on whether that matters."]}),
 
-"bd-o1": _v("Volume 07 · 2010–2011", "Brightest Day Omnibus",
-    "The direct sequel to Blackest Night, and very nearly not a Green Lantern book at all.",
-    [{"era": "Plastic", "years": "2010–2011",
-      "h": "Twelve resurrections",
-      "body": [
-          "Blackest Night ends with the white light bringing twelve characters back to life. "
-          "This is a biweekly, year-long mystery about why: <b>Deadman, Aquaman, the "
-          "Martian Manhunter, Firestorm, Hawkman and Hawkgirl</b> carry it.",
-          "<b>Hal Jordan barely appears.</b> It is on this shelf as the direct sequel to "
-          "Blackest Night, because it is the White Lantern's story, and because it is where the spectrum's "
-          "last colour gets used. Its ending sets up a character from a different corner of "
-          "DC altogether.",
-          "Ivan Reis, Patrick Gleason, Ardian Syaf and Scott Clark rotate on art, which is "
-          "why the look changes issue to issue."],
-      "fig": {"src": [A + "bd-0.jpg"], "cap": "#0, the twelve."}}],
-    {"standing": "Divisive", "cls": "mixed",
-     "body": ["The <b>Aquaman and Martian Manhunter chapters are widely praised</b>, and the "
-              "Aquaman thread led straight into Johns's well-liked New 52 Aquaman.",
-              "The recurring criticism is <b>pacing</b>: twenty-five issues for a story that "
-              "is slow to reveal what it is, and an ending many readers found arbitrary."]}),
-
-"glc-o2": _v("Volume 08 · 2009–2013", "Green Lantern Corps by Tomasi & Gleason Vol. 2",
+"glc-o2": _v("Volume 07 · 2009–2013", "Green Lantern Corps by Tomasi & Gleason Vol. 2",
     "Blackest Night from the Corps, Guy Gardner's Emerald Warriors, and the New 52 Corps "
     "book.",
     [{"era": "Plastic", "years": "2009–2013",
@@ -479,7 +452,7 @@ VOLUMES = {
               "Emerald Warriors is considered <b>uneven</b>, and readers who skipped Johns's "
               "book find the War of the Green Lanterns chapters hard to follow on their own."]}),
 
-"johns-o3": _v("Volume 09 · 2010–2013", "Green Lantern by Geoff Johns Omnibus Vol. 3",
+"johns-o3": _v("Volume 08 · 2010–2013", "Green Lantern by Geoff Johns Omnibus Vol. 3",
     "Krona's return, the War of the Green Lanterns, Sinestro in green, and the farewell "
     "issue.",
     [{"era": "Modern", "years": "2010–2013",
@@ -505,7 +478,7 @@ VOLUMES = {
               "The War of the Green Lanterns crossover is the volume's weak point &mdash; "
               "readers find it rushed and hard to follow across three titles."]}),
 
-"red-o1": _v("Volume 10 · 2011–2015", "Red Lanterns: The New 52 Omnibus",
+"red-o1": _v("Volume 09 · 2011–2015", "Red Lanterns: The New 52 Omnibus",
     "The rage corps' own book, and the run where Guy Gardner wears red.",
     [{"era": "Modern", "years": "2011–2015",
       "h": "A book about anger",
@@ -525,7 +498,7 @@ VOLUMES = {
               "Milligan's opening run is <b>widely considered weak</b> &mdash; meandering, "
               "with characters who struggle to carry a book."]}),
 
-"ven-o1": _v("Volume 11 · 2013–2014", "Green Lantern by Robert Venditti Omnibus Vol. 1",
+"ven-o1": _v("Volume 10 · 2013–2014", "Green Lantern by Robert Venditti Omnibus Vol. 1",
     "After Johns: Hal in charge, and Relic's discovery that the rings are running the "
     "universe dry.",
     [{"era": "Modern", "years": "2013–2014",
@@ -544,7 +517,7 @@ VOLUMES = {
               "The common complaint is <b>crossover fatigue</b> and the inevitable comparison "
               "with Johns; readers describe it as capable rather than essential."]}),
 
-"ven-o2": _v("Volume 12 · 2014–2016", "Green Lantern by Robert Venditti Omnibus Vol. 2",
+"ven-o2": _v("Volume 11 · 2014–2016", "Green Lantern by Robert Venditti Omnibus Vol. 2",
     "Godhead against the New Gods, then Hal as a renegade, to the end of the New 52.",
     [{"era": "Modern", "years": "2014–2016",
       "h": "Outlaw",
