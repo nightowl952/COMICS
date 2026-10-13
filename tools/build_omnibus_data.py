@@ -307,17 +307,18 @@ def splice(html, arr):
 MARK_IDS = "const MARVEL = {"
 
 
-def splice_ids(html, ids_path):
+def splice_ids(html, ids_path, mark=None):
     """Write marvel_ids.json into the tracker as the MARVEL map.
 
     The map was hand-synced before, which is how it drifted behind the store
     after a harvest. Same pinned serialization as the store itself so a regen
     that adds nothing is a no-op diff.
     """
+    mark = mark or MARK_IDS
     ids = json.load(open(ids_path, encoding="utf-8"))
-    s0 = html.index(MARK_IDS)
+    s0 = html.index(mark)
     e0 = html.index("\n};", s0)
-    return (html[:s0] + MARK_IDS[:-1]
+    return (html[:s0] + mark[:-1]
             + json.dumps(ids, indent=0, ensure_ascii=False) + html[e0 + 2:])
 
 
@@ -377,8 +378,13 @@ def main():
     arr = build_all(heroes.meta_module(h))
     html = open(TRACKER, encoding="utf-8").read()
     check_spine_colors(html, arr)
-    new = splice_ids(splice(html, arr), h["ids_path"])
-    new = splice_years(new, h["ids_path"], YEARS_PATH)
+    # A DC shelf's links are DC Universe Infinite books, spliced as DCUI
+    # rather than MARVEL; both stores are "<id>/<slug>"-shaped, so the same
+    # code writes either, and splice_years() joins on the leading id for both.
+    dc = h["pub"] == "dc"
+    new = splice_ids(splice(html, arr), h["ids_path"],
+                     "const DCUI = {" if dc else None)
+    new = splice_years(new, h["ids_path"], h["years_path"])
 
     print("[%s] %s" % (h["key"], h["tracker"]))
     slots = sum(len(c["issues"]) for o in arr for c in o["chapters"])
@@ -398,9 +404,11 @@ def main():
     ids = json.load(open(h["ids_path"], encoding="utf-8"))
     linked = len({i["id"] for o in arr for c in o["chapters"]
                   for i in c["issues"]} & set(ids))
-    print("%d/%d unique issues (%d%%) have a marvel.com link | MARVEL carries %d ids"
-          % (linked, uniq, round(linked * 100 / uniq) if uniq else 0, len(ids)))
-    dates = json.load(open(YEARS_PATH, encoding="utf-8"))
+    print("%d/%d unique issues (%d%%) have a %s link | %s carries %d ids"
+          % (linked, uniq, round(linked * 100 / uniq) if uniq else 0,
+             "DC Universe Infinite" if dc else "marvel.com",
+             "DCUI" if dc else "MARVEL", len(ids)))
+    dates = json.load(open(h["years_path"], encoding="utf-8"))
     dated = len({i["id"] for o in arr for c in o["chapters"] for i in c["issues"]
                  if ids.get(i["id"], "/").split("/", 1)[0] in dates})
     print("%d/%d unique issues (%d%%) carry a publication year"

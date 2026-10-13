@@ -181,6 +181,23 @@
   .kr-empty{font-size:12.5px;line-height:1.6;color:var(--dim);padding:20px 18px;border-radius:12px;
     background:rgba(255,255,255,.035);border:1px solid var(--line);margin-bottom:12px;}
 
+  /* ---- the Marvel / DC toggle ----
+     The homescreen shows one publisher at a time: the wall, the Keep Reading
+     rail, the banner copy and Ask AI all follow it, so the two collections
+     never mix. It sits directly under the banner because everything below it
+     is what it switches. Each side's pill takes that publisher's own colour
+     when it is on -- the one place the site uses either brand colour. */
+  .uni{display:flex;align-items:center;gap:12px;margin:-6px 0 22px;padding:0 2px;}
+  .uni-seg{display:inline-flex;padding:4px;border-radius:24px;background:rgba(255,255,255,.05);
+    border:1px solid var(--line);}
+  .uni-btn{cursor:pointer;font-family:inherit;font-size:11px;font-weight:900;letter-spacing:2.4px;
+    text-transform:uppercase;color:var(--dim);padding:8px 20px;border-radius:20px;border:0;
+    background:transparent;transition:background .18s,color .18s,box-shadow .18s;}
+  .uni-btn:hover{color:var(--txt);}
+  .uni-btn:focus-visible{outline:2px solid var(--xyellow);outline-offset:2px;}
+  .uni-btn.on[data-uni="marvel"]{color:#fff;background:#e23636;box-shadow:0 4px 14px rgba(226,54,54,.35);}
+  .uni-btn.on[data-uni="dc"]{color:#fff;background:#0074e8;box-shadow:0 4px 14px rgba(0,116,232,.35);}
+
   /* ---- section heads and chips ---- */
   .act-head{margin:30px 0 14px;padding:0 2px;display:flex;align-items:center;gap:12px;}
   .act-head .line{flex:1;height:1px;background:linear-gradient(90deg, var(--line-hi), transparent);}
@@ -426,6 +443,7 @@
   .a-ghost{background:linear-gradient(163deg,#ffd06a 0%,#f07a12 32%,#a32c06 64%,#180402 100%);}
   .a-venom{background:linear-gradient(163deg,#7f8f86 0%,#38473f 30%,#141c18 62%,#020403 100%);}
   .a-strange{background:linear-gradient(163deg,#8ff0c4 0%,#25a97c 32%,#0d4f42 64%,#04140f 100%);}
+  .a-lantern{background:linear-gradient(163deg,#c8ffd8 0%,#3fd17a 30%,#0f5a32 64%,#020d07 100%);}
 
   /* ---------- hero textures ---------- */
   .tex-web{background:
@@ -504,6 +522,9 @@
     repeating-conic-gradient(from 0deg at 50% 32%, rgba(255,255,255,.10) 0deg 1.2deg, transparent 1.2deg 15deg),
     radial-gradient(circle at 50% 32%, transparent 0 11%, rgba(255,255,255,.15) 11% 11.9%, transparent 11.9% 21%,
       rgba(255,255,255,.12) 21% 21.9%, transparent 21.9% 33%, rgba(255,255,255,.09) 33% 33.9%, transparent 33.9%);}
+  .tex-lantern{background:
+    radial-gradient(circle at 50% 34%, rgba(255,255,255,.28), transparent 30%),
+    repeating-radial-gradient(circle at 50% 34%, rgba(255,255,255,.10) 0 2px, transparent 2px 16px);}
   /* Re-aim the ramp for a wide box so it doesn't bottom out in the first 40px. */
   .a-spider.wide{background:linear-gradient(104deg,#f04a44 0%,#c4151f 42%,#7d0d16 72%,#15286b 100%);}
   .a-wolverine.wide{background:linear-gradient(104deg,#ffd84d 0%,#f0a800 40%,#2a3f7a 74%,#101c3f 100%);}
@@ -520,6 +541,7 @@
   .a-ghost.wide{background:linear-gradient(104deg,#ffd06a 0%,#f07a12 38%,#a32c06 70%,#180402 100%);}
   .a-venom.wide{background:linear-gradient(104deg,#7f8f86 0%,#38473f 36%,#141c18 68%,#020403 100%);}
   .a-strange.wide{background:linear-gradient(104deg,#8ff0c4 0%,#25a97c 38%,#0d4f42 70%,#04140f 100%);}
+  .a-lantern.wide{background:linear-gradient(104deg,#c8ffd8 0%,#3fd17a 36%,#0f5a32 70%,#020d07 100%);}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 
   @media (max-width:600px){
@@ -568,15 +590,21 @@
 
 <div class="wrap">
   <div class="hb" id="heroBanner">
-    <div class="hb-fallback" style="background:linear-gradient(122deg,#12234a 0%,#1a2b52 28%,#111726 66%,#080b13 100%)"></div>
+    <div class="hb-fallback" id="hbFallback" style="background:linear-gradient(122deg,#12234a 0%,#1a2b52 28%,#111726 66%,#080b13 100%)"></div>
     <div class="hb-tiles" id="hbTiles" aria-hidden="true"></div>
-    <img class="hb-art" src="Art/Banners/index.jpg" alt="" onerror="this.style.display='none'">
+    <img class="hb-art" id="hbArt" alt="" onerror="this.style.display='none'">
     <div class="hb-scrim"></div>
     <div class="hb-in">
       <div class="hb-name">C.O.M.I.C.S.</div>
-      <div class="hb-sub">Caleb&rsquo;s Online Marvel Intractable Comic Shelf</div>
-      <div class="hb-blurb">Fifteen subjects, every one of them a shelf of omnibus volumes with the issue list
-        each printed book actually holds. Pick up wherever you left off &mdash; or start something new.</div>
+      <div class="hb-sub">Caleb&rsquo;s Online Multiverse Intractable Comic Shelf</div>
+      <div class="hb-blurb" id="hbBlurb"></div>
+    </div>
+  </div>
+
+  <div class="uni" role="group" aria-label="Publisher">
+    <div class="uni-seg">
+      <button class="uni-btn" data-uni="marvel" aria-pressed="false">Marvel</button>
+      <button class="uni-btn" data-uni="dc" aria-pressed="false">DC</button>
     </div>
   </div>
 
@@ -596,16 +624,19 @@
 <div id="askScrim"></div>
 <aside class="ask-panel" id="askPanel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="askTitle">
   <div class="ask-head">
-    <div class="ask-kicker">Your fifteen shelves</div>
+    <div class="ask-kicker">Your shelves</div>
     <h2 id="askTitle">Ask AI</h2>
     <button class="ask-close" id="askClose" aria-label="Close Ask AI">&#10005;</button>
   </div>
   <div class="ask-body" id="askBody">
     <div class="ask-intro">Ask about a run, a mood, a creator, or what to read next. Answers stay grounded in books on these shelves and can search the web when current reception matters.</div>
     <div class="ask-prompts">
-      <button class="ask-prompt">What is the highest-rated Captain America run?</button>
-      <button class="ask-prompt">What goes closest to eldritch horror?</button>
-      <button class="ask-prompt">What should I read after Christopher Priest&rsquo;s Black Panther?</button>
+      <button class="ask-prompt" data-pub="marvel">What is the highest-rated Captain America run?</button>
+      <button class="ask-prompt" data-pub="marvel">What goes closest to eldritch horror?</button>
+      <button class="ask-prompt" data-pub="marvel">What should I read after Christopher Priest&rsquo;s Black Panther?</button>
+      <button class="ask-prompt" data-pub="dc" hidden>Where should I start Green Lantern?</button>
+      <button class="ask-prompt" data-pub="dc" hidden>What do I need to read before Blackest Night?</button>
+      <button class="ask-prompt" data-pub="dc" hidden>Which Green Lantern book is the most political?</button>
     </div>
     <div class="ask-answer" id="askAnswer" aria-live="polite"></div>
   </div>
@@ -777,7 +808,13 @@ const EMBLEMS = {
     '<path d="M6,50 l8,3 5,-3 -5,-3 z"/><path d="M94,50 l-8,3 -5,-3 5,-3 z"/></g>' +
     '<path fill="none" stroke="url(#g$)" stroke-width="5"' +
     ' d="M22,50 C32,34 68,34 78,50 C68,66 32,66 22,50 Z"/>' +
-    '<circle cx="50" cy="50" r="9" fill="url(#g$)"/>'
+    '<circle cx="50" cy="50" r="9" fill="url(#g$)"/>',
+
+  /* The lantern emblem: a ring between two bars, the ring's centre knocked out
+     with evenodd so the poster ramp shows through it. */
+  lantern: '<path fill="url(#g$)" fill-rule="evenodd" d="'+
+    'M12,16 L88,16 L88,27 L74,27 A28,28 0 0 1 74,73 L88,73 L88,84 L12,84 L12,73 L26,73'+
+    ' A28,28 0 0 1 26,27 L12,27 Z M50,33 A17,17 0 1 0 50,67 A17,17 0 1 0 50,33 Z"/>'
 };
 
 /* Each emblem instance needs its own gradient id, or later copies reuse the first. */
@@ -860,8 +897,43 @@ const HEROES = [
 
   { id:"doctor-strange", name:"Doctor Strange", art:"a-strange", tex:"tex-mandala", emblem:"eye", cover:"Art/Heroes/doctor-strange.jpg", pos:"31%", plate:["18,114,86","3,27,21"], logo:"Art/Logos/doctor-strange.png",
     era:"1963–2024 · 10 omnibuses", file:"doctorstrange-reading-tracker.html", total:348,
-    desc:"The Sorcerer Supreme, from Ditko's five-page backup strip at the back of Strange Tales to Clea running the Sanctum. Ten volumes: the two Strange Tales books, Master of the Mystic Arts for the Englehart and Brunner run, three Sorcerer Supreme volumes, Aaron and Bachalo, and Jed MacKay — plus both Defenders omnibuses, because he founds the non-team in the last thing he does in his own book. Two runs are missing and both are Marvel's doing: Doctor Strange (1974) #23–81, and everything between 1996 and 2015, which is where The Oath falls." }
+    desc:"The Sorcerer Supreme, from Ditko's five-page backup strip at the back of Strange Tales to Clea running the Sanctum. Ten volumes: the two Strange Tales books, Master of the Mystic Arts for the Englehart and Brunner run, three Sorcerer Supreme volumes, Aaron and Bachalo, and Jed MacKay — plus both Defenders omnibuses, because he founds the non-team in the last thing he does in his own book. Two runs are missing and both are Marvel's doing: Doctor Strange (1974) #23–81, and everything between 1996 and 2015, which is where The Oath falls." },
+
+  /* ---- DC (Oct 2026). `pub:"dc"` puts a subject behind the DC side of the
+     toggle; everything without it is Marvel. Order within a side follows the
+     same rule as the Marvel wall -- the user's, new subjects at the end.
+     No `cover` or `logo` yet: the poster, banner and logo are the user's to
+     supply, and until they land the ramp, texture and emblem stand in, the
+     same degrade-don't-vanish rule every subject follows. ---- */
+  { id:"green-lantern", pub:"dc", name:"Green Lantern", art:"a-lantern", tex:"tex-lantern", emblem:"lantern", pos:"30%", plate:["16,74,40","3,18,9"],
+    era:"Omnibus Shelf · 1959–2016", file:"greenlantern-reading-tracker.html", total:507,
+    desc:"Twelve omnibuses, from Showcase #22 to the end of the New 52 — 507 issues reproducing exactly what each printed book holds. Broome and Kane's Silver Age in two volumes, O'Neil and Adams's Hard Travelin' Heroes, then the Geoff Johns decade in three volumes with Tomasi and Gleason's two Corps books running beside it, Brightest Day, Red Lanterns and both Venditti books. One gap is DC's, not ours: nothing between 1979 and 2004 — Emerald Twilight and Kyle Rayner's whole decade included — has ever been collected in omnibus." }
 ];
+
+/* ============ UNIVERSE ============
+   Marvel or DC. The choice is a per-viewer convenience, so it lives in plain
+   localStorage (wrapped -- it can throw) and the page works without it. A
+   `#dc` / `#marvel` hash wins over it, which is how a DC tracker's back link
+   returns you to the DC side. window.COMICS_UNIVERSE is what ask-ai.js reads,
+   and the comics:universe event is how it hears about a change. */
+const KEY_UNI = "comics-universe";
+const UNI = {
+  marvel: { name:"Marvel", banner:"Art/Banners/index.jpg",
+    fallback:"linear-gradient(122deg,#12234a 0%,#1a2b52 28%,#111726 66%,#080b13 100%)",
+    blurb:"Every subject a shelf of omnibus volumes, with the issue list each printed book actually holds. Pick up wherever you left off &mdash; or start something new." },
+  dc:     { name:"DC", banner:"Art/Banners/index-dc.jpg",
+    fallback:"linear-gradient(122deg,#06306a 0%,#0b3f86 28%,#0d1a33 66%,#060a14 100%)",
+    blurb:"The DC side of the shelf &mdash; same omnibus rule, same tracking, kept entirely separate from the Marvel wall. Green Lantern is the first subject here." }
+};
+let UNIVERSE = "marvel";
+function pubOf(h){ return h.pub || "marvel"; }
+function inUniverse(h){ return pubOf(h) === UNIVERSE; }
+function initialUniverse(){
+  const hash = (location.hash || "").slice(1).toLowerCase();
+  if(UNI[hash]) return hash;
+  try{ const v = localStorage.getItem(KEY_UNI); if(UNI[v]) return v; }catch(e){}
+  return "marvel";
+}
 
 /* ============ STORAGE (dual-mode, same contract as the trackers) ============ */
 const IN_CLAUDE = (typeof window.storage !== "undefined" && window.storage && typeof window.storage.get === "function");
@@ -917,6 +989,7 @@ const PROGRESS_KEYS = {
   "ghost-rider":    "ghostrider-omni-progress-v1",
   "doctor-strange": "doctorstrange-omni-progress-v1",
   "venom":          "venom-omni-progress-v1",
+  "green-lantern":  "greenlantern-omni-progress-v1",
   "xmen":           "xmen-saga-progress-v2"
 };
 /* Read straight from the X-Men tracker's own progress key as a fallback, so the
@@ -1027,10 +1100,44 @@ function posterHTML(h){
 }
 
 function buildShelf(){
-  shelfEl.innerHTML = HEROES.map(posterHTML).join("");
+  const list = HEROES.filter(inUniverse);
+  shelfEl.innerHTML = list.map(posterHTML).join("");
   document.getElementById("shelfCount").textContent =
-    HEROES.length + " subjects · " + HEROES.filter(h => h.file).length + " ready";
+    list.length + (list.length === 1 ? " subject · " : " subjects · ") + list.filter(h => h.file).length + " ready";
 }
+
+/* Repaint everything that belongs to one side: the wall, the rail, the banner
+   copy and art. The banner falls back to that side's posters in a row and then
+   to its own ramp, exactly as before -- Art/Banners/index-dc.jpg is the user's
+   to supply, and until it exists the DC side degrades rather than vanishing. */
+function paintUniverse(){
+  const u = UNI[UNIVERSE];
+  document.querySelectorAll(".uni-btn").forEach(b => {
+    const on = b.dataset.uni === UNIVERSE;
+    b.classList.toggle("on", on); b.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  const list = HEROES.filter(inUniverse);
+  document.getElementById("hbBlurb").innerHTML = u.blurb;
+  document.getElementById("hbFallback").style.background = u.fallback;
+  document.getElementById("hbTiles").innerHTML =
+    list.filter(h => h.cover).map(h => '<img src="' + esc(h.cover) + '" alt="">').join("");
+  const art = document.getElementById("hbArt");
+  art.style.display = ""; art.src = u.banner;
+  window.COMICS_UNIVERSE = UNIVERSE;
+  buildShelf();
+  paintKeepReading();
+}
+function setUniverse(u){
+  if(!UNI[u] || u === UNIVERSE) return;
+  UNIVERSE = u;
+  try{ localStorage.setItem(KEY_UNI, u); }catch(e){}
+  try{ history.replaceState(null, "", "#" + u); }catch(e){}
+  paintUniverse();
+  document.dispatchEvent(new CustomEvent("comics:universe", {detail:u}));
+}
+document.querySelector(".uni-seg").addEventListener("click", e => {
+  const b = e.target.closest(".uni-btn"); if(b) setUniverse(b.dataset.uni);
+});
 
 
 /* ---- Keep Reading ----
@@ -1068,7 +1175,8 @@ function krCard(r){
 function paintKeepReading(){
   const box=document.getElementById("keepReading");
   const rows=[];
-  HEROES.forEach(h=>{
+  /* One side at a time: a Green Lantern tile never sits in the Marvel rail. */
+  HEROES.filter(inUniverse).forEach(h=>{
     const p=progress[h.id];
     if(!h.file||!p||!Array.isArray(p.spots)) return;
     /* Touched volumes only. A tracker published before this rule landed can
@@ -1078,7 +1186,7 @@ function paintKeepReading(){
     p.spots.forEach(sp=>{ if(sp && sp.o && sp.done>0 && !isHidden(h.id, sp)) rows.push({h:h, sp:sp}); });
   });
   if(!rows.length){
-    const started = HEROES.some(h=>{ const p=progress[h.id];
+    const started = HEROES.filter(inUniverse).some(h=>{ const p=progress[h.id];
       return p && ((p.read||0)+(p.skip||0))>0; });
     if(!started){ box.hidden=true; box.innerHTML=""; return; }
     box.hidden=false;
@@ -1287,16 +1395,22 @@ const setScrim = document.getElementById("setScrim");
 
 /* ============ INIT ============ */
 (async function init(){
-  /* The banner's fallback: the eight posters in a row behind the scrim, shown
-     whenever Art/Banners/index.jpg is missing or fails. */
-  document.getElementById("hbTiles").innerHTML =
-    HEROES.filter(h => h.cover).map(h => '<img src="' + esc(h.cover) + '" alt="">').join("");
+  UNIVERSE = initialUniverse();
+  window.COMICS_UNIVERSE = UNIVERSE;
   await loadHidden();
   await loadProgress();
-  buildShelf();
-  paintKeepReading();
+  /* paintUniverse() does the banner fallback too: that side's posters in a
+     row behind the scrim, shown whenever its banner file is missing. */
+  paintUniverse();
 })();
+/* A tracker's back link can land here with a different hash while the page is
+   already open (bfcache), so follow the hash too. */
+window.addEventListener("hashchange", () => {
+  const h = (location.hash || "").slice(1).toLowerCase();
+  if(UNI[h] && h !== UNIVERSE){ UNIVERSE = h; try{ localStorage.setItem(KEY_UNI, h); }catch(e){}
+    paintUniverse(); document.dispatchEvent(new CustomEvent("comics:universe", {detail:h})); }
+});
 </script>
-<script src="ask-ai.js?v=20260825-8"></script>
+<script src="ask-ai.js?v=20261013-1"></script>
 </body>
 </html>

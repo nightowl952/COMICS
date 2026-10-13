@@ -38,7 +38,11 @@ IDS = os.path.join(HERE, "marvel_ids.json")
 sys.path.insert(0, HERE)
 import heroes                                                    # noqa: E402
 
-TRACKERS = {k: h["tracker"] for k, h in heroes.HEROES.items()}
+# DC shelves are linked by dc_link.py against DC Universe Infinite and keep
+# their own store; matching them against marvel.com would only produce
+# confident nonsense, so they are the one thing this deliberately skips.
+TRACKERS = {k: h["tracker"] for k, h in heroes.HEROES.items()
+            if h.get("pub", "marvel") == "marvel"}
 
 
 def load(p, d=None):

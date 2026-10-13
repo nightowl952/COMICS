@@ -38,7 +38,9 @@ HERO_IDS = ["spider-man", "wolverine", "hulk", "xmen",
             # Placeholder subjects -- poster art only so far, no logo supplied.
             # `audit` reports these as missing until one arrives.
             "avengers", "black-panther", "ghost-rider", "venom",
-            "doctor-strange"]
+            "doctor-strange",
+            # DC -- the first subject on the other side of the toggle
+            "green-lantern"]
 
 
 def save_logo(im, hid):

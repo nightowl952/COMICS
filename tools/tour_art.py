@@ -72,8 +72,54 @@ def resolve(iid):
     return iid, None
 
 
+def fetch_dc(hero, iid):
+    """A DC shelf's tour figure, from DC Universe Infinite.
+
+    DCUI's search records carry no image, but every book page's og:image is
+    the cover scan, so one page request per figure resolves it: shelf issue id
+    -> dc_ids.json -> DCUI book page -> og:image. `name:<book uuid>` names a
+    book on no shelf, the same escape the Marvel side has.
+    """
+    from PIL import Image
+    if ":" in iid:
+        iid, uuid = iid.split(":", 1)
+        cat = json.load(open(os.path.join(HERE, "dc_catalog.json"), encoding="utf-8"))
+        if uuid not in cat:
+            return iid, "book %s is not in dc_catalog.json" % uuid
+        path = "%s/%s" % (uuid, cat[uuid][0])
+    else:
+        ids = json.load(open(os.path.join(HERE, "dc_ids.json"), encoding="utf-8"))
+        path = ids.get(iid)
+        if not path:
+            return iid, "not linked -- no DCUI book for this issue"
+    uuid, slug = path.split("/", 1)
+    page = requests.get("https://www.dcuniverseinfinite.com/comics/book/%s/%s" % (slug, uuid),
+                        headers={"User-Agent": UA}, timeout=30)
+    m = re.search(r'property="og:image"\s+content="([^"]+)"', page.text) or \
+        re.search(r'content="([^"]+)"[^>]*property="og:image"', page.text)
+    if not m:
+        return iid, "no og:image on the DCUI book page"
+    img = requests.get(m.group(1), headers={"User-Agent": UA}, timeout=40)
+    if img.status_code != 200:
+        return iid, "image HTTP %d" % img.status_code
+    im = Image.open(io.BytesIO(img.content)).convert("RGB")
+    w, h = im.size
+    if w > 700:
+        im = im.resize((700, round(h * 700 / w)), Image.LANCZOS)
+    os.makedirs(out_dir(hero), exist_ok=True)
+    p = os.path.join(out_dir(hero), iid + ".jpg")
+    im.save(p, "JPEG", quality=82, optimize=True, progressive=True)
+    return iid, "%s  (%dx%d from %dx%d, %.0f KB)  %s" % (
+        slug, im.size[0], im.size[1], w, h, os.path.getsize(p) / 1024.0,
+        os.path.relpath(p, ROOT).replace(os.sep, "/"))
+
+
 def fetch(hero, iid):
     from PIL import Image
+    sys.path.insert(0, HERE)
+    import heroes
+    if heroes.HEROES.get(hero, {}).get("pub") == "dc":
+        return fetch_dc(hero, iid)
     name, cid = resolve(iid)
     iid = name
     if not cid:
