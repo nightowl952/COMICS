@@ -4838,6 +4838,11 @@ rather than the intended art. See open item 19.
 
 ## The DC side (Oct 2026)
 
+**Never write two opening curly braces in a Markdown file in this repo.** Pages
+runs Jekyll over every `.md`, reads them as a Liquid tag, and the whole deploy
+fails -- this section first shipped with the wiki template written out in full
+and took the site build down with it.
+
 The site has two collections now. **Green Lantern is the first DC subject**, and
 the homescreen carries a **Marvel / DC toggle** directly under the banner that
 switches between them. The user's brief was "same layout, same AI helper,
@@ -4890,7 +4895,7 @@ entry has `pub="dc"`, `ids="dc_ids.json"` and `years="dc_years.json"`.
 marvel.com would only produce confident nonsense.
 
 **Contents come from DC Database** (`dc.fandom.com`), whose collected-edition
-pages carry an `IssueList` of `{{C|Series Vol N #}}` entries — the DC
+pages carry an `IssueList` of entries in DC Database's `C` template (`C|Series Vol N #`) — the DC
 equivalent of Marvel's `ReprintOf<N>` fields. Two things to know:
 
 - **DC Database's omnibus coverage is thin.** Its `Category:Omnibus Editions`
@@ -4899,7 +4904,7 @@ equivalent of Marvel's `ReprintOf<N>` fields. Two things to know:
   page at all, so their contents are **DC's own collecting lines** (dc.com's
   graphic-novel pages, Penguin Random House's listings). On the Marvel shelves
   those are the independent *check*; here they are the source.
-- **The template is case-inconsistent**: some pages write `{{C|`, some `{{c|`.
+- **The template is case-inconsistent**: some pages write it as `C|`, some as `c|`.
   A case-sensitive pull silently reads three volumes as nearly empty.
 
 **Links and years come from DC Universe Infinite's catalog** — DC's equivalent
